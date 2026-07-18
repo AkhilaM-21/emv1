@@ -1,0 +1,213 @@
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --text-main: #ffffff;
+  --text-muted: #a0a0a0;
+  --accent-blue: #f2853f;
+  --accent-purple: #d9531f;
+  --gradient-primary: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Utilities */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(242, 133, 63, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Global Layout */
+.section-padding {
+  padding: 6rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-title p {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   GLOBAL STANDARDIZATION: SECTION BADGES AND TITLES
+========================================================= */
+
+.why-badge,
+.features-badge,
+.faq-badge,
+.globe-eyebrow,
+.ri-hero-badge,
+.global-section-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 20px !important;
+  border-radius: 50px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: #e2601f !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 6px 14px rgba(0, 0, 0, 0.12) !important;
+  margin-bottom: 1.5rem !important;
+  text-transform: none !important;
+  letter-spacing: 0px !important;
+}
+
+body.dark-theme .why-badge,
+body.dark-theme .features-badge,
+body.dark-theme .faq-badge,
+body.dark-theme .globe-eyebrow,
+body.dark-theme .ri-hero-badge,
+body.dark-theme .global-section-badge {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Dots inside badges */
+.badge-dot, .why-dot, .eyebrow-dot, .global-badge-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%) !important;
+  display: inline-block !important;
+}
+
+/* Unified Main Headings */
+.why-title,
+.features-title,
+.faq-title,
+.globe-title,
+.product-title-top,
+.clients-title,
+.ri-features-title,
+.ri-accordion-title,
+.ri-stats-title,
+.global-section-title {
+  font-size: 3.2rem !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -1.5px !important;
+  margin-bottom: 1.5rem !important;
+  color: #1e293b;
+}
+
+body.dark-theme .why-title,
+body.dark-theme .features-title,
+body.dark-theme .faq-title,
+body.dark-theme .globe-title,
+body.dark-theme .product-title-top,
+body.dark-theme .clients-title,
+body.dark-theme .ri-features-title,
+body.dark-theme .ri-accordion-title,
+body.dark-theme .ri-stats-title,
+body.dark-theme .global-section-title {
+  color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .why-title,
+  .features-title,
+  .faq-title,
+  .globe-title,
+  .product-title-top,
+  .clients-title,
+  .ri-features-title,
+  .ri-accordion-title,
+  .ri-stats-title,
+  .global-section-title {
+    font-size: 2.2rem !important;
+  }
+}

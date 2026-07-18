@@ -1,0 +1,257 @@
+/* =========================================
+   FAQ SECTION — Magic AI Search
+========================================= */
+
+.faq-section {
+  padding: 8rem 0;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Real Dropship background asset — spans the whole section (heading included) */
+.faq-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6; /* Balanced background opacity so it's still colorful but readable */
+}
+
+.faq-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2601f;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5rem;
+}
+
+.badge-dot-blue {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  display: inline-block;
+}
+
+.faq-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+  letter-spacing: -1px;
+}
+
+.faq-subtitle {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #64748b;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* ---- BODY: centered search bar, answer floats on the right ---- */
+.faq-body {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---- SEARCH AREA (centered on screen) ---- */
+.faq-search-area {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  height: 500px;
+}
+
+/* Reel of scrolling questions */
+.reel-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  /* Only fade the very bottom, keep the top completely solid and visible */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+}
+
+.reel-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* No will-change/GPU layer: keeps the question text crisp when the
+     fixed-1280 layout is scaled down on smaller devices */
+}
+
+.reel-item {
+  display: flex;
+  align-items: center;
+  padding: 0 70px 0 56px;   /* aligns text after the bar's left icon */
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #334155;           /* Very dark so it's perfectly clear */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.reel-item:hover {
+  color: #e2601f;
+}
+
+/* The centred row is hidden — the bar overlay shows it instead */
+.reel-item.is-center {
+  opacity: 0;
+}
+
+/* Hide the items below the search bar to make room for the answer */
+.reel-item.is-below {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Fixed search bar in the centre */
+.search-bar-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 0 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fc 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 10px 30px rgba(0, 0, 0, 0.05),
+    0 25px 55px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+}
+
+.ov-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ov-query {
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e2601f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.ov-send {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(226, 96, 31, 0.45);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.ov-send:hover {
+  transform: translateY(-2px);
+}
+
+/* ---- ANSWER PANEL (below the search bar) ---- */
+.faq-answer-panel {
+  position: absolute;
+  top: calc(50% + 44px);       /* directly below the search bar */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;            /* narrower than the search bar for nested look */
+  min-height: 90px;
+  text-align: left;
+  animation: answer-in 0.5s ease;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  z-index: 4;
+}
+
+@keyframes answer-in {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.answer-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #e2601f;
+  margin-bottom: 0.6rem;
+}
+
+.answer-text {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  /* Answer is already centered, just adjust top if needed */
+  .faq-answer-panel {
+    top: calc(50% + 44px);
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-title { font-size: 2.4rem; }
+  .reel-item, .ov-query { font-size: 1rem; }
+  .search-bar-overlay { padding: 0 8px 0 16px; }
+}

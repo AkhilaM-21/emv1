@@ -1,0 +1,609 @@
+.products-section {
+  padding: 6rem 0 10rem 0;
+  position: relative;
+  background-color: #e8ecf3;
+  /* Let the oversized dashboard break out of its frame without
+     creating a horizontal page scrollbar */
+  overflow-x: clip;
+}
+
+.products-section .container {
+  max-width: none !important;
+  width: 80%;
+  /* left-aligned */
+  margin: 0;
+}
+
+/* =========================================
+   HEADER & AGENT STUDIO BLOCK
+========================================= */
+.emv-products-header {
+  /* left indent so the bare heading text isn't flush to the edge */
+  margin: 0 0 4rem 4rem;
+}
+.emv-subtitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #dc2626;
+  text-transform: uppercase;
+}
+.emv-headline {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #1e293b;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: -1.5px;
+}
+/* keep the headline on a single line — scoped to the products section only */
+.products-section .emv-headline {
+  white-space: nowrap;
+}
+.text-accent {
+  background: linear-gradient(100deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.emv-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 800px;
+}
+
+.emv-featured-apps-container {
+  display: flex;
+  gap: 4rem;
+  /* left indent to match the header */
+  margin: 0 0 6rem 4rem;
+  align-items: flex-start;
+}
+
+/* Purple Card */
+.emv-agent-studio-card {
+  position: relative;
+  overflow: hidden;
+  flex: 0 0 380px;
+  background:
+    radial-gradient(130% 90% at 12% 6%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 46%),
+    radial-gradient(120% 120% at 100% 100%, rgba(217, 70, 239, 0.35) 0%, rgba(217, 70, 239, 0) 55%),
+    linear-gradient(150deg, #3b0764 0%, #5b21b6 48%, #7c3aed 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  padding: 2rem;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 50px -18px rgba(76, 29, 149, 0.5);
+}
+.emv-new-badge {
+  background: rgba(255,255,255,0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.emv-agent-studio-card h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.emv-agent-studio-card p {
+  color: #f7c8a3;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.emv-btn-outline-white {
+  padding: 10px 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+.emv-btn-outline-white:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Apps Grid */
+.emv-apps-grid-section {
+  flex: 1;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 1.5rem;
+}
+.emv-apps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.emv-apps-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1.5px;
+}
+.emv-explore-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-decoration: none;
+}
+.emv-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2rem;
+}
+.emv-app-mini-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.emv-app-icon {
+  position: relative;
+  overflow: hidden;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.16),
+    0 7px 16px -3px rgba(15, 23, 42, 0.24);
+}
+/* glossy top-left sheen over the colored background */
+.emv-app-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 52%);
+  z-index: 1;
+  pointer-events: none;
+}
+.emv-app-icon svg {
+  position: relative;
+  z-index: 2;
+}
+.emv-app-info h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #0f172a;
+}
+.emv-app-info p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* =========================================
+   HERO-STYLE CAROUSEL
+========================================= */
+.products-carousel-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4rem;
+  width: 100%;
+}
+
+.products-carousel-track {
+  position: relative;
+  width: 100%;
+  display: grid;
+}
+
+.prod-carousel-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.98);
+  transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+
+  /* Premium layered mesh: soft white -> sky blue -> lavender, with ambient
+     glows (one sits behind the dashboard). Decorative accents live in
+     .prod-card-decor; noise + glass live in ::after. */
+  /* Clean light surface */
+  background-color: #f4f7fc;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 22px 46px -30px rgba(15, 23, 42, 0.10);
+  border-radius: 44px;
+  padding: 2rem 4rem;
+  overflow: visible; /* dashboard intentionally overflows the frame */
+  display: flex;
+}
+
+.prod-carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* Large faint product-icon watermark in the middle of the card */
+.prod-card-watermark {
+  position: absolute;
+  /* somewhat toward the bottom */
+  top: 64%;
+  /* sit just before the dashboard (right area of the card) */
+  left: 62%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0.05;
+  line-height: 0;
+  pointer-events: none;
+}
+
+/* Decorative accents layer (orbs, rings, dot clusters), clipped to the card */
+.prod-card-decor {
+  position: absolute;
+  inset: 0;
+  border-radius: 44px;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.prod-decor-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.prod-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.25);
+  background: transparent;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: none;
+  transition: all 0.2s ease;
+}
+.prod-arrow:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(15, 23, 42, 0.45);
+}
+.prod-arrow.prev { left: 0; }
+/* pinned to the far right of the screen (past the left-aligned 80% card) */
+.prod-arrow.next { right: calc(2rem - 20vw); }
+
+.industry-tag-icon { position: relative; z-index: 1; flex-shrink: 0; }
+
+/* Dot pagination (reference style) */
+.prod-dots {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 6;
+}
+.prod-dot {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #94a3b8;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.prod-dot.active {
+  background: #0f172a;
+  border-color: #0f172a;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 1; /* sit above the faceted background */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  gap: 1.25rem;
+}
+.product-info {
+  /* info takes most of the card so the dashboard column is small */
+  flex: 0 0 70%;
+  max-width: 70%;
+}
+.product-dashboard {
+  /* small column so the image overflows it and sits ~half outside the card */
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: visible;
+}
+.product-dashboard { position: relative; }
+
+/* Fixed dashboard size; it overflows the narrow column to hang past the edge */
+.product-dashboard-inner {
+  position: relative;
+  width: 500px;
+  max-width: none;
+}
+/* Frosted-glass icon chip on the dashboard's bottom-left corner */
+.prod-dash-badge {
+  position: absolute;
+  left: -24px;
+  bottom: 40px;
+  width: 66px;
+  height: 66px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(59, 95, 192, 0.55) 0%, rgba(30, 58, 138, 0.6) 100%);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    inset 0 -6px 12px rgba(30, 58, 138, 0.25),
+    0 12px 26px rgba(30, 58, 138, 0.32);
+  z-index: 3;
+}
+
+/* Elements inside info — reduced ~15-20% to give the dashboard more room */
+.product-header-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
+.product-icon-3d {
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, #3b5fc0 0%, #1e3a8a 50%, #14286e 100%);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), 0 10px 20px rgba(30, 58, 138,0.4);
+}
+.product-title-top { font-size: 2.05rem; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -1px; line-height: 1.1; }
+.product-desc { font-size: 1rem; color: #475569; line-height: 1.55; margin-bottom: 1.85rem; max-width: 90%; }
+
+.industry-label { display: block; font-size: 0.9rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.75rem; }
+.industry-tags {
+  /* force 3 pills on the first row, 2 on the second */
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 0.85rem;
+  justify-content: start;
+}
+
+@keyframes border-spin {
+  100% { transform: rotate(360deg); }
+}
+
+.industry-tag {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f4f9 100%);
+  color: #1e3a8a;
+  padding: 8px 16px;
+  border-radius: 26px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  z-index: 1;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 5px rgba(15, 23, 42, 0.04),
+    0 4px 10px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* The spinning gradient that forms the moving border */
+.industry-tag::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 70%, #1e3a8a 100%);
+  animation: border-spin 3s linear infinite;
+  z-index: -2;
+}
+
+/* The inner pill that covers the center, leaving a 1px gap for the border */
+.industry-tag::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background: #ffffff;
+  border-radius: 25px;
+  z-index: -1;
+}
+
+/* Staggered animation delays so they don't all spin in sync */
+.industry-tag:nth-child(2)::before { animation-delay: -0.5s; }
+.industry-tag:nth-child(3)::before { animation-delay: -1.0s; }
+.industry-tag:nth-child(4)::before { animation-delay: -1.5s; }
+.industry-tag:nth-child(5)::before { animation-delay: -2.0s; }
+
+.industry-tag:hover {
+  transform: translateY(-2px);
+  color: #fff; /* light text on the dark pill */
+  box-shadow:
+    0 2px 4px rgba(16, 24, 40, 0.08),
+    0 10px 20px rgba(16, 24, 40, 0.12);
+}
+/* Fill the inner pill with the theme's dark blue on hover */
+.industry-tag:hover::after {
+  background: linear-gradient(150deg, #0d1b3e 0%, #10276b 55%, #14286e 100%);
+}
+.industry-tag:hover::before {
+  animation-duration: 1s; /* spin faster on hover */
+}
+
+/* =========================================
+   DASHBOARDS CSS (Reused from before)
+========================================= */
+.detailed-dashboard {
+  /* Fills the inner box; the inner box handles size + right breakout */
+  width: 100%;
+  max-width: none;
+  height: 372px;
+  margin: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  /* Normal soft shadow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 22px 48px -26px rgba(15, 23, 42, 0.22);
+  display: flex;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Anchored right (flex-end), then nudged further right to overflow the frame */
+  transform: perspective(1600px) rotateY(-3deg) scale(0.96);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease;
+}
+.active .detailed-dashboard {
+  transform: perspective(1600px) rotateY(-3deg) scale(1);
+  opacity: 1;
+}
+
+.dd-sidebar { width: 140px; background: #f8fafc; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; padding: 0.75rem 0; }
+.dd-logo { display: flex; align-items: center; gap: 6px; padding: 0 0.75rem 1rem; font-weight: 700; color: #0f172a; font-size: 0.8rem; }
+.dd-logo-icon { width: 16px; height: 16px; background: linear-gradient(135deg, #3b5fc0 0%, #1e3a8a 50%, #14286e 100%); border-radius: 4px; }
+.dd-nav { display: flex; flex-direction: column; flex: 1; }
+.dd-nav-item { padding: 8px 0.75rem; display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 0.7rem; cursor: pointer; }
+.dd-nav-item.active { color: #1e3a8a; background: rgba(30, 58, 138, 0.1); border-right: 2px solid #1e3a8a; }
+.dd-sidebar-footer { padding-top: 0.5rem; border-top: 1px solid #e2e8f0; }
+.dd-main { flex: 1; display: flex; flex-direction: column; background: #ffffff; }
+.dd-header { height: 40px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 0 1rem; }
+.dd-header-title { color: #0f172a; font-weight: 600; font-size: 0.8rem; }
+.dd-header-title span { color: #94a3b8; font-weight: 400; }
+.dd-header-actions { display: flex; align-items: center; gap: 10px; }
+.dd-icon-btn { background: transparent; border: none; color: #64748b; }
+.dd-avatar { width: 20px; height: 20px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; }
+.dd-content { flex: 1; padding: 1rem; overflow: hidden; display: flex; flex-direction: column; }
+.db-grid { display: grid; gap: 0.75rem; width: 100%; height: 100%; }
+.db-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-radius: 6px; padding: 0.75rem; display: flex; flex-direction: column; }
+.db-card h4 { margin: 0 0 0.5rem 0; font-size: 0.7rem; color: #475569; font-weight: 600; }
+.lbl { font-size: 0.65rem; color: #64748b; margin-bottom: 2px; }
+.val { font-size: 1.1rem; color: #0f172a; font-weight: 600; }
+.text-blue { color: #1e3a8a; }
+.text-green { color: #10b981; }
+.text-orange { color: #2b4fb0; }
+.badge { padding: 2px 6px; border-radius: 4px; font-size: 0.55rem; font-weight: 600; }
+.badge.green { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.badge.orange { background: rgba(43, 79, 176, 0.15); color: #2b4fb0; }
+.list-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.65rem; color: #475569; }
+.list-item:last-child { border-bottom: none; }
+
+/* Dashboard Grids */
+.erp-grid { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; }
+.erp-grid .main-chart { grid-column: 1 / 3; }
+.erp-grid .side-list { grid-column: 3 / 4; }
+.hr-grid { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; }
+.hr-grid .roster { grid-column: 1 / 3; }
+.hr-grid .payroll-chart { grid-column: 3 / 4; align-items: center; justify-content: center; }
+.crm-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; }
+.crm-grid .funnel { grid-column: 1 / 2; }
+.crm-grid .deal-list { grid-column: 2 / 3; }
+.report-grid { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto 1fr; }
+.report-grid .radar { grid-column: 1 / 2; align-items: center; justify-content: center; }
+.report-grid .bars { grid-column: 2 / 4; }
+.flow-grid { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+.inv-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; }
+.inv-grid .inv-preview { grid-column: 1 / 2; grid-row: 1 / 3; align-items: center; justify-content: center; }
+.inv-grid .inv-list { grid-column: 2 / 3; grid-row: 2 / 3; }
+
+/* Visual Elements */
+.chart-bars { display: flex; align-items: flex-end; justify-content: space-around; height: 100%; padding-top: 10px;}
+.c-bar { width: 15%; border-radius: 2px 2px 0 0; transform-origin: bottom; height: var(--target-h); background: linear-gradient(135deg, #3b5fc0 0%, #1e3a8a 50%, #14286e 100%); }
+.avatar-list { display: flex; flex-direction: column; gap: 8px; }
+.av-row { display: flex; align-items: center; gap: 8px; }
+.av { width: 24px; height: 24px; border-radius: 50%; background: #e2e8f0; }
+.av-info b { font-size: 0.65rem; color: #0f172a; display: block; }
+.av-info span { font-size: 0.55rem; color: #64748b; }
+.donut-wrap { width: 80px; height: 80px; }
+.mini-donut { width: 100%; height: 100%; transform: rotate(-90deg); }
+.funnel-chart { display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: center; }
+.f-layer { background: linear-gradient(135deg, #3b5fc0 0%, #1e3a8a 50%, #14286e 100%); color: #fff; font-size: 0.55rem; text-align: center; padding: 4px; width: var(--target-w); }
+.line-graph { height: 2px; width: 100%; margin-top: 8px; background: linear-gradient(135deg, #3b5fc0 0%, #1e3a8a 50%, #14286e 100%);}
+.radar-circle { width: 80px; height: 80px; border-radius: 50%; border: 1px dashed #cbd5e1; position: relative; }
+.r-poly { position: absolute; top: 20%; left: 20%; right: 20%; bottom: 20%; background: rgba(30, 58, 138, 0.2); border: 1px solid #1e3a8a; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+.node-map { display: flex; flex-direction: column; align-items: center; padding-top: 10px; }
+.node { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 12px; font-size: 0.6rem; color: #0f172a; border-radius: 4px; }
+.line-down { width: 2px; height: 15px; background: #cbd5e1; }
+.line-split { width: 80px; height: 15px; border-top: 2px solid #cbd5e1; border-left: 2px solid #cbd5e1; border-right: 2px solid #cbd5e1; }
+.node-row { display: flex; gap: 30px; }
+.inv-doc { background: #f8fafc; width: 120px; padding: 10px; border-radius: 4px; border: 1px solid #e2e8f0; position: relative; }
+.inv-head { display: flex; flex-direction: column; color: #0f172a; font-size: 0.5rem; }
+.inv-line { height: 1px; background: #cbd5e1; margin: 4px 0; }
+.inv-row { display: flex; justify-content: space-between; font-size: 0.45rem; color: #475569; margin-bottom: 2px; }
+.inv-total { border-top: 1px solid #94a3b8; margin-top: 4px; padding-top: 2px; font-size: 0.55rem; font-weight: bold; color: #0f172a; text-align: right; }
+.paid-stamp { position: absolute; top: 40%; left: 20%; transform: rotate(-15deg) scale(1.5); opacity: 0.8; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .emv-featured-apps-container { flex-direction: column; }
+  .emv-agent-studio-card { flex: auto; }
+  .products-carousel-track { height: auto; }
+  .prod-carousel-slide { width: auto; }
+  .slide-content { flex-direction: column; gap: 2rem; height: auto; }
+  .product-info { flex: 1 1 100%; max-width: 100%; text-align: center; }
+  .product-dashboard { flex: 1 1 100%; transform: none; justify-content: center; }
+  .product-dashboard-inner { width: 100%; max-width: 590px; transform: none; }
+  .product-header-top { justify-content: center; }
+  .industry-tags { justify-content: center; }
+  /* Reset the desktop breakout so the dashboard fits when stacked */
+  .detailed-dashboard,
+  .active .detailed-dashboard {
+    width: 100%;
+    max-width: 650px;
+    height: 480px;
+    margin: 0 auto;
+    transform: none;
+  }
+}
+@media (max-width: 768px) {
+  .emv-apps-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-carousel-stage { padding: 0 1rem; }
+  .prod-carousel-slide { padding: 2rem 1.5rem; }
+}
+@media (max-width: 500px) {
+  .emv-apps-grid { grid-template-columns: 1fr; }
+}

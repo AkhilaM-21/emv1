@@ -1,0 +1,353 @@
+.features-section {
+  padding: 8rem 0;
+  background-color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.features-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.features-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2601f;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5rem;
+}
+
+.badge-dot-blue {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  display: inline-block;
+}
+
+.features-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  letter-spacing: -1.5px;
+}
+
+/* Layout */
+.features-layout {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 600px;
+}
+
+/* Connectors */
+.connector-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.conn-line {
+  fill: none;
+  stroke: #cbd5e1;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.conn-glow {
+  fill: none;
+  stroke: #e2601f;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(226, 96, 31, 0.8));
+  stroke-dasharray: 20 200;
+  stroke-dashoffset: 0;
+  animation: traceLine 3s linear infinite;
+}
+
+.glow-delay-1 { animation-delay: -1s; }
+.glow-delay-2 { animation-delay: -2s; }
+.glow-delay-3 { animation-delay: -1.5s; }
+
+@keyframes traceLine {
+  0% { stroke-dashoffset: 220; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Columns */
+.features-column {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  z-index: 1;
+}
+
+.left-col {
+  align-items: flex-end;
+}
+.left-col .feature-card {
+  text-align: center;
+}
+
+.right-col {
+  align-items: flex-start;
+}
+.right-col .feature-card {
+  text-align: center;
+}
+
+/* Center the icon box on every card */
+.feature-icon-box {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-center {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Hub Logo */
+.hub-logo-box {
+  width: 200px;
+  height: 140px;
+  background: linear-gradient(145deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  box-shadow:
+    inset 0 4px 8px rgba(255, 255, 255, 0.4),
+    0 15px 35px rgba(226, 96, 31, 0.4),
+    0 0 40px rgba(226, 96, 31, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.hub-logo-box:hover {
+  transform: scale(1.05);
+}
+
+.hub-icon {
+  margin-bottom: 8px;
+}
+
+.hub-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Cards */
+.feature-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.08),
+    0 15px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    0 25px 40px rgba(226, 96, 31, 0.18);
+}
+
+/* Hover media — department image revealed with a light effect */
+.feature-media {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 0;
+  background: #0f172a; /* Dark navy blue */
+}
+
+.feature-card:hover .feature-media {
+  opacity: 1;
+}
+
+/* Soft spotlight sweeping in */
+.feature-media-light {
+  display: none; /* Removed the orange spotlights */
+}
+
+.feature-card:hover .feature-media-light {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Large department icon as the "image" */
+.feature-media-icon {
+  position: absolute;
+  right: -18px;
+  bottom: -22px;
+  color: rgba(255, 255, 255, 0.14);
+  transform: rotate(-8deg);
+}
+
+.feature-icon-box {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    0 10px 20px rgba(217, 83, 31, 0.35);
+  transition: box-shadow 0.3s ease;
+}
+
+.feature-card:hover .feature-icon-box {
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.5),
+    0 12px 24px rgba(217, 83, 31, 0.55),
+    0 0 0 4px rgba(255, 255, 255, 0.25);
+}
+
+.feature-card-title {
+  position: relative;
+  z-index: 1;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.8rem 0;
+  transition: color 0.3s ease;
+}
+
+.feature-card-desc {
+  position: relative;
+  z-index: 1;
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* On hover the media is dark, so flip the text to light */
+.feature-card:hover .feature-card-title {
+  color: #ffffff;
+}
+
+.feature-card:hover .feature-card-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Responsive
+   KEEP the 3-column hub layout on tablets/small screens — just scale it down.
+   Only stack to a single column on real phones (<=560px). */
+
+/* ---- KEEP 3 COLUMNS, scale down (<=1024px) ---- */
+@media (max-width: 1024px) {
+  .features-section { padding: 6rem 0; }
+  .features-container { padding: 0 1.25rem; }
+  .features-header { margin-bottom: 3.5rem; }
+  .features-title { font-size: 2.6rem; letter-spacing: -1px; }
+
+  .features-layout { min-height: 0; }
+  .features-column { width: 34%; gap: 1.25rem; }
+  .features-center { width: 24%; }
+
+  .feature-card { padding: 1.25rem; border-radius: 18px; }
+  .feature-icon-box { width: 42px; height: 42px; margin-bottom: 0.8rem; }
+  .feature-card-title { font-size: 1rem; margin-bottom: 0.5rem; }
+  .feature-card-desc { font-size: 0.8rem; line-height: 1.45; }
+
+  .hub-logo-box { width: 130px; height: 100px; border-radius: 22px; }
+  .hub-icon { width: 34px; height: 34px; }
+  .hub-text { font-size: 1.05rem; }
+}
+
+/* ---- Still 3 columns, tighter (<=720px) ---- */
+@media (max-width: 720px) {
+  .features-section { padding: 5rem 0; }
+  .features-title { font-size: 2.2rem; }
+  .features-column { gap: 0.9rem; }
+  .feature-card { padding: 1rem; border-radius: 16px; }
+  .feature-card-title { font-size: 0.9rem; }
+  .feature-card-desc { font-size: 0.72rem; line-height: 1.4; }
+  .feature-icon-box { width: 38px; height: 38px; }
+  .hub-logo-box { width: 104px; height: 86px; }
+  .hub-text { font-size: 0.9rem; }
+}
+
+/* ---- PHONES: finally stack to ONE column (<=560px) ---- */
+@media (max-width: 560px) {
+  .features-section { padding: 4rem 0; }
+  .features-title { font-size: 1.9rem; letter-spacing: -0.5px; }
+  .features-header { margin-bottom: 2.25rem; }
+
+  .features-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .connector-svg { display: none; }
+
+  /* Hub goes to the TOP of the stack, back to full size */
+  .features-center { width: 100%; order: -1; margin-bottom: 0.5rem; }
+  .hub-logo-box { width: 170px; height: 120px; border-radius: 30px; }
+  .hub-icon { width: 44px; height: 44px; }
+  .hub-text { font-size: 1.3rem; }
+
+  .features-column { width: 100%; max-width: 460px; gap: 1.25rem; }
+  .left-col, .right-col { align-items: stretch; }
+  .feature-card { padding: 1.5rem; border-radius: 20px; text-align: center; }
+  .feature-card-title { font-size: 1.1rem; margin-bottom: 0.8rem; }
+  .feature-card-desc { font-size: 0.9rem; line-height: 1.6; }
+  .feature-icon-box { width: 50px; height: 50px; margin: 0 auto 1.2rem auto; }
+}

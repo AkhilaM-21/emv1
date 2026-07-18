@@ -1,0 +1,309 @@
+/* =========================================
+   FOOTER SECTION
+========================================= */
+
+.footer-section {
+  background: #ffffff;
+  color: #1e293b;
+  padding: 1.5rem 0 1.5rem 0;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Huge Background Typography (Aigocy style) */
+.footer-huge-text {
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+  pointer-events: none;
+}
+
+.footer-huge-text h1 {
+  font-size: 7.5vw;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: transparent; /* "no clear text" */
+  white-space: nowrap;
+  
+  /* Blurred 3D shadow type */
+  text-shadow: 
+    -2px -2px 6px rgba(255, 255, 255, 0.5), /* Top-left highlight */
+    2px 2px 6px rgba(0, 0, 0, 0.1),         /* Bottom-right shadow */
+    0 0 15px rgba(255, 255, 255, 0.3);      /* Overall soft blur */
+    
+  filter: blur(0.5px); /* Very slight blur to soften the entire shape */
+}
+
+.footer-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Glass Panel Wrap */
+.footer-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  padding: 3rem 4rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  position: relative;
+  z-index: 2; /* Keep above the huge typography */
+}
+
+/* Grid Layout */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 0;
+}
+
+.footer-heading {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.footer-links a {
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #0f172a;
+}
+
+/* Large Links Column */
+.large-links {
+  gap: 1.25rem;
+}
+.large-links a {
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  color: #1e293b;
+}
+
+/* Newsletter Column & Logo */
+.col-newsletter {
+  padding-right: 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-text-footer {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1rem 0.5rem 1rem;
+  color: #0f172a;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  /* 3D Inset Effect */
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.1), 0 2px 0 rgba(255,255,255,0.8);
+}
+
+.input-group input:focus {
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.1), 0 2px 0 #e2601f;
+}
+
+.input-group label {
+  position: absolute;
+  left: 1rem;
+  top: 0.8rem;
+  color: #64748b;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: 0.3rem;
+  font-size: 0.65rem;
+  color: #e2601f;
+  font-weight: 700;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  appearance: none;
+  min-width: 18px;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 2px;
+  /* 3D Checkbox */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  border-color: #e2601f;
+}
+
+.checkbox-group label {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #475569;
+  cursor: pointer;
+}
+
+.checkbox-group label a {
+  color: #0f172a;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.subscribe-btn {
+  background: linear-gradient(180deg, #f8cba6 0%, #f7b07e 100%);
+  color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 1rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+  align-self: flex-start;
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 -2px 4px rgba(0,0,0,0.1),
+    0 4px 6px rgba(0,0,0,0.1);
+  transform: translateY(0);
+}
+
+.subscribe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -2px 4px rgba(0,0,0,0.1),
+    0 8px 12px rgba(0,0,0,0.15);
+}
+
+.subscribe-btn:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    inset 0 -1px 2px rgba(0,0,0,0.1),
+    0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #334155;
+  padding: 1rem 0 0.25rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-social {
+  margin-top: 0.5rem;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  /* No need to override font-size, 7.5vw scales perfectly */
+}
+
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .col-newsletter {
+    padding-left: 0;
+  }
+  .footer-legal {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .footer-huge-text h1 {
+    letter-spacing: -1px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}

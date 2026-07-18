@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 80" width="350" height="80">
+  <rect width="350" height="80" fill="transparent" />
+  <text x="260" y="32" font-family="sans-serif" font-size="24" font-weight="bold" fill="#1e293b" text-anchor="end">التميمي للمقاولات</text>
+  <text x="260" y="62" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1e293b" text-anchor="end">AL TAMIMI CONTRACTING</text>
+  <g transform="translate(270, 15)" fill="none" stroke="#f0a500" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M25,25 L10,10 M25,25 L40,10" />
+    <path d="M25,25 L10,40 M25,25 L40,40" />
+    <path d="M25,25 L25,5" />
+    <path d="M25,25 L25,45" />
+  </g>
+</svg>
