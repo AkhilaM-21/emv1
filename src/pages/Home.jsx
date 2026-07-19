@@ -6,9 +6,10 @@ import Features from '../components/Features';
 import AppBuilder from '../components/AppBuilder';
 import GlobeSection from '../components/GlobeSection';
 import Clients from '../components/Clients';
-import Testimonials from '../components/Testimonials';
 import CTA from '../components/CTA';
-import FAQ from '../components/FAQ';
+import CustomerStory from '../components/CustomerStory';
+import Resources from '../components/Resources';
+import Announcement from '../components/Announcement';
 
 const Home = () => {
   return (
@@ -16,12 +17,14 @@ const Home = () => {
       <AgenticHero />
       <Clients />
       <Products />
+      <Features />
+      <Announcement />
+      <AppBuilder />
       <WhyEmvive />
       <GlobeSection />
-      <Features />
-      <AppBuilder />
-      <Testimonials />
-      <FAQ />
+      <GlobeSection variant="map" id="global-map" />
+      <CustomerStory />
+      <Resources />
       <CTA />
     </>
   );

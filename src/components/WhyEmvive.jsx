@@ -1,152 +1,270 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Shield, Zap, BarChart3, Users, CheckCircle, Lock, Layout, TrendingUp } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import './WhyEmvive.css';
 
-// Card 1 Illustration: Horizontal bars with metric labels
-const OutcomeIllustration = ({ inView }) => (
-  <div className="why-illustration">
-    <div className={`bar-metrics ${inView ? 'in-view' : ''}`}>
-      <div className="metric-row">
-        <div className="metric-bar" style={{ '--target-w': '85%' }}></div>
-        <span className="metric-pill"><Zap size={12} /> ERP</span>
-      </div>
-      <div className="metric-row">
-        <div className="metric-bar" style={{ '--target-w': '95%' }}></div>
-        <span className="metric-pill"><BarChart3 size={12} /> CRM</span>
-      </div>
-      <div className="metric-row">
-        <div className="metric-bar" style={{ '--target-w': '70%' }}></div>
-        <span className="metric-pill"><Users size={12} /> HR</span>
-      </div>
-      <div className="metric-row">
-        <div className="metric-bar" style={{ '--target-w': '90%' }}></div>
-        <span className="metric-pill"><TrendingUp size={12} /> Invoicing</span>
-      </div>
-    </div>
-  </div>
-);
+/* ------------------------------------------------------------------
+   Card visuals — one looping illustration per card, sitting in a
+   fixed-height panel at the bottom of the card (same pattern as the
+   cloud-7 feature cards). All motion is CSS/SVG, no JS timers.
+------------------------------------------------------------------ */
 
-// Card 2 Illustration: Three checkmark circles
-const ReliabilityIllustration = () => (
-  <div className="why-illustration">
-    <div className="check-group">
-      <div className="check-circle"><CheckCircle size={32} /></div>
-      <div className="check-circle"><CheckCircle size={32} /></div>
-      <div className="check-circle"><CheckCircle size={32} /></div>
+// 1. Industries scrolling past in two opposing marquee rows
+const IndustryViz = () => {
+  const rowA = ['Construction', 'Retail', 'Manufacturing', 'Trading'];
+  const rowB = ['Restaurants', 'Services', 'Contracting', 'Wholesale'];
+  const track = (items, cls) => (
+    <div className={`viz-track ${cls}`}>
+      {[...items, ...items].map((label, i) => (
+        <span className="viz-pill" key={i}>
+          {label}
+        </span>
+      ))}
     </div>
-  </div>
-);
+  );
+  return (
+    <div className="why-viz why-viz--marquee">
+      {track(rowA, '')}
+      {track(rowB, 'viz-track--rev')}
+      {track(rowA, '')}
+    </div>
+  );
+};
 
-// Card 3 Illustration: Shield with lock
-const SecureIllustration = () => (
-  <div className="why-illustration">
-    <div className="shield-wrap">
-      <svg viewBox="0 0 120 140" className="shield-svg">
-        <defs>
-          <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#f7b07e" />
-          </linearGradient>
-        </defs>
-        <path d="M60 10 L110 35 L110 80 Q110 120 60 135 Q10 120 10 80 L10 35 Z" 
-          fill="none" stroke="#e2601f" strokeWidth="2" />
-        <path d="M60 20 L100 40 L100 78 Q100 112 60 125 Q20 112 20 78 L20 40 Z" 
-          fill="url(#shieldGrad)" />
+// 2. One system, every team connected to it
+const ConnectedViz = () => {
+  const people = [
+    { x: 34, y: 30 },
+    { x: 34, y: 110 },
+    { x: 206, y: 30 },
+    { x: 206, y: 110 },
+    { x: 120, y: 16 },
+    { x: 120, y: 124 },
+  ];
+  return (
+    <div className="why-viz">
+      <svg viewBox="0 0 240 140" className="viz-svg">
+        {/* links, each carrying a packet to and from the system */}
+        {people.map((p, i) => (
+          <line
+            key={`l${i}`}
+            x1="120"
+            y1="70"
+            x2={p.x}
+            y2={p.y}
+            className="viz-wire"
+          />
+        ))}
+        {people.map((p, i) => (
+          <line
+            key={`p${i}`}
+            x1="120"
+            y1="70"
+            x2={p.x}
+            y2={p.y}
+            className="viz-packet"
+            style={{ animationDelay: `${i * 0.4}s` }}
+          />
+        ))}
+
+        {/* the people on each end */}
+        {people.map((p, i) => (
+          <g key={`u${i}`} className="viz-user" style={{ animationDelay: `${i * 0.4}s` }}>
+            <circle cx={p.x} cy={p.y - 7} r="4.5" className="viz-user-head" />
+            <path
+              d={`M${p.x - 8},${p.y + 6} a8,8 0 0 1 16,0`}
+              className="viz-user-body"
+            />
+          </g>
+        ))}
+
+        {/* the system itself */}
+        <g className="viz-machine">
+          <rect x="94" y="50" width="52" height="36" rx="5" className="viz-screen" />
+          <rect x="100" y="57" width="26" height="3" rx="1.5" className="viz-screen-line" />
+          <rect x="100" y="64" width="34" height="3" rx="1.5" className="viz-screen-line" />
+          <rect x="100" y="71" width="20" height="3" rx="1.5" className="viz-screen-line viz-screen-line--hot" />
+          <rect x="114" y="86" width="12" height="6" className="viz-stand" />
+          <rect x="103" y="92" width="34" height="4" rx="2" className="viz-stand" />
+        </g>
       </svg>
-      <Lock size={28} className="shield-lock" />
     </div>
-  </div>
-);
+  );
+};
 
-// Card 4 Illustration: UI elements
-const DesignIllustration = () => (
-  <div className="why-illustration">
-    <div className="design-ui">
-      <div className="ui-window">
-        <div className="ui-bar"></div>
-        <div className="ui-bar short"></div>
-        <div className="ui-bar shorter"></div>
+// 3. Compliance tags streaming behind a shield that stamps a check
+const ComplianceViz = () => {
+  const tags = ['ZATCA', 'GOSI', 'WPS', 'VAT', 'EOSB', 'E-INVOICE'];
+  return (
+    <div className="why-viz why-viz--shield">
+      <div className="viz-stream">
+        <div className="viz-track">
+          {[...tags, ...tags].map((tag, i) => (
+            <span className="viz-code" key={i}>
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="viz-track viz-track--rev">
+          {[...tags, ...tags].reverse().map((tag, i) => (
+            <span className="viz-code" key={i}>
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-      <div className="ui-sidebar">
-        <div className="ui-toggle"></div>
-        <div className="ui-bar thin"></div>
-        <div className="ui-bar thin short"></div>
-        <div className="ui-check-big"><CheckCircle size={28} /></div>
-      </div>
+      <svg viewBox="0 0 120 130" className="viz-shield">
+        <path
+          d="M60 8 L108 30 L108 70 Q108 108 60 122 Q12 108 12 70 L12 30 Z"
+          className="viz-shield-body"
+        />
+        <path d="M40 66 L54 80 L82 50" className="viz-check" />
+      </svg>
     </div>
-  </div>
-);
+  );
+};
+
+import { geoEquirectangular, geoPath } from 'd3-geo';
+import * as topojson from 'topojson-client';
+
+// 4. Regions lighting up on a flat world map
+const RegionViz = () => {
+  const [landPath, setLandPath] = React.useState('');
+  
+  React.useEffect(() => {
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+      .then((r) => r.json())
+      .then((world) => {
+        const land = topojson.feature(world, world.objects.land);
+        // Create a flat projection centered around our points of interest
+        const projection = geoEquirectangular()
+          .scale(40)
+          .translate([100, 80]); // Shift map to focus on Europe/Asia/Africa
+        const pathGenerator = geoPath().projection(projection);
+        setLandPath(pathGenerator(land));
+      })
+      .catch((err) => console.error('Map load error', err));
+  }, []);
+
+  // Approximate screen coordinates for the locations on this specific projection
+  const dots = [
+    { x: 131, y: 55, label: 'Saudi' },
+    { x: 139, y: 57, label: 'Dubai' },
+    { x: 158, y: 65, label: 'India' },
+  ];
+
+  return (
+    <div className="why-viz">
+      <svg viewBox="0 0 240 140" className="viz-svg viz-map">
+        {/* World Map Background */}
+        {landPath && (
+          <path d={landPath} fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5" />
+        )}
+        
+        {/* Pings */}
+        {landPath && dots.map((d, i) => (
+          <g key={i} style={{ animationDelay: `${i * 0.6}s` }} className="viz-ping">
+            <circle cx={d.x} cy={d.y} r="8" className="viz-ping-ring" />
+            <circle cx={d.x} cy={d.y} r="2.5" className="viz-ping-dot" />
+          </g>
+        ))}
+
+        {/* Labels */}
+        {landPath && (
+          <g className="viz-fx">
+            <text x="175" y="46" className="viz-cur">Saudi</text>
+            <text x="175" y="66" className="viz-cur">Dubai</text>
+            <text x="175" y="86" className="viz-cur">India</text>
+          </g>
+        )}
+      </svg>
+    </div>
+  );
+};
 
 const WhyEmvive = () => {
   const { t } = useTranslation();
-  const gridRef = useRef(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = gridRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold: 0.25 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   const benefits = [
     {
       id: 1,
-      title: t('whyData.b1_title', 'Unified Platform, Zero Silos'),
-      description: t('whyData.b1_desc', 'From Cloud ERP and CRM to HR & Payroll and E-Invoicing — Emvive connects every department on a single platform. No more juggling between disconnected tools or importing spreadsheets.'),
-      illustration: <OutcomeIllustration inView={inView} />,
+      title: t('whyData.b1_title', 'Built for your industry'),
+      description: t(
+        'whyData.b1_desc',
+        'Pre-configured flows for construction, retail, manufacturing, and services reduce customization and risk, so you go live faster and with more confidence.'
+      ),
+      viz: <IndustryViz />,
     },
     {
       id: 2,
-      title: t('whyData.b2_title', '99.9% Uptime Guarantee'),
-      description: t('whyData.b2_desc', 'Our cloud infrastructure is built for mission-critical operations. Real-time monitoring, automatic failovers, and load balancing keep your business running 24/7 without disruption.'),
-      illustration: <ReliabilityIllustration />,
+      title: t('whyData.b2_title', 'One connected system'),
+      description: t(
+        'whyData.b2_desc',
+        'Finance, supply chain, sales, HR, and POS share a single cloud data model, so nothing is stitched together and nothing falls between systems.'
+      ),
+      viz: <ConnectedViz />,
     },
     {
       id: 3,
-      title: t('whyData.b3_title', 'Enterprise-Grade Security'),
-      description: t('whyData.b3_desc', 'End-to-end encryption, role-based access control, SSO/SAML authentication, and comprehensive audit trails. Your financial data, HR records, and customer information stay protected.'),
-      illustration: <SecureIllustration />,
+      title: t('whyData.b3_title', 'Compliance built in'),
+      description: t(
+        'whyData.b3_desc',
+        'ZATCA e-invoicing, GOSI, WPS, and VAT are native to the platform, keeping every entity audit-ready without bolt-on tools or manual filing.'
+      ),
+      viz: <ComplianceViz />,
     },
     {
       id: 4,
-      title: t('whyData.b4_title', 'Intuitive by Design'),
-      description: t('whyData.b4_desc', 'Every module — from Workflow Automation to Advanced Reporting — is crafted with clean interfaces that your teams can adopt in days, not months. Less training, faster ROI.'),
-      illustration: <DesignIllustration />,
+      title: t('whyData.b4_title', 'Ready for every region'),
+      description: t(
+        'whyData.b4_desc',
+        'Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform.'
+      ),
+      viz: <RegionViz />,
     },
   ];
 
   return (
     <section className="why-emvive-section" id="why-emvive">
       <div className="why-emvive-container">
-        {/* Section Header */}
-        <div className="why-header">
-          <span className="why-badge">
-            <span className="badge-dot"></span>
-            {t('why.badge', 'Benefits')}
-          </span>
-          <h2 className="why-title">{t('why.title', 'Why Choose Emvive')}</h2>
-          <p className="why-subtitle">
-            {t('why.subtitle', 'One platform to run your entire enterprise — ERP, CRM, HR, Invoicing, and more — with the performance, security, and simplicity your teams deserve.')}
-          </p>
-        </div>
-
-        {/* Benefits Grid */}
-        <div className="why-grid" ref={gridRef}>
-          {benefits.map((benefit) => (
-            <div key={benefit.id} className="why-card">
-              {benefit.illustration}
-              <h3 className="why-card-title">{benefit.title}</h3>
-              <p className="why-card-desc">{benefit.description}</p>
+        <div className="why-panel">
+          {/* Header row: eyebrow + title + intro on the left, CTA on the right */}
+          <div className="why-header">
+            <div className="why-header-text">
+              <span className="why-eyebrow">{t('why.badge', 'Why Emvive?')}</span>
+              <h2 className="why-heading">
+                {t('why.title1', 'One platform to run')}{' '}
+                <span className="text-accent">
+                  {t('why.title2', 'your')}{' '}
+                  <br className="why-br" />
+                  {t('why.title3', 'entire business.')}
+                </span>
+              </h2>
+              <p className="why-subtitle">
+                {t(
+                  'why.subtitle',
+                  'Emvive is a next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.'
+                )}
+              </p>
             </div>
-          ))}
+            <a href="#products" className="why-cta">
+              {t('why.cta', 'Explore Emvive modules')}
+              <ArrowRight size={16} />
+            </a>
+          </div>
+
+          {/* Benefits Grid */}
+          <div className="why-grid">
+            {benefits.map((benefit) => (
+              <div key={benefit.id} className="why-card">
+                <div className="why-card-body">
+                  <h3 className="why-card-title">{benefit.title}</h3>
+                  <p className="why-card-desc">{benefit.description}</p>
+                </div>
+                {benefit.viz}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,254 @@
+.cs-section {
+  background-color: #ffffff; /* Explicitly white so it doesn't become dark in dark mode */
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+
+.cs-container {
+  max-width: 1300px; /* Increased width as requested */
+  width: 100%;
+}
+
+.cs-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+.cs-header {
+  max-width: 1000px; /* Increased to allow title on one line */
+}
+
+.cs-nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.cs-nav-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s ease;
+}
+
+.cs-nav-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+.cs-eyebrow-top {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f2853f; /* Matches Why Emvive eyebrow */
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.cs-title {
+  font-size: 3.4rem; /* Matches Why Emvive heading size */
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  color: #0b1730; /* Dark navy color to match the theme */
+  white-space: nowrap;
+}
+
+.text-accent {
+  background: linear-gradient(100deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.cs-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cs-carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.cs-slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.cs-card {
+  background-color: #f6efe9; /* Light orange/beige background as requested */
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .cs-card {
+    flex-direction: row;
+    padding: 24px;
+    gap: 40px;
+    align-items: center;
+  }
+}
+
+.cs-media-side {
+  flex: 1;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.cs-media-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-media-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cs-media-play:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.cs-content-side {
+  flex: 1.2;
+  padding: 24px;
+}
+
+@media (min-width: 900px) {
+  .cs-content-side {
+    padding: 0;
+  }
+}
+
+.cs-eyebrow-card {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f2853f; /* Matches Why Emvive eyebrow */
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.cs-quote {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.01em;
+}
+
+.cs-author {
+  font-size: 0.85rem;
+  color: #374151;
+  margin-bottom: 32px;
+}
+
+.cs-author strong {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.cs-divider {
+  border: 0;
+  height: 1px;
+  background-color: rgba(0,0,0,0.08);
+  margin-bottom: 32px;
+}
+
+.cs-stats {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.cs-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.cs-stat-orange {
+  color: #ea580c;
+}
+
+.cs-stat-label {
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+.cs-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.cs-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #d1d5db;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.cs-dot:hover {
+  background-color: #9ca3af;
+}
+
+.cs-dot.active {
+  width: 32px;
+  border-radius: 8px;
+  background-color: #f97316;
+}
+
+

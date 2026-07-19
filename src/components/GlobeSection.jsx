@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { geoOrthographic, geoPath, geoInterpolate } from 'd3-geo';
+import { geoOrthographic, geoPath, geoInterpolate, geoNaturalEarth1, geoCentroid } from 'd3-geo';
 import { feature, mesh } from 'topojson-client';
 import './GlobeSection.css';
-import Galaxy from './Galaxy';
 
 // Office regions: [lon, lat, label]
 const OFFICES = [
@@ -46,22 +45,13 @@ const geoDistanceFn = (a, b) => {
   return Math.acos(Math.max(-1, Math.min(1, c)));
 };
 
-const Globe = () => {
+// `selected` / `onSelect` are owned by GlobeSection so the detail card
+// beside the globe reflects whichever pin is active.
+const Globe = ({ selected = 0, onSelect = () => {} }) => {
   const { t } = useTranslation();
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
   const badgeRefs = useRef([]);
-  const [activePin, setActivePin] = useState(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!e.target.closest('.globe-pin') && !e.target.closest('.globe-popup')) {
-        setActivePin(null);
-      }
-    };
-    window.addEventListener('click', handleClickOutside);
-    return () => window.removeEventListener('click', handleClickOutside);
-  }, []);
 
   useEffect(() => {
     let raf;
@@ -364,19 +354,12 @@ const Globe = () => {
         <div 
           key={i} 
           ref={(el) => (badgeRefs.current[i] = el)} 
-          className={`globe-pin${m.labelBelow ? ' globe-pin-below' : ''} ${activePin === i ? 'active' : ''}`}
-          onClick={(e) => { e.stopPropagation(); setActivePin(activePin === i ? null : i); }}
+          className={`globe-pin${m.labelBelow ? ' globe-pin-below' : ''} ${selected === i ? 'active' : ''}`}
+          onClick={(e) => { e.stopPropagation(); onSelect(i); }}
         >
           <span className="globe-pin-flag" />
           {t(`header.regions.${m.regionKey}`, m.label)}
           <span className="globe-pin-dot" />
-          
-          {activePin === i && (
-            <div className="globe-popup" onClick={(e) => e.stopPropagation()}>
-              <h4>{t('globe.officeTitle', { region: t(`header.regions.${m.regionKey}`, m.label), defaultValue: '{{region}} Office' })}</h4>
-              <p>{t(`globe.offices.${m.regionKey}.address`, m.address)}</p>
-            </div>
-          )}
         </div>
       ))}
     </div>
@@ -433,6 +416,43 @@ const FLAG_US = (
 );
 const REGION_FLAGS = [FLAG_IN, FLAG_AE, FLAG_SA];
 
+// Flags keyed by region so they can never fall out of step with OFFICES.
+const FLAG_BY_KEY = { india: FLAG_IN, saudi: FLAG_SA, dubai: FLAG_AE };
+
+// What "native" means in each region we operate in. Rows mirror the
+// compliance surface described in the product doc.
+const REGION_DETAILS = {
+  saudi: [
+    ['Currency', 'SAR'],
+    ['Tax regime', 'VAT 15%'],
+    ['Payroll', 'WPS · GOSI'],
+    ['E-invoicing', 'ZATCA Phase 1 & 2'],
+    ['Data residency', 'Riyadh'],
+  ],
+  dubai: [
+    ['Currency', 'AED'],
+    ['Tax regime', 'VAT 5%'],
+    ['Payroll', 'WPS'],
+    ['E-invoicing', 'UAE e-invoicing'],
+    ['Data residency', 'Dubai'],
+  ],
+  india: [
+    ['Currency', 'INR'],
+    ['Tax regime', 'GST'],
+    ['Payroll', 'EPF · ESI'],
+    ['E-invoicing', 'GST e-invoice (IRP)'],
+    ['Data residency', 'India'],
+  ],
+};
+
+// Figures shown along the bottom of the panel.
+const COVERAGE_STATS = [
+  { value: '3', labelKey: 'globe.stat_1_label', label: 'Global Regions' },
+  { value: '50k+', labelKey: 'globe.stat_2_label', label: 'Active Users' },
+  { value: '99.9%', labelKey: 'globe.stat_0_label', label: 'Server Uptime' },
+  { value: '24/7', labelKey: 'globe.stat_3_label', label: 'Support' },
+];
+
 // Person photos for the active-users card (placeholder avatar service).
 const AVATARS = [
   'https://i.pravatar.cc/80?img=11',
@@ -441,129 +461,231 @@ const AVATARS = [
   'https://i.pravatar.cc/80?img=45',
 ];
 
-const GlobeSection = () => {
+
+/* Dot-matrix world map. Land is rasterised once to an offscreen canvas,
+   then sampled on a grid — every hit becomes a dot. All the dots live in a
+   single <path> (zero-length segments + round linecaps) so the map is a
+   couple of DOM nodes rather than thousands of <circle> elements. */
+const DOT_STEP = 7;   // grid spacing in viewBox units
+const MAP_W = 960;
+const MAP_H = 440;
+
+const WorldMap = ({ selected = 0, onSelect = () => {} }) => {
   const { t } = useTranslation();
+  const [world, setWorld] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/countries-110m.json')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setWorld(data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const { dots, points } = useMemo(() => {
+    if (!world || typeof document === 'undefined') return { dots: '', points: [] };
+
+    // Antarctica reads as a meaningless band of dots along the bottom — drop it
+    // so the inhabited world fills the frame.
+    const all = feature(world, world.objects.countries);
+    const land = {
+      type: 'FeatureCollection',
+      features: all.features.filter((f) => geoCentroid(f)[1] > -60),
+    };
+    const projection = geoNaturalEarth1().fitExtent(
+      [[4, 4], [MAP_W - 4, MAP_H - 4]],
+      land
+    );
+
+    const canvas = document.createElement('canvas');
+    canvas.width = MAP_W;
+    canvas.height = MAP_H;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const path = geoPath(projection, ctx);
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    path(land);
+    ctx.fill();
+
+    const { data } = ctx.getImageData(0, 0, MAP_W, MAP_H);
+    const cells = [];
+    for (let y = 4; y < MAP_H; y += DOT_STEP) {
+      for (let x = 4; x < MAP_W; x += DOT_STEP) {
+        // alpha channel of the rasterised land tells us if this cell is on land
+        if (data[(y * MAP_W + x) * 4 + 3] > 128) cells.push([x, y]);
+      }
+    }
+    if (!cells.length) return { dots: '', points: [] };
+
+    // fitExtent sizes to the land geometry, which includes specks too small to
+    // produce a dot — that left empty margins. Re-fit to the dots themselves so
+    // the drawn map touches the frame on every side.
+    const xs = cells.map((c) => c[0]);
+    const ys = cells.map((c) => c[1]);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+    const pad = 6;
+    const k = Math.min(
+      (MAP_W - pad * 2) / (maxX - minX),
+      (MAP_H - pad * 2) / (maxY - minY)
+    );
+    const tx = pad - minX * k + (MAP_W - pad * 2 - (maxX - minX) * k) / 2;
+    const ty = pad - minY * k + (MAP_H - pad * 2 - (maxY - minY) * k) / 2;
+    const fit = ([x, y]) => [x * k + tx, y * k + ty];
+
+    let d = '';
+    for (const c of cells) {
+      const [x, y] = fit(c);
+      d += `M${x.toFixed(1)} ${y.toFixed(1)}h0`;
+    }
+
+    return {
+      dots: d,
+      points: OFFICES.map((o) => ({ ...o, xy: fit(projection(o.coords)) })),
+    };
+  }, [world]);
 
   return (
-    <section className="globe-section" id="global">
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-        <Galaxy 
-          mouseRepulsion={false}
-          mouseInteraction={false}
-          density={0.5}
-          glowIntensity={0.1}
-          saturation={0}
-          hueShift={140}
-          twinkleIntensity={0.3}
-          rotationSpeed={0.005}
-          repulsionStrength={0}
-          autoCenterRepulsion={0}
-          starSpeed={0.01}
-          speed={0.1}
-          transparent={true}
-        />
-      </div>
+    <div className="worldmap-wrap">
+      <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="wm-svg" role="img">
+        <defs>
+          <linearGradient id="wmDotGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#f7a76c" />
+            <stop offset="45%" stopColor="#f0883e" />
+            <stop offset="100%" stopColor="#d6461a" />
+          </linearGradient>
+          <radialGradient id="wmGlow">
+            <stop offset="0%" stopColor="#e2601f" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#e2601f" stopOpacity="0" />
+          </radialGradient>
+        </defs>
 
-      <div className="globe-container">
+        {points.map((p) => (
+          <circle
+            key={`g${p.regionKey}`}
+            cx={p.xy[0]}
+            cy={p.xy[1]}
+            r="90"
+            fill="url(#wmGlow)"
+          />
+        ))}
+
+        <path d={dots} className="wm-dots" />
+
+        {points.map((p, i) => (
+          <g
+            key={p.regionKey}
+            className={`wm-pin${selected === i ? ' active' : ''}`}
+            transform={`translate(${p.xy[0]}, ${p.xy[1]})`}
+            onClick={() => onSelect(i)}
+          >
+            <circle r="22" className="wm-halo" />
+            <circle r="6.5" className="wm-dot" />
+            <g className="wm-tag" transform="translate(0, -20)">
+              <rect x="-52" y="-16" width="104" height="26" rx="13" />
+              <text x="0" y="2">{t(`header.regions.${p.regionKey}`, p.label)}</text>
+            </g>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
+  const { t } = useTranslation();
+  const [selected, setSelected] = useState(0);
+  const office = OFFICES[selected];
+  const rows = REGION_DETAILS[office.regionKey] || [];
+
+  // Regions advance on their own; clicking a pin jumps to it and
+  // restarts the dwell from there (the effect re-runs on `selected`).
+  useEffect(() => {
+    const timer = setTimeout(
+      () => setSelected((i) => (i + 1) % OFFICES.length),
+      5000
+    );
+    return () => clearTimeout(timer);
+  }, [selected]);
+
+  return (
+    <section className="globe-section" id={id}>
+      <div className="globe-shell">
         <div className="globe-header">
-          <span className="globe-eyebrow">
-            <span className="eyebrow-dot" />
-            {t('globe.badge', 'GLOBAL PRESENCE')}
-          </span>
-          <h2 className="globe-title">{t('globe.title', 'One platform, offices across the globe')}</h2>
-          <p className="globe-subtitle">
-            {t('globe.subtitle', 'From India to Saudi Arabia and Dubai, Emvive powers enterprises across regions — drag the globe to explore where we operate.')}
+          <span className="globe-kicker">{t('globe.badge', 'Global by design')}</span>
+          <h2 className="globe-heading">
+            {t('globe.title1', 'Native in')}{' '}
+            <span className="text-accent">{t('globe.title2', 'every region you run.')}</span>
+          </h2>
+          <p className="globe-sub">
+            {t(
+              'globe.subtitle',
+              'Local tax regimes, statutory payroll, e-invoicing formats and data residency — the default, not an add-on. Click a location on the globe to see what native means where you operate.'
+            )}
           </p>
         </div>
-      </div>
 
-      <div className="globe-float-layout">
-        <Globe />
+        <div className="globe-panel">
+          <div className="globe-panel-grid">
+            {/* Detail card — cycling through the regions */}
+            <div className="globe-detail is-open" key={office.regionKey}>
+              <span className="gd-flag">{FLAG_BY_KEY[office.regionKey]}</span>
+              <h3 className="gd-title">
+                {t(`header.regions.${office.regionKey}`, office.label)}
+              </h3>
+              <dl className="gd-rows">
+                {rows.map(([label, value]) => (
+                  <div className="gd-row" key={label}>
+                    <dt>{t(`globe.fields.${label.toLowerCase().replace(/ /g, '_')}`, label)}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="gd-dots">
+                {OFFICES.map((o, i) => (
+                  <button
+                    key={o.regionKey}
+                    type="button"
+                    aria-label={o.label}
+                    className={`gd-dot${selected === i ? ' active' : ''}`}
+                    onClick={() => setSelected(i)}
+                  />
+                ))}
+              </div>
+            </div>
 
-        {/* Server Uptime — top left */}
-        <div className="globe-stat-card float-card float-card-0">
-          <div className="gs-head">
-            <div className="gs-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">{STAT_ICON_PATHS.uptime}</svg>
-            </div>
-            <div className="gs-text-wrap">
-              <div className="gs-value">99.9%</div>
-              <div className="gs-label">{t('globe.stat_0_label', 'Server Uptime')}</div>
+            {/* Globe — left */}
+            <div className={`globe-stage${variant === 'map' ? ' globe-stage--map' : ''}`}>
+              {variant === 'map' ? (
+                <WorldMap selected={selected} onSelect={setSelected} />
+              ) : (
+                <Globe selected={selected} onSelect={setSelected} />
+              )}
             </div>
           </div>
-          <svg className="gs-spark" viewBox="0 0 220 44" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="gsSpark1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#ef7838" stopOpacity="0.28" />
-                <stop offset="1" stopColor="#ef7838" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path className="gs-spark-area" fill="url(#gsSpark1)" d="M0,36 C25,32 40,38 60,29 80,20 100,25 120,17 140,9 165,15 190,7 205,9 220,4 L220,44 L0,44 Z" />
-            <path className="gs-spark-line" fill="none" d="M0,36 C25,32 40,38 60,29 80,20 100,25 120,17 140,9 165,15 190,7 205,9 220,4" />
-          </svg>
-        </div>
 
-        {/* Active Users — top right */}
-        <div className="globe-stat-card float-card float-card-2">
-          <div className="gs-head">
-            <div className="gs-icon-wrap gs-icon-purple">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">{STAT_ICON_PATHS.users}</svg>
+          {/* Coverage figures + CTA */}
+          <div className="globe-metrics">
+            <div className="gm-stats">
+              {COVERAGE_STATS.map((st) => (
+                <div className="gm-stat" key={st.label}>
+                  <span className="gm-value">{st.value}</span>
+                  <span className="gm-label">{t(st.labelKey, st.label)}</span>
+                </div>
+              ))}
             </div>
-            <div className="gs-text-wrap">
-              <div className="gs-value">50k+</div>
-              <div className="gs-label">{t('globe.stat_2_label', 'Active Users')}</div>
-            </div>
-          </div>
-          <div className="gs-avatars">
-            {AVATARS.map((src, i) => (
-              <img key={i} className="gs-av" src={src} alt="" loading="lazy" />
-            ))}
-            <span className="gs-av gs-av-plus">+</span>
-          </div>
-          <div className="gs-progress"><span style={{ width: '72%' }} /></div>
-          <div className="gs-foot">
-            <span>{t('globe.growingDaily', 'Growing every day')}</span>
-            <span className="gs-up">12.5% ↑</span>
-          </div>
-        </div>
-
-        {/* Global Regions — bottom left */}
-        <div className="globe-stat-card float-card float-card-1">
-          <div className="gs-head">
-            <div className="gs-icon-wrap gs-icon-green">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">{STAT_ICON_PATHS.regions}</svg>
-            </div>
-            <div className="gs-text-wrap">
-              <div className="gs-value">3</div>
-              <div className="gs-label">{t('globe.stat_1_label', 'Global Regions')}</div>
-            </div>
-          </div>
-          <div className="gs-flags">
-            {REGION_FLAGS.map((flag, i) => (
-              <span key={i} className="gs-flag">{flag}</span>
-            ))}
-            <span className="gs-flag-more">{t('globe.regionsList', 'India · UAE · Saudi')}</span>
-          </div>
-        </div>
-
-        {/* Support — bottom right */}
-        <div className="globe-stat-card float-card float-card-3">
-          <div className="gs-head">
-            <div className="gs-icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">{STAT_ICON_PATHS.support}</svg>
-            </div>
-            <div className="gs-text-wrap">
-              <div className="gs-value">24/7</div>
-              <div className="gs-label">{t('globe.stat_3_label', 'Support')}</div>
-            </div>
-          </div>
-          <svg className="gs-spark" viewBox="0 0 220 44" preserveAspectRatio="none">
-            <path className="gs-spark-area" fill="url(#gsSpark1)" d="M0,30 C25,26 45,34 65,24 85,14 105,22 125,14 145,7 165,16 185,10 200,12 220,6 L220,44 L0,44 Z" />
-            <path className="gs-spark-line" fill="none" d="M0,30 C25,26 45,34 65,24 85,14 105,22 125,14 145,7 165,16 185,10 200,12 220,6" />
-          </svg>
-          <div className="gs-foot">
-            <span>{t('globe.alwaysHere', 'Always here for you')}</span>
-            <span className="gs-badge">{t('globe.available', 'Available')}</span>
+            <a href="#why-emvive" className="gm-cta">
+              {t('globe.cta', 'See compliance coverage')}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

@@ -607,3 +607,301 @@
 @media (max-width: 500px) {
   .emv-apps-grid { grid-template-columns: 1fr; }
 }
+
+/* =========================================
+   CAROUSEL CONTROLS — dots left, arrows right,
+   in a row beneath the slide (the side-pinned
+   arrows assumed the old 80%-width container).
+========================================= */
+.prod-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.prod-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* undo the absolute side placement */
+.prod-arrow,
+.prod-arrow.prev,
+.prod-arrow.next {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+.prod-dots {
+  position: static !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .prod-controls {
+    flex-direction: column-reverse;
+    gap: 1.25rem;
+  }
+}
+
+/* The stage was a centred flex ROW built for side-pinned arrows;
+   with the controls moved beneath the slide it has to be a column. */
+.products-carousel-stage {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.prod-controls {
+  width: 100%;
+  flex: none;
+}
+
+/* Card back to its narrower width (it used to be 80% of the old
+   80%-wide container), left-aligned with the section gutter. */
+.products-carousel-stage {
+  max-width: 80%;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 1080px) {
+  .products-carousel-stage { max-width: 100%; }
+}
+
+/* The 4rem left indent predates the section gutter — it now pushes the
+   header and app grid past the carousel and past every other section. */
+.emv-products-header {
+  margin-left: 0 !important;
+}
+
+.emv-featured-apps-container {
+  margin-left: 0 !important;
+}
+
+/* Controls now sit outside the 80%-wide card, spanning the full
+   container: prev pinned to the left gutter, next to the right. */
+.prod-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.prod-controls .prod-dots {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Arrows flank the carousel card, vertically centred on it. */
+.products-carousel-stage {
+  position: relative;
+}
+
+.prod-arrow.prev,
+.prod-arrow.next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10;
+}
+
+.prod-arrow.prev { left: 1.25rem !important; right: auto !important; }
+.prod-arrow.next { right: 1.25rem !important; left: auto !important; }
+
+.prod-arrow.prev:hover,
+.prod-arrow.next:hover {
+  transform: translateY(-50%) scale(1.05) !important;
+}
+
+.prod-arrow.prev:active,
+.prod-arrow.next:active {
+  transform: translateY(-50%) scale(0.96) !important;
+}
+
+/* dots centred under the card */
+.prod-controls {
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .prod-arrow.prev { left: 0.5rem !important; }
+  .prod-arrow.next { right: 0.5rem !important; }
+}
+
+/* Card spans the section's content box exactly — same left and right
+   edge as the heading above it — with the arrows on its inner edges. */
+.products-carousel-stage {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.products-carousel-track,
+.prod-carousel-slide {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.prod-arrow.prev { left: 1.5rem !important; }
+.prod-arrow.next { right: 1.5rem !important; }
+
+/* Arrows sit on the section's gutter edges; the card is narrower and
+   centred between them. */
+.prod-arrow.prev { left: 0 !important; }
+.prod-arrow.next { right: 0 !important; }
+
+.products-carousel-track {
+  width: calc(100% - 9rem) !important;
+  max-width: calc(100% - 9rem) !important;
+  margin: 0 auto !important;
+}
+
+@media (max-width: 700px) {
+  .products-carousel-track {
+    width: calc(100% - 5rem) !important;
+    max-width: calc(100% - 5rem) !important;
+  }
+}
+
+/* The dashboard was built to spill past the card's right edge, which put
+   it under the next arrow. Clip it to the card so the arrow zone is clear. */
+.prod-carousel-slide {
+  overflow: hidden;
+}
+
+.product-dashboard {
+  overflow: hidden;
+}
+
+/* 70/30 split was built for a dashboard that overflowed the card. Now that
+   it is clipped, the columns need to be balanced so the mockup fits. */
+.slide-content {
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.product-info {
+  flex: 1 1 46% !important;
+  max-width: 46% !important;
+}
+
+.product-dashboard {
+  flex: 1 1 54% !important;
+  max-width: 54%;
+  justify-content: flex-end;
+}
+
+.product-dashboard-inner {
+  width: 100% !important;
+  max-width: 640px;
+}
+
+@media (max-width: 1100px) {
+  .product-info,
+  .product-dashboard {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* The floating badge sits at left:-24px, outside its column — clipping the
+   column cut it in half. Only the card itself needs to clip. */
+.product-dashboard {
+  overflow: visible !important;
+}
+
+/* keep the watermark above the card background but under the content */
+.prod-card-watermark {
+  z-index: 0;
+  opacity: 0.06;
+}
+
+/* Watermark sat at left:62%, which the widened 54% dashboard column now
+   covers. Move it into the gap between the two columns. */
+.prod-card-watermark {
+  left: 46% !important;
+  top: 58% !important;
+  opacity: 0.07 !important;
+  z-index: 0 !important;
+}
+
+/* Push the mockup out to the card's right edge — the slide's 4rem padding
+   was leaving a gap between it and the border. */
+.product-dashboard {
+  margin-right: -4rem !important;
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 1100px) {
+  .product-dashboard { margin-right: 0 !important; }
+}
+
+/* Widen the card — 4.5rem clearance each side was more than the 44px
+   buttons needed. 3.25rem leaves a small gap and nothing more. */
+.products-carousel-track {
+  width: calc(100% - 6.5rem) !important;
+  max-width: calc(100% - 6.5rem) !important;
+}
+
+@media (max-width: 700px) {
+  .products-carousel-track {
+    width: calc(100% - 4rem) !important;
+    max-width: calc(100% - 4rem) !important;
+  }
+}
+
+/* Carousel card title one step down (it was picking up the 3.2rem
+   unified-heading rule in index.css). */
+.product-title-top {
+  font-size: 2.8rem !important;
+}
+
+/* Pagination: grey dots, with the active one stretching into an
+   orange pill. Centred under the card. */
+.prod-controls {
+  justify-content: center !important;
+}
+
+.prod-dots {
+  display: flex !important;
+  align-items: center;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+.prod-dot {
+  width: 9px !important;
+  height: 9px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: #d3d8e0 !important;
+  cursor: pointer;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
+}
+
+.prod-dot:hover {
+  background: #b9c0cb !important;
+}
+
+.prod-dot.active {
+  width: 34px !important;
+  background: linear-gradient(90deg, #f7834a 0%, #e8501c 100%) !important;
+}

@@ -476,6 +476,9 @@ const Products = () => {
           <button className="prod-arrow prev" onClick={goPrev} aria-label="Previous slide">
             <ChevronLeft size={24} />
           </button>
+          <button className="prod-arrow next" onClick={goNext} aria-label="Next slide">
+            <ChevronRight size={24} />
+          </button>
 
           <div className="products-carousel-track">
             {productsList.map((product, index) => {
@@ -525,11 +528,10 @@ const Products = () => {
               );
             })}
           </div>
+        </div>
 
-          <button className="prod-arrow next" onClick={goNext} aria-label="Next slide">
-            <ChevronRight size={24} />
-          </button>
-
+        {/* dots below the card; the arrows flank it */}
+        <div className="prod-controls">
           <div className="prod-dots">
             {productsList.map((_, i) => (
               <button

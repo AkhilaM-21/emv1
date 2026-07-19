@@ -207,22 +207,10 @@ body.dark-theme .inv-doc { background: #0f1631; border-color: rgba(255, 255, 255
 body.dark-theme .av { background: #1b2547; }
 body.dark-theme .radar-circle { border-color: rgba(255, 255, 255, 0.15); }
 
-/* ---------- WHY EMVIVE ---------- */
+/* ---------- WHY EMVIVE ----------
+   The panel is dark in both themes (it mirrors the hero), so only the
+   surrounding section needs a dark-theme override. */
 body.dark-theme .why-emvive-section { background-color: #0d1330; }
-body.dark-theme .why-card {
-  background: linear-gradient(180deg, #141b3a 0%, #0f1631 100%);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 34px rgba(0, 0, 0, 0.5);
-}
-body.dark-theme .why-card-title { color: #ffffff; }
-body.dark-theme .why-card-desc,
-body.dark-theme .why-subtitle { color: #94a3b8; }
-body.dark-theme .why-title { color: #ffffff; }
-body.dark-theme .why-badge {
-  background: linear-gradient(180deg, #1b2547 0%, #131a36 100%);
-  color: #f2853f;
-  border-color: rgba(255, 255, 255, 0.08);
-}
 
 /* ---------- FEATURES ---------- */
 body.dark-theme .features-section { background-color: #0a0f24; }

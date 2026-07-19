@@ -84,11 +84,7 @@ const Testimonials = () => {
   const { t } = useTranslation();
   return (
     <section className="tst-section" id="testimonials">
-      <div className="tst-head">
-        <h2 className="tst-title">{t('testimonials.title', '10,000 companies have already made the move')}</h2>
-        <p className="tst-sub">{t('testimonials.subtitle', 'Join the teams running finance, HR, IT and operations on Emvive.')}</p>
-        <a className="tst-btn" href="#stories">{t('testimonials.button', 'Read customer stories')} <ArrowRight size={17} /></a>
-      </div>
+
 
       <div className="tst-wrapper">
         {COLUMNS.map((col, i) => (

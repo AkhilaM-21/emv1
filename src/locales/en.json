@@ -93,7 +93,10 @@
   },
   "features": {
     "badge": "Departments",
-    "title": "One Platform for Every Team"
+    "title1": "Built for the way",
+    "title2": "your teams",
+    "title3": "actually work.",
+    "subtitle": "Finance, sales, HR, operations, marketing and IT on one platform — configured, not customized."
   },
   "featuresData": {
     "f1_title": "Finance & Accounting",
@@ -107,7 +110,19 @@
     "f5_title": "Marketing",
     "f5_desc": "Launch targeted campaigns, track ROI on marketing spend, and seamlessly hand off qualified leads to your sales teams.",
     "f6_title": "IT & Security",
-    "f6_desc": "Maintain complete control over user access, monitor system health, and ensure enterprise-grade data security across all modules."
+    "f6_desc": "Maintain complete control over user access, monitor system health, and ensure enterprise-grade data security across all modules.",
+    "f7_title": "Projects",
+    "f7_desc": "Plan work with WBS, track budgets and time, and bill by milestone with retention handled end to end.",
+    "f8_title": "Manufacturing",
+    "f8_desc": "Bills of materials, production orders and shop floor control with material consumption and costing.",
+    "f9_title": "Retail & POS",
+    "f9_desc": "Fast billing across branches with offline mode, kitchen display, loyalty and real-time inventory sync.",
+    "f10_title": "E-Invoicing & Tax",
+    "f10_desc": "ZATCA Phase 1 & 2 clearance, QR and digital signing, plus VAT, withholding and reverse charge.",
+    "f11_title": "Vendor & Customer Portals",
+    "f11_desc": "Vendors submit RFQs and invoices; customers track orders, deliveries and payments themselves.",
+    "f12_title": "No-Code Studio",
+    "f12_desc": "Build forms, tables and approval chains by drag and drop, with workflow automation and event triggers."
   },
   "products": {
     "badge": "Our Products",
@@ -281,19 +296,22 @@
     }
   },
   "why": {
-    "badge": "Benefits",
-    "title": "Why Choose Emvive",
-    "subtitle": "One platform to run your entire enterprise — ERP, CRM, HR, Invoicing, and more — with the performance, security, and simplicity your teams deserve."
+    "badge": "Why Emvive?",
+    "subtitle": "Emvive is a next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.",
+    "cta": "Explore Emvive modules",
+    "title1": "One platform to run",
+    "title2": "your",
+    "title3": "entire business."
   },
   "whyData": {
-    "b1_title": "Unified Platform, Zero Silos",
-    "b1_desc": "From Cloud ERP and CRM to HR & Payroll and E-Invoicing — Emvive connects every department on a single platform. No more juggling between disconnected tools or importing spreadsheets.",
-    "b2_title": "99.9% Uptime Guarantee",
-    "b2_desc": "Our cloud infrastructure is built for mission-critical operations. Real-time monitoring, automatic failovers, and load balancing keep your business running 24/7 without disruption.",
-    "b3_title": "Enterprise-Grade Security",
-    "b3_desc": "End-to-end encryption, role-based access control, SSO/SAML authentication, and comprehensive audit trails. Your financial data, HR records, and customer information stay protected.",
-    "b4_title": "Intuitive by Design",
-    "b4_desc": "Every module — from Workflow Automation to Advanced Reporting — is crafted with clean interfaces that your teams can adopt in days, not months. Less training, faster ROI."
+    "b1_title": "Built for your industry",
+    "b1_desc": "Pre-configured flows for construction, retail, manufacturing, and services reduce customization and risk, so you go live faster and with more confidence.",
+    "b2_title": "One connected system",
+    "b2_desc": "Finance, supply chain, sales, HR, and POS share a single cloud data model, so nothing is stitched together and nothing falls between systems.",
+    "b3_title": "Compliance built in",
+    "b3_desc": "ZATCA e-invoicing, GOSI, WPS, and VAT are native to the platform, keeping every entity audit-ready without bolt-on tools or manual filing.",
+    "b4_title": "Ready for every region",
+    "b4_desc": "Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform."
   },
   "faq": {
     "badge": "FAQ",
@@ -317,9 +335,8 @@
   "globe": {
     "customers": "+2,781 Customers",
     "scaling": "Scaling their business with us",
-    "badge": "GLOBAL PRESENCE",
-    "title": "One platform, offices across the globe",
-    "subtitle": "From India to Saudi Arabia and Dubai, Emvive powers enterprises across regions — drag the globe to explore where we operate.",
+    "badge": "Global by design",
+    "subtitle": "Local tax regimes, statutory payroll, e-invoicing formats and data residency — the default, not an add-on. Click a location on the globe to see what native means where you operate.",
     "officeTitle": "{{region}} Office",
     "stat_0_label": "Server Uptime",
     "stat_1_label": "Global Regions",
@@ -339,7 +356,18 @@
       "dubai": {
         "address": "Sheikh Zayed Road, Trade Centre, Dubai, UAE"
       }
-    }
+    },
+    "title1": "Native in",
+    "title2": "every region you run.",
+    "cta": "See compliance coverage",
+    "fields": {
+      "currency": "Currency",
+      "tax_regime": "Tax regime",
+      "payroll": "Payroll",
+      "e-invoicing": "E-invoicing",
+      "data_residency": "Data residency"
+    },
+    "prompt": "Click a location on the globe to see local tax, payroll and e-invoicing."
   },
   "footer": {
     "emailLabel": "Email Address*",

@@ -211,3 +211,1200 @@ body.dark-theme .global-section-title {
     font-size: 2.2rem !important;
   }
 }
+
+/* =========================================
+   CAROUSEL ARROWS — one style for every
+   prev/next control on the site.
+   Marked !important because each component
+   ships its own older arrow rules.
+========================================= */
+.ah-tile-arrow,
+.cs-nav-btn,
+.hero-arrow,
+.prod-arrow,
+.res-nav-btn,
+.carousel-arrow {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 6px 14px -6px rgba(226, 96, 31, 0.75) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+}
+
+.ah-tile-arrow:hover,
+.cs-nav-btn:hover,
+.hero-arrow:hover,
+.prod-arrow:hover,
+.res-nav-btn:hover,
+.carousel-arrow:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 10px 20px -8px rgba(226, 96, 31, 0.9) !important;
+}
+
+.ah-tile-arrow:active,
+.cs-nav-btn:active,
+.hero-arrow:active,
+.prod-arrow:active,
+.res-nav-btn:active,
+.carousel-arrow:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.ah-tile-arrow:disabled,
+.cs-nav-btn:disabled,
+.hero-arrow:disabled,
+.prod-arrow:disabled,
+.res-nav-btn:disabled,
+.carousel-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* icons inherit the white fill */
+.ah-tile-arrow svg,
+.cs-nav-btn svg,
+.hero-arrow svg,
+.prod-arrow svg,
+.res-nav-btn svg,
+.carousel-arrow svg {
+  stroke: currentColor;
+}
+
+/* =========================================
+   SECTION CTA — orange pill with a white
+   circular arrow badge. Colours swap on hover.
+========================================= */
+.why-cta,
+.features-cta,
+.gm-cta,
+.section-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 5px 5px 5px 20px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 18px -10px rgba(226, 96, 31, 0.85) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    background 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* the arrow sits in a white disc at the right end */
+.why-cta svg,
+.features-cta svg,
+.gm-cta svg,
+.section-cta svg {
+  width: 32px !important;
+  height: 32px !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 9px;
+  border-radius: 50% !important;
+  background: #ffffff;
+  color: #e2601f !important;
+  stroke: #e2601f;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+  transition: transform 0.22s ease, background 0.25s ease,
+    color 0.25s ease, stroke 0.25s ease;
+}
+
+/* hover: the pill goes white, the disc goes orange */
+.why-cta:hover,
+.features-cta:hover,
+.gm-cta:hover,
+.section-cta:hover {
+  transform: translateY(-2px);
+  color: #e2601f !important;
+  background: #ffffff !important;
+  border-color: rgba(226, 96, 31, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -12px rgba(226, 96, 31, 0.6) !important;
+}
+
+.why-cta:hover svg,
+.features-cta:hover svg,
+.gm-cta:hover svg,
+.section-cta:hover svg {
+  transform: translateX(3px);
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%);
+  color: #ffffff !important;
+  stroke: #ffffff;
+}
+
+.why-cta:active,
+.features-cta:active,
+.gm-cta:active,
+.section-cta:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ---- Same pill for the Resources and CTA-section buttons ---- */
+.res-view-all,
+.cta-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 5px 5px 5px 20px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 18px -10px rgba(226, 96, 31, 0.85) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    background 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+}
+
+.res-view-all svg,
+/* the CTA button ships a text arrow rather than an svg, so the disc is
+   built on the span instead */
+.cta-btn-arrow {
+  width: 32px !important;
+  height: 32px !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  color: #e2601f !important;
+  stroke: #e2601f;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+  transition: transform 0.22s ease, background 0.25s ease,
+    color 0.25s ease, stroke 0.25s ease;
+}
+
+.res-view-all svg { padding: 9px !important; }
+
+.res-view-all:hover,
+.cta-btn-primary:hover {
+  transform: translateY(-2px);
+  color: #e2601f !important;
+  background: #ffffff !important;
+  border-color: rgba(226, 96, 31, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -12px rgba(226, 96, 31, 0.6) !important;
+}
+
+.res-view-all:hover svg,
+.cta-btn-primary:hover .cta-btn-arrow {
+  transform: translateX(3px);
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%) !important;
+  color: #ffffff !important;
+  stroke: #ffffff;
+}
+
+.res-view-all:active,
+.cta-btn-primary:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ---- Secondary CTA: same pill, white ---- */
+.cta-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 24px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transition: transform 0.22s ease, background 0.25s ease,
+    color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.cta-btn-secondary:hover {
+  transform: translateY(-2px);
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -12px rgba(0, 0, 0, 0.55) !important;
+}
+
+.cta-btn-secondary:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* Solid white at rest; hover just lifts it. */
+.cta-btn-secondary {
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 18px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.cta-btn-secondary:hover {
+  transform: translateY(-2px);
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 14px 26px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* =========================================
+   SECTION EYEBROW PILL
+   One badge for every section heading, modelled
+   on .ab-badge (orange dot + orange label).
+========================================= */
+.why-eyebrow,
+.globe-kicker,
+.features-kicker,
+.cta-eyebrow,
+.res-eyebrow,
+.cs-eyebrow-top,
+.emv-subtitle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 20px !important;
+  border-radius: 50px !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  color: #d9531f !important;
+  background: rgba(226, 96, 31, 0.08) !important;
+  border: 1px solid rgba(217, 83, 31, 0.25) !important;
+  box-shadow: 0 0 24px rgba(226, 96, 31, 0.1) !important;
+  margin-bottom: 1.5rem !important;
+  width: auto !important;
+}
+
+/* the dot, drawn rather than marked up */
+.why-eyebrow::before,
+.globe-kicker::before,
+.features-kicker::before,
+.cta-eyebrow::before,
+.res-eyebrow::before,
+.cs-eyebrow-top::before,
+.emv-subtitle::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  box-shadow: 0 0 8px #f6a04a;
+}
+
+/* On the dark panels the pill needs to lift off the navy. */
+.why-panel .why-eyebrow,
+.cta-panel .cta-eyebrow,
+.globe-panel .globe-kicker,
+body.dark-theme .why-eyebrow,
+body.dark-theme .globe-kicker,
+body.dark-theme .features-kicker,
+body.dark-theme .cta-eyebrow,
+body.dark-theme .res-eyebrow,
+body.dark-theme .cs-eyebrow-top,
+body.dark-theme .emv-subtitle {
+  color: #f7a869 !important;
+  background: rgba(226, 96, 31, 0.12) !important;
+  border-color: rgba(242, 141, 66, 0.35) !important;
+  box-shadow: 0 0 24px rgba(226, 96, 31, 0.15) !important;
+}
+
+/* ---- Smaller eyebrow pill ---- */
+.why-eyebrow,
+.globe-kicker,
+.features-kicker,
+.cta-eyebrow,
+.res-eyebrow,
+.cs-eyebrow-top,
+.emv-subtitle {
+  gap: 6px !important;
+  padding: 5px 14px !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.4px !important;
+  margin-bottom: 1.1rem !important;
+}
+
+.why-eyebrow::before,
+.globe-kicker::before,
+.features-kicker::before,
+.cta-eyebrow::before,
+.res-eyebrow::before,
+.cs-eyebrow-top::before,
+.emv-subtitle::before {
+  width: 6px;
+  height: 6px;
+  box-shadow: 0 0 6px #f6a04a;
+}
+
+/* Stop flex/grid parents stretching the pill to full width. */
+.why-eyebrow,
+.globe-kicker,
+.features-kicker,
+.cta-eyebrow,
+.res-eyebrow,
+.cs-eyebrow-top,
+.emv-subtitle {
+  align-self: flex-start !important;
+  justify-self: start !important;
+  max-width: max-content !important;
+}
+
+/* centred headers keep the pill centred */
+.cta-panel .cta-eyebrow {
+  align-self: center !important;
+  justify-self: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* =========================================
+   SECTION RHYTHM
+   Every section shares the Clients section's
+   measurements: 6rem vertical, 1280px container,
+   2rem side padding. No section-specific gaps.
+========================================= */
+.emv-clients-section,
+.products-section,
+.features-section,
+.app-builder-section,
+.why-emvive-section,
+.globe-section,
+.cs-section,
+.res-section,
+.cta-section {
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.emv-clients-container,
+.features-container,
+.ab-container,
+.why-emvive-container,
+.globe-shell,
+.cs-container,
+.res-container {
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+/* the CTA panel is its own container */
+.cta-section > .cta-panel {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+}
+.cta-section {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+/* panels sit flush inside the shared container */
+.why-emvive-container .why-panel,
+.globe-shell .globe-panel {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 768px) {
+  .emv-clients-section,
+  .products-section,
+  .features-section,
+  .app-builder-section,
+  .why-emvive-section,
+  .globe-section,
+  .cs-section,
+  .res-section,
+  .cta-section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .emv-clients-container,
+  .features-container,
+  .ab-container,
+  .why-emvive-container,
+  .globe-shell,
+  .cs-container,
+  .res-container,
+  .cta-section {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+/* ---- Section headings: one scale everywhere ---- */
+.emv-headline,
+.features-heading,
+.why-heading,
+.globe-heading,
+.ab-title,
+.cs-title,
+.res-title,
+.cta-title {
+  font-size: 3.4rem !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -1.5px !important;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .emv-headline,
+  .features-heading,
+  .why-heading,
+  .globe-heading,
+  .ab-title,
+  .cs-title,
+  .res-title,
+  .cta-title {
+    font-size: 2.6rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .emv-headline,
+  .features-heading,
+  .why-heading,
+  .globe-heading,
+  .ab-title,
+  .cs-title,
+  .res-title,
+  .cta-title {
+    font-size: 2.1rem !important;
+  }
+}
+
+/* =========================================
+   CONTENT GUTTER
+   Matches the hero exactly: content is capped
+   at 1500px and never sits closer than 7.5rem
+   to the viewport edge — the same left edge the
+   hero heading starts from.
+   (hero = .ah-section 1.5rem + .ah-dark 6rem
+    gutter, with .ah-grid capped at 1500px)
+========================================= */
+.container,
+.emv-clients-container,
+.features-container,
+.ab-container,
+.why-emvive-container,
+.globe-shell,
+.cs-container,
+.res-container,
+.cta-section {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: max(7.5rem, calc((100% - 1500px) / 2)) !important;
+  padding-right: max(7.5rem, calc((100% - 1500px) / 2)) !important;
+}
+
+@media (max-width: 1080px) {
+  .container,
+  .emv-clients-container,
+  .features-container,
+  .ab-container,
+  .why-emvive-container,
+  .globe-shell,
+  .cs-container,
+  .res-container,
+  .cta-section {
+    padding-left: 4.5rem !important;
+    padding-right: 4.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container,
+  .emv-clients-container,
+  .features-container,
+  .ab-container,
+  .why-emvive-container,
+  .globe-shell,
+  .cs-container,
+  .res-container,
+  .cta-section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+/* the CTA panel already spans its section */
+.cta-section > .cta-panel {
+  max-width: none !important;
+}
+
+/* ==========================================================
+   SITE-WIDE LAYOUT — single source of truth.
+   Audited against every section's real class names:
+     Clients .emv-clients-section / .container
+     Products .products-section / .container  (had width:80%)
+     Features .features-section / .features-container
+     AppBuilder .app-builder-section / .ab-container
+     WhyEmvive .why-emvive-section / .why-emvive-container
+     Globe .globe-section / .globe-shell
+     CustomerStory .cs-section / .cs-container
+     Resources .res-section / .res-container
+     FAQ .faq-section / .faq-container
+     CTA .cta-section
+   ========================================================== */
+
+/* 1. Vertical rhythm — identical for every section */
+.emv-clients-section,
+.products-section,
+.features-section,
+.app-builder-section,
+.why-emvive-section,
+.globe-section,
+.cs-section,
+.res-section,
+.faq-section,
+.cta-section {
+  padding: 6rem 0 !important;
+}
+
+/* 2. Horizontal gutter — the hero's own geometry, everywhere */
+.container,
+.products-section .container,
+.emv-clients-container,
+.features-container,
+.ab-container,
+.why-emvive-container,
+.globe-shell,
+.cs-container,
+.res-container,
+.faq-container,
+.cta-section {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  padding-left: max(7.5rem, calc((100% - 1500px) / 2)) !important;
+  padding-right: max(7.5rem, calc((100% - 1500px) / 2)) !important;
+}
+
+@media (max-width: 1080px) {
+  .container,
+  .products-section .container,
+  .emv-clients-container,
+  .features-container,
+  .ab-container,
+  .why-emvive-container,
+  .globe-shell,
+  .cs-container,
+  .res-container,
+  .faq-container,
+  .cta-section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  .emv-clients-section,
+  .products-section,
+  .features-section,
+  .app-builder-section,
+  .why-emvive-section,
+  .globe-section,
+  .cs-section,
+  .res-section,
+  .faq-section,
+  .cta-section {
+    padding: 4rem 0 !important;
+  }
+}
+
+/* 3. Eyebrow pill — every section's kicker, including the ones
+      I missed before (.ab-eyebrow, .faq-badge, .cs-eyebrow-top) */
+.emv-subtitle,
+.features-kicker,
+.ab-eyebrow,
+.ab-badge,
+.why-eyebrow,
+.globe-kicker,
+.cs-eyebrow-top,
+.res-eyebrow,
+.faq-badge,
+.cta-eyebrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  width: auto !important;
+  max-width: max-content !important;
+  align-self: flex-start !important;
+  justify-self: start !important;
+  padding: 5px 14px !important;
+  border-radius: 50px !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.4px !important;
+  text-transform: uppercase !important;
+  color: #d9531f !important;
+  background: rgba(226, 96, 31, 0.08) !important;
+  border: 1px solid rgba(217, 83, 31, 0.25) !important;
+  box-shadow: 0 0 24px rgba(226, 96, 31, 0.1) !important;
+  margin: 0 0 1.1rem 0 !important;
+}
+
+.emv-subtitle::before,
+.features-kicker::before,
+.ab-eyebrow::before,
+.why-eyebrow::before,
+.globe-kicker::before,
+.cs-eyebrow-top::before,
+.res-eyebrow::before,
+.cta-eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  box-shadow: 0 0 6px #f6a04a;
+}
+
+/* dark surfaces */
+.cta-panel .cta-eyebrow,
+.why-panel .why-eyebrow,
+.globe-panel .globe-kicker {
+  color: #f7a869 !important;
+  background: rgba(226, 96, 31, 0.12) !important;
+  border-color: rgba(242, 141, 66, 0.35) !important;
+}
+
+.cta-panel .cta-eyebrow {
+  align-self: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* 4. Headings — one scale, every section (.res-heading and
+      .ab-title were wrong/missing in my earlier pass) */
+.emv-headline,
+.features-heading,
+.ab-title,
+.why-heading,
+.globe-heading,
+.cs-title,
+.res-heading,
+.res-title,
+.faq-title,
+.cta-title {
+  font-size: 3.4rem !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -1.5px !important;
+  margin: 0 0 1rem 0 !important;
+  max-width: none !important;
+}
+
+@media (max-width: 1080px) {
+  .emv-headline,
+  .features-heading,
+  .ab-title,
+  .why-heading,
+  .globe-heading,
+  .cs-title,
+  .res-heading,
+  .res-title,
+  .faq-title,
+  .cta-title {
+    font-size: 2.4rem !important;
+  }
+}
+
+/* ==========================================================
+   CANONICAL GUTTER — the hero's top block is the reference:
+   6rem floor, content capped at 1500px. Applied to the hero's
+   own two blocks as well, which previously disagreed
+   (4rem/1440px on the cards row).
+   ========================================================== */
+.ah-section.ah-dark,
+.ah-tiles-section,
+.ah-tiles-section.ah-dark,
+.container,
+.products-section .container,
+.emv-clients-container,
+.features-container,
+.ab-container,
+.why-emvive-container,
+.globe-shell,
+.cs-container,
+.res-container,
+.faq-container,
+.cta-section {
+  padding-left: max(6rem, calc((100% - 1500px) / 2)) !important;
+  padding-right: max(6rem, calc((100% - 1500px) / 2)) !important;
+}
+
+/* inner caps removed — the gutter formula already limits the
+   content width, and a second cap re-centres it independently */
+.ah-grid,
+.ah-industries-wrap {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (max-width: 1080px) {
+  .ah-section.ah-dark,
+  .ah-tiles-section,
+  .ah-tiles-section.ah-dark,
+  .container,
+  .products-section .container,
+  .emv-clients-container,
+  .features-container,
+  .ab-container,
+  .why-emvive-container,
+  .globe-shell,
+  .cs-container,
+  .res-container,
+  .faq-container,
+  .cta-section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+/* ==========================================================
+   EVERY SECTION — full class list taken from the codebase
+   (grep of `<section className=...` and every *-container),
+   so nothing is left on its own spacing.
+   ========================================================== */
+.ah-section.ah-dark,
+.ah-tiles-section,
+.ah-tiles-section.ah-dark,
+.about-section,
+.ann-section,
+.app-builder-section,
+.cs-section,
+.cta-section,
+.emv-clients-section,
+.faq-section,
+.features-section,
+.globe-section,
+.neurox-clients-section,
+.products-section,
+.res-section,
+.services-section,
+.tst-section,
+.why-emvive-section,
+.ri-hero,
+.ri-features,
+.ri-accordion-section,
+.ri-pricing,
+/* inner containers */
+.container,
+.products-section .container,
+.ab-container,
+.ann-container,
+.cs-container,
+.emv-clients-container,
+.faq-container,
+.features-container,
+.footer-container,
+.globe-shell,
+.res-container,
+.ri-accordion-container,
+.why-emvive-container {
+  padding-left: max(6rem, calc((100% - 1500px) / 2)) !important;
+  padding-right: max(6rem, calc((100% - 1500px) / 2)) !important;
+}
+
+/* a container nested inside an already-padded section would
+   double the gutter — zero those out */
+.about-section > .container,
+.ann-section > .ann-container,
+.app-builder-section > .ab-container,
+.cs-section > .cs-container,
+.emv-clients-section > .container,
+.faq-section > .faq-container,
+.features-section > .features-container,
+.globe-section > .globe-shell,
+.neurox-clients-section > .container,
+.products-section > .container,
+.res-section > .res-container,
+.services-section > .container,
+.tst-section > .container,
+.why-emvive-section > .why-emvive-container,
+.ri-accordion-section > .ri-accordion-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+/* vertical rhythm for the remaining sections */
+.about-section,
+.ann-section,
+.services-section,
+.tst-section,
+.neurox-clients-section {
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
+}
+
+@media (max-width: 1080px) {
+  .ah-section.ah-dark,
+  .ah-tiles-section,
+  .ah-tiles-section.ah-dark,
+  .about-section,
+  .ann-section,
+  .app-builder-section,
+  .cs-section,
+  .cta-section,
+  .emv-clients-section,
+  .faq-section,
+  .features-section,
+  .globe-section,
+  .neurox-clients-section,
+  .products-section,
+  .res-section,
+  .services-section,
+  .tst-section,
+  .why-emvive-section,
+  .ri-hero,
+  .ri-features,
+  .ri-accordion-section,
+  .ri-pricing,
+  .container,
+  .ab-container,
+  .ann-container,
+  .cs-container,
+  .emv-clients-container,
+  .faq-container,
+  .features-container,
+  .footer-container,
+  .globe-shell,
+  .res-container,
+  .ri-accordion-container,
+  .why-emvive-container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .about-section,
+  .ann-section,
+  .services-section,
+  .tst-section,
+  .neurox-clients-section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
+/* ---- Same pill for the two remaining link-buttons ---- */
+.emv-customer-btn,
+.emv-explore-all {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 5px 5px 5px 20px !important;
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 18px -10px rgba(226, 96, 31, 0.85) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    background 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+}
+
+.emv-customer-btn svg,
+.emv-explore-all svg {
+  width: 32px !important;
+  height: 32px !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 9px;
+  border-radius: 50% !important;
+  background: #ffffff;
+  color: #e2601f !important;
+  stroke: #e2601f;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+  transition: transform 0.22s ease, background 0.25s ease,
+    color 0.25s ease, stroke 0.25s ease;
+}
+
+.emv-customer-btn:hover,
+.emv-explore-all:hover {
+  transform: translateY(-2px);
+  color: #e2601f !important;
+  background: #ffffff !important;
+  border-color: rgba(226, 96, 31, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -12px rgba(226, 96, 31, 0.6) !important;
+}
+
+.emv-customer-btn:hover svg,
+.emv-explore-all:hover svg {
+  transform: translateX(3px);
+  background: linear-gradient(180deg, #f7834a 0%, #f2642a 55%, #e8501c 100%);
+  color: #ffffff !important;
+  stroke: #ffffff;
+}
+
+.emv-customer-btn:active,
+.emv-explore-all:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ==========================================================
+   ONE BUTTON LOOK — values taken from .btn-get-started
+   (white shell, #16181d label, orange arrow disc).
+   The CTA section's own buttons are deliberately excluded.
+   ========================================================== */
+.why-cta,
+.features-cta,
+.gm-cta,
+.section-cta,
+.res-view-all,
+.emv-customer-btn,
+.emv-explore-all {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  padding: 0.35rem 0.35rem 0.35rem 1.4rem !important;
+  min-height: 0 !important;
+  border-radius: 999px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  text-decoration: none !important;
+  color: #16181d !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 16px -8px rgba(15, 23, 42, 0.35) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* arrow disc — matches .arrow-circle */
+.why-cta svg,
+.features-cta svg,
+.gm-cta svg,
+.section-cta svg,
+.res-view-all svg,
+.emv-customer-btn svg,
+.emv-explore-all svg {
+  width: 34px !important;
+  height: 34px !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 10px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%) !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 3px 6px rgba(226, 96, 31, 0.45) !important;
+  transition: transform 0.2s ease !important;
+}
+
+.why-cta:hover,
+.features-cta:hover,
+.gm-cta:hover,
+.section-cta:hover,
+.res-view-all:hover,
+.emv-customer-btn:hover,
+.emv-explore-all:hover {
+  transform: translateY(-2px);
+  color: #16181d !important;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -10px rgba(15, 23, 42, 0.4) !important;
+}
+
+.why-cta:hover svg,
+.features-cta:hover svg,
+.gm-cta:hover svg,
+.section-cta:hover svg,
+.res-view-all:hover svg,
+.emv-customer-btn:hover svg,
+.emv-explore-all:hover svg {
+  transform: translateX(3px);
+}
+
+.why-cta:active,
+.features-cta:active,
+.gm-cta:active,
+.section-cta:active,
+.res-view-all:active,
+.emv-customer-btn:active,
+.emv-explore-all:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ---- Orange border on the shared buttons ---- */
+.why-cta,
+.features-cta,
+.gm-cta,
+.section-cta,
+.res-view-all,
+.emv-customer-btn,
+.emv-explore-all {
+  border: 1px solid rgba(226, 96, 31, 0.45) !important;
+}
+
+.why-cta:hover,
+.features-cta:hover,
+.gm-cta:hover,
+.section-cta:hover,
+.res-view-all:hover,
+.emv-customer-btn:hover,
+.emv-explore-all:hover {
+  border-color: rgba(226, 96, 31, 0.85) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -10px rgba(226, 96, 31, 0.5) !important;
+}
+
+/* ---- App Builder: stage on the shared gutter, button on the shared style ---- */
+.ab-stage {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: max(6rem, calc((100% - 1500px) / 2)) !important;
+  padding-right: max(6rem, calc((100% - 1500px) / 2)) !important;
+}
+
+.ab-cta-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  padding: 0.35rem 0.35rem 0.35rem 1.4rem !important;
+  min-height: 0 !important;
+  border-radius: 999px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  text-decoration: none !important;
+  color: #16181d !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%) !important;
+  border: 1px solid rgba(226, 96, 31, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 16px -8px rgba(15, 23, 42, 0.35) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* its arrow is a text span, so the disc is built on that */
+.ab-cta-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  flex-shrink: 0;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 50% !important;
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 3px 6px rgba(226, 96, 31, 0.45) !important;
+  transition: transform 0.2s ease !important;
+}
+
+.ab-cta-btn:hover {
+  transform: translateY(-2px);
+  color: #16181d !important;
+  border-color: rgba(226, 96, 31, 0.85) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 24px -10px rgba(226, 96, 31, 0.5) !important;
+}
+
+.ab-cta-btn:hover .ab-cta-arrow { transform: translateX(3px); }
+
+@media (max-width: 1080px) {
+  .ab-stage {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+/* .app-builder-section already carries the gutter; the stage must not add
+   a second one or the deck's absolute panels sit off-centre. */
+.ab-stage {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ab-deck {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* The two text-arrow buttons now carry a real icon; the span stays the
+   disc, the svg inside it is the arrow. */
+.cta-btn-arrow svg,
+.ab-cta-arrow svg {
+  width: 16px !important;
+  height: 16px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  stroke: currentColor !important;
+  color: inherit !important;
+  display: block;
+}

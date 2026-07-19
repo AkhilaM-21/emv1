@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Database, Bell, FileText } from 'lucide-react';
+import { Database, Bell, FileText, ArrowRight } from 'lucide-react';
 import './AppBuilder.css';
 
 const B = '{';
@@ -77,17 +77,19 @@ const AppBuilder = () => {
 
       <div className="ab-container">
         <div className="ab-header">
-          <span className="ab-badge">
-            <span className="ab-badge-dot" />
-            {t('appBuilder.badge', 'Powering Enterprises Globally')}
-          </span>
-          <h2 className="ab-title">
-            {t('appBuilder.titleLine1', 'One Platform.')}{' '}
-            <span className="ab-title-grad">{t('appBuilder.titleLine2', 'Infinite Possibilities.')}</span>
-          </h2>
-          <p className="ab-subtitle">
-            {t('appBuilder.subtitle', 'From India to the world — Emvive helps businesses connect, automate, and grow across borders.')}
-          </p>
+          <div className="ab-header-text">
+            <span className="ab-eyebrow">POWERING ENTERPRISES GLOBALLY</span>
+            <h2 className="ab-title">
+              {t('appBuilder.titleLine1', 'One Platform.')}{' '}
+              <span className="ab-title-grad">{t('appBuilder.titleLine2', 'Infinite Possibilities.')}</span>
+            </h2>
+            <p className="ab-subtitle">
+              {t('appBuilder.subtitle', 'From India to the world — Emvive helps businesses connect, automate, and grow across borders.')}
+            </p>
+          </div>
+          <a href="#app-builder" className="ab-cta-btn">
+            Explore platform <span className="ab-cta-arrow"><ArrowRight size={16} /></span>
+          </a>
         </div>
       </div>
 

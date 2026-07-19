@@ -167,8 +167,8 @@ body.dark-theme .emv-brands-title {
 }
 
 .emv-logo-item img {
-  max-width: 140px;
-  max-height: 45px;
+  max-width: 220px;
+  max-height: 75px;
   object-fit: contain;
   transition: all 0.3s ease;
 }

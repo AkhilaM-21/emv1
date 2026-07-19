@@ -1,0 +1,224 @@
+.ann-section {
+  background: #ffffff;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.ann-container {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ann-card {
+  background: #f6efe9;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .ann-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 40px 50px;
+    gap: 40px;
+  }
+}
+
+/* Left side — text content */
+.ann-content {
+  flex: 1;
+  padding: 40px;
+}
+
+@media (min-width: 900px) {
+  .ann-content {
+    padding: 0;
+  }
+}
+
+.ann-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #f2853f;
+  margin-bottom: 1rem;
+}
+
+.ann-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  color: #0b1730;
+  margin: 0 0 1rem 0;
+  max-width: 480px;
+}
+
+.ann-heading .text-accent {
+  background: linear-gradient(100deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.ann-desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0 0 1.5rem 0;
+  max-width: 480px;
+}
+
+.ann-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ann-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(226, 96, 31, 0.3);
+}
+
+.ann-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(226, 96, 31, 0.4);
+}
+
+.ann-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: #111827;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+}
+
+.ann-btn-secondary:hover {
+  border-color: #9ca3af;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Right side — visual panel */
+.ann-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+@media (min-width: 900px) {
+  .ann-visual {
+    padding: 0;
+  }
+}
+
+.ann-visual-panel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 30% 70%, rgba(120, 50, 180, 0.25) 0%, transparent 60%),
+    radial-gradient(circle at 70% 30%, rgba(80, 40, 160, 0.2) 0%, transparent 50%),
+    linear-gradient(160deg, #0d1530 0%, #141838 40%, #1a1540 100%);
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
+}
+
+.ann-constellation {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Constellation edges */
+.ann-edge {
+  stroke: rgba(140, 120, 200, 0.35);
+  stroke-width: 1;
+  animation: ann-edge-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes ann-edge-glow {
+  0% { stroke: rgba(140, 120, 200, 0.2); }
+  100% { stroke: rgba(160, 140, 220, 0.5); }
+}
+
+/* Constellation nodes */
+.ann-node {
+  fill: #a78bfa;
+  animation: ann-node-pulse 2.5s ease-in-out infinite alternate;
+}
+
+.ann-node-ring {
+  fill: none;
+  stroke: rgba(167, 139, 250, 0.3);
+  stroke-width: 1;
+  animation: ann-ring-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes ann-node-pulse {
+  0% { opacity: 0.6; r: 3; }
+  100% { opacity: 1; r: 5; }
+}
+
+@keyframes ann-ring-pulse {
+  0% { opacity: 0; r: 6; }
+  100% { opacity: 0.4; r: 12; }
+}
+
+/* Icon badge at bottom-left of visual */
+.ann-icon-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #6d28d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ann-heading {
+    font-size: 2.2rem;
+    max-width: none;
+  }
+
+  .ann-desc {
+    max-width: none;
+  }
+
+  .ann-visual-panel {
+    max-width: 100%;
+  }
+}

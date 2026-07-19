@@ -1,328 +1,713 @@
 /* =========================================
-   WHY EMVIVE SECTION — Neumorphic style
+   WHY EMVIVE SECTION
+   Layout spec mirrors infor.com/solutions/erp
+   (their root is 62.5% so 1rem = 10px; values converted to px)
 ========================================= */
 
 .why-emvive-section {
-  padding: 4rem 0 8rem 0;
+  padding: 6rem 0;
   position: relative;
   background-color: #ffffff;
   overflow: hidden;
 }
 
+/* ---- Wrapper: near-full width, capped like their .wrapper ---- */
 .why-emvive-container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1720px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 20px;
   position: relative;
   z-index: 1;
 }
 
-/* ---- Section Header ---- */
+/* ---- Rounded panel: light orange background ---- */
+.why-panel {
+  background: #f6efe9;
+  border-radius: 16px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* ---- Header: text left, CTA right (their .SectionHeader_container) ---- */
 .why-header {
-  text-align: center;
-  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
-.why-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #e2601f;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-  margin-bottom: 1.5rem;
+.why-header-text {
+  min-width: 0;
 }
 
-.badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  display: inline-block;
+/* Eyebrow + heading match .emv-subtitle / .emv-headline in Products.css
+   so both sections read as one system. */
+/* Override global index.css badge styles for this specific light-orange panel */
+.why-panel .why-eyebrow {
+  color: #a83610 !important;
+  background: rgba(214, 70, 26, 0.08) !important;
+  border-color: rgba(214, 70, 26, 0.2) !important;
+  box-shadow: none !important;
 }
 
-.why-title {
-  font-size: 3.2rem;
+.why-panel .why-eyebrow::before {
+  background: #a83610 !important;
+  box-shadow: 0 0 8px rgba(168, 54, 16, 0.5) !important;
+}
+
+.why-heading {
+  font-size: 2.2rem;
   font-weight: 800;
-  color: #1e293b;
-  margin: 0 0 1rem 0;
+  line-height: 1.15;
   letter-spacing: -1.5px;
-  line-height: 1.1;
+  color: #0b1730;
+  margin: 0 0 1rem 0;
+}
+
+/* The break after "your" is forced only once there is room for it;
+   below 901px the heading wraps on its own. */
+.why-br {
+  display: none;
 }
 
 .why-subtitle {
-  font-size: 1.15rem;
-  color: #64748b;
-  max-width: 550px;
-  margin: 0 auto;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4b5563;
+  margin: 0;
+  max-width: 1100px;
+  text-wrap: pretty;
 }
 
-/* ---- Benefits Grid ---- */
+/* ---- CTA button: their .Button_secondary + arrow ---- */
+.why-cta {
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 5px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f2853f;
+  background: transparent;
+  border: 1px solid #f2853f;
+  transition: all 0.25s;
+}
+
+.why-cta svg {
+  margin-left: 12px;
+  flex-shrink: 0;
+  transition: transform 0.25s;
+}
+
+.why-cta:hover {
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
+  border-color: #e2601f;
+  color: #ffffff;
+}
+
+.why-cta:hover svg {
+  transform: translateX(2px);
+}
+
+/* ---- Grid: 4 equal columns, their 24/28/32px gutter ---- */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 24px;
 }
 
-/* Asymmetrical Layout */
-.why-card:nth-child(1) { grid-column: span 7; }
-.why-card:nth-child(2) { grid-column: span 5; }
-.why-card:nth-child(3) { grid-column: span 5; }
-.why-card:nth-child(4) { grid-column: span 7; }
-
-/* ---- Benefit Card ---- */
+/* ---- Card: their .Card_card--border + .Card_content ---- */
 .why-card {
-  padding: 2.5rem;
-  border-radius: 28px;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 200px;
+  padding: 0;
+  border-radius: 16px;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),       /* top inner highlight */
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),          /* bottom inner shade */
-    0 2px 4px rgba(0, 0, 0, 0.1),                  /* contact shadow */
-    0 16px 34px rgba(0, 0, 0, 0.16);               /* elevation */
-  transition: all 0.3s ease;
-  cursor: default;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
+/* A permanent accent rail along the top edge of every card */
+.why-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #f0883e 0%,
+    #e2601f 100%
+  );
+}
+
+/* ...with a light running along it non-stop, staggered card to card. */
+.why-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(242, 133, 63, 0) 20%,
+    #ffb27a 50%,
+    rgba(242, 133, 63, 0) 80%,
+    transparent 100%
+  );
+  animation: why-sweep 3.2s linear infinite;
+}
+
+.why-card:nth-child(1)::before { animation-delay: 0s; }
+.why-card:nth-child(2)::before { animation-delay: 0.4s; }
+.why-card:nth-child(3)::before { animation-delay: 0.8s; }
+.why-card:nth-child(4)::before { animation-delay: 1.2s; }
+
+@keyframes why-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* On hover: card goes dark so visualizations show, lifts up */
 .why-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 4px 8px rgba(0, 0, 0, 0.12),
-    0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  background:
+    radial-gradient(80% 45% at 50% 0%, rgba(242, 133, 63, 0.14) 0%, rgba(242, 133, 63, 0) 70%),
+    linear-gradient(165deg, rgba(24, 40, 74, 0.95) 0%, rgba(14, 26, 52, 0.97) 100%);
+  border-color: rgba(242, 133, 63, 0.35);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(242, 133, 63, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-card::before {
+    animation: none;
+    display: none;
+  }
+  .why-card:hover {
+    transform: none;
+  }
+  /* keep the copy in place and the illustration out of the way */
+  .why-card:hover .why-card-body {
+    opacity: 1;
+    transform: none;
+  }
+  .why-card:hover .why-viz {
+    opacity: 0;
+  }
+}
+
+/* Text sits above the animation layer, and clears out on hover so the
+   illustration has the card to itself. */
+.why-card-body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 24px;
+  transition: opacity 0.3s ease, transform 0.35s ease;
+}
+
+.why-card:hover .why-card-body {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
 }
 
 .why-card-title {
-  font-size: 1.5rem;
+  font-size: 20px;
+  line-height: 24px;
   font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 0.75rem 0;
+  color: #0b1730;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.3px;
+  text-wrap: balance;
 }
 
 .why-card-desc {
-  font-size: 0.95rem;
-  color: #64748b;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4b5563;
   margin: 0;
+  text-wrap: pretty;
 }
 
-/* ---- Illustrations ---- */
-.why-illustration {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Card 1 — Bar Metrics */
-.bar-metrics {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.metric-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.metric-bar {
-  height: 36px;
-  width: 0;                         /* starts empty, fills on scroll into view */
-  border-radius: 50px;
-  background: linear-gradient(180deg, #ffffff 20%, #f7b07e 85%, #f2853f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 1),
-    inset 0 -3px 6px rgba(242, 141, 66, 0.3),
-    0 4px 12px rgba(242, 141, 66, 0.3);
-  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* When the section scrolls into view, animate each bar to its target width */
-.bar-metrics.in-view .metric-bar {
-  width: var(--target-w);
-}
-.bar-metrics.in-view .metric-row:nth-child(1) .metric-bar { transition-delay: 0.05s; }
-.bar-metrics.in-view .metric-row:nth-child(2) .metric-bar { transition-delay: 0.15s; }
-.bar-metrics.in-view .metric-row:nth-child(3) .metric-bar { transition-delay: 0.25s; }
-.bar-metrics.in-view .metric-row:nth-child(4) .metric-bar { transition-delay: 0.35s; }
-
-.metric-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 14px;
-  border-radius: 50px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #e2601f;
-  white-space: nowrap;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-}
-
-/* Card 2 — Checkmarks */
-.check-group {
-  display: flex;
-  gap: 20px;
-}
-
-.check-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #e2601f;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-}
-
-/* Card 3 — Shield */
-.shield-wrap {
-  position: relative;
-  width: 120px;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.shield-svg {
+/* =========================================
+   CARD VISUALS
+   A living background layer filling the whole card, behind the text.
+========================================= */
+.why-viz {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
-}
-
-.shield-lock {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #e2601f;
-}
-
-/* Card 4 — Design UI */
-.design-ui {
-  display: flex;
-  gap: 16px;
-  width: 100%;
-  max-width: 320px;
-}
-
-.ui-window {
-  flex: 1.2;
-  padding: 20px;
-  border-radius: 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 12px 26px rgba(0, 0, 0, 0.14);
-}
-
-.ui-bar {
-  height: 10px;
-  border-radius: 50px;
-  background: linear-gradient(90deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.5),
-    inset 0 -2px 4px rgba(217, 83, 31, 0.35),
-    0 4px 12px rgba(242, 141, 66, 0.35);
-}
-.ui-bar.short { width: 75%; }
-.ui-bar.shorter { width: 55%; }
-.ui-bar.thin { height: 6px; }
-
-.ui-sidebar {
-  flex: 0.8;
-  padding: 16px;
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 12px 26px rgba(0, 0, 0, 0.14);
-}
-
-.ui-toggle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 6px 14px rgba(0, 0, 0, 0.12);
-}
-
-.ui-check-big {
-  margin-top: auto;
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  color: #e2601f;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 6px 14px rgba(0, 0, 0, 0.12);
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  pointer-events: none;
+  /* hidden until the card is hovered */
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.4s ease, transform 0.5s ease;
 }
 
-/* ---- Responsive ---- */
-@media (max-width: 768px) {
+/* Nothing animates while the card is at rest — the loops only start
+   running once it is hovered, so idle cards cost nothing. */
+.why-viz *,
+.why-viz {
+  animation-play-state: paused;
+}
+
+/* full strength — with the text gone there is nothing to read through it */
+.why-card:hover .why-viz {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.why-card:hover .why-viz *,
+.why-card:hover .why-viz {
+  animation-play-state: running;
+}
+
+.viz-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---- 1. Industry marquee ---- */
+.why-viz--marquee {
+  justify-content: center;
+  gap: 12px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.2) 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.2) 100%);
+  mask-composite: intersect;
+}
+
+.viz-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: viz-marquee 26s linear infinite;
+}
+
+/* second copy of the list is offset by exactly -50% so the loop is seamless */
+.viz-track--rev {
+  animation: viz-marquee-rev 22s linear infinite;
+}
+
+@keyframes viz-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes viz-marquee-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.viz-pill {
+  flex: none;
+  padding: 7px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #ffb27a;
+  background: rgba(242, 133, 63, 0.12);
+  border: 1px solid rgba(242, 133, 63, 0.38);
+  box-shadow: 0 0 18px -6px rgba(242, 133, 63, 0.5);
+}
+
+/* ---- 2. Teams connected to one system ---- */
+.viz-wire {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+}
+
+/* a short dash runs the length of each wire — the packet */
+.viz-packet {
+  stroke: #f2853f;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 7 200;
+  filter: drop-shadow(0 0 5px rgba(242, 133, 63, 0.9));
+  animation: viz-transmit 2.8s ease-in-out infinite;
+}
+
+@keyframes viz-transmit {
+  0%   { stroke-dashoffset: 100; opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { stroke-dashoffset: 0;   opacity: 1; }
+  90%  { stroke-dashoffset: -100; opacity: 0; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+.viz-user-head,
+.viz-user-body {
+  fill: none;
+  stroke: rgba(203, 215, 234, 0.65);
+  stroke-width: 1.6;
+}
+
+.viz-user {
+  animation: viz-user-lit 2.8s ease-in-out infinite;
+}
+
+@keyframes viz-user-lit {
+  0%, 40%, 100% { opacity: 0.55; }
+  60%           { opacity: 1; }
+}
+
+.viz-screen {
+  fill: rgba(11, 23, 48, 0.95);
+  stroke: #f2853f;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 16px rgba(242, 133, 63, 0.35));
+}
+
+.viz-screen-line {
+  fill: rgba(203, 215, 234, 0.35);
+}
+
+.viz-screen-line--hot {
+  fill: #f2853f;
+  animation: viz-blink 1.6s steps(1, end) infinite;
+}
+
+@keyframes viz-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
+}
+
+.viz-stand {
+  fill: rgba(203, 215, 234, 0.45);
+}
+
+/* ---- 3. Compliance shield ---- */
+.why-viz--shield {
+  justify-content: center;
+}
+
+.viz-stream {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+.viz-code {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(159, 176, 205, 0.75);
+  white-space: nowrap;
+}
+
+.viz-shield {
+  position: relative;
+  height: 110px;
+  width: auto;
+}
+
+.viz-shield-body {
+  fill: rgba(11, 23, 48, 0.92);
+  stroke: #f2853f;
+  stroke-width: 2.5;
+}
+
+.viz-check {
+  fill: none;
+  stroke: #f2853f;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 70;
+  animation: viz-draw 3.4s ease-in-out infinite;
+}
+
+@keyframes viz-draw {
+  0%        { stroke-dashoffset: 70; }
+  35%, 80%  { stroke-dashoffset: 0; }
+  100%      { stroke-dashoffset: 70; }
+}
+
+/* ---- 4. Regions ---- */
+.viz-globe-edge {
+  fill: rgba(255, 255, 255, 0.02);
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 1.2;
+}
+
+.viz-globe-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+.viz-ping {
+  animation: viz-ping-fade 3s ease-in-out infinite;
+}
+
+.viz-ping-dot {
+  fill: #f2853f;
+}
+
+.viz-ping-ring {
+  fill: none;
+  stroke: rgba(242, 133, 63, 0.5);
+  stroke-width: 1.2;
+}
+
+@keyframes viz-ping-fade {
+  0%, 70%, 100% { opacity: 0.25; }
+  20%           { opacity: 1; }
+}
+
+.viz-cur {
+  fill: rgba(159, 176, 205, 0.8);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.viz-fx text {
+  animation: viz-cur-fade 3.6s ease-in-out infinite;
+}
+.viz-fx text:nth-child(2) { animation-delay: 1.2s; }
+.viz-fx text:nth-child(3) { animation-delay: 2.4s; }
+
+@keyframes viz-cur-fade {
+  0%, 60%, 100% { opacity: 0.35; }
+  25%           { opacity: 1; fill: #f2853f; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viz-track,
+  .viz-packet,
+  .viz-user,
+  .viz-screen-line--hot,
+  .viz-check,
+  .viz-ping,
+  .viz-fx text {
+    animation: none;
+  }
+  .viz-check { stroke-dashoffset: 0; }
+}
+
+/* ---- ≥601px ---- */
+@media (min-width: 601px) {
+  .why-heading {
+    font-size: 2.8rem;
+  }
+  .why-subtitle {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .why-card-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .why-card-desc {
+    font-size: 18px;
+    line-height: 26px;
+  }
   .why-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .why-card:nth-child(n) {
-    grid-column: span 1;
+}
+
+/* ---- ≥901px: header goes side-by-side, cards go to 4 up ---- */
+@media (min-width: 901px) {
+  .why-emvive-container {
+    padding: 0 40px;
   }
-  .why-title {
-    font-size: 2.2rem;
+  .why-panel {
+    padding: 40px;
   }
+  .why-header {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 28px;
+  }
+  .why-heading {
+    font-size: 3.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .why-br {
+    display: inline;
+  }
+  .why-card-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  .why-card-body {
+    padding: 28px;
+  }
+  .why-card {
+    min-height: 260px;
+  }
+  .why-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+}
+
+/* ---- ≥1501px ---- */
+@media (min-width: 1501px) {
+  .why-emvive-container {
+    padding: 0 60px;
+  }
+  .why-panel {
+    padding: 60px;
+  }
+  .why-header {
+    margin-bottom: 32px;
+  }
+  .why-card-body {
+    padding: 32px;
+  }
+  .why-grid {
+    gap: 32px;
+  }
+}
+
+/* =========================================
+   CARD — quiet, classic treatment.
+   No decorative rails; weight comes from
+   type, spacing and a single hairline rule.
+========================================= */
+.why-card::before,
+.why-card::after {
+  display: none !important;
+}
+
+.why-card {
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(11, 23, 48, 0.07);
+  box-shadow:
+    0 1px 2px rgba(11, 23, 48, 0.04),
+    0 14px 30px -22px rgba(11, 23, 48, 0.5);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(11, 23, 48, 0.12);
+  box-shadow:
+    0 2px 4px rgba(11, 23, 48, 0.05),
+    0 28px 48px -26px rgba(11, 23, 48, 0.55);
+}
+
+.why-card-body {
+  padding: 2.25rem 2rem;
+}
+
+.why-card-title {
+  font-size: 22px !important;
+  line-height: 1.25 !important;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: #0b1730;
+  margin: 0 0 14px 0;
+}
+
+/* the one flourish: a short rule that warms and grows on hover */
+.why-card-title::after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-top: 18px;
+  border-radius: 2px;
+  background: rgba(11, 23, 48, 0.14);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s ease;
+}
+
+.why-card:hover .why-card-title::after {
+  width: 46px;
+  background: linear-gradient(90deg, #f0883e 0%, #e2601f 100%);
+}
+
+.why-card-desc {
+  font-size: 15.5px !important;
+  line-height: 1.75 !important;
+  color: #6b7280;
+}
+
+@media (min-width: 1200px) {
+  .why-card-title { font-size: 24px !important; }
+  .why-card-body { padding: 2.5rem 2.25rem; }
+}
+
+/* ---- Orange border ---- */
+.why-card {
+  border: 1px solid rgba(226, 96, 31, 0.3);
+  box-shadow:
+    0 1px 2px rgba(11, 23, 48, 0.04),
+    0 14px 30px -22px rgba(226, 96, 31, 0.45);
+}
+
+.why-card:hover {
+  border-color: rgba(226, 96, 31, 0.65);
+  box-shadow:
+    0 2px 4px rgba(11, 23, 48, 0.05),
+    0 28px 48px -26px rgba(226, 96, 31, 0.55);
+}
+
+/* rule picks up the accent at rest too */
+.why-card-title::after {
+  background: rgba(226, 96, 31, 0.45);
+}
+
+/* Wider cards: tighter gutter inside the panel and less space between them. */
+.why-panel {
+  padding: 28px !important;
+}
+
+.why-grid {
+  gap: 18px !important;
+}
+
+@media (min-width: 1501px) {
+  .why-panel { padding: 34px !important; }
+  .why-grid { gap: 20px !important; }
+}
+
+@media (max-width: 768px) {
+  .why-panel { padding: 20px !important; }
+  .why-grid { gap: 16px !important; }
 }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircleDollarSign, TrendingUp, Users, Package, Megaphone, ShieldCheck, Hexagon } from 'lucide-react';
+import { CircleDollarSign, TrendingUp, Users, Package, Megaphone, ShieldCheck, FolderKanban, Factory, Store, FileCheck, Handshake, Blocks } from 'lucide-react';
 import './Features.css';
 
 const FEATURES = [
@@ -9,25 +9,31 @@ const FEATURES = [
   { id: 3, icon: Users, title: 'Human Resources' },
   { id: 4, icon: Package, title: 'Operations & Supply Chain' },
   { id: 5, icon: Megaphone, title: 'Marketing' },
-  { id: 6, icon: ShieldCheck, title: 'IT & Security' }
+  { id: 6, icon: ShieldCheck, title: 'IT & Security' },
+  { id: 7, icon: FolderKanban, title: 'Projects' },
+  { id: 8, icon: Factory, title: 'Manufacturing' },
+  { id: 9, icon: Store, title: 'Retail & POS' },
+  { id: 10, icon: FileCheck, title: 'E-Invoicing & Tax' },
+  { id: 11, icon: Handshake, title: 'Vendor & Customer Portals' },
+  { id: 12, icon: Blocks, title: 'No-Code Studio' }
 ];
 
-const FeatureCard = ({ feature, activeIndex, index }) => {
+const FeatureCard = ({ feature, index }) => {
   const { t } = useTranslation();
   const Icon = feature.icon;
-  const isActive = activeIndex === index;
 
   return (
-    <div className={`feature-card ${isActive ? 'active' : ''}`}>
+    <div className="feature-card">
+      {/* revealed on hover — dark panel with the department icon behind */}
       <div className="feature-media" aria-hidden="true">
         <span className="feature-media-light" />
         <Icon size={150} className="feature-media-icon" />
       </div>
 
-      <div className="feature-icon-box">
-        <Icon size={24} />
-      </div>
-      <h3 className="feature-card-title">{t(`featuresData.f${feature.id}_title`, feature.title)}</h3>
+      <span className="feature-num">{String(index + 1).padStart(2, '0')}</span>
+      <h3 className="feature-card-title">
+        {t(`featuresData.f${feature.id}_title`, feature.title)}
+      </h3>
       <p className="feature-card-desc">{t(`featuresData.f${feature.id}_desc`)}</p>
     </div>
   );
@@ -35,53 +41,37 @@ const FeatureCard = ({ feature, activeIndex, index }) => {
 
 const Features = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <section className="features-section" id="features">
       <div className="features-container">
         <div className="features-header">
-          <span className="features-badge">
-            <span className="badge-dot-blue"></span>
-            {t('features.badge', 'Departments')}
-          </span>
-          <h2 className="features-title">{t('features.title', 'One Platform for Every Team')}</h2>
+          <div className="features-header-text">
+            <span className="features-kicker">{t('features.badge', 'Departments')}</span>
+            <h2 className="features-heading">
+              {t('features.title1', 'Built for the way')}{' '}
+              <span className="text-accent">{t('features.title2', 'your teams')}</span>{' '}
+              {t('features.title3', 'actually work.')}
+            </h2>
+            <p className="features-sub">
+              {t(
+                'features.subtitle',
+                'Finance, sales, HR, operations, marketing and IT on one platform — configured, not customized.'
+              )}
+            </p>
+          </div>
+          <a href="#products" className="features-cta">
+            {t('features.cta', 'Explore industries')}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
         </div>
 
-        <div className="features-layout">
-          <svg className="connector-svg" preserveAspectRatio="none" viewBox="0 0 1000 600">
-            <path className="conn-line" d="M 500 300 L 400 300 L 400 100 L 300 100" />
-            <path className="conn-glow" d="M 500 300 L 400 300 L 400 100 L 300 100" />
-            <path className="conn-line" d="M 500 300 L 300 300" />
-            <path className="conn-glow glow-delay-1" d="M 500 300 L 300 300" />
-            <path className="conn-line" d="M 500 300 L 400 300 L 400 500 L 300 500" />
-            <path className="conn-glow glow-delay-2" d="M 500 300 L 400 300 L 400 500 L 300 500" />
-            <path className="conn-line" d="M 500 300 L 600 300 L 600 100 L 700 100" />
-            <path className="conn-glow glow-delay-3" d="M 500 300 L 600 300 L 600 100 L 700 100" />
-            <path className="conn-line" d="M 500 300 L 700 300" />
-            <path className="conn-glow glow-delay-1" d="M 500 300 L 700 300" />
-            <path className="conn-line" d="M 500 300 L 600 300 L 600 500 L 700 500" />
-            <path className="conn-glow glow-delay-2" d="M 500 300 L 600 300 L 600 500 L 700 500" />
-          </svg>
-
-          <div className="features-column left-col">
-            {FEATURES.slice(0, 3).map((feature, index) => (
-              <FeatureCard key={feature.id} feature={feature} activeIndex={activeTab} index={index} />
-            ))}
-          </div>
-
-          <div className="features-center">
-            <div className="hub-logo-box">
-              <Hexagon size={48} className="hub-icon" />
-              <span className="hub-text">Emvive</span>
-            </div>
-          </div>
-
-          <div className="features-column right-col">
-            {FEATURES.slice(3, 6).map((feature, index) => (
-              <FeatureCard key={feature.id} feature={feature} activeIndex={activeTab} index={index + 3} />
-            ))}
-          </div>
+        <div className="features-grid">
+          {FEATURES.map((feature, index) => (
+            <FeatureCard key={feature.id} feature={feature} index={index} />
+          ))}
         </div>
       </div>
     </section>

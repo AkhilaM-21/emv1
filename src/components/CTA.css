@@ -1,168 +1,126 @@
 .cta-section {
   background: #ffffff;
-  padding: 2rem 1.5rem 4rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", 'Inter', sans-serif;
+  padding: 4rem 1.5rem 6rem;
+  font-family: 'Inter', sans-serif;
 }
+
 .cta-panel {
   position: relative;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
-  border-radius: 32px;
+  border-radius: 24px;
   overflow: hidden;
-  background:
-    radial-gradient(60% 110% at 6% 0%, rgba(226, 96, 31, 0.14) 0%, rgba(226, 96, 31, 0) 42%),
-    linear-gradient(160deg, #1a2540 0%, #0f1a30 100%);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 34px 60px -34px rgba(15, 23, 42, 0.55);
+  /* Dark navy to deep purple gradient, matching image */
+  background: 
+    radial-gradient(circle at 10% 90%, rgba(20, 50, 120, 0.3) 0%, transparent 60%),
+    radial-gradient(circle at 90% 10%, rgba(150, 50, 50, 0.2) 0%, rgba(80, 20, 100, 0.3) 50%, transparent 80%),
+    linear-gradient(110deg, #0a132c 0%, #15183d 45%, #2e1a5a 100%);
+  padding: 6rem 2rem;
+  text-align: center;
 }
 
-/* left content — badges + headline at the top */
-.cta-left {
-  position: relative;
-  z-index: 2;
-  width: 48%;
-  min-height: 460px;
-  padding: 3rem 3.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.cta-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f59e0b; /* Yellow-orange matching the screenshot */
+  margin-bottom: 1.5rem;
 }
-
-/* button centered horizontally in the info column */
-.cta-actions {
-  margin-top: 2.25rem;
-  display: flex;
-  justify-content: center;
-}
-
-/* info block (badges + headline) */
-.cta-info { display: flex; flex-direction: column; }
-
-/* award pills with proper icons */
-.cta-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.75rem; }
-.cta-award {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 18px 7px 7px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
-.cta-award-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  color: #fff;
-  flex-shrink: 0;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35);
-}
-.cta-award-txt b { display: block; font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; }
-.cta-award-txt span { font-size: 11px; color: #94a3b8; }
 
 .cta-title {
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: -1.5px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   color: #ffffff;
-  margin: 0;
-  max-width: none;
+  margin: 0 auto 1.5rem;
+  max-width: 1000px;
 }
 
-/* CTA button — same blue pill + white ring */
-/* same as the navbar button — white embossed pill + blue arrow circle */
-.cta-field { display: inline-flex; width: fit-content; }
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.4rem 0.4rem 0.4rem 1.6rem;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
-  color: #16181d;
-  font-size: 16px;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 8px 18px rgba(0, 0, 0, 0.28);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+.cta-subtitle {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+  max-width: 800px;
 }
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 26px rgba(0, 0, 0, 0.35);
-}
-.cta-arrow {
-  display: inline-flex;
-  align-items: center;
+
+.cta-actions {
+  display: flex;
   justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  color: #fff;
-  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 3px 6px rgba(226, 96, 31, 0.45);
-}
-.cta-trial { font-size: 0.9rem; color: #94a3b8; margin: 1.2rem 0 0; }
-.cta-trial b { color: #fff; font-weight: 800; }
-
-/* right side — looping muted video, absolutely fills the panel */
-.cta-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 60%;
-  overflow: hidden;
-}
-.cta-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-.cta-right::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  /* blend the image into the dark panel on its left edge */
-  /* gradual dark-blue fade over the video's left so it dissolves into the panel (no hard cut) */
-  background: linear-gradient(90deg, #141f38 0%, rgba(20, 31, 56, 0.9) 10%, rgba(20, 31, 56, 0) 42%);
-  z-index: 1;
+  align-items: center;
+  gap: 16px;
 }
 
-/* RTL (Arabic): mirror the panel so the video sits on the LEFT and the
-   text on the RIGHT. The text column already flows to the inline-start
-   (right) in RTL; only the absolutely-positioned video needs flipping,
-   along with its dissolve gradient (now fading on its right edge). */
-[dir="rtl"] .cta-right { right: auto; left: 0; }
-[dir="rtl"] .cta-right::before {
-  background: linear-gradient(270deg, #141f38 0%, rgba(20, 31, 56, 0.9) 10%, rgba(20, 31, 56, 0) 42%);
+.cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f97316;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-/* confetti dots */
-.cta-dot { position: absolute; z-index: 1; border-radius: 3px; }
-.cta-dot--1 { width: 12px; height: 12px; background: #ef4444; top: 8%; right: 34%; transform: rotate(20deg); }
-.cta-dot--2 { width: 10px; height: 10px; background: #f59e0b; top: 16%; right: 20%; }
-.cta-dot--3 { width: 12px; height: 12px; background: #6366f1; top: 6%; right: 12%; transform: rotate(35deg); }
-.cta-dot--4 { width: 9px; height: 9px; background: #22c55e; border-radius: 50%; bottom: 14%; right: 46%; }
-.cta-dot--5 { width: 11px; height: 11px; background: #f6a04a; top: 24%; right: 40%; transform: rotate(15deg); }
+.cta-btn-arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+}
 
-@media (max-width: 900px) {
-  .cta-panel { background: linear-gradient(160deg, #1a2540 0%, #0f1a30 100%); }
-  .cta-left { width: 100%; min-height: 0; padding: 2.5rem 1.75rem 0; }
-  .cta-title { font-size: 2.1rem; }
-  .cta-actions { margin-top: 1.5rem; }
-  .cta-right { position: static; width: 100%; min-height: 240px; margin-top: 1.75rem; }
-  .cta-right::before { background: linear-gradient(180deg, #141f38 0%, rgba(20, 31, 56, 0) 45%); }
-  /* stacked layout is vertical in both directions on mobile */
-  [dir="rtl"] .cta-right::before { background: linear-gradient(180deg, #141f38 0%, rgba(20, 31, 56, 0) 45%); }
+.cta-btn-primary:hover {
+  background-color: #ea580c;
+}
+
+.cta-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #4b5563; /* Slate grey border */
+  transition: all 0.2s ease;
+}
+
+.cta-btn-secondary:hover {
+  border-color: #6b7280;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.text-accent {
+  background: linear-gradient(90deg, #f97316 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: 2.5rem;
+  }
+  .cta-actions {
+    flex-direction: column;
+  }
+  .cta-btn-primary, .cta-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---- Navy panel, matching the hero and Why Emvive surfaces ---- */
+.cta-panel {
+  background:
+    radial-gradient(60% 45% at 82% 8%, rgba(200, 82, 26, 0.22) 0%, rgba(200, 82, 26, 0) 62%),
+    radial-gradient(55% 45% at 12% 92%, rgba(30, 58, 138, 0.35) 0%, rgba(30, 58, 138, 0) 65%),
+    linear-gradient(180deg, #0b1730 0%, #091428 45%, #0b1a38 100%);
 }
