@@ -444,3 +444,73 @@
 .footer-social-btn:active {
   transform: translateY(0) scale(0.95);
 }
+
+/* Narrower newsletter column so the link columns get more room. */
+.footer-grid {
+  grid-template-columns: minmax(220px, 0.75fr) auto auto auto !important;
+}
+
+.footer-grid .col-newsletter {
+  max-width: 340px;
+}
+
+.footer-grid .col-newsletter .newsletter-form,
+.footer-grid .col-newsletter input[type='email'] {
+  max-width: 340px;
+}
+
+@media (max-width: 1080px) {
+  .footer-grid .col-newsletter,
+  .footer-grid .col-newsletter .newsletter-form,
+  .footer-grid .col-newsletter input[type='email'] {
+    max-width: none;
+  }
+}
+
+/* Four equal columns. */
+.footer-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  justify-content: stretch !important;
+  gap: 2.5rem !important;
+}
+
+.footer-grid .col-newsletter,
+.footer-grid .col-newsletter .newsletter-form,
+.footer-grid .col-newsletter input[type='email'] {
+  max-width: none;
+  width: 100%;
+}
+
+@media (max-width: 1080px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Newsletter column gets the width the consent copy needs to break into
+   two lines at "…personal data / in accordance with…". Text size unchanged. */
+.footer-grid {
+  grid-template-columns: 1.45fr 1fr 1fr 1fr !important;
+}
+
+.footer-grid .col-newsletter {
+  max-width: 460px;
+}
+
+.checkbox-group label {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 42ch;
+}
+
+@media (max-width: 1080px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .footer-grid .col-newsletter { max-width: none; }
+  .checkbox-group label { max-width: none; }
+}
+
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
+}

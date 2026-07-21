@@ -711,3 +711,82 @@
   .why-panel { padding: 20px !important; }
   .why-grid { gap: 16px !important; }
 }
+
+/* ---- 1. Industry tiles: each lights up in turn ---- */
+.why-viz--tiles {
+  padding: 18px;
+}
+
+.viz-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.viz-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: 12px;
+  text-align: center;
+  color: rgba(203, 215, 234, 0.55);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: viz-tile-lit 3.3s ease-in-out infinite;
+}
+
+.viz-tile span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+@keyframes viz-tile-lit {
+  0%, 78%, 100% {
+    color: rgba(203, 215, 234, 0.5);
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(0);
+  }
+  88% {
+    color: #ffb27a;
+    border-color: rgba(242, 133, 63, 0.65);
+    background: rgba(242, 133, 63, 0.14);
+    transform: translateY(-3px);
+  }
+}
+
+/* ==========================================================
+   HOVER GLITCH FIXES
+   1. The 4px lift moved the card out from under the cursor near
+      its edges, so hover toggled on/off in a loop (flicker).
+      Depth now comes from the shadow, not movement.
+   2. Animations were paused at rest and started on hover, which
+      made every loop jump to its delayed position. They now run
+      continuously — the layer is simply invisible until hover.
+   ========================================================== */
+.why-card:hover {
+  transform: none;
+}
+
+.why-viz *,
+.why-viz,
+.why-card:hover .why-viz *,
+.why-card:hover .why-viz {
+  animation-play-state: running;
+}
+
+/* no scale-in either — that re-triggered layout on entry */
+.why-viz {
+  transform: none;
+  transition: opacity 0.35s ease;
+}
+
+.why-card:hover .why-viz {
+  transform: none;
+}

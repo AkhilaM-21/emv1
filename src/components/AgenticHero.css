@@ -1152,3 +1152,205 @@
   0%, 100% { transform: translate3d(0, 0, 0); }
   50%      { transform: translate3d(0, -4px, 0); }
 }
+
+/* ==========================================================
+   PILLS ON AN ARC
+   Five pills, offset so their left edges trace a curve —
+   the middle one sits furthest out, the ends tuck back in.
+   ========================================================== */
+@media (min-width: 901px) {
+  .ah-pills {
+    top: 2%;
+    gap: 1.1rem;
+    align-items: flex-end;
+  }
+
+  /* smaller margin-right = further right, so 1-3-5 pull back and
+     the middle pushes out, giving the bow */
+  .ah-pills .ah-pill:nth-child(1) { margin-right: 3.5rem; animation-duration: 6.4s; animation-delay: 0s; }
+  .ah-pills .ah-pill:nth-child(2) { margin-right: 1.6rem; animation-duration: 7.2s; animation-delay: 0.5s; }
+  .ah-pills .ah-pill:nth-child(3) { margin-right: 0.2rem; animation-duration: 6.8s; animation-delay: 1s; }
+  .ah-pills .ah-pill:nth-child(4) { margin-right: 1.6rem; animation-duration: 7.6s; animation-delay: 1.5s; }
+  .ah-pills .ah-pill:nth-child(5) { margin-right: 3.5rem; animation-duration: 7s;   animation-delay: 2s; }
+}
+
+/* ==========================================================
+   PILLS — compact single-label style, circular icon badge on
+   the outer edge, stacked flush right. No arc.
+   ========================================================== */
+@media (min-width: 901px) {
+  .ah-pills {
+    top: 4%;
+    gap: 0.85rem;
+    align-items: flex-end;
+  }
+
+  /* flush right — the arc offsets are gone */
+  .ah-pills .ah-pill:nth-child(1),
+  .ah-pills .ah-pill:nth-child(2),
+  .ah-pills .ah-pill:nth-child(3),
+  .ah-pills .ah-pill:nth-child(4),
+  .ah-pills .ah-pill:nth-child(5) {
+    margin-right: 0;
+  }
+
+  .ah-pills .ah-pill:nth-child(1) { animation-duration: 6.4s; animation-delay: 0s; }
+  .ah-pills .ah-pill:nth-child(2) { animation-duration: 7.2s; animation-delay: 0.5s; }
+  .ah-pills .ah-pill:nth-child(3) { animation-duration: 6.8s; animation-delay: 1s; }
+  .ah-pills .ah-pill:nth-child(4) { animation-duration: 7.6s; animation-delay: 1.5s; }
+  .ah-pills .ah-pill:nth-child(5) { animation-duration: 7s;   animation-delay: 2s; }
+}
+
+.ah-pills .ah-pill {
+  /* icon sits at the right end, label to its left */
+  flex-direction: row-reverse;
+  gap: 0.65rem;
+  min-width: 0;
+  width: auto;
+  padding: 0.4rem 0.4rem 0.4rem 1.35rem;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.55);
+}
+
+.ah-pills .ah-pill-ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+.ah-pills .ah-pill-ic svg { width: 16px; height: 16px; }
+
+/* single label, like the reference */
+.ah-pills .ah-pill-txt b {
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #0f1a30;
+}
+
+.ah-pills .ah-pill-txt span { display: none; }
+
+/* Arc again — the five pills bow outward, middle furthest right,
+   ends tucked back, keeping the compact pill style. */
+@media (min-width: 901px) {
+  .ah-pills .ah-pill:nth-child(1) { margin-right: 3.75rem; }
+  .ah-pills .ah-pill:nth-child(2) { margin-right: 1.75rem; }
+  .ah-pills .ah-pill:nth-child(3) { margin-right: 0.25rem; }
+  .ah-pills .ah-pill:nth-child(4) { margin-right: 1.75rem; }
+  .ah-pills .ah-pill:nth-child(5) { margin-right: 3.75rem; }
+}
+
+/* Arc across six pills */
+@media (min-width: 901px) {
+  .ah-pills .ah-pill:nth-child(1) { margin-right: 3.75rem; animation-delay: 0s; }
+  .ah-pills .ah-pill:nth-child(2) { margin-right: 2rem;    animation-delay: 0.4s; }
+  .ah-pills .ah-pill:nth-child(3) { margin-right: 0.4rem;  animation-delay: 0.8s; }
+  .ah-pills .ah-pill:nth-child(4) { margin-right: 0.4rem;  animation-delay: 1.2s; }
+  .ah-pills .ah-pill:nth-child(5) { margin-right: 2rem;    animation-delay: 1.6s; }
+  .ah-pills .ah-pill:nth-child(6) { margin-right: 3.75rem; animation-delay: 2s; }
+}
+
+/* Five pills on an arc that opens from the top: the first sits tucked in
+   and each one below steps further out, tracing the curve. */
+@media (min-width: 901px) {
+  .ah-pills .ah-pill:nth-child(1) { margin-right: 4.25rem; animation-delay: 0s; }
+  .ah-pills .ah-pill:nth-child(2) { margin-right: 2.6rem;  animation-delay: 0.45s; }
+  .ah-pills .ah-pill:nth-child(3) { margin-right: 1.35rem; animation-delay: 0.9s; }
+  .ah-pills .ah-pill:nth-child(4) { margin-right: 0.5rem;  animation-delay: 1.35s; }
+  .ah-pills .ah-pill:nth-child(5) { margin-right: 0;       animation-delay: 1.8s; }
+  .ah-pills .ah-pill:nth-child(6) { display: none; }
+}
+
+/* ==========================================================
+   PILLS — sit off the card's right edge instead of across it.
+   The dashboard narrows and shifts left to make the room, so
+   only the pills' left tips overlap the card.
+   ========================================================== */
+@media (min-width: 901px) {
+  .ah-visual {
+    padding-right: 4.5rem;
+  }
+
+  .ah-dashcard {
+    max-width: 560px;
+  }
+
+  .ah-pills {
+    top: 8%;
+    right: 0;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+
+  /* smaller pills so long product names stay compact */
+  .ah-pills .ah-pill {
+    padding: 0.35rem 0.35rem 0.35rem 1.1rem;
+    box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.7);
+  }
+
+  .ah-pills .ah-pill-txt b { font-size: 0.86rem; }
+
+  .ah-pills .ah-pill-ic { width: 30px; height: 30px; }
+  .ah-pills .ah-pill-ic svg { width: 15px; height: 15px; }
+
+  /* gentle arc, all of it outboard of the card */
+  .ah-pills .ah-pill:nth-child(1) { margin-right: 2.25rem; }
+  .ah-pills .ah-pill:nth-child(2) { margin-right: 1.1rem; }
+  .ah-pills .ah-pill:nth-child(3) { margin-right: 0.35rem; }
+  .ah-pills .ah-pill:nth-child(4) { margin-right: 1.1rem; }
+  .ah-pills .ah-pill:nth-child(5) { margin-right: 2.25rem; }
+}
+
+/* ==========================================================
+   PILLS — enter one after another on load, all five in ~1.7s,
+   then hand over to the idle float.
+   ========================================================== */
+@keyframes ah-pill-in {
+  from {
+    opacity: 0;
+    transform: translate3d(26px, 6px, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (min-width: 901px) {
+  .ah-pills .ah-pill {
+    /* entry runs first (backwards fill keeps it hidden until its turn),
+       then the float takes over the transform */
+    animation:
+      ah-pill-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both,
+      ah-pill-float 6.6s ease-in-out infinite;
+  }
+
+  .ah-pills .ah-pill:nth-child(1) { animation-delay: 0.15s, 1.9s; }
+  .ah-pills .ah-pill:nth-child(2) { animation-delay: 0.45s, 2.2s; }
+  .ah-pills .ah-pill:nth-child(3) { animation-delay: 0.75s, 2.5s; }
+  .ah-pills .ah-pill:nth-child(4) { animation-delay: 1.05s, 2.8s; }
+  .ah-pills .ah-pill:nth-child(5) { animation-delay: 1.35s, 3.1s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ah-pills .ah-pill {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
+/* Entry is a plain fade — no sliding. Each pill appears exactly where the
+   arc puts it, so the entrance never fights the layout or the float. */
+@keyframes ah-pill-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (min-width: 901px) {
+  .ah-pills .ah-pill {
+    animation:
+      ah-pill-appear 0.45s ease-out both,
+      ah-pill-float 6.6s ease-in-out infinite;
+  }
+}

@@ -96,7 +96,8 @@
     "title1": "Built for the way",
     "title2": "your teams",
     "title3": "actually work.",
-    "subtitle": "Finance, sales, HR, operations, marketing and IT on one platform — configured, not customized."
+    "subtitle": "Finance, sales, HR, operations, marketing and IT on one platform — configured, not customized.",
+    "learnMore": "Learn more"
   },
   "featuresData": {
     "f1_title": "Finance & Accounting",
@@ -122,7 +123,43 @@
     "f11_title": "Vendor & Customer Portals",
     "f11_desc": "Vendors submit RFQs and invoices; customers track orders, deliveries and payments themselves.",
     "f12_title": "No-Code Studio",
-    "f12_desc": "Build forms, tables and approval chains by drag and drop, with workflow automation and event triggers."
+    "f12_desc": "Build forms, tables and approval chains by drag and drop, with workflow automation and event triggers.",
+    "f1_p1": "Automated invoicing",
+    "f1_p2": "Real-time cash flow",
+    "f1_p3": "Compliance-ready ledger",
+    "f2_p1": "Pipeline management",
+    "f2_p2": "Revenue forecasting",
+    "f2_p3": "Full customer history",
+    "f3_p1": "Onboarding workflows",
+    "f3_p2": "Automated payroll",
+    "f3_p3": "Employee self-service",
+    "f4_p1": "Inventory optimisation",
+    "f4_p2": "Vendor management",
+    "f4_p3": "Logistics tracking",
+    "f5_p1": "Targeted campaigns",
+    "f5_p2": "ROI tracking",
+    "f5_p3": "Lead handoff to sales",
+    "f6_p1": "Role-based access",
+    "f6_p2": "System monitoring",
+    "f6_p3": "Full audit trails",
+    "f7_p1": "WBS planning",
+    "f7_p2": "Budget & time tracking",
+    "f7_p3": "Milestone billing",
+    "f8_p1": "Bills of materials",
+    "f8_p2": "Production orders",
+    "f8_p3": "Shop floor control",
+    "f9_p1": "Multi-branch billing",
+    "f9_p2": "Offline mode",
+    "f9_p3": "Live inventory sync",
+    "f10_p1": "ZATCA Phase 1 & 2",
+    "f10_p2": "VAT & withholding",
+    "f10_p3": "Digital signing & QR",
+    "f11_p1": "RFQ & invoice submission",
+    "f11_p2": "Order & delivery tracking",
+    "f11_p3": "Payment status",
+    "f12_p1": "Drag-and-drop builder",
+    "f12_p2": "Approval chains",
+    "f12_p3": "Event triggers"
   },
   "products": {
     "badge": "Our Products",
@@ -311,7 +348,23 @@
     "b3_title": "Compliance built in",
     "b3_desc": "ZATCA e-invoicing, GOSI, WPS, and VAT are native to the platform, keeping every entity audit-ready without bolt-on tools or manual filing.",
     "b4_title": "Ready for every region",
-    "b4_desc": "Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform."
+    "b4_desc": "Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform.",
+    "b1_p1": "Construction & contracting",
+    "b1_p2": "Retail & restaurants",
+    "b1_p3": "Manufacturing & trading",
+    "b1_p4": "Professional services",
+    "b2_p1": "Finance & supply chain",
+    "b2_p2": "Sales, HR and POS",
+    "b2_p3": "One cloud data model",
+    "b2_p4": "No integrations to maintain",
+    "b3_p1": "ZATCA e-invoicing",
+    "b3_p2": "GOSI & WPS payroll",
+    "b3_p3": "VAT & withholding tax",
+    "b3_p4": "Audit-ready by default",
+    "b4_p1": "Multi-company & currency",
+    "b4_p2": "Local tax rules",
+    "b4_p3": "Arabic & English (RTL)",
+    "b4_p4": "Data residency options"
   },
   "faq": {
     "badge": "FAQ",
@@ -663,20 +716,24 @@
     },
     "pills": {
       "0": {
-        "title": "ERP",
+        "title": "Cloud ERP",
         "sub": "Unified operations"
       },
       "1": {
-        "title": "CRM",
-        "sub": "Deepen relationships"
-      },
-      "2": {
-        "title": "HCM",
+        "title": "HR & Payroll",
         "sub": "People management"
       },
+      "2": {
+        "title": "CRM & Sales",
+        "sub": "Deepen relationships"
+      },
       "3": {
-        "title": "AI",
-        "sub": "Intelligent insights"
+        "title": "Advanced Reporting",
+        "sub": "Live insights"
+      },
+      "4": {
+        "title": "Workflow Automation",
+        "sub": "No-code flows"
       }
     },
     "features": {

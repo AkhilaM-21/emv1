@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Factory, Store, HardHat, Truck, UtensilsCrossed, Briefcase } from 'lucide-react';
 import './WhyEmvive.css';
 
 /* ------------------------------------------------------------------
@@ -9,27 +9,32 @@ import './WhyEmvive.css';
    cloud-7 feature cards). All motion is CSS/SVG, no JS timers.
 ------------------------------------------------------------------ */
 
-// 1. Industries scrolling past in two opposing marquee rows
-const IndustryViz = () => {
-  const rowA = ['Construction', 'Retail', 'Manufacturing', 'Trading'];
-  const rowB = ['Restaurants', 'Services', 'Contracting', 'Wholesale'];
-  const track = (items, cls) => (
-    <div className={`viz-track ${cls}`}>
-      {[...items, ...items].map((label, i) => (
-        <span className="viz-pill" key={i}>
-          {label}
-        </span>
+// 1. Industry tiles lighting up one after another
+const INDUSTRY_TILES = [
+  { Icon: HardHat, label: 'Construction' },
+  { Icon: Store, label: 'Retail' },
+  { Icon: Factory, label: 'Manufacturing' },
+  { Icon: Truck, label: 'Trading' },
+  { Icon: UtensilsCrossed, label: 'Restaurants' },
+  { Icon: Briefcase, label: 'Services' },
+];
+
+const IndustryViz = () => (
+  <div className="why-viz why-viz--tiles">
+    <div className="viz-tiles">
+      {INDUSTRY_TILES.map(({ Icon, label }, i) => (
+        <div
+          className="viz-tile"
+          key={label}
+          style={{ animationDelay: `${i * 0.55}s` }}
+        >
+          <Icon size={20} strokeWidth={1.6} />
+          <span>{label}</span>
+        </div>
       ))}
     </div>
-  );
-  return (
-    <div className="why-viz why-viz--marquee">
-      {track(rowA, '')}
-      {track(rowB, 'viz-track--rev')}
-      {track(rowA, '')}
-    </div>
-  );
-};
+  </div>
+);
 
 // 2. One system, every team connected to it
 const ConnectedViz = () => {

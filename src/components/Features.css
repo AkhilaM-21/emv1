@@ -352,318 +352,42 @@
   .feature-icon-box { width: 50px; height: 50px; margin: 0 auto 1.2rem auto; }
 }
 
-/* =========================================
-   INDUSTRIES-STYLE LAYOUT
-   Left-aligned header + numbered cards.
-   The hover reveal (.feature-media) is untouched.
-========================================= */
-.features-header {
-  text-align: left;
-  max-width: 900px;
-  margin: 0 0 3rem;
-}
+/* ==========================================================
+   DEPARTMENTS
+   Card structure follows the reference: icon on top, a clear
+   gap, title, body, then a link sitting on the bottom edge.
+   Cards share a height so those links line up across the row.
+   ========================================================== */
 
-.features-kicker {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #e2601f;
-  margin-bottom: 1rem;
-}
-
-.features-heading {
-  font-size: 2.2rem;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -1.5px;
-  color: #1e293b;
-  margin: 0 0 1rem 0;
-}
-
-.features-sub {
-  font-size: 16px;
-  line-height: 24px;
-  color: #64748b;
-  margin: 0;
-  max-width: 640px;
-  text-wrap: pretty;
-}
-
-@media (min-width: 601px) {
-  .features-heading { font-size: 2.8rem; }
-  .features-sub { font-size: 18px; line-height: 26px; }
-}
-
-@media (min-width: 901px) {
-  .features-heading { font-size: 3.4rem; margin-bottom: 1.5rem; }
-}
-
-/* ---- Grid ---- */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-@media (max-width: 900px) {
-  .features-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 560px) {
-  .features-grid { grid-template-columns: 1fr; }
-}
-
-/* ---- Card: flat and quiet at rest, unchanged on hover ---- */
-.features-grid .feature-card {
-  text-align: left;
-  padding: 1.75rem;
-  border-radius: 14px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.09);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-}
-
-.features-grid .feature-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.1),
-    0 25px 40px rgba(226, 96, 31, 0.18);
-}
-
-.feature-num {
-  position: relative;
-  z-index: 1;
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #94a3b8;
-  margin-bottom: 1.5rem;
-  transition: color 0.3s ease;
-}
-
-.feature-card:hover .feature-num {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.features-grid .feature-card-title {
-  position: relative;
-  z-index: 1;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 0.6rem 0;
-  letter-spacing: -0.2px;
-}
-
-.features-grid .feature-card-desc {
-  position: relative;
-  z-index: 1;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: #64748b;
-  margin: 0;
-}
-
-/* hover media follows the card's smaller radius */
-.features-grid .feature-media { border-radius: 14px; }
-
-/* ---- Four across ---- */
-.features-grid {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-@media (max-width: 1200px) {
-  .features-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (max-width: 900px) {
-  .features-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 560px) {
-  .features-grid { grid-template-columns: 1fr; }
-}
-
-/* =========================================
-   PREMIUM POLISH
-========================================= */
-.features-grid .feature-card {
-  border-radius: 16px;
-  padding: 1.9rem 1.75rem 2.4rem;
-  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 1px 2px rgba(15, 23, 42, 0.05),
-    0 10px 24px -18px rgba(15, 23, 42, 0.4);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-/* accent rail that draws itself across the top edge on hover */
-.features-grid .feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #f0883e 0%, #e2601f 55%, #d6461a 100%);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.features-grid .feature-card:hover::before { transform: scaleX(1); }
-
-/* arrow that slides in at the corner */
-.features-grid .feature-card::after {
-  content: '→';
-  position: absolute;
-  right: 1.5rem;
-  bottom: 1.25rem;
-  z-index: 3;
-  font-size: 1.05rem;
-  line-height: 1;
-  color: #f2853f;
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.features-grid .feature-card:hover::after {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.features-grid .feature-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(226, 96, 31, 0.3);
-  box-shadow:
-    0 10px 24px rgba(15, 23, 42, 0.12),
-    0 30px 50px -20px rgba(226, 96, 31, 0.35);
-}
-
-/* ---- Number: set in tabular figures with a hairline beside it ---- */
-.feature-num {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #b6c0cf;
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 1.35rem;
-}
-
-.feature-num::after {
-  content: '';
-  width: 22px;
-  height: 1px;
-  background: rgba(15, 23, 42, 0.14);
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
-}
-
-.feature-card:hover .feature-num::after {
-  width: 38px;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-/* ---- Media reveal: soften the panel and warm the watermark ---- */
-.features-grid .feature-media {
-  border-radius: 16px;
-  background:
-    radial-gradient(70% 60% at 15% 0%, rgba(226, 96, 31, 0.35) 0%, rgba(226, 96, 31, 0) 60%),
-    linear-gradient(165deg, #16233f 0%, #0b1122 100%);
-}
-
-.features-grid .feature-media-icon {
-  color: rgba(255, 255, 255, 0.1);
-}
-
-.features-grid .feature-card:hover .feature-card-title { color: #ffffff; }
-.features-grid .feature-card:hover .feature-card-desc { color: rgba(255, 255, 255, 0.78); }
-
-/* ---- Orange border + arrow visible at rest ---- */
-.features-grid .feature-card {
-  border-color: rgba(226, 96, 31, 0.35);
-}
-
-.features-grid .feature-card:hover {
-  border-color: rgba(226, 96, 31, 0.75);
-}
-
-/* arrow is always on; it just brightens and nudges on hover */
-.features-grid .feature-card::after {
-  opacity: 1;
-  transform: none;
-  color: #e2601f;
-}
-
-.features-grid .feature-card:hover::after {
-  opacity: 1;
-  transform: translateX(4px);
-  color: #ffb27a;
-}
-
-/* keep the top rail visible too, filling in fully on hover */
-.features-grid .feature-card::before {
-  transform: scaleX(0.28);
-  opacity: 0.55;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
-}
-
-.features-grid .feature-card:hover::before {
-  transform: scaleX(1);
-  opacity: 1;
-}
-
-/* ---- Header CTA, top right (matches .why-cta) ---- */
+/* ---- Header ---- */
 .features-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1.5rem;
+  text-align: left;
   max-width: none;
+  margin: 0 0 3.5rem;
 }
 
 .features-header-text { max-width: 900px; }
 
-.features-cta {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 5px 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 600;
-  text-decoration: none;
-  color: #e2601f;
-  background: transparent;
-  border: 1px solid #e2601f;
-  transition: all 0.25s;
+.features-heading {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  color: #0b1730;
+  margin: 0 0 1rem;
 }
 
-.features-cta svg {
-  margin-left: 12px;
-  flex-shrink: 0;
-  transition: transform 0.25s;
+.features-sub {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #64748b;
+  margin: 0;
+  max-width: 620px;
 }
-
-.features-cta:hover {
-  background: linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  border-color: #e2601f;
-  color: #ffffff;
-}
-
-.features-cta:hover svg { transform: translateX(2px); }
 
 @media (min-width: 901px) {
   .features-header {
@@ -672,4 +396,222 @@
     justify-content: space-between;
     gap: 2.5rem;
   }
+}
+
+@media (max-width: 900px) { .features-heading { font-size: 2.4rem; } }
+
+/* ---- Grid ---- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1200px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px)  { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .features-grid { grid-template-columns: 1fr; } }
+
+/* ---- Card: three stacked zones ---- */
+.features-grid .feature-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+  text-align: left;
+  padding: 2.25rem 1.75rem 1.9rem;
+  border-radius: 16px;
+  background: #ffffff;
+  /* shadows as committed on main, with the orange border */
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  border: 1px solid rgba(226, 96, 31, 0.4);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.08),
+    0 15px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.features-grid .feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(226, 96, 31, 0.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    0 25px 40px rgba(226, 96, 31, 0.18);
+}
+
+/* 1. icon, alone on its own line */
+.feature-ic {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  line-height: 0;
+  color: #0b1730;
+  margin-bottom: 2.5rem;
+  transition: color 0.3s ease;
+}
+
+/* 2. text block takes the free space, pushing the link down */
+.feature-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.features-grid .feature-card-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  color: #0b1730;
+  margin: 0 0 0.75rem;
+  text-wrap: balance;
+}
+
+.features-grid .feature-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #6b7482;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* 3. link on the bottom edge, aligned across every card */
+.feature-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e2601f;
+  transition: color 0.3s ease, gap 0.3s ease;
+}
+
+.feature-card:hover .feature-link {
+  gap: 0.8rem;
+  color: #ffb27a;
+}
+
+/* hover reveal */
+.features-grid .feature-media {
+  border-radius: 24px;
+  background: linear-gradient(170deg, #131f3a 0%, #090f20 100%);
+}
+
+.features-grid .feature-media-icon { color: rgba(255, 255, 255, 0.07); }
+
+.features-grid .feature-card:hover .feature-ic { color: #f2853f; }
+.features-grid .feature-card:hover .feature-card-title { color: #ffffff; }
+.features-grid .feature-card:hover .feature-card-desc { color: rgba(255, 255, 255, 0.75); }
+
+.features-cta { flex-shrink: 0; }
+
+/* Accent rail along the top-left edge — clipped by the card's radius so it
+   follows the corner. Extends across the top on hover. */
+.features-grid .feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 46%;
+  height: 3px;
+  background: linear-gradient(90deg, #e2601f 0%, #f2853f 55%, rgba(242, 133, 63, 0) 100%);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.features-grid .feature-card:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================
+   HOVER — light and warm rather than a dark takeover.
+   The card stays legible; depth comes from a peach wash,
+   a lift and a warmer border.
+   ========================================================== */
+.features-grid .feature-media {
+  border-radius: 24px;
+  background:
+    radial-gradient(90% 70% at 85% 8%, rgba(242, 133, 63, 0.16) 0%, rgba(242, 133, 63, 0) 60%),
+    linear-gradient(180deg, #fffaf6 0%, #fdf1e8 100%);
+}
+
+/* watermark reads as a warm ghost, not a grey blob */
+.features-grid .feature-media-icon {
+  color: rgba(226, 96, 31, 0.09);
+  right: -26px;
+  bottom: -30px;
+}
+
+/* copy keeps its colour — no inversion */
+.features-grid .feature-card:hover .feature-card-title {
+  color: #0b1730;
+}
+
+.features-grid .feature-card:hover .feature-card-desc {
+  color: #5f6875;
+}
+
+.features-grid .feature-card:hover .feature-ic {
+  color: #e2601f;
+  transform: translateY(-2px);
+}
+
+.features-grid .feature-card:hover .feature-link {
+  color: #d6461a;
+}
+
+.feature-ic {
+  transition: color 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* lift + warm shadow */
+.features-grid .feature-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(226, 96, 31, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    0 26px 44px -26px rgba(226, 96, 31, 0.55);
+}
+
+/* Watermark sat half outside the card and too faint to read. Bring it
+   fully inside and lift the opacity. */
+.features-grid .feature-media-icon {
+  right: 18px;
+  bottom: 18px;
+  width: 116px;
+  height: 116px;
+  color: rgba(226, 96, 31, 0.16);
+  transform: rotate(-6deg);
+  stroke-width: 1.25;
+}
+
+/* stronger watermark */
+.features-grid .feature-media-icon {
+  color: rgba(226, 96, 31, 0.3);
+}
+
+/* Watermark: softer edges and a stronger presence on hover. */
+.features-grid .feature-media-icon {
+  color: rgba(226, 96, 31, 0.45);
+  filter: blur(2.5px);
+}
+
+/* No blur — a clean, light watermark. */
+.features-grid .feature-media-icon {
+  filter: none;
+  color: rgba(226, 96, 31, 0.18);
+}
+
+/* lighter still */
+.features-grid .feature-media-icon {
+  color: rgba(226, 96, 31, 0.1);
 }

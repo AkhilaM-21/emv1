@@ -6,7 +6,7 @@ import {
   ChevronLeft, ChevronRight, Factory, ShoppingBag, HeartPulse, Truck,
   X, Maximize2,
   LayoutGrid, Users, Clock, Wallet, UserPlus, BarChart3, Settings, Search,
-  Layers, Home, UsersRound, Cpu,
+  Layers, Home, UsersRound, Cpu, TrendingUp,
 } from 'lucide-react';
 import './AgenticHero.css';
 
@@ -45,11 +45,13 @@ const DASH_METRICS = [
 
 // floating feature pills on the right (blue theme)
 const PILLS = [
-  { title: 'ERP', sub: 'Unified operations', icon: <Layers size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'CRM', sub: 'Deepen relationships', icon: <Home size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'HCM', sub: 'People management', icon: <UsersRound size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'AI', sub: 'Intelligent insights', icon: <Cpu size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Cloud ERP', sub: 'Unified operations', icon: <Layers size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'HR & Payroll', sub: 'People management', icon: <UsersRound size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'CRM & Sales', sub: 'Deepen relationships', icon: <TrendingUp size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Advanced Reporting', sub: 'Live insights', icon: <BarChart3 size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Workflow Automation', sub: 'No-code flows', icon: <Sparkles size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
 ];
+
 
 // dummy demo video (placeholder for now) — embedded YouTube link
 const DEMO_VIDEO = 'https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&rel=0';

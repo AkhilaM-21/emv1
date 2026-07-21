@@ -392,6 +392,15 @@ const Products = () => {
   const goPrev = () => setActiveSlide((s) => (s - 1 + slideCount) % slideCount);
   const goNext = () => setActiveSlide((s) => (s + 1) % slideCount);
 
+  // auto-advance; any manual change restarts the dwell because the
+  // effect re-runs on activeSlide
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return undefined;
+    const timer = setTimeout(() => setActiveSlide((s) => (s + 1) % slideCount), 3000);
+    return () => clearTimeout(timer);
+  }, [activeSlide, paused, slideCount]);
+
   return (
     <section id="products" className="products-section">
       <div className="container">
@@ -472,7 +481,11 @@ const Products = () => {
         </div>
 
         {/* HERO-STYLE CAROUSEL FOR DETAILED DASHBOARDS */}
-        <div className="products-carousel-stage">
+        <div
+          className="products-carousel-stage"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
           <button className="prod-arrow prev" onClick={goPrev} aria-label="Previous slide">
             <ChevronLeft size={24} />
           </button>
