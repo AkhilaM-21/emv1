@@ -185,16 +185,79 @@
   to   { transform: translateX(100%); }
 }
 
-/* On hover: card goes dark so visualizations show, lifts up */
+/* On hover the card stays light — only the border and shadow deepen. */
 .why-card:hover {
-  transform: translateY(-4px);
-  background:
-    radial-gradient(80% 45% at 50% 0%, rgba(242, 133, 63, 0.14) 0%, rgba(242, 133, 63, 0) 70%),
-    linear-gradient(165deg, rgba(24, 40, 74, 0.95) 0%, rgba(14, 26, 52, 0.97) 100%);
-  border-color: rgba(242, 133, 63, 0.35);
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 0 1px rgba(242, 133, 63, 0.12);
+  border-color: rgba(226, 96, 31, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    0 26px 44px -26px rgba(226, 96, 31, 0.45);
+}
+
+.why-card-body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 24px;
+}
+
+/* =========================================
+   POINTS
+
+   At rest each row sits flush left with its arrow tucked out of sight.
+   On hover the arrows fade in and the rows step forward one after
+   another, top to bottom, off the --i each <li> carries.
+========================================= */
+.why-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.why-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 22px;
+  color: #4b5563;
+  /* transform is left to the hover keyframes — only colour transitions here */
+  transition: color 0.5s ease;
+  transition-delay: calc(var(--i) * 160ms);
+}
+
+/* Arrows are part of the resting card, held back at half strength. */
+.why-points li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: rgba(226, 96, 31, 0.55);
+  transition: color 0.4s ease;
+}
+
+/* On hover a single ripple runs top to bottom: each row darts forward and
+   settles back, 90ms behind the one above it. It plays once per hover
+   rather than holding a shifted position, so the list reads as a sequence
+   instead of a block that moved. */
+.why-card:hover .why-points li {
+  color: #0b1730;
+  animation: why-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 160ms);
+}
+
+.why-card:hover .why-points li svg {
+  color: #e2601f;
+}
+
+@keyframes why-point-dart {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(10px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -202,33 +265,12 @@
     animation: none;
     display: none;
   }
-  .why-card:hover {
-    transform: none;
+  .why-points li {
+    transition: none;
   }
-  /* keep the copy in place and the illustration out of the way */
-  .why-card:hover .why-card-body {
-    opacity: 1;
-    transform: none;
+  .why-card:hover .why-points li {
+    animation: none;
   }
-  .why-card:hover .why-viz {
-    opacity: 0;
-  }
-}
-
-/* Text sits above the animation layer, and clears out on hover so the
-   illustration has the card to itself. */
-.why-card-body {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding: 24px;
-  transition: opacity 0.3s ease, transform 0.35s ease;
-}
-
-.why-card:hover .why-card-body {
-  opacity: 0;
-  transform: translateY(-8px);
-  pointer-events: none;
 }
 
 .why-card-title {
@@ -247,282 +289,6 @@
   color: #4b5563;
   margin: 0;
   text-wrap: pretty;
-}
-
-/* =========================================
-   CARD VISUALS
-   A living background layer filling the whole card, behind the text.
-========================================= */
-.why-viz {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  overflow: hidden;
-  pointer-events: none;
-  /* hidden until the card is hovered */
-  opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 0.4s ease, transform 0.5s ease;
-}
-
-/* Nothing animates while the card is at rest — the loops only start
-   running once it is hovered, so idle cards cost nothing. */
-.why-viz *,
-.why-viz {
-  animation-play-state: paused;
-}
-
-/* full strength — with the text gone there is nothing to read through it */
-.why-card:hover .why-viz {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.why-card:hover .why-viz *,
-.why-card:hover .why-viz {
-  animation-play-state: running;
-}
-
-.viz-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* ---- 1. Industry marquee ---- */
-.why-viz--marquee {
-  justify-content: center;
-  gap: 12px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
-    linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.2) 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent),
-    linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.2) 100%);
-  mask-composite: intersect;
-}
-
-.viz-track {
-  display: flex;
-  gap: 10px;
-  width: max-content;
-  animation: viz-marquee 26s linear infinite;
-}
-
-/* second copy of the list is offset by exactly -50% so the loop is seamless */
-.viz-track--rev {
-  animation: viz-marquee-rev 22s linear infinite;
-}
-
-@keyframes viz-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@keyframes viz-marquee-rev {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-
-.viz-pill {
-  flex: none;
-  padding: 7px 14px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  color: #ffb27a;
-  background: rgba(242, 133, 63, 0.12);
-  border: 1px solid rgba(242, 133, 63, 0.38);
-  box-shadow: 0 0 18px -6px rgba(242, 133, 63, 0.5);
-}
-
-/* ---- 2. Teams connected to one system ---- */
-.viz-wire {
-  stroke: rgba(255, 255, 255, 0.12);
-  stroke-width: 1;
-}
-
-/* a short dash runs the length of each wire — the packet */
-.viz-packet {
-  stroke: #f2853f;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 7 200;
-  filter: drop-shadow(0 0 5px rgba(242, 133, 63, 0.9));
-  animation: viz-transmit 2.8s ease-in-out infinite;
-}
-
-@keyframes viz-transmit {
-  0%   { stroke-dashoffset: 100; opacity: 0; }
-  10%  { opacity: 1; }
-  50%  { stroke-dashoffset: 0;   opacity: 1; }
-  90%  { stroke-dashoffset: -100; opacity: 0; }
-  100% { stroke-dashoffset: -100; opacity: 0; }
-}
-
-.viz-user-head,
-.viz-user-body {
-  fill: none;
-  stroke: rgba(203, 215, 234, 0.65);
-  stroke-width: 1.6;
-}
-
-.viz-user {
-  animation: viz-user-lit 2.8s ease-in-out infinite;
-}
-
-@keyframes viz-user-lit {
-  0%, 40%, 100% { opacity: 0.55; }
-  60%           { opacity: 1; }
-}
-
-.viz-screen {
-  fill: rgba(11, 23, 48, 0.95);
-  stroke: #f2853f;
-  stroke-width: 1.6;
-  filter: drop-shadow(0 0 16px rgba(242, 133, 63, 0.35));
-}
-
-.viz-screen-line {
-  fill: rgba(203, 215, 234, 0.35);
-}
-
-.viz-screen-line--hot {
-  fill: #f2853f;
-  animation: viz-blink 1.6s steps(1, end) infinite;
-}
-
-@keyframes viz-blink {
-  0%, 60% { opacity: 1; }
-  61%, 100% { opacity: 0.25; }
-}
-
-.viz-stand {
-  fill: rgba(203, 215, 234, 0.45);
-}
-
-/* ---- 3. Compliance shield ---- */
-.why-viz--shield {
-  justify-content: center;
-}
-
-.viz-stream {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 14px;
-  opacity: 0.5;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
-}
-
-.viz-code {
-  flex: none;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: rgba(159, 176, 205, 0.75);
-  white-space: nowrap;
-}
-
-.viz-shield {
-  position: relative;
-  height: 110px;
-  width: auto;
-}
-
-.viz-shield-body {
-  fill: rgba(11, 23, 48, 0.92);
-  stroke: #f2853f;
-  stroke-width: 2.5;
-}
-
-.viz-check {
-  fill: none;
-  stroke: #f2853f;
-  stroke-width: 7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 70;
-  animation: viz-draw 3.4s ease-in-out infinite;
-}
-
-@keyframes viz-draw {
-  0%        { stroke-dashoffset: 70; }
-  35%, 80%  { stroke-dashoffset: 0; }
-  100%      { stroke-dashoffset: 70; }
-}
-
-/* ---- 4. Regions ---- */
-.viz-globe-edge {
-  fill: rgba(255, 255, 255, 0.02);
-  stroke: rgba(255, 255, 255, 0.16);
-  stroke-width: 1.2;
-}
-
-.viz-globe-line {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.1);
-  stroke-width: 1;
-}
-
-.viz-ping {
-  animation: viz-ping-fade 3s ease-in-out infinite;
-}
-
-.viz-ping-dot {
-  fill: #f2853f;
-}
-
-.viz-ping-ring {
-  fill: none;
-  stroke: rgba(242, 133, 63, 0.5);
-  stroke-width: 1.2;
-}
-
-@keyframes viz-ping-fade {
-  0%, 70%, 100% { opacity: 0.25; }
-  20%           { opacity: 1; }
-}
-
-.viz-cur {
-  fill: rgba(159, 176, 205, 0.8);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.viz-fx text {
-  animation: viz-cur-fade 3.6s ease-in-out infinite;
-}
-.viz-fx text:nth-child(2) { animation-delay: 1.2s; }
-.viz-fx text:nth-child(3) { animation-delay: 2.4s; }
-
-@keyframes viz-cur-fade {
-  0%, 60%, 100% { opacity: 0.35; }
-  25%           { opacity: 1; fill: #f2853f; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .viz-track,
-  .viz-packet,
-  .viz-user,
-  .viz-screen-line--hot,
-  .viz-check,
-  .viz-ping,
-  .viz-fx text {
-    animation: none;
-  }
-  .viz-check { stroke-dashoffset: 0; }
 }
 
 /* ---- ≥601px ---- */
@@ -625,7 +391,6 @@
 }
 
 .why-card:hover {
-  transform: translateY(-4px);
   border-color: rgba(11, 23, 48, 0.12);
   box-shadow:
     0 2px 4px rgba(11, 23, 48, 0.05),
@@ -660,12 +425,6 @@
 .why-card:hover .why-card-title::after {
   width: 46px;
   background: linear-gradient(90deg, #f0883e 0%, #e2601f 100%);
-}
-
-.why-card-desc {
-  font-size: 15.5px !important;
-  line-height: 1.75 !important;
-  color: #6b7280;
 }
 
 @media (min-width: 1200px) {
@@ -710,83 +469,4 @@
 @media (max-width: 768px) {
   .why-panel { padding: 20px !important; }
   .why-grid { gap: 16px !important; }
-}
-
-/* ---- 1. Industry tiles: each lights up in turn ---- */
-.why-viz--tiles {
-  padding: 18px;
-}
-
-.viz-tiles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  width: 100%;
-}
-
-.viz-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 12px 6px;
-  border-radius: 12px;
-  text-align: center;
-  color: rgba(203, 215, 234, 0.55);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  animation: viz-tile-lit 3.3s ease-in-out infinite;
-}
-
-.viz-tile span {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-}
-
-@keyframes viz-tile-lit {
-  0%, 78%, 100% {
-    color: rgba(203, 215, 234, 0.5);
-    border-color: rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
-    transform: translateY(0);
-  }
-  88% {
-    color: #ffb27a;
-    border-color: rgba(242, 133, 63, 0.65);
-    background: rgba(242, 133, 63, 0.14);
-    transform: translateY(-3px);
-  }
-}
-
-/* ==========================================================
-   HOVER GLITCH FIXES
-   1. The 4px lift moved the card out from under the cursor near
-      its edges, so hover toggled on/off in a loop (flicker).
-      Depth now comes from the shadow, not movement.
-   2. Animations were paused at rest and started on hover, which
-      made every loop jump to its delayed position. They now run
-      continuously — the layer is simply invisible until hover.
-   ========================================================== */
-.why-card:hover {
-  transform: none;
-}
-
-.why-viz *,
-.why-viz,
-.why-card:hover .why-viz *,
-.why-card:hover .why-viz {
-  animation-play-state: running;
-}
-
-/* no scale-in either — that re-triggered layout on entry */
-.why-viz {
-  transform: none;
-  transition: opacity 0.35s ease;
-}
-
-.why-card:hover .why-viz {
-  transform: none;
 }

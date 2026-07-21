@@ -18,6 +18,9 @@ const Home = () => {
       <Clients />
       <Products />
       <Features />
+      {/* second pass of the same section, one accent colour per card —
+          here so the client can compare both treatments side by side */}
+      <Features variant="color" id="features-color" />
       <Announcement />
       <AppBuilder />
       <WhyEmvive />

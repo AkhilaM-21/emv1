@@ -227,12 +227,16 @@ const AgenticHero = () => {
           onMouseLeave={() => { pausedRef.current = false; }}
         >
           {INDUSTRIES.map((ind, i) => (
-            <div key={ind.key} className="ind-card" style={{ backgroundImage: ind.grad }}>
-              <span className="ind-ic">{ind.icon}</span>
-              <div className="ind-body">
-                <h3 className="ind-title">{t(`agenticHero.industries.${i}.title`, ind.title)}</h3>
-                <p className="ind-desc">{t(`agenticHero.industries.${i}.desc`, ind.desc)}</p>
-                <a href="#platform" className="ind-link">{t(`agenticHero.industries.${i}.link`, ind.link)} <ArrowRight size={15} /></a>
+            /* The slot holds the size and never moves — the card lifts inside
+               it, so :hover can't be lost when the card slides up. */
+            <div key={ind.key} className="ind-slot">
+              <div className="ind-card" style={{ backgroundImage: ind.grad }}>
+                <span className="ind-ic">{ind.icon}</span>
+                <div className="ind-body">
+                  <h3 className="ind-title">{t(`agenticHero.industries.${i}.title`, ind.title)}</h3>
+                  <p className="ind-desc">{t(`agenticHero.industries.${i}.desc`, ind.desc)}</p>
+                  <a href="#platform" className="ind-link">{t(`agenticHero.industries.${i}.link`, ind.link)} <ArrowRight size={15} /></a>
+                </div>
               </div>
             </div>
           ))}

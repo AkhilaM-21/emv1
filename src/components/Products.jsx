@@ -397,7 +397,7 @@ const Products = () => {
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused) return undefined;
-    const timer = setTimeout(() => setActiveSlide((s) => (s + 1) % slideCount), 3000);
+    const timer = setTimeout(() => setActiveSlide((s) => (s + 1) % slideCount), 2200);
     return () => clearTimeout(timer);
   }, [activeSlide, paused, slideCount]);
 
