@@ -21,6 +21,8 @@ const Home = () => {
       {/* second pass of the same section, one accent colour per card —
           here so the client can compare both treatments side by side */}
       <Features variant="color" id="features-color" />
+      {/* third pass: solid card colors like in Agentic Hero */}
+      <Features variant="solid" id="features-solid" />
       <Announcement />
       <AppBuilder />
       <WhyEmvive />

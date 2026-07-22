@@ -213,7 +213,8 @@ body.dark-theme .radar-circle { border-color: rgba(255, 255, 255, 0.15); }
 body.dark-theme .why-emvive-section { background-color: #0d1330; }
 
 /* ---------- FEATURES ---------- */
-body.dark-theme .features-section { background-color: #0a0f24; }
+body.dark-theme .features-section:not(.features-section--solid) { background-color: #0a0f24; }
+body.dark-theme .features-section--solid { background: #ffffff !important; background-color: #ffffff !important; }
 body.dark-theme .features-title { color: #ffffff; }
 body.dark-theme .features-subtitle { color: #94a3b8; }
 body.dark-theme .features-badge {
@@ -221,7 +222,7 @@ body.dark-theme .features-badge {
   color: #f2853f;
   border-color: rgba(255, 255, 255, 0.08);
 }
-body.dark-theme .feature-card,
+body.dark-theme .feature-card:not(.feature-card--solid),
 body.dark-theme .hub-logo-box {
   background: linear-gradient(180deg, #141b3a 0%, #0f1631 100%);
   border-color: rgba(255, 255, 255, 0.08);
