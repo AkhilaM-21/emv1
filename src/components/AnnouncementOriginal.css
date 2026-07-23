@@ -1,42 +1,45 @@
-.ann-section {
-  background: #f6efe9;
-  padding: 6rem 0;
+.ann-section-original {
+  background: #ffffff;
+  padding: 40px 20px;
   font-family: 'Inter', sans-serif;
 }
 
-.ann-container {
+.ann-container-original {
+  max-width: 1300px;
   width: 100%;
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 2rem;
 }
 
-
-
-.ann-card {
-  background: transparent;
+.ann-card-original {
+  background: #f6efe9;
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
-  .ann-card {
+  .ann-card-original {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 0;
+    padding: 40px 50px;
     gap: 40px;
   }
 }
 
 /* Left side — text content */
-.ann-content {
+.ann-content-original {
   flex: 1;
-  padding: 0;
-  max-width: 480px;
+  padding: 40px;
 }
 
-.ann-eyebrow {
+@media (min-width: 900px) {
+  .ann-content-original {
+    padding: 0;
+  }
+}
+
+.ann-eyebrow-original {
   display: block;
   font-size: 0.8rem;
   font-weight: 700;
@@ -46,16 +49,17 @@
   margin-bottom: 1rem;
 }
 
-.ann-heading {
+.ann-heading-original {
   font-size: 2.2rem;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -1px;
   color: #0b1730;
   margin: 0 0 1rem 0;
+  max-width: 480px;
 }
 
-.ann-heading .text-accent {
+.ann-heading-original .text-accent-original {
   background: linear-gradient(100deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -63,21 +67,22 @@
   color: transparent;
 }
 
-.ann-desc {
+.ann-desc-original {
   font-size: 0.95rem;
   line-height: 1.5;
   color: #4b5563;
   margin: 0 0 1.5rem 0;
+  max-width: 480px;
 }
 
-.ann-actions {
+.ann-actions-original {
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
 }
 
-.ann-btn-primary {
+.ann-btn-primary-original {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -92,12 +97,12 @@
   box-shadow: 0 4px 12px rgba(226, 96, 31, 0.3);
 }
 
-.ann-btn-primary:hover {
+.ann-btn-primary-original:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(226, 96, 31, 0.4);
 }
 
-.ann-btn-secondary {
+.ann-btn-secondary-original {
   display: inline-flex;
   align-items: center;
   background: transparent;
@@ -111,13 +116,13 @@
   transition: all 0.2s ease;
 }
 
-.ann-btn-secondary:hover {
+.ann-btn-secondary-original:hover {
   border-color: #9ca3af;
   background: rgba(0, 0, 0, 0.03);
 }
 
 /* Right side — visual panel */
-.ann-visual {
+.ann-visual-original {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -126,13 +131,12 @@
 }
 
 @media (min-width: 900px) {
-  .ann-visual {
+  .ann-visual-original {
     padding: 0;
-    justify-content: flex-end;
   }
 }
 
-.ann-visual-panel {
+.ann-visual-panel-original {
   position: relative;
   width: 100%;
   max-width: 460px;
@@ -146,75 +150,18 @@
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
 }
 
-.ann-constellation {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Constellation edges */
-.ann-edge {
-  stroke: rgba(140, 120, 200, 0.35);
-  stroke-width: 1;
-  animation: ann-edge-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes ann-edge-glow {
-  0% { stroke: rgba(140, 120, 200, 0.2); }
-  100% { stroke: rgba(160, 140, 220, 0.5); }
-}
-
-/* Constellation nodes */
-.ann-node {
-  fill: #a78bfa;
-  animation: ann-node-pulse 2.5s ease-in-out infinite alternate;
-}
-
-.ann-node-ring {
-  fill: none;
-  stroke: rgba(167, 139, 250, 0.3);
-  stroke-width: 1;
-  animation: ann-ring-pulse 3s ease-in-out infinite alternate;
-}
-
-@keyframes ann-node-pulse {
-  0% { opacity: 0.6; r: 3; }
-  100% { opacity: 1; r: 5; }
-}
-
-@keyframes ann-ring-pulse {
-  0% { opacity: 0; r: 6; }
-  100% { opacity: 0.4; r: 12; }
-}
-
-/* Icon badge at bottom-left of visual */
-.ann-icon-badge {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #6d28d9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4);
-}
-
 /* Responsive */
 @media (max-width: 900px) {
-  .ann-heading {
+  .ann-heading-original {
     font-size: 2.2rem;
     max-width: none;
   }
 
-  .ann-desc {
+  .ann-desc-original {
     max-width: none;
   }
 
-  .ann-visual-panel {
+  .ann-visual-panel-original {
     max-width: 100%;
   }
 }
