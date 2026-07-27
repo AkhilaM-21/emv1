@@ -48,11 +48,13 @@ const Announcement = () => {
             <p className="ann-desc">
               AI agents run inside your Emvive tenant with the same permissions as your users. They detect ledger exceptions, reconcile invoices end-to-end, chase vendors and post journals — escalating to humans only when judgement is required.
             </p>
+            {/* reuse the CTA button pair so the UI and colours match exactly */}
             <div className="ann-actions">
-              <a href="#blog" className="ann-btn-primary">
-                Read the blog <ArrowRight size={16} />
+              <a href="#blog" className="cta-btn-primary">
+                Read the blog
+                <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
               </a>
-              <a href="#demo" className="ann-btn-secondary">
+              <a href="#demo" className="cta-btn-secondary">
                 See agents in action
               </a>
             </div>

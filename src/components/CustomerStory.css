@@ -1,5 +1,5 @@
 .cs-section {
-  background-color: #ffffff; /* Explicitly white so it doesn't become dark in dark mode */
+  background-color: #f6efe9; /* full-width cream, matching Why Emvive */
   padding: 100px 20px;
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
 }
 
 .cs-container {
-  max-width: 1300px; /* Increased width as requested */
+  max-width: 1720px; /* match the Why Emvive panel width */
   width: 100%;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .cs-card {
-  background-color: #f6efe9; /* Light orange/beige background as requested */
+  background-color: #ffffff; /* white card on the cream section */
   border-radius: 24px;
   display: flex;
   flex-direction: column;

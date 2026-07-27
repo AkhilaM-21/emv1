@@ -495,6 +495,8 @@ body.dark-theme .global-section-title {
 .cta-eyebrow,
 .res-eyebrow,
 .cs-eyebrow-top,
+.ab-eyebrow,
+.ann-eyebrow,
 .emv-subtitle {
   display: inline-flex !important;
   align-items: center !important;
@@ -520,6 +522,8 @@ body.dark-theme .global-section-title {
 .cta-eyebrow::before,
 .res-eyebrow::before,
 .cs-eyebrow-top::before,
+.ab-eyebrow::before,
+.ann-eyebrow::before,
 .emv-subtitle::before {
   content: '';
   width: 8px;
@@ -540,6 +544,8 @@ body.dark-theme .features-kicker,
 body.dark-theme .cta-eyebrow,
 body.dark-theme .res-eyebrow,
 body.dark-theme .cs-eyebrow-top,
+body.dark-theme .ab-eyebrow,
+body.dark-theme .ann-eyebrow,
 body.dark-theme .emv-subtitle {
   color: #f7a869 !important;
   background: rgba(226, 96, 31, 0.12) !important;
@@ -861,6 +867,7 @@ body.dark-theme .emv-subtitle {
 .features-kicker,
 .ab-eyebrow,
 .ab-badge,
+.ann-eyebrow,
 .why-eyebrow,
 .globe-kicker,
 .cs-eyebrow-top,
@@ -890,6 +897,7 @@ body.dark-theme .emv-subtitle {
 .emv-subtitle::before,
 .features-kicker::before,
 .ab-eyebrow::before,
+.ann-eyebrow::before,
 .why-eyebrow::before,
 .globe-kicker::before,
 .cs-eyebrow-top::before,

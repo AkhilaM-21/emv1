@@ -41,17 +41,18 @@
 
 /* Eyebrow + heading match .emv-subtitle / .emv-headline in Products.css
    so both sections read as one system. */
-/* Override global index.css badge styles for this specific light-orange panel */
+/* Same orange pill as every other section (matches the unified rule in
+   index.css) — no special maroon treatment on the cream panel. */
 .why-panel .why-eyebrow {
-  color: #a83610 !important;
-  background: rgba(214, 70, 26, 0.08) !important;
-  border-color: rgba(214, 70, 26, 0.2) !important;
-  box-shadow: none !important;
+  color: #d9531f !important;
+  background: rgba(226, 96, 31, 0.08) !important;
+  border-color: rgba(217, 83, 31, 0.25) !important;
+  box-shadow: 0 0 24px rgba(226, 96, 31, 0.1) !important;
 }
 
 .why-panel .why-eyebrow::before {
-  background: #a83610 !important;
-  box-shadow: 0 0 8px rgba(168, 54, 16, 0.5) !important;
+  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%) !important;
+  box-shadow: 0 0 8px #f6a04a !important;
 }
 
 .why-heading {
