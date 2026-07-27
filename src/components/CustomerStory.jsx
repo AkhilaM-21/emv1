@@ -2,65 +2,49 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import './CustomerStory.css';
 
+/* SAMPLE stories — illustrative examples only, to be replaced with real,
+   verified case studies. Names, figures and quotes here are placeholders. */
 const STORIES = [
   {
     id: 1,
-    company: 'Meridian Logistics',
-    eyebrow: 'MERIDIAN LOGISTICS · 12 COUNTRIES · 1,800 EMPLOYEES',
-    quote: '"Emvive replaced our ERP and HR stack. Our month-end close went from eleven days to four."',
-    authorName: 'Anika Rao',
-    authorRole: 'CFO, Meridian Logistics',
+    company: 'Gulf Build Contracting',
+    eyebrow: 'CONSTRUCTION & ENGINEERING · SAUDI ARABIA',
+    quote: 'Projects, procurement and costs finally live in one place.',
+    detail: 'Site teams, procurement and finance now work from a single source of data, reducing manual reconciliation across active projects.',
     stats: [
-      { value: '-64%', label: 'Month-end close time', colorClass: 'cs-stat-orange' },
-      { value: '$2.1M', label: 'Annual tooling saved', colorClass: '' },
-      { value: '9wk', label: 'Time to go-live', colorClass: '' }
+      { value: '6 → 1', label: 'Systems replaced', colorClass: 'cs-stat-orange' },
+      { value: 'Real-time', label: 'Project cost view', colorClass: '' },
+      { value: '~40%', label: 'Less admin work', colorClass: '' }
     ],
-    mediaType: 'video',
+    mediaType: 'image',
     mediaUrl: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 2,
-    company: 'Lumen Health',
-    eyebrow: 'LUMEN HEALTH · HEALTHCARE · 5,000+ STAFF',
-    quote: '"Staff scheduling and payroll are finally in sync, saving us hundreds of hours weekly."',
-    authorName: 'Sarah Kim',
-    authorRole: 'Ops Director, Lumen Health',
+    company: 'Marina Retail Group',
+    eyebrow: 'RETAIL & COMMERCE · UAE',
+    quote: 'POS, inventory and finance connected across every branch.',
+    detail: 'Live stock and sales data across branches gives head office one real-time view of the business.',
     stats: [
-      { value: '120h', label: 'Saved per week', colorClass: 'cs-stat-orange' },
-      { value: '100%', label: 'Compliance rate', colorClass: '' },
-      { value: '3wk', label: 'Implementation', colorClass: '' }
-    ],
-    mediaType: 'video',
-    mediaUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80'
-  },
-  {
-    id: 3,
-    company: 'Nimbus Retail',
-    eyebrow: 'NIMBUS RETAIL · E-COMMERCE · 3M CUSTOMERS',
-    quote: '"Real-time inventory across every warehouse cut our stockouts by 40%."',
-    authorName: 'David Okoro',
-    authorRole: 'Supply Chain Lead, Nimbus Retail',
-    stats: [
-      { value: '-40%', label: 'Stockouts reduced', colorClass: 'cs-stat-orange' },
-      { value: '99.9%', label: 'Inventory accuracy', colorClass: '' },
-      { value: '+$1M', label: 'Recovered revenue', colorClass: '' }
+      { value: '12', label: 'Branches live', colorClass: 'cs-stat-orange' },
+      { value: 'Real-time', label: 'Inventory sync', colorClass: '' },
+      { value: '~30%', label: 'Less manual entry', colorClass: '' }
     ],
     mediaType: 'image',
     mediaUrl: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80'
   },
   {
-    id: 4,
-    company: 'Zephyr Group',
-    eyebrow: 'ZEPHYR GROUP · IT SERVICES · GLOBAL',
-    quote: '"The rollout across 14 countries was incredibly smooth. Setup was entirely painless."',
-    authorName: 'Omar Haddad',
-    authorRole: 'VP of IT, Zephyr Group',
+    id: 3,
+    company: 'Meridian Advisory',
+    eyebrow: 'PROFESSIONAL SERVICES · GCC',
+    quote: 'Projects, people and billing in one connected flow.',
+    detail: 'Time, expenses and billing now flow from project delivery straight into finance, with fewer gaps between teams.',
     stats: [
-      { value: '14', label: 'Countries deployed', colorClass: 'cs-stat-orange' },
-      { value: 'Zero', label: 'Downtime incidents', colorClass: '' },
-      { value: '4mos', label: 'To full adoption', colorClass: '' }
+      { value: '1 platform', label: 'Projects to finance', colorClass: 'cs-stat-orange' },
+      { value: 'Faster', label: 'Invoicing cycle', colorClass: '' },
+      { value: 'More', label: 'Billable hours captured', colorClass: '' }
     ],
-    mediaType: 'video',
+    mediaType: 'image',
     mediaUrl: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=800&q=80'
   }
 ];
@@ -83,8 +67,11 @@ const CustomerStory = () => {
           <div className="cs-header">
             <span className="cs-eyebrow-top">CUSTOMER STORIES</span>
             <h2 className="cs-title">
-              See how <span className="text-accent">teams are transforming</span> their work.
+              See how businesses are <span className="text-accent">transforming the way they work.</span>
             </h2>
+            <p className="cs-sub">
+              See how organizations use Emvive to connect operations, improve visibility and manage everyday business processes from one platform.
+            </p>
           </div>
           <div className="cs-nav-buttons">
             <button className="cs-nav-btn" onClick={prevSlide} aria-label="Previous story">
@@ -115,15 +102,14 @@ const CustomerStory = () => {
                   
                   <div className="cs-content-side">
                     <span className="cs-eyebrow-card">{story.eyebrow}</span>
+                    <p className="cs-company">{story.company}</p>
                     <blockquote className="cs-quote">
                       {story.quote}
                     </blockquote>
-                    <p className="cs-author">
-                      <strong>{story.authorName}</strong> &middot; {story.authorRole}
-                    </p>
-                    
+                    <p className="cs-author">{story.detail}</p>
+
                     <hr className="cs-divider" />
-                    
+
                     <div className="cs-stats">
                       {story.stats.map((stat, i) => (
                         <div className="cs-stat-item" key={i}>
@@ -132,6 +118,10 @@ const CustomerStory = () => {
                         </div>
                       ))}
                     </div>
+
+                    <a href="#" className="cs-read-link">
+                      Read Customer Story <ChevronRight size={16} />
+                    </a>
                   </div>
                 </div>
               </div>

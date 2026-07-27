@@ -70,7 +70,7 @@
 }
 
 .footer-heading {
-  font-size: 0.8rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #1e293b;
   letter-spacing: 1px;
@@ -88,10 +88,11 @@
 }
 
 .footer-links a {
-  color: #475569;
+  color: #1e293b;
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.2px;
   transition: color 0.2s ease;
 }
 

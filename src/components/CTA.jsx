@@ -11,12 +11,12 @@ const CTA = () => {
         <span className="cta-eyebrow">READY TO RUN YOUR BUSINESS BETTER?</span>
 
         <h2 className="cta-title">
-          See what <span className="text-accent">one connected business platform</span> can do for you.
+          See what <span className="text-accent">one connected business platform</span><br />
+          can do for you.
         </h2>
 
         <p className="cta-subtitle">
-          Discover how Emvive can bring your finance, supply chain, sales, people, projects,<br />
-          POS, compliance, reporting and workflows together around the way your business operates.
+          Discover how Emvive can bring your finance, supply chain, sales, people, projects, POS, compliance, reporting and workflows together around the way your business operates.
         </p>
 
         <div className="cta-actions">

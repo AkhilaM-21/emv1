@@ -48,7 +48,8 @@
   color: #9ca3af;
   margin: 0 auto 2.5rem;
   line-height: 1.6;
-  max-width: 800px;
+  /* same width as the heading above */
+  max-width: 1000px;
 }
 
 .cta-microcopy {

@@ -5,26 +5,26 @@ import './Resources.css';
 const RESOURCES = [
   {
     id: 1,
-    category: 'WHITEPAPER',
-    categoryColor: 'res-cat-green',
-    title: 'The 2026 State of Global Operations',
-    description: 'How 400+ finance leaders are consolidating stacks and adopting agentic workflows.',
-    gradient: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 40%, #6366f1 100%)',
-  },
-  {
-    id: 2,
     category: 'GUIDE',
     categoryColor: 'res-cat-blue',
-    title: 'Multi-entity close in 4 days, not 11',
-    description: 'A step-by-step playbook for shortening month-end across borders and currencies.',
+    title: 'A Practical Guide to Connecting Finance and Operations',
+    description: 'How connected data between finance and operations cuts manual work and delays.',
     gradient: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 40%, #06b6d4 100%)',
   },
   {
+    id: 2,
+    category: 'REPORT / INSIGHT',
+    categoryColor: 'res-cat-green',
+    title: 'What Growing Businesses Should Look for in a Modern ERP',
+    description: 'The capabilities that matter when you outgrow spreadsheets and disconnected tools.',
+    gradient: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 40%, #6366f1 100%)',
+  },
+  {
     id: 3,
-    category: 'CASE STUDY',
+    category: 'PLAYBOOK',
     categoryColor: 'res-cat-red',
-    title: 'How Meridian saved $2.1M in tooling',
-    description: 'The 12-week migration story: from 7 systems to a single operating platform.',
+    title: 'Building a More Connected Procure-to-Pay Process',
+    description: 'Steps to link purchasing, receiving, invoicing and payments end to end.',
     gradient: 'linear-gradient(135deg, #ef4444 0%, #f97316 50%, #dc2626 100%)',
   },
 ];
@@ -37,11 +37,14 @@ const Resources = () => {
           <div className="res-header-text">
             <span className="res-eyebrow">RESOURCES</span>
             <h2 className="res-heading">
-              Insights, reports and <span className="text-accent">playbooks&nbsp;for&nbsp;operators.</span>
+              Practical insights for <span className="text-accent">running&nbsp;a&nbsp;better&nbsp;business.</span>
             </h2>
+            <p className="res-sub">
+              Explore guides, reports and practical resources for finance, HR, sales, operations and business leaders managing growing organizations.
+            </p>
           </div>
           <a href="#resources" className="res-view-all">
-            View all resources <ArrowRight size={16} />
+            Explore All Resources <ArrowRight size={16} />
           </a>
         </div>
 

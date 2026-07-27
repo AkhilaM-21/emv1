@@ -19,7 +19,7 @@ const FEATURES = [
   { id: 9, icon: Store, title: 'Retail & POS', color: '#9333ea', rgb: '147, 51, 234', grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
   { id: 10, icon: FileCheck, title: 'E-Invoicing & Tax', color: '#0891b2', rgb: '8, 145, 178', grad: 'linear-gradient(165deg, #0891b2 0%, #164e63 100%)' },
   { id: 11, icon: Handshake, title: 'Vendor & Customer Portals', color: '#e2601f', rgb: '226, 96, 31', grad: 'linear-gradient(165deg, #f0883e 0%, #b44410 100%)' },
-  { id: 12, icon: Blocks, title: 'No-Code Studio', color: '#ec4899', rgb: '236, 72, 153', grad: 'linear-gradient(165deg, #ec4899 0%, #831843 100%)' }
+  { id: 12, icon: Blocks, title: 'Low-Code Studio', color: '#ec4899', rgb: '236, 72, 153', grad: 'linear-gradient(165deg, #ec4899 0%, #831843 100%)' }
 ];
 
 const FeatureCard = ({ feature, variant }) => {

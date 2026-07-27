@@ -7,7 +7,7 @@ import {
   X, Maximize2,
   LayoutGrid, Users, Clock, Wallet, UserPlus, BarChart3, Settings, Search,
   Layers, Home, UsersRound, Cpu, TrendingUp,
-  HardHat, Utensils, Briefcase, Headphones,
+  HardHat, Utensils, Briefcase, Headphones, Wrench, Building2,
 } from 'lucide-react';
 import './AgenticHero.css';
 
@@ -77,14 +77,17 @@ const FEATURES = [
   { icon: <InfinityIcon size={22} />, color: 'linear-gradient(180deg, #fdeede,#f9d2b3)', iconColor: '#c2491b', title: 'Enterprise-ready', sub: 'Secure & compliant' },
 ];
 
-// Industries (master document §11) — text comes from en.json, icons/gradients here.
+// Industries carousel — text comes from en.json, icons/gradients here.
 const INDUSTRIES = [
-  { key: 'construction', title: 'Construction & Contracting', desc: 'Connect projects, procurement, workforce, costs, and finance.', link: 'Explore Construction', icon: <HardHat size={30} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
-  { key: 'retail', title: 'Retail & Restaurants', desc: 'Connect POS, inventory, purchasing, people, and finance.', link: 'Explore Retail & Restaurants', icon: <Utensils size={30} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
+  { key: 'construction', title: 'Construction & Engineering', desc: 'Connect projects, procurement, workforce, costs, and finance.', link: 'Explore Construction & Engineering', icon: <HardHat size={30} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
+  { key: 'retail', title: 'Retail & Commerce', desc: 'Connect POS, inventory, purchasing, people, and finance.', link: 'Explore Retail & Commerce', icon: <ShoppingBag size={30} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
   { key: 'mfg', title: 'Manufacturing', desc: 'Connect production, inventory, procurement, sales, and finance.', link: 'Explore Manufacturing', icon: <Factory size={30} />, grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
-  { key: 'trading', title: 'Trading & Distribution', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', link: 'Explore Trading & Distribution', icon: <Truck size={30} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
+  { key: 'supply', title: 'Supply Chain & Distribution', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', link: 'Explore Supply Chain & Distribution', icon: <Truck size={30} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
   { key: 'services', title: 'Professional Services', desc: 'Connect projects, people, customers, expenses, and billing.', link: 'Explore Professional Services', icon: <Briefcase size={30} />, grad: 'linear-gradient(165deg, #d9722a 0%, #114e87 100%)' },
-  { key: 'serviceorg', title: 'Service Organizations', desc: 'Connect customers, teams, workflows, finance, and reporting.', link: 'Explore Service Organizations', icon: <Headphones size={30} />, grad: 'linear-gradient(165deg, #1f9f70 0%, #0f5d44 100%)' },
+  { key: 'field', title: 'Field Service Management', desc: 'Connect scheduling, technicians, assets, billing, and finance.', link: 'Explore Field Service Management', icon: <Wrench size={30} />, grad: 'linear-gradient(150deg, #4f46e5 0%, #06b6d4 100%)' },
+  { key: 'healthcare', title: 'Healthcare', desc: 'Connect patients, staff, inventory, billing, and compliance.', link: 'Explore Healthcare', icon: <HeartPulse size={30} />, grad: 'linear-gradient(150deg, #0ea5e9 0%, #22c55e 100%)' },
+  { key: 'realestate', title: 'Real Estate & Property', desc: 'Connect properties, leasing, tenants, payments, and finance.', link: 'Explore Real Estate & Property', icon: <Building2 size={30} />, grad: 'linear-gradient(150deg, #8b5cf6 0%, #ec4899 100%)' },
+  { key: 'hospitality', title: 'Hospitality & Restaurants', desc: 'Connect POS, inventory, staff, bookings, and finance.', link: 'Explore Hospitality & Restaurants', icon: <Utensils size={30} />, grad: 'linear-gradient(150deg, #f97316 0%, #ec4899 100%)' },
 ];
 
 const AgenticHero = () => {

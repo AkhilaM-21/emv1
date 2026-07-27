@@ -1,37 +1,106 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  ArrowRight,
+  FileText, Send, Users, ShoppingCart, PackageCheck, ReceiptText, CreditCard,
+  UserPlus, Target, ClipboardList, Truck,
+} from 'lucide-react';
 import './Announcement.css';
 
-/* Constellation animation for the right panel */
-const ConstellationViz = () => {
-  const nodes = [
-    { x: 60, y: 30 }, { x: 140, y: 20 }, { x: 220, y: 45 },
-    { x: 260, y: 100 }, { x: 200, y: 140 }, { x: 120, y: 120 },
-    { x: 80, y: 80 }, { x: 170, y: 75 },
-  ];
-  const edges = [
-    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 0],
-    [1, 7], [7, 4], [7, 2], [6, 5],
-  ];
+/* The two end-to-end business processes documented in the Emvive ERP
+   Master Document. Selecting a tab shows the actual stages of that flow,
+   which then light up one after another so "connected" is demonstrated
+   rather than just claimed. */
+const FLOWS = {
+  p2p: {
+    tab: 'Procure-to-Pay',
+    label: 'PROCURE-TO-PAY',
+    caption: 'From request to payment, connected.',
+    steps: [
+      { icon: FileText, label: 'Purchase Request' },
+      { icon: Send, label: 'RFQ' },
+      { icon: Users, label: 'Vendor Selection' },
+      { icon: ShoppingCart, label: 'Purchase Order' },
+      { icon: PackageCheck, label: 'Goods Receipt' },
+      { icon: ReceiptText, label: 'Vendor Invoice' },
+      { icon: CreditCard, label: 'Payment' },
+    ],
+  },
+  o2c: {
+    tab: 'Order-to-Cash',
+    label: 'ORDER-TO-CASH',
+    caption: 'From lead to payment, connected.',
+    steps: [
+      { icon: UserPlus, label: 'Lead' },
+      { icon: Target, label: 'Opportunity' },
+      { icon: FileText, label: 'Quotation' },
+      { icon: ClipboardList, label: 'Sales Order' },
+      { icon: Truck, label: 'Delivery' },
+      { icon: ReceiptText, label: 'Sales Invoice' },
+      { icon: CreditCard, label: 'Payment' },
+    ],
+  },
+};
+
+/* A distinct colour per stage so the flow reads as a sequence of steps
+   rather than one block. Applied by position, shared across both flows. */
+const PALETTE = ['#8b5cf6', '#6366f1', '#3b82f6', '#0ea5e9', '#14b8a6', '#f59e0b', '#ec4899'];
+
+const ProcessFlow = () => {
+  const [tab, setTab] = useState('p2p');
+  const [active, setActive] = useState(0);
+  const flow = FLOWS[tab];
+
+  /* Advance the highlighted stage on a loop; reset whenever the tab
+     changes so the new flow always begins at its first stage. */
+  useEffect(() => {
+    setActive(0);
+    const id = setInterval(() => {
+      setActive((prev) => (prev + 1) % flow.steps.length);
+    }, 1050);
+    return () => clearInterval(id);
+  }, [tab, flow.steps.length]);
 
   return (
-    <svg viewBox="0 0 320 180" className="ann-constellation">
-      {edges.map(([a, b], i) => (
-        <line
-          key={`e${i}`}
-          x1={nodes[a].x} y1={nodes[a].y}
-          x2={nodes[b].x} y2={nodes[b].y}
-          className="ann-edge"
-          style={{ animationDelay: `${i * 0.2}s` }}
-        />
-      ))}
-      {nodes.map((n, i) => (
-        <g key={`n${i}`}>
-          <circle cx={n.x} cy={n.y} r="4" className="ann-node" style={{ animationDelay: `${i * 0.3}s` }} />
-          <circle cx={n.x} cy={n.y} r="8" className="ann-node-ring" style={{ animationDelay: `${i * 0.3}s` }} />
-        </g>
-      ))}
-    </svg>
+    <div className="ann-visual-panel">
+      <div className="flow-tabs" role="tablist" aria-label="Business processes">
+        {Object.entries(FLOWS).map(([key, f]) => (
+          <button
+            key={key}
+            type="button"
+            role="tab"
+            aria-selected={tab === key}
+            className={`flow-tab ${tab === key ? 'is-active' : ''}`}
+            onClick={() => setTab(key)}
+          >
+            {f.tab}
+          </button>
+        ))}
+      </div>
+
+      <div className="flow-track" key={tab}>
+        {flow.steps.map((step, i) => {
+          const Icon = step.icon;
+          const state = i === active ? 'is-active' : i < active ? 'is-done' : '';
+          return (
+            <div
+              className={`flow-step ${state}`}
+              key={step.label}
+              style={{ '--c': PALETTE[i % PALETTE.length] }}
+            >
+              <span className="flow-node">
+                <Icon size={22} strokeWidth={2} />
+              </span>
+              <span className="flow-label">{step.label}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flow-caption">
+        <span className="flow-caption-label">{flow.label}</span>
+        <span className="flow-caption-text">{flow.caption}</span>
+      </div>
+    </div>
   );
 };
 
@@ -41,38 +110,27 @@ const Announcement = () => {
       <div className="ann-container">
         <div className="ann-card">
           <div className="ann-content">
-            <span className="ann-eyebrow">INTELLIGENT FEATURES</span>
+            <span className="ann-eyebrow">CONNECTED BUSINESS OPERATIONS</span>
             <h2 className="ann-heading">
-              Data that works for you — <span className="text-accent">not the other way around.</span>
+              Your Business Works Together.{' '}
+              <span className="text-accent">Your Software Should Too.</span>
             </h2>
             <p className="ann-desc">
-              Emvive turns your operational data into decisions with predictive analytics, smart recommendations and automatic bank reconciliation — with AI-driven insights on the roadmap to help you act before problems surface.
+              Finance, sales, procurement, inventory, people, and operations are part of the same business. Emvive connects these processes across one platform, helping information move with the work and giving teams greater visibility from one step to the next.
             </p>
-            {/* reuse the CTA button pair so the UI and colours match exactly */}
             <div className="ann-actions">
               <a href="#platform" className="cta-btn-primary">
-                Explore the platform
+                See How Emvive Works
                 <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
               </a>
               <a href="#demo" className="cta-btn-secondary">
-                Request a demo
+                Request a Demo
               </a>
             </div>
           </div>
 
           <div className="ann-visual">
-            <div className="ann-visual-panel">
-              <ConstellationViz />
-              <div className="ann-icon-badge">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                  <rect x="3" y="3" width="18" height="18" rx="3" />
-                  <line x1="3" y1="9" x2="21" y2="9" />
-                  <line x1="3" y1="15" x2="21" y2="15" />
-                  <line x1="9" y1="3" x2="9" y2="21" />
-                  <line x1="15" y1="3" x2="15" y2="21" />
-                </svg>
-              </div>
-            </div>
+            <ProcessFlow />
           </div>
         </div>
       </div>

@@ -582,8 +582,22 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
 
 .globe-shell .globe-header {
   text-align: left;
-  max-width: 900px;
+  max-width: none;
   margin-bottom: 2.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.globe-header-text {
+  max-width: 900px;
+}
+
+/* the CTA in the header keeps its shape and doesn't stretch */
+.globe-header .gm-cta {
+  flex-shrink: 0;
 }
 
 .globe-panel {
@@ -719,6 +733,42 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
 
 .gm-stat { display: flex; flex-direction: column; gap: 0.35rem; }
 
+/* capability callouts (replace numeric stats).
+   Columns sit together in the centre with a fixed gap, leaving equal
+   breathing room on the left and right of the row. */
+.gm-caps {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-evenly;
+  gap: 0.9rem 2rem;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.gm-cap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #d7e0f2;
+}
+
+.gm-cap svg {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 50%;
+  color: #f7a869;
+  background: rgba(226, 96, 31, 0.16);
+}
+
+@media (min-width: 900px) {
+  .gm-caps { grid-template-columns: repeat(3, auto); }
+}
+
 .gm-value {
   font-size: 2rem;
   font-weight: 800;
@@ -840,8 +890,23 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
 ========================================= */
 .globe-shell .globe-header {
   text-align: left;
-  max-width: 900px;
+  max-width: none;
   margin: 0 0 3rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.globe-shell .globe-header-text {
+  max-width: 900px;
+}
+
+/* keep the CTA at the top, on the heading's line — not dropped to the bottom */
+.globe-header .gm-cta {
+  flex-shrink: 0;
+  margin-top: 0.5rem;
 }
 
 .globe-kicker {

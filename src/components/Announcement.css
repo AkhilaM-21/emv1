@@ -137,72 +137,182 @@
 .ann-visual-panel {
   position: relative;
   width: 100%;
-  max-width: 620px;
-  aspect-ratio: 16 / 10;
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at 30% 70%, rgba(120, 50, 180, 0.25) 0%, transparent 60%),
-    radial-gradient(circle at 70% 30%, rgba(80, 40, 160, 0.2) 0%, transparent 50%),
-    linear-gradient(160deg, #0d1530 0%, #141838 40%, #1a1540 100%);
-  overflow: hidden;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
+  max-width: 760px;
+  padding: 0;
+  background: transparent;
 }
 
-.ann-constellation {
-  width: 100%;
-  height: 100%;
-  display: block;
+/* ---- Tabs: switch between the two documented processes ---- */
+.flow-tabs {
+  display: inline-flex;
+  gap: 6px;
+  padding: 5px;
+  margin-bottom: 32px;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.06);
+  border: 1px solid rgba(124, 58, 237, 0.2);
 }
 
-/* Constellation edges */
-.ann-edge {
-  stroke: rgba(140, 120, 200, 0.35);
-  stroke-width: 1;
-  animation: ann-edge-glow 3s ease-in-out infinite alternate;
+.flow-tab {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #6d5f80;
+  background: transparent;
+  transition: color 0.2s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
-@keyframes ann-edge-glow {
-  0% { stroke: rgba(140, 120, 200, 0.2); }
-  100% { stroke: rgba(160, 140, 220, 0.5); }
+.flow-tab:hover {
+  color: #2e1065;
 }
 
-/* Constellation nodes */
-.ann-node {
-  fill: #a78bfa;
-  animation: ann-node-pulse 2.5s ease-in-out infinite alternate;
+.flow-tab.is-active {
+  color: #ffffff;
+  background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+  box-shadow: 0 6px 16px -6px rgba(124, 58, 237, 0.7);
 }
 
-.ann-node-ring {
-  fill: none;
-  stroke: rgba(167, 139, 250, 0.3);
-  stroke-width: 1;
-  animation: ann-ring-pulse 3s ease-in-out infinite alternate;
+/* ---- Flow track: horizontal connected stages ---- */
+.flow-track {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
 }
 
-@keyframes ann-node-pulse {
-  0% { opacity: 0.6; r: 3; }
-  100% { opacity: 1; r: 5; }
+.flow-step {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 8px 2px;
 }
 
-@keyframes ann-ring-pulse {
-  0% { opacity: 0; r: 6; }
-  100% { opacity: 0.4; r: 12; }
-}
-
-/* Icon badge at bottom-left of visual */
-.ann-icon-badge {
+/* the connecting line running from each node across to the next —
+   animated flowing dots, tinted with the step's own colour (--c) */
+.flow-step:not(:last-child)::before {
+  content: '';
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #6d28d9;
+  top: 33px;
+  left: 50%;
+  width: 100%;
+  height: 4px;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--c) 40%, transparent) 42%,
+    transparent 44%
+  );
+  background-size: 16px 4px;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  animation: flow-dots 0.9s linear infinite;
+  transition: background-image 0.4s ease;
+}
+
+.flow-step.is-done::before {
+  background-image: radial-gradient(
+    circle,
+    var(--c) 42%,
+    transparent 44%
+  );
+}
+
+@keyframes flow-dots {
+  to {
+    background-position: 16px 0;
+  }
+}
+
+.flow-node {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4);
+  color: var(--c);
+  background: #ffffff;
+  border: 2px solid color-mix(in srgb, var(--c) 35%, transparent);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flow-step.is-done .flow-node {
+  color: #ffffff;
+  background: color-mix(in srgb, var(--c) 88%, white);
+  border-color: var(--c);
+}
+
+.flow-step.is-active .flow-node {
+  color: #ffffff;
+  background: var(--c);
+  border-color: var(--c);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--c) 16%, transparent),
+    0 10px 26px -4px color-mix(in srgb, var(--c) 60%, transparent);
+}
+
+.flow-label {
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #6b6470;
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+
+.flow-step.is-done .flow-label {
+  color: #33303a;
+}
+
+.flow-step.is-active .flow-label {
+  color: color-mix(in srgb, var(--c) 55%, #111827);
+  font-weight: 600;
+  transform: translateY(-2px);
+}
+
+/* ---- Caption ---- */
+.flow-caption {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(124, 58, 237, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.flow-caption-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #7c3aed;
+}
+
+.flow-caption-text {
+  font-size: 1.05rem;
+  color: #6d5f80;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-node,
+  .flow-label {
+    transition: none;
+  }
+  .flow-step::before {
+    animation: none;
+  }
 }
 
 /* Responsive */

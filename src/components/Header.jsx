@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu,
   Cloud, TrendingUp, BarChart3, Workflow, Blocks, CircleDollarSign, Store, Factory, Receipt, Handshake, ClipboardCheck, LayoutGrid, Plug, ShieldCheck, UserCheck, Layers, ArrowUpRight,
-  Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase } from 'lucide-react';
+  Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase,
+  HardHat, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
@@ -14,11 +15,12 @@ import { getMegaMenuData } from '../data/megaMenuData';
    from the title (see megaMeta), so dynamic data is never boring or blank. */
 const MEGA_META = {
   'Cloud ERP': { icon: Cloud, sub: 'Finance, supply chain & operations', color: '#2563eb' },
+  'ERP': { icon: Cloud, sub: 'Finance, supply chain & operations', color: '#2563eb' },
   'HR & Payroll': { icon: Users, sub: 'People, payroll & compliance', color: '#0d9488' },
   'CRM & Sales': { icon: TrendingUp, sub: 'Pipeline to cash', color: '#7c3aed' },
   'Advanced Reporting': { icon: BarChart3, sub: 'Dashboards & insights', color: '#db2777' },
   'Workflow Automation': { icon: Workflow, sub: 'Approvals & triggers', color: '#0891b2' },
-  'No-Code App Builder': { icon: Blocks, sub: 'Build without code', color: '#e2601f' },
+  'Low-Code App Builder': { icon: Blocks, sub: 'Build without code', color: '#e2601f' },
   'Inventory for Retail & POS': { icon: ShoppingCart, sub: 'Stock & point of sale', color: '#2563eb' },
   'Financial Management': { icon: CircleDollarSign, sub: 'Ledgers, cash & assets', color: '#059669' },
   'Supply Chain': { icon: Truck, sub: 'Procure to pay', color: '#d97706' },
@@ -49,7 +51,29 @@ const MEGA_META = {
   'Projects': { icon: Briefcase, sub: '', color: '#4f46e5' },
   'E-Invoicing': { icon: Receipt, sub: '', color: '#0891b2' },
   'Analytics & Reporting': { icon: BarChart3, sub: '', color: '#db2777' },
+  'HR & Payroll': { icon: Users, sub: '', color: '#0d9488' },
+  /* industries (§ hero list) */
+  'Construction & Engineering': { icon: HardHat, sub: '', color: '#d97706' },
+  'Retail & Commerce': { icon: ShoppingCart, sub: '', color: '#be123c' },
+  'Supply Chain & Distribution': { icon: Truck, sub: '', color: '#7c3aed' },
+  'Professional Services': { icon: Briefcase, sub: '', color: '#2563eb' },
+  'Field Service Management': { icon: Wrench, sub: '', color: '#0d9488' },
+  'Healthcare': { icon: HeartPulse, sub: '', color: '#0891b2' },
+  'Real Estate & Property': { icon: Building2, sub: '', color: '#4f46e5' },
+  'Hospitality & Restaurants': { icon: Utensils, sub: '', color: '#e2601f' },
 };
+
+/* Static mega-menu lists (no hover-driven swapping). Products keep the
+   original Solutions list — only the interactivity changed, not the items. */
+const MEGA_PRODUCTS = [
+  'ERP', 'HR & Payroll', 'CRM & Sales',
+  'Advanced Reporting', 'Workflow Automation', 'Emvive Studio',
+];
+const MEGA_CORE_APPS = [
+  'Construction & Engineering', 'Retail & Commerce', 'Manufacturing',
+  'Supply Chain & Distribution', 'Professional Services', 'Field Service Management',
+  'Healthcare', 'Real Estate & Property', 'Hospitality & Restaurants',
+];
 
 /* deterministic pools for any label not in the map above */
 const FALLBACK_ICONS = [Boxes, Puzzle, Plug, LayoutGrid, Workflow, ShieldCheck, Zap, Sparkles, PackageCheck, FileText, Database, Filter];
@@ -511,24 +535,12 @@ const Header = () => {
         >
           <div className="infor-mega-layout">
 
-            {/* Column 1: SOLUTIONS */}
+            {/* Column 1: SOLUTIONS — original list, now static (no hover swap) */}
             <div className="infor-column">
-              <h3 className="infor-col-header">Solutions</h3>
+              <h3 className="infor-col-header">Business Suites</h3>
               <div className="mega-items">
-                {productKeys.map((tab, pIdx) => (
-                  <MegaItem
-                    key={tab}
-                    title={tab}
-                    active={activeProductIndex === pIdx}
-                    onEnter={() => {
-                      setActiveProductIndex(pIdx);
-                      setActiveIndustryIndex(0);
-                    }}
-                    onClick={() => {
-                      setActiveProductIndex(pIdx);
-                      setActiveIndustryIndex(0);
-                    }}
-                  />
+                {MEGA_PRODUCTS.map((title) => (
+                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
                 ))}
               </div>
               <a href="#all-solutions" className="infor-all-link">
@@ -536,43 +548,25 @@ const Header = () => {
               </a>
             </div>
 
-            {/* Column 2: FEATURED PRODUCTS */}
+            {/* Column 2: INDUSTRIES — static list */}
             <div className="infor-column">
-              <h3 className="infor-col-header">Featured products</h3>
+              <h3 className="infor-col-header">Industries</h3>
               <div className="mega-items">
-                {(() => {
-                  const modules = [];
-                  Object.values(activeProductData).forEach(ind => {
-                    if (ind.modules) modules.push(...ind.modules);
-                  });
-                  return modules.slice(0, 8).map((mod, i) => (
-                    <MegaItem
-                      key={i}
-                      title={mod.title}
-                      noSub
-                      onClick={() => {
-                        if (mod.id === 'retail-inventory' || mod.title === 'Inventory for Retail & POS' || mod.title === t('megaMenu.retail.inventory', "Inventory for Retail & POS")) {
-                          navigate('/products/retail-inventory');
-                          setOpenNav(null);
-                        }
-                      }}
-                    />
-                  ));
-                })()}
+                {MEGA_CORE_APPS.map((title) => (
+                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
+                ))}
               </div>
-              <a href="#all-products" className="infor-all-link">
-                All products <ArrowRight size={15} />
+              <a href="#industries" className="infor-all-link" onClick={() => setOpenNav(null)}>
+                All industries <ArrowRight size={15} />
               </a>
             </div>
 
-            {/* Column 3: NO CODE MACHINE */}
+            {/* Column 3: PLATFORM & BUILDER */}
             <div className="infor-column">
-              <h3 className="infor-col-header">No-code machine</h3>
+              <h3 className="infor-col-header">Platform & Builder</h3>
               <div className="mega-items">
                 <MegaItem title="Emvive Studio" />
                 <MegaItem title="Emvive Flow" />
-                <MegaItem title="Integration Layer" />
-                <MegaItem title="Security" />
               </div>
               <a href="#all-platforms" className="infor-all-link">
                 All platforms <ArrowRight size={15} />
@@ -581,7 +575,7 @@ const Header = () => {
 
             {/* Column 4: PORTALS */}
             <div className="infor-column">
-              <h3 className="infor-col-header">Portals</h3>
+              <h3 className="infor-col-header">Digital Portals</h3>
               <div className="mega-items">
                 <MegaItem title="Vendor Portal" />
                 <MegaItem title="Customer Portal" />

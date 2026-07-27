@@ -466,7 +466,7 @@ const Products = () => {
                 <div className="emv-app-icon" style={{background: '#2b4fb0'}}><Settings size={18} color="#fff"/></div>
                 <div className="emv-app-info">
                   <h4>{t('products.featured.apps.4.name', 'Automation')}</h4>
-                  <p>{t('products.featured.apps.4.desc', 'Visual, no-code workflow studio')}</p>
+                  <p>{t('products.featured.apps.4.desc', 'Visual, low-code workflow studio')}</p>
                 </div>
               </div>
               <div className="emv-app-mini-card">

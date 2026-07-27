@@ -446,11 +446,15 @@ const REGION_DETAILS = {
 };
 
 // Figures shown along the bottom of the panel.
-const COVERAGE_STATS = [
-  { value: '3', labelKey: 'globe.stat_1_label', label: 'Global Regions' },
-  { value: '50k+', labelKey: 'globe.stat_2_label', label: 'Active Users' },
-  { value: '99.9%', labelKey: 'globe.stat_0_label', label: 'Server Uptime' },
-  { value: '24/7', labelKey: 'globe.stat_3_label', label: 'Support' },
+/* Documented multi-country & localization capabilities — no unverified
+   numbers (active users / uptime / support). */
+const COVERAGE_CAPS = [
+  { key: 'multiCompany', label: 'Multi-company operations' },
+  { key: 'multiCurrency', label: 'Multi-currency' },
+  { key: 'rtl', label: 'Arabic & English / RTL' },
+  { key: 'vat', label: 'VAT, GST & sales tax' },
+  { key: 'withholding', label: 'Withholding tax & reverse charge' },
+  { key: 'payroll', label: 'Regional payroll & compliance' },
 ];
 
 // Person photos for the active-users card (placeholder avatar service).
@@ -618,17 +622,25 @@ const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
     <section className="globe-section" id={id}>
       <div className="globe-shell">
         <div className="globe-header">
-          <span className="globe-kicker">{t('globe.badge', 'Global by design')}</span>
-          <h2 className="globe-heading">
-            {t('globe.title1', 'Native in')}{' '}
-            <span className="text-accent">{t('globe.title2', 'every region you run.')}</span>
-          </h2>
-          <p className="globe-sub">
-            {t(
-              'globe.subtitle',
-              'Local tax regimes, statutory payroll, e-invoicing formats and data residency — the default, not an add-on. Click a location on the globe to see what native means where you operate.'
-            )}
-          </p>
+          <div className="globe-header-text">
+            <span className="globe-kicker">{t('globe.badge', 'Global by design')}</span>
+            <h2 className="globe-heading">
+              {t('globe.title1', 'Native in')}{' '}
+              <span className="text-accent">{t('globe.title2', 'every region you run.')}</span>
+            </h2>
+            <p className="globe-sub">
+              {t(
+                'globe.subtitle',
+                'Local tax regimes, statutory payroll, e-invoicing formats and data residency — the default, not an add-on. Click a location on the globe to see what native means where you operate.'
+              )}
+            </p>
+          </div>
+          <a href="#why-emvive" className="gm-cta">
+            {t('globe.cta', 'Explore Global Capabilities')}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
         </div>
 
         <div className="globe-panel">
@@ -670,22 +682,18 @@ const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
             </div>
           </div>
 
-          {/* Coverage figures + CTA */}
+          {/* Capability callouts */}
           <div className="globe-metrics">
-            <div className="gm-stats">
-              {COVERAGE_STATS.map((st) => (
-                <div className="gm-stat" key={st.label}>
-                  <span className="gm-value">{st.value}</span>
-                  <span className="gm-label">{t(st.labelKey, st.label)}</span>
+            <div className="gm-caps">
+              {COVERAGE_CAPS.map((c) => (
+                <div className="gm-cap" key={c.key}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>{t(`globe.caps.${c.key}`, c.label)}</span>
                 </div>
               ))}
             </div>
-            <a href="#why-emvive" className="gm-cta">
-              {t('globe.cta', 'See compliance coverage')}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
           </div>
         </div>
       </div>

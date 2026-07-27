@@ -62,30 +62,32 @@ const Footer = () => {
               </div>
             </div>
             
-            {/* Column 2: Products (Large text) */}
+            {/* Column 2: Products (Large text) — matches mega-menu Business Suites */}
             <div className="footer-col col-large">
-              <h4 className="footer-heading">{t('footer.productsTitle', 'PRODUCTS')}</h4>
+              <h4 className="footer-heading">{t('footer.productsTitle', 'BUSINESS SUITES')}</h4>
               <ul className="footer-links large-links">
-                <li><a href="#products">{t('megaMenu.products.cloudErp', 'Cloud ERP')}</a></li>
-                <li><a href="#products">{t('megaMenu.products.hrPayroll', 'HR & Payroll')}</a></li>
-                <li><a href="#products">{t('megaMenu.products.crmSales', 'CRM & Sales')}</a></li>
-                <li><a href="#products">{t('megaMenu.products.reporting', 'Advanced Reporting')}</a></li>
-                <li><a href="#products">{t('megaMenu.products.workflow', 'Workflow Automation')}</a></li>
-                <li><a href="#products">{t('megaMenu.products.noCode', 'E-Invoicing')}</a></li>
+                <li><a href="#products">ERP</a></li>
+                <li><a href="#products">HR & Payroll</a></li>
+                <li><a href="#products">CRM & Sales</a></li>
+                <li><a href="#products">Advanced Reporting</a></li>
+                <li><a href="#products">Workflow Automation</a></li>
+                <li><a href="#products">Emvive Studio</a></li>
               </ul>
             </div>
 
-            {/* Column 3: Industries */}
+            {/* Column 3: Industries — matches mega-menu Industries column */}
             <div className="footer-col">
-              <h4 className="footer-heading">{t('footer.industriesTitle', 'INDUSTRIES')}</h4>
+              <h4 className="footer-heading">{t('footer.coreAppsTitle', 'INDUSTRIES')}</h4>
               <ul className="footer-links">
-                <li><a href="#">{t('footer.industry.Manufacturing', 'Manufacturing')}</a></li>
-                <li><a href="#">{t('footer.industry.Retail', 'Retail & E-commerce')}</a></li>
-                <li><a href="#">{t('footer.industry.Healthcare', 'Healthcare')}</a></li>
-                <li><a href="#">{t('footer.industry.Financial', 'Financial Services')}</a></li>
-                <li><a href="#">{t('footer.industry.Logistics', 'Logistics & Supply Chain')}</a></li>
-                <li><a href="#">{t('footer.industry.Technology', 'Technology & SaaS')}</a></li>
-                <li><a href="#">{t('footer.industry.Government', 'Government & Public Sector')}</a></li>
+                <li><a href="#industries">{t('footer.industry.construction', 'Construction & Engineering')}</a></li>
+                <li><a href="#industries">{t('footer.industry.retail', 'Retail & Commerce')}</a></li>
+                <li><a href="#industries">{t('footer.industry.manufacturing', 'Manufacturing')}</a></li>
+                <li><a href="#industries">{t('footer.industry.supplyChain', 'Supply Chain & Distribution')}</a></li>
+                <li><a href="#industries">{t('footer.industry.professional', 'Professional Services')}</a></li>
+                <li><a href="#industries">{t('footer.industry.fieldService', 'Field Service Management')}</a></li>
+                <li><a href="#industries">{t('footer.industry.healthcare', 'Healthcare')}</a></li>
+                <li><a href="#industries">{t('footer.industry.realEstate', 'Real Estate & Property')}</a></li>
+                <li><a href="#industries">{t('footer.industry.hospitality', 'Hospitality & Restaurants')}</a></li>
               </ul>
             </div>
 

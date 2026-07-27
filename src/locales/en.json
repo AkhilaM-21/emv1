@@ -120,7 +120,7 @@
     "f10_desc": "ZATCA Phase 1 & 2 clearance, QR and digital signing, plus VAT, withholding and reverse charge.",
     "f11_title": "Vendor & Customer Portals",
     "f11_desc": "Vendors submit RFQs and invoices; customers track orders, deliveries and payments themselves.",
-    "f12_title": "No-Code Studio",
+    "f12_title": "Low-Code Studio",
     "f12_desc": "Build forms, tables and approval chains by drag and drop, with workflow automation and event triggers.",
     "f1_p1": "Automated invoicing",
     "f1_p2": "Real-time cash flow",
@@ -193,7 +193,7 @@
         },
         "4": {
           "name": "Automation",
-          "desc": "Visual, no-code workflow studio"
+          "desc": "Visual, low-code workflow studio"
         },
         "5": {
           "name": "E-Invoicing",
@@ -331,38 +331,45 @@
     }
   },
   "why": {
-    "badge": "Why Emvive?",
-    "subtitle": "Emvive is a next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.",
-    "cta": "Explore Emvive modules",
-    "title1": "One platform to run",
-    "title2": "your",
-    "title3": "entire business."
+    "badge": "WHY EMVIVE?",
+    "title1": "More Than ERP.",
+    "title2": "One System for",
+    "title3": "Running Your Business.",
+    "subtitle": "Emvive brings ERP, POS, HCM, compliance, automation, reporting and low-code capabilities into one cloud-based Business Operating System — so businesses can manage connected operations without treating every function as a separate system.",
+    "cta": "Explore the Emvive Platform"
   },
   "whyData": {
-    "b1_title": "Built for your industry",
-    "b1_desc": "Pre-configured flows for construction, retail, manufacturing, and services reduce customization and risk, so you go live faster and with more confidence.",
-    "b2_title": "One connected system",
-    "b2_desc": "Finance, supply chain, sales, HR, and POS share a single cloud data model, so nothing is stitched together and nothing falls between systems.",
-    "b3_title": "Compliance built in",
-    "b3_desc": "ZATCA e-invoicing, GOSI, WPS, and VAT are native to the platform, keeping every entity audit-ready without bolt-on tools or manual filing.",
-    "b4_title": "Ready for every region",
-    "b4_desc": "Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform.",
-    "b1_p1": "Construction & contracting",
-    "b1_p2": "Retail & restaurants",
-    "b1_p3": "Manufacturing",
-    "b1_p4": "Trading companies",
-    "b2_p1": "Finance & supply chain",
-    "b2_p2": "Sales, HR and POS",
-    "b2_p3": "One cloud data model",
-    "b2_p4": "No integrations to maintain",
-    "b3_p1": "ZATCA e-invoicing",
-    "b3_p2": "GOSI & WPS payroll",
-    "b3_p3": "VAT & withholding tax",
-    "b3_p4": "Audit-ready by default",
-    "b4_p1": "Multi-company & currency",
-    "b4_p2": "Local tax rules",
-    "b4_p3": "Arabic & English (RTL)",
-    "b4_p4": "Data residency options"
+    "b1_label": "CONNECTED",
+    "b1_title": "One Connected Business System",
+    "b1_p1": "Finance & Supply Chain",
+    "b1_p2": "Sales & CRM",
+    "b1_p3": "HCM & Payroll",
+    "b1_p4": "Projects & Manufacturing",
+    "b1_p5": "POS & E-Invoicing",
+    "b2_label": "REGIONAL",
+    "b2_title": "Built for Regional Operations",
+    "b2_p1": "Multi-company",
+    "b2_p2": "Multi-currency",
+    "b2_p3": "English & Arabic (RTL)",
+    "b2_p4": "Multi-language documents",
+    "b2_p5": "VAT, GST & sales tax",
+    "b2_p6": "Withholding tax & reverse charge",
+    "b3_label": "COMPLIANT",
+    "b3_title": "Compliance Built Into the Platform",
+    "b3_p1": "ZATCA Phase 1 & 2",
+    "b3_p2": "E-Invoicing APIs",
+    "b3_p3": "WPS payroll compliance",
+    "b3_p4": "GOSI capabilities",
+    "b3_p5": "EOSB calculations",
+    "b3_p6": "Audit logs",
+    "b4_label": "ADAPTABLE",
+    "b4_title": "Adapt the Platform to Your Business",
+    "b4_p1": "Drag-and-drop application builder",
+    "b4_p2": "Custom forms",
+    "b4_p3": "Tables & relationships",
+    "b4_p4": "Workflow automation",
+    "b4_p5": "Approval chains",
+    "b4_p6": "APIs & Webhooks"
   },
   "faq": {
     "badge": "FAQ",
@@ -386,8 +393,8 @@
   "globe": {
     "customers": "+2,781 Customers",
     "scaling": "Scaling their business with us",
-    "badge": "Global by design",
-    "subtitle": "Local tax regimes, statutory payroll, e-invoicing formats and data residency — the default, not an add-on. Click a location on the globe to see what native means where you operate.",
+    "badge": "GLOBAL OPERATIONS",
+    "subtitle": "Support operations across regions with multi-company, multi-currency, multilingual, tax, payroll and compliance capabilities — built for businesses operating across Saudi Arabia, the GCC, India and beyond.",
     "officeTitle": "{{region}} Office",
     "stat_0_label": "Server Uptime",
     "stat_1_label": "Global Regions",
@@ -408,9 +415,9 @@
         "address": "Sheikh Zayed Road, Trade Centre, Dubai, UAE"
       }
     },
-    "title1": "Native in",
-    "title2": "every region you run.",
-    "cta": "See compliance coverage",
+    "title1": "Run across markets",
+    "title2": "without losing control.",
+    "cta": "Explore Global Capabilities",
     "fields": {
       "currency": "Currency",
       "tax_regime": "Tax regime",
@@ -418,7 +425,15 @@
       "e-invoicing": "E-invoicing",
       "data_residency": "Data residency"
     },
-    "prompt": "Click a location on the globe to see local tax, payroll and e-invoicing."
+    "prompt": "Click a location on the globe to see local tax, payroll and e-invoicing.",
+    "caps": {
+      "multiCompany": "Multi-company operations",
+      "multiCurrency": "Multi-currency",
+      "rtl": "Arabic & English / RTL",
+      "vat": "VAT, GST & sales tax",
+      "withholding": "Withholding tax & reverse charge",
+      "payroll": "Regional payroll & compliance"
+    }
   },
   "footer": {
     "emailLabel": "Email Address*",
@@ -438,7 +453,7 @@
       "crmSales": "CRM & Sales",
       "reporting": "Advanced Reporting",
       "workflow": "Workflow Automation",
-      "noCode": "No-Code App Builder",
+      "noCode": "Low-Code App Builder",
       "exploreAll": "Explore all products"
     },
     "manufacturing": {
@@ -607,7 +622,7 @@
     },
     "workflow": {
       "title": "Automate every process",
-      "desc": "Connect triggers to actions with a visual builder. Route approvals, send notifications and orchestrate multi-step logic — no code.",
+      "desc": "Connect triggers to actions with a visual builder. Route approvals, send notifications and orchestrate multi-step logic — low code.",
       "trigger": "New order created",
       "condition": "Amount over $1,000",
       "action1": "Notify manager",
@@ -750,14 +765,14 @@
     },
     "industries": {
       "0": {
-        "title": "Construction & Contracting",
+        "title": "Construction & Engineering",
         "desc": "Connect projects, procurement, workforce, costs, and finance.",
-        "link": "Explore Construction"
+        "link": "Explore Construction & Engineering"
       },
       "1": {
-        "title": "Retail & Restaurants",
+        "title": "Retail & Commerce",
         "desc": "Connect POS, inventory, purchasing, people, and finance.",
-        "link": "Explore Retail & Restaurants"
+        "link": "Explore Retail & Commerce"
       },
       "2": {
         "title": "Manufacturing",
@@ -765,9 +780,9 @@
         "link": "Explore Manufacturing"
       },
       "3": {
-        "title": "Trading & Distribution",
+        "title": "Supply Chain & Distribution",
         "desc": "Connect suppliers, stock, customer orders, invoicing, and finance.",
-        "link": "Explore Trading & Distribution"
+        "link": "Explore Supply Chain & Distribution"
       },
       "4": {
         "title": "Professional Services",
@@ -775,9 +790,24 @@
         "link": "Explore Professional Services"
       },
       "5": {
-        "title": "Service Organizations",
-        "desc": "Connect customers, teams, workflows, finance, and reporting.",
-        "link": "Explore Service Organizations"
+        "title": "Field Service Management",
+        "desc": "Connect scheduling, technicians, assets, billing, and finance.",
+        "link": "Explore Field Service Management"
+      },
+      "6": {
+        "title": "Healthcare",
+        "desc": "Connect patients, staff, inventory, billing, and compliance.",
+        "link": "Explore Healthcare"
+      },
+      "7": {
+        "title": "Real Estate & Property",
+        "desc": "Connect properties, leasing, tenants, payments, and finance.",
+        "link": "Explore Real Estate & Property"
+      },
+      "8": {
+        "title": "Hospitality & Restaurants",
+        "desc": "Connect POS, inventory, staff, bookings, and finance.",
+        "link": "Explore Hospitality & Restaurants"
       }
     },
     "secondaryCta": "Explore Emvive",

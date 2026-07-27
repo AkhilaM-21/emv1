@@ -11,46 +11,53 @@ const WhyEmvive = () => {
   const benefits = [
     {
       id: 1,
-      title: t('whyData.b1_title', 'Built for your industry'),
+      label: t('whyData.b1_label', 'CONNECTED'),
+      title: t('whyData.b1_title', 'One Connected Business System'),
       points: [
-        t('whyData.b1_p1', 'Construction & contracting'),
-        t('whyData.b1_p2', 'Retail & restaurants'),
-        t('whyData.b1_p3', 'Manufacturing'),
-        t('whyData.b1_p4', 'Trading companies'),
-        t('whyData.b1_p5', 'Service organizations'),
+        t('whyData.b1_p1', 'Finance & Supply Chain'),
+        t('whyData.b1_p2', 'Sales & CRM'),
+        t('whyData.b1_p3', 'HCM & Payroll'),
+        t('whyData.b1_p4', 'Projects & Manufacturing'),
+        t('whyData.b1_p5', 'POS & E-Invoicing'),
       ],
     },
     {
       id: 2,
-      title: t('whyData.b2_title', 'One connected system'),
+      label: t('whyData.b2_label', 'REGIONAL'),
+      title: t('whyData.b2_title', 'Built for Regional Operations'),
       points: [
-        t('whyData.b2_p1', 'Financials & supply chain'),
-        t('whyData.b2_p2', 'Sales & CRM'),
-        t('whyData.b2_p3', 'Projects & manufacturing'),
-        t('whyData.b2_p4', 'Human capital & payroll'),
-        t('whyData.b2_p5', 'POS for retail & restaurants'),
+        t('whyData.b2_p1', 'Multi-company'),
+        t('whyData.b2_p2', 'Multi-currency'),
+        t('whyData.b2_p3', 'English & Arabic (RTL)'),
+        t('whyData.b2_p4', 'Multi-language documents'),
+        t('whyData.b2_p5', 'VAT, GST & sales tax'),
+        t('whyData.b2_p6', 'Withholding tax & reverse charge'),
       ],
     },
     {
       id: 3,
-      title: t('whyData.b3_title', 'Compliance built in'),
+      label: t('whyData.b3_label', 'COMPLIANT'),
+      title: t('whyData.b3_title', 'Compliance Built Into the Platform'),
       points: [
         t('whyData.b3_p1', 'ZATCA Phase 1 & 2'),
-        t('whyData.b3_p2', 'GOSI contributions'),
+        t('whyData.b3_p2', 'E-Invoicing APIs'),
         t('whyData.b3_p3', 'WPS payroll compliance'),
-        t('whyData.b3_p4', 'End of service benefits'),
-        t('whyData.b3_p5', 'VAT, GST & withholding tax'),
+        t('whyData.b3_p4', 'GOSI capabilities'),
+        t('whyData.b3_p5', 'EOSB calculations'),
+        t('whyData.b3_p6', 'Audit logs'),
       ],
     },
     {
       id: 4,
-      title: t('whyData.b4_title', 'Ready for every region'),
+      label: t('whyData.b4_label', 'ADAPTABLE'),
+      title: t('whyData.b4_title', 'Adapt the Platform to Your Business'),
       points: [
-        t('whyData.b4_p1', 'Multi-company'),
-        t('whyData.b4_p2', 'Multi-currency'),
-        t('whyData.b4_p3', 'Multi-country'),
-        t('whyData.b4_p4', 'English & Arabic (RTL)'),
-        t('whyData.b4_p5', 'Country-based tax rules'),
+        t('whyData.b4_p1', 'Drag-and-drop application builder'),
+        t('whyData.b4_p2', 'Custom forms'),
+        t('whyData.b4_p3', 'Tables & relationships'),
+        t('whyData.b4_p4', 'Workflow automation'),
+        t('whyData.b4_p5', 'Approval chains'),
+        t('whyData.b4_p6', 'APIs & Webhooks'),
       ],
     },
   ];
@@ -62,24 +69,24 @@ const WhyEmvive = () => {
           {/* Header row: eyebrow + title + intro on the left, CTA on the right */}
           <div className="why-header">
             <div className="why-header-text">
-              <span className="why-eyebrow">{t('why.badge', 'Why Emvive?')}</span>
+              <span className="why-eyebrow">{t('why.badge', 'WHY EMVIVE?')}</span>
               <h2 className="why-heading">
-                {t('why.title1', 'One platform to run')}{' '}
+                {t('why.title1', 'More Than ERP.')}{' '}
                 <span className="text-accent">
-                  {t('why.title2', 'your')}{' '}
+                  {t('why.title2', 'One System for')}{' '}
                   <br className="why-br" />
-                  {t('why.title3', 'entire business.')}
+                  {t('why.title3', 'Running Your Business.')}
                 </span>
               </h2>
               <p className="why-subtitle">
                 {t(
                   'why.subtitle',
-                  'Emvive is a next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.'
+                  'EMVIVE brings ERP, POS, HCM, compliance, automation, reporting, and no-code capabilities into one cloud-based Business Operating System—so businesses can manage connected operations without treating every function as a separate system.'
                 )}
               </p>
             </div>
             <a href="#products" className="why-cta">
-              {t('why.cta', 'Explore Emvive modules')}
+              {t('why.cta', 'Explore the EMVIVE Platform')}
               <ArrowRight size={16} />
             </a>
           </div>
@@ -89,6 +96,7 @@ const WhyEmvive = () => {
             {benefits.map((benefit) => (
               <div key={benefit.id} className="why-card">
                 <div className="why-card-body">
+                  {benefit.label && <span className="why-card-label">{benefit.label}</span>}
                   <h3 className="why-card-title">{benefit.title}</h3>
                   <ul className="why-points">
                     {benefit.points.map((point, i) => (
