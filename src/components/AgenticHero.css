@@ -885,18 +885,25 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.7);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-/* Hover is read on the slot, so the lift never pulls the card out from
-   under the cursor — no flicker at the edges. */
+/* Hover: the card stays put — instead the gradient brightens, the edge
+   lights up and a soft glow lifts it off the dark background. */
 .ind-slot:hover .ind-card {
-  transform: translateY(-6px);
-  box-shadow: 0 32px 60px -26px rgba(0, 0, 0, 0.8);
+  filter: brightness(1.08) saturate(1.15);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 30px 60px -26px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
 }
-/* faded outline icon at the top */
+/* faded outline icon at the top — brightens on hover */
 .ind-ic {
   align-self: flex-end;
   color: rgba(255, 255, 255, 0.32);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.ind-slot:hover .ind-ic {
+  color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.08);
 }
 .ind-body { display: flex; flex-direction: column; }
 .ind-title { font-size: 2rem; font-weight: 800; color: #ffffff; margin: 0 0 0.6rem; letter-spacing: -0.5px; }
