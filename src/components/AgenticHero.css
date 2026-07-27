@@ -88,7 +88,29 @@
   margin: 0 0 2.2rem;
   max-width: 560px;
 }
-.ah-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.ah-btns { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+/* secondary hero CTA — outline pill on the dark hero */
+.ah-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.ah-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
 .ah-btn-primary {
   display: inline-flex;
   align-items: center;
@@ -804,6 +826,25 @@
   gap: 2rem;
   margin-bottom: 2.5rem;
 }
+.ah-tiles-head-text { max-width: 760px; }
+
+.ah-tiles-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #f2853f;
+  margin-bottom: 0.9rem;
+}
+
+.ah-tiles-sub {
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(226, 232, 245, 0.72);
+}
+
 .ah-tiles-title {
   font-size: 2.6rem;
   font-weight: 800;

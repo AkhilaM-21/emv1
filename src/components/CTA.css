@@ -18,7 +18,8 @@
     radial-gradient(circle at 10% 90%, rgba(20, 50, 120, 0.3) 0%, transparent 60%),
     radial-gradient(circle at 90% 10%, rgba(150, 50, 50, 0.2) 0%, rgba(80, 20, 100, 0.3) 50%, transparent 80%),
     linear-gradient(110deg, #0a132c 0%, #15183d 45%, #2e1a5a 100%);
-  padding: 6rem 2rem;
+  /* content sits at the exact site gutter, same as every other section */
+  padding: 6rem max(6rem, calc((100% - 1500px) / 2));
   text-align: center;
 }
 
@@ -48,6 +49,13 @@
   margin: 0 auto 2.5rem;
   line-height: 1.6;
   max-width: 800px;
+}
+
+.cta-microcopy {
+  margin: 1.5rem auto 0;
+  font-size: 0.85rem;
+  color: rgba(148, 163, 184, 0.85);
+  max-width: 640px;
 }
 
 .cta-actions {

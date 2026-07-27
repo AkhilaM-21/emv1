@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircleDollarSign, TrendingUp, Users, Package, Megaphone, ShieldCheck, FolderKanban, Factory, Store, FileCheck, Handshake, Blocks } from 'lucide-react';
+import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, ShieldCheck, FolderKanban, Factory, Store, FileCheck, Handshake, Blocks } from 'lucide-react';
 import './Features.css';
 
 /* Each department carries its own accent. `rgb` is the same colour as a raw
@@ -12,8 +12,8 @@ const FEATURES = [
   { id: 2, icon: TrendingUp, title: 'Sales & CRM', color: '#059669', rgb: '5, 150, 105', grad: 'linear-gradient(165deg, #059669 0%, #034e36 100%)' },
   { id: 3, icon: Users, title: 'Human Resources', color: '#2563eb', rgb: '37, 99, 235', grad: 'linear-gradient(165deg, #c14a2e 0%, #7c2617 100%)' },
   { id: 4, icon: Package, title: 'Operations & Supply Chain', color: '#f43f5e', rgb: '244, 63, 94', grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
-  { id: 5, icon: Megaphone, title: 'Marketing', color: '#d97706', rgb: '217, 119, 6', grad: 'linear-gradient(165deg, #e2601f 0%, #9e3b0e 100%)' },
-  { id: 6, icon: ShieldCheck, title: 'IT & Security', color: '#8466d9', rgb: '132, 102, 217', grad: 'linear-gradient(165deg, #6c40b2 0%, #3f2082 100%)' },
+  { id: 5, icon: BarChart3, title: 'Analytics & Reporting', color: '#d97706', rgb: '217, 119, 6', grad: 'linear-gradient(165deg, #e2601f 0%, #9e3b0e 100%)' },
+  { id: 6, icon: ShieldCheck, title: 'Security & Access', color: '#8466d9', rgb: '132, 102, 217', grad: 'linear-gradient(165deg, #6c40b2 0%, #3f2082 100%)' },
   { id: 7, icon: FolderKanban, title: 'Projects', color: '#0d9488', rgb: '13, 148, 136', grad: 'linear-gradient(165deg, #0d9488 0%, #0f514c 100%)' },
   { id: 8, icon: Factory, title: 'Manufacturing', color: '#4f46e5', rgb: '79, 70, 229', grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
   { id: 9, icon: Store, title: 'Retail & POS', color: '#9333ea', rgb: '147, 51, 234', grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },

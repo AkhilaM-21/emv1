@@ -16,8 +16,7 @@ const Home = () => {
     <>
       <AgenticHero />
       <Clients />
-      {/* Products carousel hidden for now — re-enable when ready */}
-      {/* <Products /> */}
+      <Products />
       <Features variant="color" />
       <Announcement />
       <AppBuilder />

@@ -7,6 +7,7 @@ import {
   X, Maximize2,
   LayoutGrid, Users, Clock, Wallet, UserPlus, BarChart3, Settings, Search,
   Layers, Home, UsersRound, Cpu, TrendingUp,
+  HardHat, Utensils, Briefcase, Headphones,
 } from 'lucide-react';
 import './AgenticHero.css';
 
@@ -37,19 +38,20 @@ const DASH_BARS = [62, 78, 70, 88, 95, 74, 58];
 const DASH_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 // hero dashboard-card metrics
+// dashboard = product concepts, not mock claims (sample/demo data only)
 const DASH_METRICS = [
-  { label: 'REVENUE YTD', value: '$4.28M', accent: true },
-  { label: 'COUNTRIES', value: '42' },
-  { label: 'UPTIME', value: '99.99%' },
+  { label: 'REVENUE', value: '$4.28M', accent: true },
+  { label: 'OPEN ORDERS', value: '128' },
+  { label: 'PENDING APPROVALS', value: '17' },
 ];
 
-// floating feature pills on the right (blue theme)
+// floating feature pills on the right — Business Operating System modules
 const PILLS = [
-  { title: 'Cloud ERP', sub: 'Unified operations', icon: <Layers size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'HR & Payroll', sub: 'People management', icon: <UsersRound size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'CRM & Sales', sub: 'Deepen relationships', icon: <TrendingUp size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'Advanced Reporting', sub: 'Live insights', icon: <BarChart3 size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
-  { title: 'Workflow Automation', sub: 'No-code flows', icon: <Sparkles size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Financials & ERP', sub: 'Finance to operations', icon: <Landmark size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Sales & CRM', sub: 'Lead to cash', icon: <TrendingUp size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'HR & Payroll', sub: 'People & payroll', icon: <UsersRound size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'Supply Chain', sub: 'Procure to pay', icon: <Truck size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
+  { title: 'POS', sub: 'Retail & restaurant', icon: <ShoppingBag size={18} />, bg: 'linear-gradient(180deg, #f0883e 0%, #e2601f 50%, #d6461a 100%)' },
 ];
 
 
@@ -75,16 +77,14 @@ const FEATURES = [
   { icon: <InfinityIcon size={22} />, color: 'linear-gradient(180deg, #fdeede,#f9d2b3)', iconColor: '#c2491b', title: 'Enterprise-ready', sub: 'Secure & compliant' },
 ];
 
+// Industries (master document §11) — text comes from en.json, icons/gradients here.
 const INDUSTRIES = [
-  { key: 'hr', title: 'HR', desc: 'Elevate the potential of your people with human-AI collaboration.', link: 'Human Capital Management', icon: <UserRound size={30} />, grad: 'linear-gradient(165deg, #c14a2e 0%, #7c2617 100%)' },
-  { key: 'finance', title: 'Finance', desc: 'Close faster, plan smarter, run global operations from one ledger.', link: 'Financial Management', icon: <Landmark size={30} />, grad: 'linear-gradient(165deg, #d9722a 0%, #114e87 100%)' },
-  { key: 'it', title: 'IT', desc: 'One platform, one data model — retire your integration debt.', link: 'Platform & APIs', icon: <MonitorSmartphone size={30} />, grad: 'linear-gradient(165deg, #6c40b2 0%, #3f2082 100%)' },
-  { key: 'legal', title: 'Legal', desc: 'Compliance workflows and audit trails, live in 42 countries.', link: 'Compliance suite', icon: <Scale size={30} />, grad: 'linear-gradient(165deg, #1f9f70 0%, #0f5d44 100%)' },
-  { key: 'ops', title: 'Operations', desc: 'Supply, inventory, and logistics — orchestrated end-to-end.', link: 'Ops suite', icon: <PackageSearch size={30} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
-  { key: 'mfg', title: 'Manufacturing', desc: 'Plan production, track output and cut waste in real time.', link: 'Production suite', icon: <Factory size={30} />, grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
-  { key: 'retail', title: 'Retail', desc: 'Unify online and in-store commerce with live data.', link: 'Commerce suite', icon: <ShoppingBag size={30} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
-  { key: 'health', title: 'Healthcare', desc: 'Streamline care operations, staffing and billing.', link: 'Care suite', icon: <HeartPulse size={30} />, grad: 'linear-gradient(165deg, #1f9f8f 0%, #0f5d53 100%)' },
-  { key: 'supply', title: 'Supply Chain', desc: 'Forecast demand and automate fulfillment everywhere.', link: 'Logistics suite', icon: <Truck size={30} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
+  { key: 'construction', title: 'Construction & Contracting', desc: 'Connect projects, procurement, workforce, costs, and finance.', link: 'Explore Construction', icon: <HardHat size={30} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
+  { key: 'retail', title: 'Retail & Restaurants', desc: 'Connect POS, inventory, purchasing, people, and finance.', link: 'Explore Retail & Restaurants', icon: <Utensils size={30} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
+  { key: 'mfg', title: 'Manufacturing', desc: 'Connect production, inventory, procurement, sales, and finance.', link: 'Explore Manufacturing', icon: <Factory size={30} />, grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
+  { key: 'trading', title: 'Trading & Distribution', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', link: 'Explore Trading & Distribution', icon: <Truck size={30} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
+  { key: 'services', title: 'Professional Services', desc: 'Connect projects, people, customers, expenses, and billing.', link: 'Explore Professional Services', icon: <Briefcase size={30} />, grad: 'linear-gradient(165deg, #d9722a 0%, #114e87 100%)' },
+  { key: 'serviceorg', title: 'Service Organizations', desc: 'Connect customers, teams, workflows, finance, and reporting.', link: 'Explore Service Organizations', icon: <Headphones size={30} />, grad: 'linear-gradient(165deg, #1f9f70 0%, #0f5d44 100%)' },
 ];
 
 const AgenticHero = () => {
@@ -145,15 +145,20 @@ const AgenticHero = () => {
         <div className="ah-copy">
           <span className="ah-eyebrow">{t('agenticHero.eyebrow', 'THE AGENTIC ENTERPRISE')}</span>
           <h1 className="ah-title">
-            {t('agenticHero.headline1', 'Business software')} <span className="ah-grad">{t('agenticHero.headline2', 'designed to think ahead.')}</span>
+            {t('agenticHero.headline1', 'Run Your Entire Business on')}{' '}
+            <span className="ah-grad">{t('agenticHero.headline2', 'One Connected Platform.')}</span>
           </h1>
           <p className="ah-sub">
             {t('agenticHero.subtitle', 'Emvive is the enterprise AI platform for HR, finance, IT and operations — unified across 42 countries, powered by autonomous agents that solve problems, not just report them.')}
           </p>
           <div className="ah-btns">
             <a href="#demo" className="btn-get-started">
-              {t('agenticHero.requestDemo', 'Request a free demo')}
+              {t('agenticHero.requestDemo', 'Request a Demo')}
               <span className="arrow-circle"><ArrowRight size={14} color="#fff" /></span>
+            </a>
+            <a href="#products" className="cta-btn-primary">
+              {t('agenticHero.secondaryCta', 'Explore Emvive')}
+              <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
             </a>
           </div>
         </div>
@@ -211,10 +216,16 @@ const AgenticHero = () => {
     <section className="ah-tiles-section ah-dark" id="industries">
       <div className="ah-industries-wrap">
         <div className="ah-tiles-head">
-          <h2 className="ah-tiles-title">
-            {t('agenticHero.tilesTitle1', 'A unified AI platform built to serve')}<br />
-            <span className="ah-grad">{t('agenticHero.tilesTitle2', 'your entire organization.')}</span>
-          </h2>
+          <div className="ah-tiles-head-text">
+            <span className="ah-tiles-eyebrow">{t('agenticHero.industriesEyebrow', 'INDUSTRIES')}</span>
+            <h2 className="ah-tiles-title">
+              {t('agenticHero.tilesTitle1', 'Built for the way')}{' '}
+              <span className="ah-grad">{t('agenticHero.tilesTitle2', 'your industry works.')}</span>
+            </h2>
+            <p className="ah-tiles-sub">
+              {t('agenticHero.industriesSub', 'Different industries have different processes, priorities and operational demands. Emvive brings the business functions behind them into a connected platform designed to support everyday operations.')}
+            </p>
+          </div>
           <div className="ah-tiles-nav">
             <button className="ah-tile-arrow" onClick={() => scrollTiles(-1)} aria-label="Previous"><ChevronLeft size={20} /></button>
             <button className="ah-tile-arrow" onClick={() => scrollTiles(1)} aria-label="Next"><ChevronRight size={20} /></button>

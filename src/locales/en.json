@@ -54,13 +54,11 @@
   "clients": {
     "trusted": "3600+ Trusted companies all over the world",
     "meetEmvive": "MEET EMVIVE",
-    "headline1": "Enterprise software and AI that ",
-    "headline2": "knows your industry.",
-    "viewAllStories": "View all customer stories",
-    "descPart1": "Emvive is a global leader in cloud enterprise software built for the way industries actually work. We combine deep operational expertise, proven processes and ",
-    "aiAgents": "AI agents",
-    "descPart2": " — so your operations don't just run, they think, adapt and act. Turn your business into an agentic enterprise, and set the pace for your industry.",
-    "brandsTrust": "BRANDS THAT TRUST US"
+    "headline1": "Trusted by businesses that ",
+    "headline2": "run on Emvive.",
+    "viewAllStories": "View Customer Stories",
+    "brandsTrust": "TRUSTED BY",
+    "supporting": "From day-to-day operations to finance and people management, businesses use Emvive to bring critical processes into one connected environment."
   },
   "about": {
     "badge": "About Us",
@@ -96,7 +94,7 @@
     "title1": "Built for the way",
     "title2": "your teams",
     "title3": "actually work.",
-    "subtitle": "Finance, sales, HR, operations, marketing and IT on one platform — configured, not customized.",
+    "subtitle": "Finance, supply chain, sales, HR, projects and manufacturing on one platform — configured, not customized.",
     "learnMore": "Learn more"
   },
   "featuresData": {
@@ -108,10 +106,10 @@
     "f3_desc": "Simplify onboarding, automate complex payroll calculations, and empower your workforce with intuitive self-service portals.",
     "f4_title": "Operations & Supply Chain",
     "f4_desc": "Optimize inventory levels, manage vendor relationships, and track logistics from procurement all the way to final delivery.",
-    "f5_title": "Marketing",
-    "f5_desc": "Launch targeted campaigns, track ROI on marketing spend, and seamlessly hand off qualified leads to your sales teams.",
-    "f6_title": "IT & Security",
-    "f6_desc": "Maintain complete control over user access, monitor system health, and ensure enterprise-grade data security across all modules.",
+    "f5_title": "Analytics & Reporting",
+    "f5_desc": "Financial dashboards, sales and POS analytics, inventory insights and project profitability — with a custom report builder and drill-down analysis.",
+    "f6_title": "Security & Access",
+    "f6_desc": "Role-based access control, field-level security and complete audit logs keep every module, record and field protected.",
     "f7_title": "Projects",
     "f7_desc": "Plan work with WBS, track budgets and time, and bill by milestone with retention handled end to end.",
     "f8_title": "Manufacturing",
@@ -136,12 +134,12 @@
     "f4_p1": "Inventory optimisation",
     "f4_p2": "Vendor management",
     "f4_p3": "Logistics tracking",
-    "f5_p1": "Targeted campaigns",
-    "f5_p2": "ROI tracking",
-    "f5_p3": "Lead handoff to sales",
-    "f6_p1": "Role-based access",
-    "f6_p2": "System monitoring",
-    "f6_p3": "Full audit trails",
+    "f5_p1": "Financial dashboards",
+    "f5_p2": "Custom report builder",
+    "f5_p3": "Drill-down analysis",
+    "f6_p1": "Role-based access control",
+    "f6_p2": "Field-level security",
+    "f6_p3": "Audit logs",
     "f7_p1": "WBS planning",
     "f7_p2": "Budget & time tracking",
     "f7_p3": "Milestone billing",
@@ -351,8 +349,8 @@
     "b4_desc": "Multi-company, multi-currency, and multi-country from day one, with local tax rules and full Arabic and English support across the platform.",
     "b1_p1": "Construction & contracting",
     "b1_p2": "Retail & restaurants",
-    "b1_p3": "Manufacturing & trading",
-    "b1_p4": "Professional services",
+    "b1_p3": "Manufacturing",
+    "b1_p4": "Trading companies",
     "b2_p1": "Finance & supply chain",
     "b2_p2": "Sales, HR and POS",
     "b2_p3": "One cloud data model",
@@ -571,7 +569,7 @@
     "badge": "Powering Enterprises Globally",
     "titleLine1": "One Platform.",
     "titleLine2": "Infinite Possibilities.",
-    "subtitle": "From India to the world — Emvive helps businesses connect, automate, and grow across borders.",
+    "subtitle": "Built for Saudi Arabia, the GCC and global enterprises — Emvive helps businesses connect, automate and grow across borders.",
     "tabs": {
       "data": "Data Builder",
       "form": "Form Builder",
@@ -694,46 +692,46 @@
     }
   },
   "agenticHero": {
-    "eyebrow": "THE AGENTIC ENTERPRISE",
-    "headline1": "Business software",
-    "headline2": "designed to think ahead.",
-    "subtitle": "Emvive is the enterprise AI platform for HR, finance, IT and operations — unified across 42 countries, powered by autonomous agents that solve problems, not just report them.",
-    "requestDemo": "Request a free demo",
+    "eyebrow": "ONE BUSINESS OPERATING SYSTEM",
+    "headline1": "Run Your Entire Business on",
+    "headline2": "One Connected Platform.",
+    "subtitle": "Emvive brings finance, supply chain, sales, HR, payroll, POS, e-invoicing, projects, manufacturing and business workflows together — so teams can run everyday operations with connected data and greater visibility across the business.",
+    "requestDemo": "Request a Demo",
     "watchTitle": "Watch: The Agentic Enterprise.",
     "watchDesc": "Emvive is the last operations software your team will ever need.",
-    "tilesTitle1": "A unified AI platform built to serve",
-    "tilesTitle2": "your entire organization.",
+    "tilesTitle1": "Built for the way",
+    "tilesTitle2": "your industry works.",
     "metrics": {
       "0": {
-        "label": "REVENUE YTD"
+        "label": "REVENUE"
       },
       "1": {
-        "label": "COUNTRIES"
+        "label": "OPEN ORDERS"
       },
       "2": {
-        "label": "UPTIME"
+        "label": "PENDING APPROVALS"
       }
     },
     "pills": {
       "0": {
-        "title": "Cloud ERP",
-        "sub": "Unified operations"
+        "title": "Financials & ERP",
+        "sub": "Finance to operations"
       },
       "1": {
-        "title": "HR & Payroll",
-        "sub": "People management"
+        "title": "Sales & CRM",
+        "sub": "Lead to cash"
       },
       "2": {
-        "title": "CRM & Sales",
-        "sub": "Deepen relationships"
+        "title": "HR & Payroll",
+        "sub": "People & payroll"
       },
       "3": {
-        "title": "Advanced Reporting",
-        "sub": "Live insights"
+        "title": "Supply Chain",
+        "sub": "Procure to pay"
       },
       "4": {
-        "title": "Workflow Automation",
-        "sub": "No-code flows"
+        "title": "POS",
+        "sub": "Retail & restaurant"
       }
     },
     "features": {
@@ -752,50 +750,38 @@
     },
     "industries": {
       "0": {
-        "title": "HR",
-        "desc": "Elevate the potential of your people with human-AI collaboration.",
-        "link": "Human Capital Management"
+        "title": "Construction & Contracting",
+        "desc": "Connect projects, procurement, workforce, costs, and finance.",
+        "link": "Explore Construction"
       },
       "1": {
-        "title": "Finance",
-        "desc": "Close faster, plan smarter, run global operations from one ledger.",
-        "link": "Financial Management"
+        "title": "Retail & Restaurants",
+        "desc": "Connect POS, inventory, purchasing, people, and finance.",
+        "link": "Explore Retail & Restaurants"
       },
       "2": {
-        "title": "IT",
-        "desc": "One platform, one data model — retire your integration debt.",
-        "link": "Platform & APIs"
+        "title": "Manufacturing",
+        "desc": "Connect production, inventory, procurement, sales, and finance.",
+        "link": "Explore Manufacturing"
       },
       "3": {
-        "title": "Legal",
-        "desc": "Compliance workflows and audit trails, live in 42 countries.",
-        "link": "Compliance suite"
+        "title": "Trading & Distribution",
+        "desc": "Connect suppliers, stock, customer orders, invoicing, and finance.",
+        "link": "Explore Trading & Distribution"
       },
       "4": {
-        "title": "Operations",
-        "desc": "Supply, inventory, and logistics — orchestrated end-to-end.",
-        "link": "Ops suite"
+        "title": "Professional Services",
+        "desc": "Connect projects, people, customers, expenses, and billing.",
+        "link": "Explore Professional Services"
       },
       "5": {
-        "title": "Manufacturing",
-        "desc": "Plan production, track output and cut waste in real time.",
-        "link": "Production suite"
-      },
-      "6": {
-        "title": "Retail",
-        "desc": "Unify online and in-store commerce with live data.",
-        "link": "Commerce suite"
-      },
-      "7": {
-        "title": "Healthcare",
-        "desc": "Streamline care operations, staffing and billing.",
-        "link": "Care suite"
-      },
-      "8": {
-        "title": "Supply Chain",
-        "desc": "Forecast demand and automate fulfillment everywhere.",
-        "link": "Logistics suite"
+        "title": "Service Organizations",
+        "desc": "Connect customers, teams, workflows, finance, and reporting.",
+        "link": "Explore Service Organizations"
       }
-    }
+    },
+    "secondaryCta": "Explore Emvive",
+    "industriesEyebrow": "INDUSTRIES",
+    "industriesSub": "Different industries have different processes, priorities and operational demands. Emvive brings the business functions behind them into a connected platform designed to support everyday operations."
   }
 }

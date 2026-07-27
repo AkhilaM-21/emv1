@@ -1,10 +1,93 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu } from 'lucide-react';
+import { ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu,
+  Cloud, TrendingUp, BarChart3, Workflow, Blocks, CircleDollarSign, Store, Factory, Receipt, Handshake, ClipboardCheck, LayoutGrid, Plug, ShieldCheck, UserCheck, Layers, ArrowUpRight,
+  Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
 
 import { getMegaMenuData } from '../data/megaMenuData';
+
+/* Icon + colour + one-line description per mega-menu entry, keyed by its
+   label. Each tile carries its own accent colour so the menu isn't all
+   orange. Unknown labels get a varied icon/colour picked deterministically
+   from the title (see megaMeta), so dynamic data is never boring or blank. */
+const MEGA_META = {
+  'Cloud ERP': { icon: Cloud, sub: 'Finance, supply chain & operations', color: '#2563eb' },
+  'HR & Payroll': { icon: Users, sub: 'People, payroll & compliance', color: '#0d9488' },
+  'CRM & Sales': { icon: TrendingUp, sub: 'Pipeline to cash', color: '#7c3aed' },
+  'Advanced Reporting': { icon: BarChart3, sub: 'Dashboards & insights', color: '#db2777' },
+  'Workflow Automation': { icon: Workflow, sub: 'Approvals & triggers', color: '#0891b2' },
+  'No-Code App Builder': { icon: Blocks, sub: 'Build without code', color: '#e2601f' },
+  'Inventory for Retail & POS': { icon: ShoppingCart, sub: 'Stock & point of sale', color: '#2563eb' },
+  'Financial Management': { icon: CircleDollarSign, sub: 'Ledgers, cash & assets', color: '#059669' },
+  'Supply Chain': { icon: Truck, sub: 'Procure to pay', color: '#d97706' },
+  'Advanced POS': { icon: Store, sub: 'Multi-branch retail', color: '#7c3aed' },
+  'Invoicing & Billing': { icon: Receipt, sub: 'E-invoicing & tax', color: '#0891b2' },
+  'Vendor Portal': { icon: Handshake, sub: 'Supplier collaboration', color: '#4f46e5' },
+  'Production Planning': { icon: Factory, sub: 'BOM & shop floor', color: '#be123c' },
+  'Quality Control': { icon: ClipboardCheck, sub: 'Inspections & compliance', color: '#0d9488' },
+  'Data Connections': { icon: Database, sub: 'Connect any source', color: '#2563eb' },
+  'Drag-and-Drop UI': { icon: MousePointerClick, sub: 'Visual builder', color: '#7c3aed' },
+  'Role-Based Logic': { icon: KeyRound, sub: 'Permissions & rules', color: '#0d9488' },
+  'Advanced Filtering': { icon: Filter, sub: 'Slice any data', color: '#db2777' },
+  'Workflow Hooks': { icon: Webhook, sub: 'Event triggers', color: '#0891b2' },
+  'SSO Integration': { icon: Lock, sub: 'Single sign-on', color: '#4f46e5' },
+  'Mobile Optimized': { icon: Smartphone, sub: 'Works on any device', color: '#d97706' },
+  'Custom Domains': { icon: Globe2, sub: 'Your own URL', color: '#059669' },
+  'Emvive Studio': { icon: LayoutGrid, sub: 'Drag & drop builder', color: '#7c3aed' },
+  'Emvive Flow': { icon: Workflow, sub: 'Workflow automation', color: '#0891b2' },
+  'Integration Layer': { icon: Plug, sub: 'APIs & webhooks', color: '#e2601f' },
+  'Security': { icon: ShieldCheck, sub: 'Roles & audit logs', color: '#4f46e5' },
+  'Customer Portal': { icon: UserCheck, sub: 'Orders & payments', color: '#0d9488' },
+  'Employee Portal (ESS)': { icon: Users, sub: 'Self-service for staff', color: '#db2777' },
+  'Vendor Portal ': { icon: Handshake, sub: 'Supplier collaboration', color: '#2563eb' },
+  /* real Emvive modules surfaced under Featured Products (master document §4/§8) */
+  'Sales & CRM': { icon: TrendingUp, sub: '', color: '#7c3aed' },
+  'Retail & POS': { icon: ShoppingCart, sub: '', color: '#2563eb' },
+  'Manufacturing': { icon: Factory, sub: '', color: '#be123c' },
+  'Projects': { icon: Briefcase, sub: '', color: '#4f46e5' },
+  'E-Invoicing': { icon: Receipt, sub: '', color: '#0891b2' },
+  'Analytics & Reporting': { icon: BarChart3, sub: '', color: '#db2777' },
+};
+
+/* deterministic pools for any label not in the map above */
+const FALLBACK_ICONS = [Boxes, Puzzle, Plug, LayoutGrid, Workflow, ShieldCheck, Zap, Sparkles, PackageCheck, FileText, Database, Filter];
+const FALLBACK_COLORS = ['#2563eb', '#7c3aed', '#0891b2', '#db2777', '#0d9488', '#d97706', '#4f46e5', '#059669', '#9333ea', '#be123c'];
+const hashStr = (s) => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+};
+const megaMeta = (title) => {
+  if (MEGA_META[title]) return MEGA_META[title];
+  const h = hashStr(title || '');
+  return {
+    icon: FALLBACK_ICONS[h % FALLBACK_ICONS.length],
+    color: FALLBACK_COLORS[h % FALLBACK_COLORS.length],
+    sub: '',
+  };
+};
+
+/* One tile row: icon chip · title + subtitle · trailing arrow.
+   The tile's accent colour rides on the --mc custom property. */
+const MegaItem = ({ title, active, onEnter, onClick, noSub }) => {
+  const { icon: Icon, sub, color } = megaMeta(title);
+  return (
+    <button
+      className={`mega-item ${active ? 'active' : ''}`}
+      style={{ '--mc': color }}
+      onMouseEnter={onEnter}
+      onClick={onClick}
+    >
+      <span className="mega-item-ic"><Icon size={23} strokeWidth={1.9} /></span>
+      <span className="mega-item-txt">
+        <span className="mega-item-title">{title}</span>
+      </span>
+      <ArrowUpRight size={15} className="mega-item-arrow" aria-hidden="true" />
+    </button>
+  );
+};
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -99,6 +182,20 @@ const Header = () => {
 
   const toggle = (menu) => setOpenMenu((prev) => (prev === menu ? null : menu));
 
+  /* Hover-intent for the mega menu (Infor-style): open on nav hover, and
+     close on a short delay so the pointer can cross the gap into the panel
+     without it snapping shut. The panel cancels the pending close on enter. */
+  const megaCloseTimer = useRef(null);
+  const openMega = (item) => {
+    clearTimeout(megaCloseTimer.current);
+    setOpenNav(item);
+  };
+  const scheduleMegaClose = () => {
+    clearTimeout(megaCloseTimer.current);
+    megaCloseTimer.current = setTimeout(() => setOpenNav(null), 160);
+  };
+  const cancelMegaClose = () => clearTimeout(megaCloseTimer.current);
+
   return (
     <header className={`neurox-header ${isScrolled || openNav || mobileOpen || !isHome ? 'scrolled' : ''}`}>
       <div className="header-inner">
@@ -128,8 +225,13 @@ const Header = () => {
               const hasMegaMenu = item === 'Products';
               
               return (
-                <div key={item} className="nav-item">
-                  <a 
+                <div
+                  key={item}
+                  className="nav-item"
+                  onMouseEnter={() => (hasMegaMenu ? openMega(item) : scheduleMegaClose())}
+                  onMouseLeave={hasMegaMenu ? scheduleMegaClose : undefined}
+                >
+                  <a
                     href={`#${item.toLowerCase()}`}
                     onClick={(e) => {
                       if (hasMegaMenu) {
@@ -402,108 +504,96 @@ const Header = () => {
 
       {/* PRODUCTS MEGA MENU - INFOR STYLE */}
       {openNav === 'Products' && (
-        <div className="mega-menu-wrapper infor-mega-wrapper">
+        <div
+          className="mega-menu-wrapper infor-mega-wrapper"
+          onMouseEnter={cancelMegaClose}
+          onMouseLeave={scheduleMegaClose}
+        >
           <div className="infor-mega-layout">
-            
+
             {/* Column 1: SOLUTIONS */}
             <div className="infor-column">
-              <h3 className="infor-col-header">SOLUTIONS</h3>
-              <ul className="infor-list">
+              <h3 className="infor-col-header">Solutions</h3>
+              <div className="mega-items">
                 {productKeys.map((tab, pIdx) => (
-                  <li key={tab}>
-                    <button
-                      className={`infor-list-btn ${activeProductIndex === pIdx ? 'active' : ''}`}
-                      onMouseEnter={() => {
-                        setActiveProductIndex(pIdx);
-                        setActiveIndustryIndex(0);
-                      }}
-                      onClick={() => {
-                        setActiveProductIndex(pIdx);
-                        setActiveIndustryIndex(0);
-                      }}
-                    >
-                      {tab}
-                    </button>
-                  </li>
+                  <MegaItem
+                    key={tab}
+                    title={tab}
+                    active={activeProductIndex === pIdx}
+                    onEnter={() => {
+                      setActiveProductIndex(pIdx);
+                      setActiveIndustryIndex(0);
+                    }}
+                    onClick={() => {
+                      setActiveProductIndex(pIdx);
+                      setActiveIndustryIndex(0);
+                    }}
+                  />
                 ))}
-              </ul>
+              </div>
               <a href="#all-solutions" className="infor-all-link">
-                All solutions &rarr;
+                All solutions <ArrowRight size={15} />
               </a>
             </div>
 
             {/* Column 2: FEATURED PRODUCTS */}
             <div className="infor-column">
-              <h3 className="infor-col-header">FEATURED PRODUCTS</h3>
-              <ul className="infor-list">
+              <h3 className="infor-col-header">Featured products</h3>
+              <div className="mega-items">
                 {(() => {
-                  // Flatten modules from all industries under the active category
                   const modules = [];
                   Object.values(activeProductData).forEach(ind => {
                     if (ind.modules) modules.push(...ind.modules);
                   });
                   return modules.slice(0, 8).map((mod, i) => (
-                    <li key={i}>
-                      <button
-                        className="infor-list-btn"
-                        onClick={() => {
-                          if (mod.id === 'retail-inventory' || mod.title === 'Inventory for Retail & POS' || mod.title === t('megaMenu.retail.inventory', "Inventory for Retail & POS")) {
-                            navigate('/products/retail-inventory');
-                            setOpenNav(null);
-                          }
-                        }}
-                      >
-                        {mod.title}
-                      </button>
-                    </li>
+                    <MegaItem
+                      key={i}
+                      title={mod.title}
+                      noSub
+                      onClick={() => {
+                        if (mod.id === 'retail-inventory' || mod.title === 'Inventory for Retail & POS' || mod.title === t('megaMenu.retail.inventory', "Inventory for Retail & POS")) {
+                          navigate('/products/retail-inventory');
+                          setOpenNav(null);
+                        }
+                      }}
+                    />
                   ));
                 })()}
-              </ul>
+              </div>
               <a href="#all-products" className="infor-all-link">
-                All products &rarr;
+                All products <ArrowRight size={15} />
               </a>
             </div>
 
             {/* Column 3: NO CODE MACHINE */}
             <div className="infor-column">
-              <h3 className="infor-col-header">NO CODE MACHINE</h3>
-              <ul className="infor-list">
-                <li><button className="infor-list-btn">Emvive Studio</button></li>
-                <li><button className="infor-list-btn">Emvive Flow</button></li>
-                <li><button className="infor-list-btn">Integration Layer</button></li>
-                <li><button className="infor-list-btn">Security</button></li>
-              </ul>
+              <h3 className="infor-col-header">No-code machine</h3>
+              <div className="mega-items">
+                <MegaItem title="Emvive Studio" />
+                <MegaItem title="Emvive Flow" />
+                <MegaItem title="Integration Layer" />
+                <MegaItem title="Security" />
+              </div>
               <a href="#all-platforms" className="infor-all-link">
-                All platforms &rarr;
+                All platforms <ArrowRight size={15} />
               </a>
             </div>
 
-            {/* Column 3: PORTALS */}
+            {/* Column 4: PORTALS */}
             <div className="infor-column">
-              <h3 className="infor-col-header">PORTALS</h3>
-              <ul className="infor-list">
-                <li>
-                  <button className="infor-list-btn">
-                    Vendor Portal
-                  </button>
-                </li>
-                <li>
-                  <button className="infor-list-btn">
-                    Customer Portal
-                  </button>
-                </li>
-                <li>
-                  <button className="infor-list-btn">
-                    Employee Portal (ESS)
-                  </button>
-                </li>
-              </ul>
+              <h3 className="infor-col-header">Portals</h3>
+              <div className="mega-items">
+                <MegaItem title="Vendor Portal" />
+                <MegaItem title="Customer Portal" />
+                <MegaItem title="Employee Portal (ESS)" />
+              </div>
               <a href="#all-portals" className="infor-all-link">
-                All portals &rarr;
+                All portals <ArrowRight size={15} />
               </a>
             </div>
 
           </div>
+
         </div>
       )}
 

@@ -37,7 +37,7 @@ const Clients = () => {
           </div>
 
           <p className="emv-description">
-            {t('clients.descPart1', 'Emvive is a global leader in cloud enterprise software built for the way industries actually work. We combine deep operational expertise, proven processes and ')}<a href="#ai-agents" className="text-link">{t('clients.aiAgents', 'AI agents')}</a>{t('clients.descPart2', " — so your operations don't just run, they think, adapt and act. Turn your business into an agentic enterprise, and set the pace for your industry.")}
+            {t('clients.supporting', 'From day-to-day operations to finance and people management, businesses use Emvive to bring critical processes into one connected environment.')}
           </p>
         </div>
 

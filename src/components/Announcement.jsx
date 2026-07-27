@@ -41,21 +41,21 @@ const Announcement = () => {
       <div className="ann-container">
         <div className="ann-card">
           <div className="ann-content">
-            <span className="ann-eyebrow">THE AGENTIC ENTERPRISE</span>
+            <span className="ann-eyebrow">INTELLIGENT FEATURES</span>
             <h2 className="ann-heading">
-              Enterprise AI that doesn't just report problems — <span className="text-accent">it solves them.</span>
+              Data that works for you — <span className="text-accent">not the other way around.</span>
             </h2>
             <p className="ann-desc">
-              AI agents run inside your Emvive tenant with the same permissions as your users. They detect ledger exceptions, reconcile invoices end-to-end, chase vendors and post journals — escalating to humans only when judgement is required.
+              Emvive turns your operational data into decisions with predictive analytics, smart recommendations and automatic bank reconciliation — with AI-driven insights on the roadmap to help you act before problems surface.
             </p>
             {/* reuse the CTA button pair so the UI and colours match exactly */}
             <div className="ann-actions">
-              <a href="#blog" className="cta-btn-primary">
-                Read the blog
+              <a href="#platform" className="cta-btn-primary">
+                Explore the platform
                 <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
               </a>
               <a href="#demo" className="cta-btn-secondary">
-                See agents in action
+                Request a demo
               </a>
             </div>
           </div>

@@ -530,156 +530,260 @@
 /* =========================================
    PRODUCTS MEGA MENU - INFOR STYLE
 ========================================= */
+/* =========================================
+   MEGA MENU — premium tiles
+========================================= */
 .mega-menu-wrapper.infor-mega-wrapper {
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: #fdfdfd; /* Light off-white */
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-  border-top: 1px solid #e5e7eb;
+  top: calc(100% - 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  /* full nav width — matches the header pill's span */
+  width: calc(100vw - 3rem);
+  max-width: 1500px;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(226, 96, 31, 0.05) 0%, rgba(226, 96, 31, 0) 55%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 30px 60px -24px rgba(15, 23, 42, 0.28),
+    0 12px 24px -18px rgba(15, 23, 42, 0.2);
   z-index: 100;
-  display: flex;
-  justify-content: center;
-  padding: 3.5rem 0;
+  overflow: hidden;
+  animation: mega-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* a thin orange accent along the very top of the panel */
+.mega-menu-wrapper.infor-mega-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg,
+    rgba(226, 96, 31, 0) 0%, rgba(226, 96, 31, 0.5) 25%,
+    #e2601f 50%, rgba(226, 96, 31, 0.5) 75%, rgba(226, 96, 31, 0) 100%);
+}
+
+@keyframes mega-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .infor-mega-layout {
-  width: 100%;
-  max-width: 1400px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1.2fr;
-  gap: 3rem;
-  padding: 0 2rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0;
+  padding: 2.25rem 1.25rem 1.5rem;
 }
 
+/* hairline dividers between the columns */
 .infor-column {
   display: flex;
   flex-direction: column;
+  padding: 0 1.25rem;
+  position: relative;
+}
+.infor-column + .infor-column::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.25rem; bottom: 0.75rem;
+  width: 1px;
+  background: linear-gradient(180deg,
+    rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.08) 20%,
+    rgba(15, 23, 42, 0.08) 80%, rgba(15, 23, 42, 0) 100%);
 }
 
 .infor-col-header {
   font-size: 0.95rem;
-  font-weight: 700;
-  color: #d9531f; /* Theme blue */
+  font-weight: 800;
+  color: #d9531f;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  margin: 0 0 0.85rem 0.6rem;
 }
 
-.infor-list {
+.mega-items {
   list-style: none;
   padding: 0;
-  margin: 0 0 2rem 0;
+  margin: 0 0 0.9rem 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 5px;
+  flex: 1;
 }
 
-.infor-list-btn {
-  background: transparent;
+/* one tile row */
+.mega-item {
+  display: grid;
+  grid-template-columns: 30px 1fr 16px;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
   border: none;
-  padding: 0;
-  font-size: 0.98rem;
-  font-weight: 500;
-  color: #334155;
-  cursor: pointer;
+  border-radius: 12px;
+  background: transparent;
   text-align: left;
+  cursor: pointer;
   font-family: inherit;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.mega-item:hover,
+.mega-item.active {
+  background: color-mix(in srgb, var(--mc, #e2601f) 8%, transparent);
+}
+
+/* bare icon in the tile's own colour — no box */
+.mega-item-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  color: var(--mc, #64748b);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.mega-item:hover .mega-item-ic,
+.mega-item.active .mega-item-ic {
+  transform: translateX(1px) scale(1.08);
+}
+
+.mega-item-txt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.mega-item-title {
+  font-size: 1rem; /* match the nav bar links */
+  font-weight: 400;
+  color: #1f2937;
   transition: color 0.2s ease;
 }
+.mega-item:hover .mega-item-title,
+.mega-item.active .mega-item-title { color: var(--mc, #d9531f); }
 
-.infor-list-btn:hover,
-.infor-list-btn.active {
-  color: #d9531f; /* Theme blue */
-}
-
-.infor-group-header {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.infor-group-header:first-child {
-  margin-top: 0;
+.mega-item-sub {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.infor-sub-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+.mega-item-arrow {
+  color: #cbd3df;
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
-.infor-sub-list .infor-list-btn {
-  font-size: 0.85rem;
-  color: #64748b;
-}
-.infor-sub-list .infor-list-btn:hover {
-  color: #d9531f;
+.mega-item:hover .mega-item-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+  color: var(--mc, #e2601f);
 }
 
 .infor-all-link {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 700;
   color: #d9531f;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: opacity 0.2s ease;
+  gap: 0.4rem;
+  margin: 0.35rem 0 0 0.75rem;
+  transition: gap 0.2s ease;
+}
+.infor-all-link:hover { gap: 0.7rem; }
+
+/* inset banner card along the bottom — separated from the white menu with
+   margin + rounding so it reads as its own element, and a vivid orange
+   gradient so it never blends into a dark section behind the menu */
+.mega-promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0.25rem 1rem 1rem;
+  padding: 1.15rem 1.75rem;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(90% 160% at 100% 0%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 45%),
+    linear-gradient(100deg, #e2601f 0%, #f2853f 55%, #f7a04a 100%);
+  box-shadow: 0 12px 26px -14px rgba(226, 96, 31, 0.7);
 }
 
-.infor-all-link:hover {
-  opacity: 0.8;
+/* faint dotted texture so the banner has some depth */
+.mega-promo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.5;
 }
 
-.infor-card-column {
-  padding-left: 2rem;
-}
-
-.infor-featured-card {
-  background-color: #0f172a; /* Professional dark slate */
-  border-radius: 12px;
-  padding: 2.5rem 2rem;
+.mega-promo-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  gap: 0.2rem;
+  position: relative;
+  z-index: 1;
 }
-
-.infor-featured-card h2 {
-  font-size: 1.5rem;
+.mega-promo-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+.mega-promo-text strong {
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0;
 }
 
-.infor-featured-card p {
-  font-size: 0.95rem;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+.mega-promo-cta {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #d6461a;
+  text-decoration: none;
+  background: #ffffff;
+  box-shadow: 0 8px 18px -10px rgba(226, 96, 31, 0.9);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-.infor-cta-btn {
-  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%); /* Theme blue */
+.mega-promo-cta:hover { transform: translateY(-1px); box-shadow: 0 14px 26px -12px rgba(15, 23, 42, 0.35); }
+/* orange disc + white arrow, now that the button itself is white */
+.mega-promo-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f7834a 0%, #e8501c 100%);
   color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.85rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.infor-cta-btn:hover {
-  background: linear-gradient(135deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
-  transform: translateY(-2px);
+@media (max-width: 1080px) {
+  .mega-menu-wrapper.infor-mega-wrapper { width: calc(100vw - 2rem); }
+  .infor-mega-layout { grid-template-columns: 1fr 1fr; gap: 0.5rem 0; }
+  .infor-column + .infor-column:nth-child(odd)::before { display: none; }
+  .mega-promo { flex-direction: column; align-items: flex-start; }
 }
 
 /* =========================================

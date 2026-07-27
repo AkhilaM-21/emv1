@@ -8,25 +8,29 @@ const CTA = () => {
   return (
     <section className="cta-section">
       <div className="cta-panel">
-        <span className="cta-eyebrow">READY WHEN YOU ARE</span>
-        
+        <span className="cta-eyebrow">READY TO RUN YOUR BUSINESS BETTER?</span>
+
         <h2 className="cta-title">
-          Run your operations like <span className="text-accent">it's 2030</span>.
+          See what <span className="text-accent">one connected business platform</span> can do for you.
         </h2>
-        
+
         <p className="cta-subtitle">
-          Ten-minute setup. Free for 30 days. Bring your team, bring your books,<br />
-          bring your countries.
+          Discover how Emvive can bring your finance, supply chain, sales, people, projects,<br />
+          POS, compliance, reporting and workflows together around the way your business operates.
         </p>
 
         <div className="cta-actions">
           <a className="cta-btn-primary" href="#demo">
-            Start free <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
+            Book Your Emvive Demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
           </a>
           <a className="cta-btn-secondary" href="#demo">
-            Book a walkthrough
+            Talk to an Emvive Specialist
           </a>
         </div>
+
+        <p className="cta-microcopy">
+          See the applications and workflows most relevant to your business.
+        </p>
       </div>
     </section>
   );
