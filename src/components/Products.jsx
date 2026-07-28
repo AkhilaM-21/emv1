@@ -480,7 +480,9 @@ const Products = () => {
           </div>
         </div>
 
-        {/* HERO-STYLE CAROUSEL FOR DETAILED DASHBOARDS */}
+        {/* HERO-STYLE CAROUSEL FOR DETAILED DASHBOARDS — hidden for now */}
+        {false && (
+        <>
         <div
           className="products-carousel-stage"
           onMouseEnter={() => setPaused(true)}
@@ -556,6 +558,8 @@ const Products = () => {
             ))}
           </div>
         </div>
+        </>
+        )}
 
       </div>
     </section>

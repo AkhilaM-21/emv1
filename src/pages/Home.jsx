@@ -16,8 +16,8 @@ const Home = () => {
     <>
       <AgenticHero />
       <Clients />
-      <Products />
       <Features variant="color" />
+      <Products />
       <Announcement />
       <AppBuilder />
       <WhyEmvive />

@@ -993,3 +993,65 @@ body.dark-theme .features-section--solid .features-sub {
   gap: 0.8rem !important;
   border-color: #ffffff !important;
 }
+
+/* ---- App cards: top row (icon + number), and bullet points ---- */
+.feature-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.feature-top .feature-ic { margin-bottom: 0; }
+
+.feature-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(11, 23, 48, 0.28);
+}
+.features-section--color .feature-num { color: rgba(var(--fc-rgb), 0.6); }
+
+/* Points sit flush left with a dim arrow. On hover the arrows brighten and
+   each row darts forward one after another (same as the Why Emvive cards). */
+.feature-points {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.feature-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b7482;
+  transition: color 0.5s ease;
+  transition-delay: calc(var(--i) * 140ms);
+}
+.feature-points li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--fc, #e2601f);
+  transition: color 0.4s ease;
+}
+.feature-card:hover .feature-points li {
+  color: #0b1730;
+  animation: feature-point-dart 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 140ms);
+}
+.feature-card:hover .feature-points li svg {
+  color: var(--fc, #e2601f);
+}
+@keyframes feature-point-dart {
+  from { transform: translateX(0); }
+  to { transform: translateX(10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feature-points li { transition: none; }
+  .feature-card:hover .feature-points li { animation: none; }
+}
