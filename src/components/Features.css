@@ -406,6 +406,25 @@
   gap: 1.5rem;
 }
 
+/* Animated GIF filling the empty last grid cell — no background */
+.feature-video-card {
+  position: relative;
+  background: transparent;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feature-video-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+@media (max-width: 560px) {
+  .feature-video-card { min-height: 220px; }
+}
+
 @media (max-width: 1200px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 900px)  { .features-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px)  { .features-grid { grid-template-columns: 1fr; } }

@@ -153,6 +153,10 @@ const Features = ({ variant = 'mono', id = 'features' }) => {
           {FEATURES.map((feature) => (
             <FeatureCard key={feature.id} feature={feature} variant={variant} />
           ))}
+          {/* fills the empty last grid cell */}
+          <div className="feature-video-card">
+            <img src="/images/application.gif" alt="Emvive applications" />
+          </div>
         </div>
       </div>
     </section>

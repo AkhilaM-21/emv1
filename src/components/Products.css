@@ -18,8 +18,29 @@
    HEADER & AGENT STUDIO BLOCK
 ========================================= */
 .emv-products-header {
-  /* left indent so the bare heading text isn't flush to the edge */
-  margin: 0 0 4rem 4rem;
+  margin: 0 0 4rem 0;
+}
+/* Heading on the left, CTA aligned to the heading's first line on the right */
+.emv-products-headline-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+.emv-products-headline-row .emv-headline {
+  margin: 0;
+}
+.emv-explore-all--head {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+@media (max-width: 768px) {
+  .emv-products-headline-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
 .emv-subtitle {
   font-size: 0.85rem;
@@ -39,7 +60,7 @@
 }
 /* keep the headline on a single line — scoped to the products section only */
 .products-section .emv-headline {
-  white-space: nowrap;
+  white-space: normal;
 }
 .text-accent {
   background: linear-gradient(100deg, #f0883e 0%, #e2601f 50%, #d6461a 100%);
@@ -55,23 +76,69 @@
   max-width: 800px;
 }
 
-.emv-featured-apps-container {
-  display: flex;
-  gap: 4rem;
-  /* left indent to match the header */
-  margin: 0 0 6rem 4rem;
-  align-items: flex-start;
+/* Full-width switcher wrapper — aligned to the header */
+.emv-apps-wrap {
+  margin: 0 0 6rem 0;
 }
 
-/* Purple Card */
+/* Full-width tab row above the divider */
+.emv-apps-wrap .emv-app-tabs {
+  margin-bottom: 1.5rem;
+}
+
+/* Divider line spans the full width, below the tabs */
+.emv-featured-apps-container {
+  position: relative;
+  display: flex;
+  gap: 4rem;
+  margin: 0;
+  padding-top: 2.5rem;
+  align-items: flex-start;
+}
+/* Divider line — heavy in the middle, fading to transparent at the ends,
+   in the active app's colour (same treatment as the footer / CTA line). */
+.emv-featured-apps-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--ac) 35%, transparent) 22%,
+    var(--ac) 50%,
+    color-mix(in srgb, var(--ac) 35%, transparent) 78%,
+    transparent 100%
+  );
+}
+.emv-featured-apps-container::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 60%);
+  height: 3px;
+  border-radius: 999px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--ac) 55%, transparent) 0%,
+    transparent 100%
+  );
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+/* Left card — takes the selected application's colour */
 .emv-agent-studio-card {
   position: relative;
   overflow: hidden;
   flex: 0 0 380px;
   background:
     radial-gradient(130% 90% at 12% 6%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 46%),
-    radial-gradient(120% 120% at 100% 100%, rgba(217, 70, 239, 0.35) 0%, rgba(217, 70, 239, 0) 55%),
-    linear-gradient(150deg, #3b0764 0%, #5b21b6 48%, #7c3aed 100%);
+    linear-gradient(150deg, color-mix(in srgb, var(--ac, #7c3aed) 62%, #000) 0%, var(--ac, #7c3aed) 100%);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 24px;
   padding: 2rem;
@@ -80,9 +147,10 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 24px 50px -18px rgba(76, 29, 149, 0.5);
+    0 24px 50px -18px color-mix(in srgb, var(--ac, #7c3aed) 45%, transparent);
 }
 .emv-new-badge {
   background: rgba(255,255,255,0.15);
@@ -93,6 +161,24 @@
   letter-spacing: 1px;
   margin-bottom: 1rem;
 }
+/* Small text tag at the top of the coloured card */
+.emv-card-tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+/* the card fades in on selection change (key remount) */
+.emv-agent-studio-card {
+  animation: emv-app-fade 0.45s ease both;
+}
 
 .emv-agent-studio-card h3 {
   font-size: 1.8rem;
@@ -101,10 +187,19 @@
   line-height: 1.2;
 }
 .emv-agent-studio-card p {
-  color: #f7c8a3;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
-  margin-bottom: 1.5rem;
   line-height: 1.5;
+}
+.emv-card-tagline {
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+.emv-card-blurb {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.9rem !important;
+  margin-bottom: 1.75rem;
 }
 .emv-btn-outline-white {
   padding: 10px 20px;
@@ -123,14 +218,80 @@
 /* Apps Grid */
 .emv-apps-grid-section {
   flex: 1;
-  border-top: 1px solid #cbd5e1;
-  padding-top: 1.5rem;
+  min-width: 0;
 }
+
+/* Tab buttons above the divider line */
+.emv-app-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.emv-app-tab {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.emv-app-tab svg { color: var(--ac); transition: color 0.2s ease; }
+.emv-app-tab:hover {
+  border-color: var(--ac);
+  color: #0f172a;
+}
+.emv-app-tab.active {
+  color: #ffffff;
+  background: var(--ac);
+  border-color: var(--ac);
+  box-shadow: 0 6px 16px -6px var(--ac);
+}
+.emv-app-tab.active svg { color: #ffffff; }
+
 .emv-apps-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
+}
+
+/* Per-app CTA pill — takes the selected application's colour */
+.emv-app-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px 6px 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--ac) 35%, #e2e8f0);
+  color: #1e293b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--ac) 60%, transparent);
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+.emv-app-cta svg {
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  border-radius: 50%;
+  background: var(--ac);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+.emv-app-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -10px color-mix(in srgb, var(--ac) 70%, transparent);
 }
 .emv-apps-title {
   font-size: 0.8rem;
@@ -196,6 +357,91 @@
   color: #64748b;
   margin: 0;
   line-height: 1.4;
+}
+
+/* ---- Selected app detail (replaces the old static grid) ---- */
+.emv-app-detail {
+  animation: emv-app-fade 0.45s ease both;
+}
+@keyframes emv-app-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emv-app-detail { animation: none; }
+}
+.emv-app-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.emv-app-detail-head-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.emv-app-detail-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ac);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.16),
+    0 7px 16px -3px rgba(15, 23, 42, 0.24);
+}
+.emv-app-detail-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+.emv-app-detail-head .emv-app-cta {
+  flex-shrink: 0;
+}
+.emv-app-detail-points {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 2rem;
+}
+.emv-app-detail-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: #334155;
+}
+.emv-app-detail-points li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--ac);
+}
+.emv-app-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ac);
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+.emv-app-detail-link:hover { gap: 12px; }
+
+@media (max-width: 640px) {
+  .emv-app-detail-points { grid-template-columns: 1fr; }
 }
 
 /* =========================================

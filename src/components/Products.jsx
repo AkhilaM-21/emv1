@@ -9,7 +9,11 @@ import {
   Building2, Hotel, HeartHandshake, Home, Landmark, ShoppingBag, Cloud,
   Cpu, RadioTower, Megaphone, Server, Clapperboard, Cog, Scale, Calculator,
   IdCard, BarChart3, Workflow, ReceiptText, Database, Target, Waypoints,
-  Network, BadgeDollarSign, TrendingUp
+  Network, BadgeDollarSign, TrendingUp,
+  BookOpen, ArrowLeftRight, Layers, RefreshCw, Warehouse, Percent, Tag,
+  CreditCard, Wallet, CalendarCheck, Award, ShieldCheck, UserCog, WifiOff,
+  ScanLine, Printer, LayoutGrid, Monitor, Gift, QrCode, Code, PenTool, Plug,
+  Lock, Globe, GitBranch, ClipboardList, Flag, MousePointerClick, Table
 } from 'lucide-react';
 
 // Icon per target-industry (reference style pills)
@@ -69,6 +73,48 @@ const productsList = [
     icon: <ReceiptText size={22} color="#fff" />
   }
 ];
+
+/* Application switcher: tab buttons above the divider, and the detail panel
+   that replaces the old static "featured apps" grid when a tab is clicked. */
+const APPS = [
+  { key: 'financials', tab: 'Emvive Financials', title: 'Run Your Finances with Greater Control', icon: BadgeDollarSign, color: '#7c3aed', link: 'Explore Financials',
+    points: [[BookOpen, 'General Ledger'], [ArrowLeftRight, 'Accounts Payable & Receivable'], [Landmark, 'Cash & Bank Management'], [Building2, 'Fixed Assets'], [LineChart, 'Budgeting & Forecasting'], [Layers, 'Cost Centers & Dimensions'], [Network, 'Intercompany Accounting'], [GitMerge, 'Consolidation'], [RefreshCw, 'Auto Bank Reconciliation']] },
+  { key: 'supply', tab: 'Emvive Supply Chain', title: 'Connect Purchasing, Inventory and Warehouses', icon: Truck, color: '#0891b2', link: 'Explore Supply Chain',
+    points: [[ShoppingCart, 'Procurement Management'], [Handshake, 'Vendor Management'], [Boxes, 'Inventory Control'], [Warehouse, 'Warehouse Management'], [TrendingUp, 'Demand Planning'], [Waypoints, '2-Way / 3-Way Matching'], [BadgeDollarSign, 'Vendor Advance Payments'], [Percent, 'Retention Deduction'], [FileCheck, 'Partial Receipts']] },
+  { key: 'sales', tab: 'Emvive Sales & CRM', title: 'Manage the Customer Journey from Lead to Order', icon: TrendingUp, color: '#059669', link: 'Explore Sales & CRM',
+    points: [[Target, 'Leads & Opportunities'], [ReceiptText, 'Quotations'], [ShoppingBag, 'Sales Orders'], [Tag, 'Pricing & Discounts'], [Users, 'Customer Management'], [CreditCard, 'Credit Limits'], [Truck, 'Partial Deliveries'], [Package, 'Backorders'], [BadgeDollarSign, 'Advance Payments'], [Percent, 'Retention Handling']] },
+  { key: 'hcm', tab: 'Emvive HCM', title: 'Manage Your Workforce from Hire to Payroll', icon: Users, color: '#2563eb', link: 'Explore HCM',
+    points: [[Users, 'Core HR'], [Wallet, 'Payroll'], [CalendarCheck, 'Attendance & Leave'], [Award, 'End of Service Benefits'], [ShieldCheck, 'GOSI'], [BadgeDollarSign, 'Employee Loans & Advances'], [BarChart3, 'KPI & Appraisals'], [User, 'Employee Self-Service'], [UserCog, 'Manager Self-Service'], [ShieldCheck, 'WPS Compliance']] },
+  { key: 'pos', tab: 'Emvive POS', title: 'Connect Every Sale with Your Business Operations', icon: ShoppingCart, color: '#9333ea', link: 'Explore POS',
+    points: [[Zap, 'Fast Billing'], [WifiOff, 'Offline Mode'], [ScanLine, 'Barcode Scanning'], [Printer, 'Receipt Printing'], [Building2, 'Multi-Branch POS'], [LayoutGrid, 'Table Management'], [Monitor, 'Kitchen Display System'], [Gift, 'Promotions & Loyalty'], [Clock, 'Cashier & Shift Control'], [RefreshCw, 'Real-Time Inventory Sync']] },
+  { key: 'einv', tab: 'Emvive E-Invoicing', title: 'Make Compliance Part of Your Invoicing Process', icon: ReceiptText, color: '#0d9488', link: 'Explore E-Invoicing',
+    points: [[ReceiptText, 'Electronic Invoices'], [QrCode, 'QR Code Generation'], [Code, 'XML / JSON Formats'], [PenTool, 'Digital Signatures'], [ShieldCheck, 'ZATCA Phase 1 & 2'], [Zap, 'Real-Time Clearance'], [Plug, 'API Integration'], [Lock, 'Cryptographic Stamping'], [Globe, 'Country-Based Tax Compliance'], [Landmark, 'Government Integration APIs']] },
+  { key: 'projects', tab: 'Emvive Projects', title: 'Keep Projects, Resources and Financials in View', icon: Briefcase, color: '#d97706', link: 'Explore Projects',
+    points: [[GitBranch, 'Project Planning with WBS'], [ClipboardList, 'Task Management'], [Users, 'Resource Allocation'], [LineChart, 'Budget Tracking'], [Clock, 'Time & Expense Tracking'], [Flag, 'Milestone Billing'], [Percent, 'Retention Management']] },
+  { key: 'mfg', tab: 'Emvive Manufacturing', title: 'Connect Production with Inventory and Cost', icon: Factory, color: '#be123c', link: 'Explore Manufacturing',
+    points: [[ClipboardList, 'Bill of Materials'], [Factory, 'Production Orders'], [Cog, 'Shop Floor Control'], [Boxes, 'Material Consumption'], [BadgeDollarSign, 'Production Costing']] },
+  { key: 'studio', tab: 'Emvive Studio', title: 'Build Around the Way Your Business Works', icon: LayoutDashboard, color: '#ec4899', link: 'Explore Studio',
+    points: [[MousePointerClick, 'Drag-and-Drop Builder'], [LayoutGrid, 'Custom Forms'], [Table, 'Tables & Relationships'], [PenTool, 'UI Designer']] },
+  { key: 'flow', tab: 'Emvive Flow', title: 'Automate the Processes Between Your Teams', icon: Workflow, color: '#4f46e5', link: 'Explore Flow',
+    points: [[Workflow, 'Workflow Automation'], [GitMerge, 'Approval Chains'], [Zap, 'Event Triggers']] },
+  { key: 'insights', tab: 'Emvive Insights', title: 'Turn Business Data into Clearer Decisions', icon: BarChart3, color: '#e2601f', link: 'Explore Insights',
+    points: [[LayoutDashboard, 'Financial Dashboards'], [TrendingUp, 'Sales Analytics'], [ShoppingCart, 'POS Analytics'], [Boxes, 'Inventory Insights'], [BadgeDollarSign, 'Project Profitability'], [PieChart, 'Custom Report Builder'], [Search, 'Drill-Down Analysis']] },
+];
+
+/* Short descriptive blurb per app for the coloured card */
+const BLURBS = {
+  financials: 'One connected view of your ledger, cash, payables, and assets.',
+  supply: 'Procurement, inventory, and warehouses managed end to end.',
+  sales: 'From lead to order to payment in one connected flow.',
+  hcm: 'Core HR, payroll, and attendance with compliance built in.',
+  pos: 'Fast billing across every branch — online or offline.',
+  einv: 'Compliant e-invoicing with real-time ZATCA clearance.',
+  projects: 'Plan, resource, track, and bill projects in one place.',
+  mfg: 'Production, materials, and costing kept connected.',
+  studio: 'Build custom apps with drag-and-drop, not heavy code.',
+  flow: 'Automate approvals and processes between your teams.',
+  insights: 'Dashboards and analytics across your whole business.',
+};
 
 const CountUp = ({ end, duration = 2000, prefix='', suffix='', inView, isFloat=false }) => {
   const [count, setCount] = useState(0);
@@ -387,6 +433,9 @@ const DashboardWrapper = ({ product, inView }) => {
 const Products = () => {
   const { t } = useTranslation();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeApp, setActiveApp] = useState(0);
+  const active = APPS[activeApp];
+  const ActiveIcon = active.icon;
   const slideCount = productsList.length;
 
   const goPrev = () => setActiveSlide((s) => (s - 1 + slideCount) % slideCount);
@@ -401,80 +450,91 @@ const Products = () => {
     return () => clearTimeout(timer);
   }, [activeSlide, paused, slideCount]);
 
+  // auto-cycle the app tabs one by one; pauses while hovered, and any
+  // manual click restarts the dwell (effect re-runs on activeApp)
+  const [appPaused, setAppPaused] = useState(false);
+  useEffect(() => {
+    if (appPaused) return undefined;
+    const timer = setTimeout(() => setActiveApp((a) => (a + 1) % APPS.length), 3000);
+    return () => clearTimeout(timer);
+  }, [activeApp, appPaused]);
+
   return (
     <section id="products" className="products-section">
       <div className="container">
 
-        {/* HEADER BLOCK FROM IMAGE */}
+        {/* HEADER BLOCK */}
         <div className="emv-products-header">
-          <div className="emv-subtitle">{t('products.featured.subtitle', 'FEATURED PRODUCTS')}</div>
-          <h2 className="emv-headline">
-            {t('products.featured.headline1', 'One platform.')} <span className="text-accent">{t('products.featured.headline2', 'Every operating layer.')}</span>
-          </h2>
+          <div className="emv-subtitle">FEATURED PRODUCTS</div>
+          <div className="emv-products-headline-row">
+            <h2 className="emv-headline">
+              Everything You Need to Run <br />
+              Your Business, <span className="text-accent">Connected</span>
+            </h2>
+            <a href="#all-products" className="emv-explore-all emv-explore-all--head">
+              Explore all products <ArrowRight size={16}/>
+            </a>
+          </div>
           <p className="emv-description">
-            {t('products.featured.description', 'Six enterprise-grade applications on a single data model — from the general ledger to the customer record. No integrations to wire. No CSVs to import.')}
+            From financials and supply chain to sales, people, projects, manufacturing, POS, compliance, and automation, Emvive brings the applications behind your business into one connected Business Operating System.
           </p>
         </div>
 
-        {/* EXACT APP STUDIO GRID BLOCK FROM IMAGE */}
-        <div className="emv-featured-apps-container">
-          {/* Left: Purple Card */}
-          <div className="emv-agent-studio-card">
-            <div className="emv-new-badge">✦ {t('products.featured.newTag', 'NEW')}</div>
-            <h3>{t('products.featured.introducing', 'Introducing')}<br/>{t('products.featured.agentStudio', 'Emvive Agent Studio')}</h3>
-            <p>{t('products.featured.agentStudioDesc', 'Build autonomous agents that reconcile ledgers, chase invoices, draft close notes and more.')}</p>
-            <a href="#agent-studio" className="emv-btn-outline-white">{t('products.featured.exploreAgentStudio', 'Explore Agent Studio')} &rarr;</a>
+        {/* APP SWITCHER: full-width tabs, divider, then card + info */}
+        <div
+          className="emv-apps-wrap"
+          onMouseEnter={() => setAppPaused(true)}
+          onMouseLeave={() => setAppPaused(false)}
+        >
+          {/* Full-width tab buttons */}
+          <div className="emv-app-tabs">
+            {APPS.map((app, i) => {
+              const TabIcon = app.icon;
+              return (
+                <button
+                  key={app.key}
+                  type="button"
+                  className={`emv-app-tab ${activeApp === i ? 'active' : ''}`}
+                  style={{ '--ac': app.color }}
+                  onClick={() => setActiveApp(i)}
+                >
+                  <TabIcon size={15} strokeWidth={2} />
+                  {app.tab}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right: Apps Grid */}
-          <div className="emv-apps-grid-section">
-            <div className="emv-apps-header">
-              <span className="emv-apps-title">{t('products.featured.featuredApps', 'FEATURED APPS')}</span>
-              <a href="#all-products" className="emv-explore-all">{t('products.featured.exploreAll', 'Explore all products')} <ArrowRight size={16}/></a>
+          {/* Below the divider line: left card (app-coloured) + right info */}
+          <div className="emv-featured-apps-container" style={{ '--ac': active.color }}>
+            {/* Left: coloured card — reflects the selected application */}
+            <div className="emv-agent-studio-card" key={active.key} style={{ '--ac': active.color }}>
+              <h3>{active.tab}</h3>
+              <p className="emv-card-tagline">{active.title}</p>
+              <p className="emv-card-blurb">{BLURBS[active.key]}</p>
+              <a href="#" className="emv-app-cta emv-card-cta">{active.link} <ArrowRight size={16}/></a>
             </div>
 
-            <div className="emv-apps-grid">
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#2b4fb0'}}><LayoutDashboard size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.0.name', 'Finance')}</h4>
-                  <p>{t('products.featured.apps.0.desc', 'Multi-entity GL, consolidation & close')}</p>
+            {/* Right: selected app info — icon + name heading, items, button */}
+            <div className="emv-apps-grid-section">
+              <div className="emv-app-detail" key={active.key} style={{ '--ac': active.color }}>
+                <div className="emv-app-detail-head">
+                  <div className="emv-app-detail-head-left">
+                    <span className="emv-app-detail-icon"><ActiveIcon size={22} color="#fff"/></span>
+                    <h3 className="emv-app-detail-title">{active.tab}</h3>
+                  </div>
+                  <a href="#" className="emv-app-cta" style={{ '--ac': active.color }}>
+                    {active.link} <ArrowRight size={16}/>
+                  </a>
                 </div>
-              </div>
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#2b4fb0'}}><Users size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.1.name', 'People')}</h4>
-                  <p>{t('products.featured.apps.1.desc', 'Global HR & statutory payroll')}</p>
-                </div>
-              </div>
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#10b981'}}><Briefcase size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.2.name', 'CRM')}</h4>
-                  <p>{t('products.featured.apps.2.desc', 'Pipeline, contracts & revenue')}</p>
-                </div>
-              </div>
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#ec4899'}}><Package size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.3.name', 'Inventory')}</h4>
-                  <p>{t('products.featured.apps.3.desc', 'Supply, warehousing & SKUs')}</p>
-                </div>
-              </div>
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#2b4fb0'}}><Settings size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.4.name', 'Automation')}</h4>
-                  <p>{t('products.featured.apps.4.desc', 'Visual, low-code workflow studio')}</p>
-                </div>
-              </div>
-              <div className="emv-app-mini-card">
-                <div className="emv-app-icon" style={{background: '#ef4444'}}><FileCheck size={18} color="#fff"/></div>
-                <div className="emv-app-info">
-                  <h4>{t('products.featured.apps.5.name', 'E-Invoicing')}</h4>
-                  <p>{t('products.featured.apps.5.desc', 'Native formats in 42 countries')}</p>
-                </div>
+                <ul className="emv-app-detail-points">
+                  {active.points.map((pt) => {
+                    const Pi = pt[0];
+                    return (
+                      <li key={pt[1]}><Pi size={16} /> <span>{pt[1]}</span></li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
           </div>
