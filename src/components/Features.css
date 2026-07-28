@@ -420,9 +420,12 @@
   height: 100%;
   object-fit: contain;
   display: block;
+  /* nudged down so it sits lower than the cards beside it */
+  transform: translateY(130px);
 }
 @media (max-width: 560px) {
   .feature-video-card { min-height: 220px; }
+  .feature-video-card img { transform: translateY(50px); }
 }
 
 @media (max-width: 1200px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
