@@ -54,7 +54,6 @@ const WhyEmvive = () => {
       points: [
         t('whyData.b4_p1', 'Drag-and-drop application builder'),
         t('whyData.b4_p2', 'Custom forms'),
-        t('whyData.b4_p3', 'Tables & relationships'),
         t('whyData.b4_p4', 'Workflow automation'),
         t('whyData.b4_p5', 'Approval chains'),
         t('whyData.b4_p6', 'APIs & Webhooks'),

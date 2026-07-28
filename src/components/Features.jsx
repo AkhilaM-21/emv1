@@ -57,7 +57,7 @@ const FEATURES = [
   {
     id: 9, icon: Blocks, title: 'Emvive Studio', color: '#ec4899', rgb: '236, 72, 153',
     desc: 'Build business applications around your processes.',
-    points: ['Drag-and-Drop Builder', 'Custom Forms', 'Tables & Relationships', 'UI Designer'],
+    points: ['Drag-and-Drop Builder', 'Custom Forms', 'UI Designer'],
     link: 'Explore Studio',
   },
   {
