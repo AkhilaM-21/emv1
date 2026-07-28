@@ -440,7 +440,6 @@ const Products = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeApp, setActiveApp] = useState(0);
   const active = APPS[activeApp];
-  const ActiveIcon = active.icon;
   const slideCount = productsList.length;
 
   const goPrev = () => setActiveSlide((s) => (s - 1 + slideCount) % slideCount);
@@ -514,13 +513,10 @@ const Products = () => {
           <div className="emv-featured-apps-container" style={{ '--ac': active.color }}>
             {/* Left: coloured card — reflects the selected application */}
             <div className="emv-agent-studio-card" key={active.key} style={{ '--ac': active.color }}>
-              <div className="emv-card-head">
-                <span className="emv-card-icon"><ActiveIcon size={22} color="#fff" /></span>
-                <h3>{active.tab}</h3>
-              </div>
-              <p className="emv-card-tagline">{active.title}</p>
-              <p className="emv-card-blurb">{BLURBS[active.key]}</p>
-              <a href="#" className="emv-app-cta emv-card-cta">{active.link} <ArrowRight size={16}/></a>
+              <h3>{active.tab}</h3>
+              {/* tagline and blurb read as one continuous paragraph */}
+              <p className="emv-card-blurb">{active.title}. {BLURBS[active.key]}</p>
+              <a href="#" className="emv-btn-outline-white emv-card-cta">{active.link} <ArrowRight size={16}/></a>
             </div>
 
             {/* Right: selected app info — icon + name heading, items, button */}

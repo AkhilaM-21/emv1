@@ -180,59 +180,39 @@
   animation: emv-app-fade 0.45s ease both;
 }
 
-/* icon sits to the left of the card heading */
-.emv-card-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 0.75rem;
-}
-.emv-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
 .emv-agent-studio-card h3 {
   font-size: 1.8rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
   line-height: 1.2;
 }
-.emv-card-head h3 { margin-bottom: 0; }
 .emv-agent-studio-card p {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
   line-height: 1.5;
 }
-.emv-card-tagline {
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0.75rem;
-}
 .emv-card-blurb {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.55;
   margin-bottom: 1.75rem;
 }
 .emv-btn-outline-white {
-  padding: 10px 20px;
-  border: 1px solid rgba(255,255,255,0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 50px;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s;
+  font-weight: 700;
+  transition: background 0.2s ease, border-color 0.2s ease;
   font-size: 0.9rem;
 }
 .emv-btn-outline-white:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.75);
 }
 
 /* Apps Grid */
@@ -420,19 +400,19 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem 1.75rem;
+  gap: 3rem 2rem;
 }
 .emv-app-detail-points li {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 16px;
 }
 .emv-point-ic {
   position: relative;
   overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -457,18 +437,17 @@
 .emv-point-txt {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 .emv-point-txt b {
-  font-size: 1.02rem;
+  font-size: 1.1rem;
   font-weight: 800;
   line-height: 1.25;
   color: #0f172a;
-  letter-spacing: -0.2px;
 }
 .emv-point-txt span {
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   line-height: 1.4;
   color: #64748b;
 }
