@@ -13,7 +13,7 @@ import {
   BookOpen, ArrowLeftRight, Layers, RefreshCw, Warehouse, Percent, Tag,
   CreditCard, Wallet, CalendarCheck, Award, ShieldCheck, UserCog, WifiOff,
   ScanLine, Printer, LayoutGrid, Monitor, Gift, QrCode, Code, PenTool, Plug,
-  Lock, Globe, GitBranch, ClipboardList, Flag, MousePointerClick, Table
+  Lock, Globe, GitBranch, ClipboardList, Flag, MousePointerClick
 } from 'lucide-react';
 
 // Icon per target-industry (reference style pills)
@@ -76,30 +76,35 @@ const productsList = [
 
 /* Application switcher: tab buttons above the divider, and the detail panel
    that replaces the old static "featured apps" grid when a tab is clicked. */
+/* points: [Icon, name, short description] — rendered as icon-tile mini cards */
 const APPS = [
   { key: 'financials', tab: 'Emvive Financials', title: 'Run Your Finances with Greater Control', icon: BadgeDollarSign, color: '#7c3aed', link: 'Explore Financials',
-    points: [[BookOpen, 'General Ledger'], [ArrowLeftRight, 'Accounts Payable & Receivable'], [Landmark, 'Cash & Bank Management'], [Building2, 'Fixed Assets'], [LineChart, 'Budgeting & Forecasting'], [Layers, 'Cost Centers & Dimensions'], [Network, 'Intercompany Accounting'], [GitMerge, 'Consolidation'], [RefreshCw, 'Auto Bank Reconciliation']] },
+    points: [[BookOpen, 'General Ledger', 'Multi-entity chart of accounts'], [ArrowLeftRight, 'Payables & Receivables', 'Vendor bills and customer dues'], [Landmark, 'Cash & Bank', 'Balances, transfers and payments'], [Building2, 'Fixed Assets', 'Registers, depreciation and disposal'], [LineChart, 'Budgeting & Forecasting', 'Plan, track and compare spend'], [Layers, 'Cost Centers & Dimensions', 'Analyse by unit, branch or project'], [Network, 'Intercompany Accounting', 'Cross-entity entries and balancing'], [GitMerge, 'Consolidation', 'Group reporting across entities'], [RefreshCw, 'Auto Bank Reconciliation', 'Match statements to book entries']] },
   { key: 'supply', tab: 'Emvive Supply Chain', title: 'Connect Purchasing, Inventory and Warehouses', icon: Truck, color: '#0891b2', link: 'Explore Supply Chain',
-    points: [[ShoppingCart, 'Procurement Management'], [Handshake, 'Vendor Management'], [Boxes, 'Inventory Control'], [Warehouse, 'Warehouse Management'], [TrendingUp, 'Demand Planning'], [Waypoints, '2-Way / 3-Way Matching'], [BadgeDollarSign, 'Vendor Advance Payments'], [Percent, 'Retention Deduction'], [FileCheck, 'Partial Receipts']] },
+    points: [[ShoppingCart, 'Procurement Management', 'Requisitions through purchase orders'], [Handshake, 'Vendor Management', 'Supplier records, terms and history'], [Boxes, 'Inventory Control', 'Stock levels across every location'], [Warehouse, 'Warehouse Management', 'Bins, transfers and picking'], [TrendingUp, 'Demand Planning', 'Forecast what to buy and hold'], [Waypoints, '2 & 3-Way Matching', 'PO, receipt and invoice checks'], [BadgeDollarSign, 'Vendor Advance Payments', 'Prepayments tracked against bills'], [Percent, 'Retention Deduction', 'Hold amounts on supplier work'], [FileCheck, 'Partial Receipts', 'Receive orders in stages']] },
   { key: 'sales', tab: 'Emvive Sales & CRM', title: 'Manage the Customer Journey from Lead to Order', icon: TrendingUp, color: '#059669', link: 'Explore Sales & CRM',
-    points: [[Target, 'Leads & Opportunities'], [ReceiptText, 'Quotations'], [ShoppingBag, 'Sales Orders'], [Tag, 'Pricing & Discounts'], [Users, 'Customer Management'], [CreditCard, 'Credit Limits'], [Truck, 'Partial Deliveries'], [Package, 'Backorders'], [BadgeDollarSign, 'Advance Payments'], [Percent, 'Retention Handling']] },
+    points: [[Target, 'Leads & Opportunities', 'Pipeline from first contact'], [ReceiptText, 'Quotations', 'Build and send priced offers'], [ShoppingBag, 'Sales Orders', 'Confirm and fulfil customer orders'], [Tag, 'Pricing & Discounts', 'Price lists and approval rules'], [Users, 'Customer Management', 'Accounts, contacts and history'], [CreditCard, 'Credit Limits', 'Control exposure per customer'], [Truck, 'Partial Deliveries', 'Ship orders in multiple drops'], [Package, 'Backorders', 'Track what is still owed'], [BadgeDollarSign, 'Advance Payments', 'Collect and apply deposits'], [Percent, 'Retention Handling', 'Manage held customer amounts']] },
   { key: 'hcm', tab: 'Emvive HCM', title: 'Manage Your Workforce from Hire to Payroll', icon: Users, color: '#2563eb', link: 'Explore HCM',
-    points: [[Users, 'Core HR'], [Wallet, 'Payroll'], [CalendarCheck, 'Attendance & Leave'], [Award, 'End of Service Benefits'], [ShieldCheck, 'GOSI'], [BadgeDollarSign, 'Employee Loans & Advances'], [BarChart3, 'KPI & Appraisals'], [User, 'Employee Self-Service'], [UserCog, 'Manager Self-Service'], [ShieldCheck, 'WPS Compliance']] },
+    points: [[Users, 'Core HR', 'Employee records and org structure'], [Wallet, 'Payroll', 'Salaries, allowances and deductions'], [CalendarCheck, 'Attendance & Leave', 'Shifts, timesheets and balances'], [Award, 'End of Service Benefits', 'Automatic settlement calculations'], [ShieldCheck, 'GOSI', 'Social insurance contributions'], [BadgeDollarSign, 'Loans & Advances', 'Requests with payroll recovery'], [BarChart3, 'KPI & Appraisals', 'Goals, reviews and ratings'], [User, 'Employee Self-Service', 'Requests, payslips and profiles'], [UserCog, 'Manager Self-Service', 'Approvals and team visibility'], [ShieldCheck, 'WPS Compliance', 'Wage protection file generation']] },
   { key: 'pos', tab: 'Emvive POS', title: 'Connect Every Sale with Your Business Operations', icon: ShoppingCart, color: '#9333ea', link: 'Explore POS',
-    points: [[Zap, 'Fast Billing'], [WifiOff, 'Offline Mode'], [ScanLine, 'Barcode Scanning'], [Printer, 'Receipt Printing'], [Building2, 'Multi-Branch POS'], [LayoutGrid, 'Table Management'], [Monitor, 'Kitchen Display System'], [Gift, 'Promotions & Loyalty'], [Clock, 'Cashier & Shift Control'], [RefreshCw, 'Real-Time Inventory Sync']] },
+    points: [[Zap, 'Fast Billing', 'Quick checkout at the counter'], [WifiOff, 'Offline Mode', 'Keep selling without a connection'], [ScanLine, 'Barcode Scanning', 'Scan items straight to the bill'], [Printer, 'Receipt Printing', 'Printed and digital receipts'], [Building2, 'Multi-Branch POS', 'One setup across every outlet'], [LayoutGrid, 'Table Management', 'Floor plans, covers and orders'], [Monitor, 'Kitchen Display', 'Orders sent straight to the kitchen'], [Gift, 'Promotions & Loyalty', 'Offers, points and vouchers'], [Clock, 'Cashier & Shift Control', 'Tills, handovers and closing'], [RefreshCw, 'Real-Time Stock Sync', 'Inventory updates on every sale']] },
   { key: 'einv', tab: 'Emvive E-Invoicing', title: 'Make Compliance Part of Your Invoicing Process', icon: ReceiptText, color: '#0d9488', link: 'Explore E-Invoicing',
-    points: [[ReceiptText, 'Electronic Invoices'], [QrCode, 'QR Code Generation'], [Code, 'XML / JSON Formats'], [PenTool, 'Digital Signatures'], [ShieldCheck, 'ZATCA Phase 1 & 2'], [Zap, 'Real-Time Clearance'], [Plug, 'API Integration'], [Lock, 'Cryptographic Stamping'], [Globe, 'Country-Based Tax Compliance'], [Landmark, 'Government Integration APIs']] },
+    points: [[ReceiptText, 'Electronic Invoices', 'Compliant invoices from your ledger'], [QrCode, 'QR Code Generation', 'Required codes on every invoice'], [Code, 'XML / JSON Formats', 'Standards-based invoice files'], [PenTool, 'Digital Signatures', 'Signed, tamper-evident documents'], [ShieldCheck, 'ZATCA Phase 1 & 2', 'Generation and integration phases'], [Zap, 'Real-Time Clearance', 'Submit and clear as you invoice'], [Plug, 'API Integration', 'Connect external billing systems'], [Lock, 'Cryptographic Stamping', 'Secure stamps on each document'], [Globe, 'Country Tax Compliance', 'Rules applied per jurisdiction'], [Landmark, 'Government APIs', 'Direct link to tax authorities']] },
   { key: 'projects', tab: 'Emvive Projects', title: 'Keep Projects, Resources and Financials in View', icon: Briefcase, color: '#d97706', link: 'Explore Projects',
-    points: [[GitBranch, 'Project Planning with WBS'], [ClipboardList, 'Task Management'], [Users, 'Resource Allocation'], [LineChart, 'Budget Tracking'], [Clock, 'Time & Expense Tracking'], [Flag, 'Milestone Billing'], [Percent, 'Retention Management']] },
+    points: [[GitBranch, 'Planning with WBS', 'Break work into structured tasks'], [ClipboardList, 'Task Management', 'Assign, schedule and track work'], [Users, 'Resource Allocation', 'Plan people across projects'], [LineChart, 'Budget Tracking', 'Compare planned and actual cost'], [Clock, 'Time & Expense', 'Log hours and project spend'], [Flag, 'Milestone Billing', 'Invoice as stages complete'], [Percent, 'Retention Management', 'Track held project amounts']] },
   { key: 'mfg', tab: 'Emvive Manufacturing', title: 'Connect Production with Inventory and Cost', icon: Factory, color: '#be123c', link: 'Explore Manufacturing',
-    points: [[ClipboardList, 'Bill of Materials'], [Factory, 'Production Orders'], [Cog, 'Shop Floor Control'], [Boxes, 'Material Consumption'], [BadgeDollarSign, 'Production Costing']] },
+    points: [[ClipboardList, 'Bill of Materials', 'Define what each product needs'], [Factory, 'Production Orders', 'Plan and release production runs'], [Cog, 'Shop Floor Control', 'Track progress on the floor'], [Boxes, 'Material Consumption', 'Issue and record used stock'], [BadgeDollarSign, 'Production Costing', 'Cost of every finished item']] },
   { key: 'studio', tab: 'Emvive Studio', title: 'Build Around the Way Your Business Works', icon: LayoutDashboard, color: '#ec4899', link: 'Explore Studio',
-    points: [[MousePointerClick, 'Drag-and-Drop Builder'], [LayoutGrid, 'Custom Forms'], [Table, 'Tables & Relationships'], [PenTool, 'UI Designer']] },
+    points: [[MousePointerClick, 'Drag-and-Drop Builder', 'Assemble apps without code'], [LayoutGrid, 'Custom Forms', 'Capture exactly the data you need'], [PenTool, 'UI Designer', 'Lay out screens your way']] },
   { key: 'flow', tab: 'Emvive Flow', title: 'Automate the Processes Between Your Teams', icon: Workflow, color: '#4f46e5', link: 'Explore Flow',
-    points: [[Workflow, 'Workflow Automation'], [GitMerge, 'Approval Chains'], [Zap, 'Event Triggers']] },
+    points: [[Workflow, 'Workflow Automation', 'Route work between teams'], [GitMerge, 'Approval Chains', 'Multi-level review and sign-off'], [Zap, 'Event Triggers', 'Run actions when things change']] },
   { key: 'insights', tab: 'Emvive Insights', title: 'Turn Business Data into Clearer Decisions', icon: BarChart3, color: '#e2601f', link: 'Explore Insights',
-    points: [[LayoutDashboard, 'Financial Dashboards'], [TrendingUp, 'Sales Analytics'], [ShoppingCart, 'POS Analytics'], [Boxes, 'Inventory Insights'], [BadgeDollarSign, 'Project Profitability'], [PieChart, 'Custom Report Builder'], [Search, 'Drill-Down Analysis']] },
+    points: [[LayoutDashboard, 'Financial Dashboards', 'Live view of company numbers'], [TrendingUp, 'Sales Analytics', 'Pipeline, revenue and trends'], [ShoppingCart, 'POS Analytics', 'Performance by outlet and hour'], [Boxes, 'Inventory Insights', 'Movement, ageing and stock value'], [BadgeDollarSign, 'Project Profitability', 'Margin per project and client'], [PieChart, 'Custom Report Builder', 'Build reports without IT'], [Search, 'Drill-Down Analysis', 'Go from summary to transaction']] },
 ];
+
+/* Rotating tile colours for the point icons — one app's list cycles through
+   these so the grid reads like the featured-apps tiles, not one flat colour. */
+const POINT_COLORS = ['#2f9bf5', '#f97316', '#10b981', '#ec4899', '#8b5cf6', '#ef4444', '#0891b2', '#f59e0b'];
 
 /* Short descriptive blurb per app for the coloured card */
 const BLURBS = {
@@ -509,7 +514,10 @@ const Products = () => {
           <div className="emv-featured-apps-container" style={{ '--ac': active.color }}>
             {/* Left: coloured card — reflects the selected application */}
             <div className="emv-agent-studio-card" key={active.key} style={{ '--ac': active.color }}>
-              <h3>{active.tab}</h3>
+              <div className="emv-card-head">
+                <span className="emv-card-icon"><ActiveIcon size={22} color="#fff" /></span>
+                <h3>{active.tab}</h3>
+              </div>
               <p className="emv-card-tagline">{active.title}</p>
               <p className="emv-card-blurb">{BLURBS[active.key]}</p>
               <a href="#" className="emv-app-cta emv-card-cta">{active.link} <ArrowRight size={16}/></a>
@@ -520,7 +528,6 @@ const Products = () => {
               <div className="emv-app-detail" key={active.key} style={{ '--ac': active.color }}>
                 <div className="emv-app-detail-head">
                   <div className="emv-app-detail-head-left">
-                    <span className="emv-app-detail-icon"><ActiveIcon size={22} color="#fff"/></span>
                     <h3 className="emv-app-detail-title">{active.tab}</h3>
                   </div>
                   <a href="#" className="emv-app-cta" style={{ '--ac': active.color }}>
@@ -528,10 +535,18 @@ const Products = () => {
                   </a>
                 </div>
                 <ul className="emv-app-detail-points">
-                  {active.points.map((pt) => {
+                  {active.points.map((pt, pi) => {
                     const Pi = pt[0];
                     return (
-                      <li key={pt[1]}><Pi size={16} /> <span>{pt[1]}</span></li>
+                      <li key={pt[1]}>
+                        <span className="emv-point-ic" style={{ '--pc': POINT_COLORS[pi % POINT_COLORS.length] }}>
+                          <Pi size={18} color="#fff" strokeWidth={2.1} />
+                        </span>
+                        <span className="emv-point-txt">
+                          <b>{pt[1]}</b>
+                          <span>{pt[2]}</span>
+                        </span>
+                      </li>
                     );
                   })}
                 </ul>

@@ -1,7 +1,7 @@
 import {
   ShoppingCart, Calculator, Truck, Activity, FileText, Users,
   Settings, Box, CheckCircle, Package, PenTool, BarChart2,
-  Shield, Clock, TrendingUp, CreditCard, PieChart, Database,
+  Shield, Clock, TrendingUp, CreditCard, PieChart,
   Layout, Zap, Link2, Send, Mail, Search, Star, Briefcase
 } from 'lucide-react';
 
@@ -91,7 +91,6 @@ export const getMegaMenuData = (t) => ({
       modules: [
         { icon: PenTool, title: t('megaMenu.studio.builder', 'Drag & Drop Builder'), desc: t('megaMenu.studio.builderDesc', 'Compose apps from ready-made blocks.') },
         { icon: FileText, title: t('megaMenu.studio.forms', 'Custom Forms'), desc: t('megaMenu.studio.formsDesc', 'Capture any data with tailored forms.') },
-        { icon: Database, title: t('megaMenu.studio.tables', 'Tables & Relationships'), desc: t('megaMenu.studio.tablesDesc', 'Model your data and link records.') },
         { icon: Layout, title: t('megaMenu.studio.ui', 'UI Designer'), desc: t('megaMenu.studio.uiDesc', 'Design polished interfaces visually.') },
         { icon: Link2, title: t('megaMenu.studio.apis', 'APIs & Webhooks'), desc: t('megaMenu.studio.apisDesc', 'Connect anything with open APIs.') },
         { icon: Shield, title: t('megaMenu.studio.access', 'Role-Based Access'), desc: t('megaMenu.studio.accessDesc', 'Field-level security and audit logs.') }

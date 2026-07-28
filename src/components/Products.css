@@ -180,12 +180,32 @@
   animation: emv-app-fade 0.45s ease both;
 }
 
+/* icon sits to the left of the card heading */
+.emv-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 0.75rem;
+}
+.emv-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
 .emv-agent-studio-card h3 {
   font-size: 1.8rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
   line-height: 1.2;
 }
+.emv-card-head h3 { margin-bottom: 0; }
 .emv-agent-studio-card p {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
@@ -382,20 +402,6 @@
   align-items: center;
   gap: 14px;
 }
-.emv-app-detail-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--ac);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.5),
-    inset 0 -3px 5px rgba(0, 0, 0, 0.16),
-    0 7px 16px -3px rgba(15, 23, 42, 0.24);
-}
 .emv-app-detail-title {
   font-size: 1.5rem;
   font-weight: 800;
@@ -407,26 +413,64 @@
 .emv-app-detail-head .emv-app-cta {
   flex-shrink: 0;
 }
+/* Points rendered as mini app-cards: glossy colored icon tile + bold label */
 .emv-app-detail-points {
   list-style: none;
   margin: 0 0 1.75rem;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem 1.75rem;
 }
 .emv-app-detail-points li {
   display: flex;
   align-items: flex-start;
-  gap: 9px;
-  font-size: 0.92rem;
-  line-height: 1.35;
-  color: #334155;
+  gap: 14px;
 }
-.emv-app-detail-points li svg {
+.emv-point-ic {
+  position: relative;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--ac);
+  /* --pc is set per point so each tile gets its own colour */
+  background: linear-gradient(160deg, color-mix(in srgb, var(--pc, var(--ac)) 72%, #ffffff) 0%, var(--pc, var(--ac)) 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.16),
+    0 7px 16px -3px rgba(15, 23, 42, 0.24);
+}
+/* glossy top-left sheen, matching the featured app tiles */
+.emv-point-ic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 52%);
+  pointer-events: none;
+  z-index: 1;
+}
+.emv-point-ic svg { position: relative; z-index: 2; }
+.emv-point-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.emv-point-txt b {
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+.emv-point-txt span {
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: #64748b;
 }
 .emv-app-detail-link {
   display: inline-flex;
@@ -440,6 +484,9 @@
 }
 .emv-app-detail-link:hover { gap: 12px; }
 
+@media (max-width: 1100px) {
+  .emv-app-detail-points { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 640px) {
   .emv-app-detail-points { grid-template-columns: 1fr; }
 }

@@ -366,10 +366,9 @@
     "b4_title": "Adapt the Platform to Your Business",
     "b4_p1": "Drag-and-drop application builder",
     "b4_p2": "Custom forms",
-    "b4_p3": "Tables & relationships",
-    "b4_p4": "Workflow automation",
-    "b4_p5": "Approval chains",
-    "b4_p6": "APIs & Webhooks"
+    "b4_p3": "Workflow automation",
+    "b4_p4": "Approval chains",
+    "b4_p5": "APIs & Webhooks"
   },
   "faq": {
     "badge": "FAQ",
