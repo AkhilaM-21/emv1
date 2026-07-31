@@ -62,7 +62,7 @@ const WhyEmviveOriginal = () => {
           {/* Header row: eyebrow + title + intro on the left, CTA on the right */}
           <div className="why-original-header">
             <div className="why-original-header-text">
-              <span className="why-original-eyebrow">{t('why.badge', 'Why Emvive?')}</span>
+              <span className="why-original-eyebrow">{t('why.badge', 'Why Us?')}</span>
               <h2 className="why-original-heading">
                 {t('why.title1', 'One platform to run')}{' '}
                 <span className="text-accent">
@@ -74,12 +74,12 @@ const WhyEmviveOriginal = () => {
               <p className="why-original-subtitle">
                 {t(
                   'why.subtitle',
-                  'Emvive is a next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.'
+                  'A next-generation, cloud-based, no-code enterprise platform that unifies finance, supply chain, sales, HR, projects, manufacturing and POS into a single system. Built for Saudi Arabia, the GCC and global enterprises — it is not just ERP software, it is a complete Business Operating System.'
                 )}
               </p>
             </div>
             <a href="#products" className="why-original-cta">
-              {t('why.cta', 'Explore Emvive modules')}
+              {t('why.cta', 'Explore platform modules')}
               <ArrowRight size={16} />
             </a>
           </div>

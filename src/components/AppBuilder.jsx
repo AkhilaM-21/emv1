@@ -84,7 +84,7 @@ const AppBuilder = () => {
               <span className="ab-title-grad">{t('appBuilder.titleLine2', 'Infinite Possibilities.')}</span>
             </h2>
             <p className="ab-subtitle">
-              {t('appBuilder.subtitle', 'From India to the world — Emvive helps businesses connect, automate, and grow across borders.')}
+              {t('appBuilder.subtitle', 'From India to the world — we help businesses connect, automate, and grow across borders.')}
             </p>
           </div>
           <a href="#app-builder" className="ab-cta-btn">

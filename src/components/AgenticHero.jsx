@@ -8,6 +8,7 @@ import {
   LayoutGrid, Users, Clock, Wallet, UserPlus, BarChart3, Settings, Search,
   Layers, Home, UsersRound, Cpu, TrendingUp,
   HardHat, Utensils, Briefcase, Headphones, Wrench, Building2,
+  CircleDollarSign, Package, FolderKanban, Store, FileCheck, Bell
 } from 'lucide-react';
 import './AgenticHero.css';
 
@@ -79,15 +80,14 @@ const FEATURES = [
 
 // Industries carousel — text comes from en.json, icons/gradients here.
 const INDUSTRIES = [
-  { key: 'construction', title: 'Construction & Engineering', desc: 'Connect projects, procurement, workforce, costs, and finance.', link: 'Explore Construction & Engineering', icon: <HardHat size={26} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
-  { key: 'retail', title: 'Retail & Commerce', desc: 'Connect POS, inventory, purchasing, people, and finance.', link: 'Explore Retail & Commerce', icon: <ShoppingBag size={26} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
-  { key: 'mfg', title: 'Manufacturing', desc: 'Connect production, inventory, procurement, sales, and finance.', link: 'Explore Manufacturing', icon: <Factory size={26} />, grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
-  { key: 'supply', title: 'Supply Chain & Distribution', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', link: 'Explore Supply Chain & Distribution', icon: <Truck size={26} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
-  { key: 'services', title: 'Professional Services', desc: 'Connect projects, people, customers, expenses, and billing.', link: 'Explore Professional Services', icon: <Briefcase size={26} />, grad: 'linear-gradient(165deg, #d9722a 0%, #114e87 100%)' },
-  { key: 'field', title: 'Field Service Management', desc: 'Connect scheduling, technicians, assets, billing, and finance.', link: 'Explore Field Service Management', icon: <Wrench size={26} />, grad: 'linear-gradient(150deg, #4f46e5 0%, #06b6d4 100%)' },
-  { key: 'healthcare', title: 'Healthcare', desc: 'Connect patients, staff, inventory, billing, and compliance.', link: 'Explore Healthcare', icon: <HeartPulse size={26} />, grad: 'linear-gradient(150deg, #0ea5e9 0%, #22c55e 100%)' },
-  { key: 'realestate', title: 'Real Estate & Property', desc: 'Connect properties, leasing, tenants, payments, and finance.', link: 'Explore Real Estate & Property', icon: <Building2 size={26} />, grad: 'linear-gradient(150deg, #8b5cf6 0%, #ec4899 100%)' },
-  { key: 'hospitality', title: 'Hospitality & Restaurants', desc: 'Connect POS, inventory, staff, bookings, and finance.', link: 'Explore Hospitality & Restaurants', icon: <Utensils size={26} />, grad: 'linear-gradient(150deg, #f97316 0%, #ec4899 100%)' },
+  { key: 'fin', title: 'Financials', desc: 'Run finance with greater visibility and control.', link: 'Explore Financials', icon: <CircleDollarSign size={26} />, grad: 'linear-gradient(165deg, #cb8c1f 0%, #8b5b10 100%)' },
+  { key: 'sc', title: 'Supply Chain', desc: 'Connect purchasing, suppliers, inventory, and warehouses.', link: 'Explore Supply Chain', icon: <Package size={26} />, grad: 'linear-gradient(165deg, #b14a2f 0%, #6f2b19 100%)' },
+  { key: 'crm', title: 'Sales & CRM', desc: 'Manage customer relationships from lead to order.', link: 'Explore Sales & CRM', icon: <TrendingUp size={26} />, grad: 'linear-gradient(165deg, #c85a1e 0%, #17406f 100%)' },
+  { key: 'hcm', title: 'HCM', desc: 'Manage people, payroll, attendance, and performance.', link: 'Explore HCM', icon: <Users size={26} />, grad: 'linear-gradient(165deg, #6c50b2 0%, #3f3082 100%)' },
+  { key: 'proj', title: 'Projects', desc: 'Keep project work, resources, costs, and billing connected.', link: 'Explore Projects', icon: <FolderKanban size={26} />, grad: 'linear-gradient(165deg, #d9722a 0%, #114e87 100%)' },
+  { key: 'mfg', title: 'Manufacturing', desc: 'Connect production planning with materials and costs.', link: 'Explore Manufacturing', icon: <Factory size={26} />, grad: 'linear-gradient(150deg, #4f46e5 0%, #06b6d4 100%)' },
+  { key: 'pos', title: 'POS', desc: 'Connect every sale with inventory and operations.', link: 'Explore POS', icon: <Store size={26} />, grad: 'linear-gradient(150deg, #0ea5e9 0%, #22c55e 100%)' },
+  { key: 'einv', title: 'E-Invoicing', desc: 'Manage electronic invoicing and ZATCA compliance.', link: 'Explore E-Invoicing', icon: <FileCheck size={26} />, grad: 'linear-gradient(150deg, #8b5cf6 0%, #ec4899 100%)' },
 ];
 
 const AgenticHero = () => {
@@ -152,7 +152,7 @@ const AgenticHero = () => {
             <span className="ah-grad">{t('agenticHero.headline2', 'One Connected Platform.')}</span>
           </h1>
           <p className="ah-sub">
-            {t('agenticHero.subtitle', 'Emvive is the enterprise AI platform for HR, finance, IT and operations — unified across 42 countries, powered by autonomous agents that solve problems, not just report them.')}
+            {t('agenticHero.subtitle', 'The enterprise AI platform for HR, finance, IT and operations — unified across 42 countries, powered by autonomous agents that solve problems, not just report them.')}
           </p>
           <div className="ah-btns">
             <a href="#demo" className="btn-get-started">
@@ -160,58 +160,171 @@ const AgenticHero = () => {
               <span className="arrow-circle"><ArrowRight size={14} color="#fff" /></span>
             </a>
             <a href="#products" className="cta-btn-primary">
-              {t('agenticHero.secondaryCta', 'Explore Emvive')}
+              {t('agenticHero.secondaryCta', 'Explore the Platform')}
               <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
             </a>
           </div>
         </div>
 
         {/* right — dashboard card + floating pills */}
-        <div className="ah-visual">
-          <div className="ah-dashcard">
-            <div className="ah-dash-head">
-              <span className="ah-dash-badge">EMV · GLOBAL</span>
-              <span className="ah-dash-sub">Q3 · Real-time</span>
+        <div className="ah-visual ah-visual-complex">
+          
+          {/* Connector Lines & Dots */}
+          <svg className="ah-connectors" viewBox="0 0 800 660" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            {/* Supply Chain */}
+            <line x1="400" y1="40" x2="400" y2="110" className="ah-conn-line ah-dot-blue" />
+            <circle cx="400" cy="110" r="4" className="ah-dot-blue" />
+            
+            {/* HCM */}
+            <line x1="160" y1="60" x2="160" y2="130" className="ah-conn-line ah-dot-purple" />
+            <circle cx="160" cy="130" r="4" className="ah-dot-purple" />
+            
+            {/* CRM */}
+            <line x1="640" y1="60" x2="640" y2="140" className="ah-conn-line ah-dot-green" />
+            <circle cx="640" cy="140" r="4" className="ah-dot-green" />
+
+            {/* Projects */}
+            <line x1="160" y1="580" x2="160" y2="440" className="ah-conn-line ah-dot-orange" />
+            <circle cx="160" cy="440" r="4" className="ah-dot-orange" />
+            
+            {/* POS */}
+            <line x1="400" y1="620" x2="400" y2="520" className="ah-conn-line ah-dot-blue" />
+            <circle cx="400" cy="520" r="4" className="ah-dot-blue" />
+            
+            {/* E-Invoicing */}
+            <line x1="640" y1="580" x2="640" y2="440" className="ah-conn-line ah-dot-pink" />
+            <circle cx="640" cy="440" r="4" className="ah-dot-pink" />
+          </svg>
+
+          {/* BACKGROUND CARDS (Layer 1) */}
+          <div className="ah-mock-card ah-card-left">
+            <div className="ah-mock-header">
+              <span className="ah-mock-logo"><CircleDollarSign size={16} color="#6c50b2" /> HCM</span>
             </div>
-            <div className="ah-dash-stats">
-              {DASH_METRICS.map((m, i) => (
-                <div key={m.label} className="ah-dash-metric">
-                  <span className="ah-dash-metric-label">{t(`agenticHero.metrics.${i}.label`, m.label)}</span>
-                  <b className={m.accent ? 'accent' : ''}>{m.value}</b>
+            <div className="ah-mock-body">
+              <div className="ah-mock-sidebar">
+                <div className="ah-mock-nav"><LayoutGrid size={12} /> Dashboard</div>
+                <div className="ah-mock-nav active"><Users size={12} /> Employees</div>
+                <div className="ah-mock-nav"><Clock size={12} /> Attendance</div>
+                <div className="ah-mock-nav"><Check size={12} /> Leave</div>
+                <div className="ah-mock-nav"><Wallet size={12} /> Payroll</div>
+              </div>
+              <div className="ah-mock-main">
+                <h4 className="ah-mock-title">Employees</h4>
+                <div className="ah-mock-table">
+                  <div className="ah-mock-row">
+                    <div className="ah-mock-avatar bg-blue">AK</div>
+                    <div className="ah-mock-txt">Arun Kumar</div>
+                  </div>
+                  <div className="ah-mock-row">
+                    <div className="ah-mock-avatar bg-purple">FH</div>
+                    <div className="ah-mock-txt">Fatima Al-Harbi</div>
+                  </div>
+                  <div className="ah-mock-row">
+                    <div className="ah-mock-avatar bg-green">RS</div>
+                    <div className="ah-mock-txt">Rahul Sharma</div>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
-            <button className="ah-dash-chart" type="button" aria-label="Play video" onClick={() => setVideoOpen(true)}>
-              <svg className="ah-chart-svg" viewBox="0 0 520 220" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="ah-area" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="#e2601f" stopOpacity="0.35" />
-                    <stop offset="1" stopColor="#e2601f" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path d="M0,190 C90,180 150,120 230,150 C320,184 380,70 520,54 L520,220 L0,220 Z" fill="url(#ah-area)" />
-                <path d="M0,190 C90,180 150,120 230,150 C320,184 380,70 520,54" fill="none" stroke="#f2853f" strokeWidth="2.5" />
-                <circle cx="230" cy="150" r="4" fill="#f2853f" />
-                <circle cx="380" cy="92" r="4" fill="#f2853f" />
-              </svg>
-              <span className="ah-chart-play"><Play size={22} fill="#fff" color="#fff" /></span>
-              <span className="ah-chart-caption">
-                <b>{t('agenticHero.watchTitle', 'Watch: The Agentic Enterprise.')}</b> {t('agenticHero.watchDesc', 'Emvive is the last operations software your team will ever need.')}
-              </span>
-            </button>
           </div>
 
-          <div className="ah-pills">
-            {PILLS.map((p, i) => (
-              <div key={p.title} className="ah-pill">
-                <span className="ah-pill-ic" style={{ background: p.bg }}>{p.icon}</span>
-                <span className="ah-pill-txt">
-                  <b>{t(`agenticHero.pills.${i}.title`, p.title)}</b>
-                  <span>{t(`agenticHero.pills.${i}.sub`, p.sub)}</span>
-                </span>
+          <div className="ah-mock-card ah-card-right">
+            <div className="ah-mock-header">
+              <span className="ah-mock-logo"><TrendingUp size={16} color="#10b981" /> CRM</span>
+            </div>
+            <div className="ah-mock-body">
+              <div className="ah-mock-main">
+                <h4 className="ah-mock-title">Sales Orders</h4>
+                <div className="ah-mock-table ah-mock-table-full">
+                  <div className="ah-mock-th"><span>Amount</span><span>Status</span></div>
+                  <div className="ah-mock-tr"><span>$18,240</span><span className="ah-mock-badge bg-green">Confirmed</span></div>
+                  <div className="ah-mock-tr"><span>$12,600</span><span className="ah-mock-badge bg-orange">Pending</span></div>
+                  <div className="ah-mock-tr"><span>$8,870</span><span className="ah-mock-badge bg-blue">Delivered</span></div>
+                  <div className="ah-mock-tr"><span>$7,120</span><span className="ah-mock-badge bg-green">Confirmed</span></div>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
+
+          {/* MAIN CARD (Layer 2) */}
+          <div className="ah-mock-card ah-card-center">
+            <div className="ah-mock-header ah-header-main">
+              <span className="ah-mock-logo main-logo"><CircleDollarSign size={20} color="#f2853f" /> Financials</span>
+              <div className="ah-mock-actions">
+                <Search size={14} />
+                <Bell size={14} />
+                <div className="ah-mock-avatar-small"></div>
+              </div>
+            </div>
+            <div className="ah-mock-body">
+              <div className="ah-mock-sidebar main-sidebar">
+                <div className="ah-mock-nav active"><LayoutGrid size={14} /> Dashboard</div>
+                <div className="ah-mock-nav"><CircleDollarSign size={14} /> Finance</div>
+                <div className="ah-mock-nav"><Landmark size={14} /> Banking</div>
+                <div className="ah-mock-nav"><ArrowRight size={14} /> Payables</div>
+                <div className="ah-mock-nav"><ArrowRight size={14} /> Receivables</div>
+                <div className="ah-mock-nav"><BarChart3 size={14} /> Reports</div>
+              </div>
+              <div className="ah-mock-main main-content">
+                <div className="ah-mock-kpi">
+                  <span className="ah-kpi-label">Total Revenue</span>
+                  <div className="ah-kpi-val">
+                    <b>$4.28M</b>
+                    <span className="ah-kpi-trend up">+12.6%</span>
+                  </div>
+                </div>
+                
+                <div className="ah-mock-chart">
+                  <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <path d="M0,50 Q20,40 40,50 T80,30 T120,40 T160,10 L200,20 L200,60 L0,60 Z" fill="url(#blue-grad)" />
+                    <path d="M0,50 Q20,40 40,50 T80,30 T120,40 T160,10 L200,20" fill="none" stroke="#3b82f6" strokeWidth="2" />
+                    <defs>
+                      <linearGradient id="blue-grad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                <div className="ah-mock-kpi">
+                  <span className="ah-kpi-label">Cash Position</span>
+                  <div className="ah-kpi-val">
+                    <b>$1.92M</b>
+                    <span className="ah-kpi-trend up">+8.4%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* FLOATING PILLS (Layer 3) */}
+          <div className="ah-float-pill pill-top">
+            <Package size={14} color="#3b82f6" />
+            <span>Supply Chain</span>
+          </div>
+          <div className="ah-float-pill pill-tl">
+            <UserRound size={14} color="#8b5cf6" />
+            <span>HCM</span>
+          </div>
+          <div className="ah-float-pill pill-tr">
+            <TrendingUp size={14} color="#10b981" />
+            <span>CRM</span>
+          </div>
+          <div className="ah-float-pill pill-bl">
+            <FolderKanban size={14} color="#f59e0b" />
+            <span>Projects</span>
+          </div>
+          <div className="ah-float-pill pill-bottom">
+            <Store size={14} color="#3b82f6" />
+            <span>POS</span>
+          </div>
+          <div className="ah-float-pill pill-br">
+            <FileCheck size={14} color="#ec4899" />
+            <span>E-Invoicing</span>
+          </div>
+
         </div>
       </div>
     </section>
@@ -220,13 +333,13 @@ const AgenticHero = () => {
       <div className="ah-industries-wrap">
         <div className="ah-tiles-head">
           <div className="ah-tiles-head-text">
-            <span className="ah-tiles-eyebrow">{t('agenticHero.industriesEyebrow', 'INDUSTRIES')}</span>
+            <span className="ah-tiles-eyebrow">{t('agenticHero.applicationsEyebrow', 'APPLICATIONS')}</span>
             <h2 className="ah-tiles-title">
-              {t('agenticHero.tilesTitle1', 'Built for the way')}{' '}
-              <span className="ah-grad">{t('agenticHero.tilesTitle2', 'your industry works.')}</span>
+              {t('agenticHero.tilesTitle1', 'Applications Built to Run')}{' '}
+              <span className="ah-grad">{t('agenticHero.tilesTitle2', 'Every Part of Your Business.')}</span>
             </h2>
             <p className="ah-tiles-sub">
-              {t('agenticHero.industriesSub', 'Different industries have different processes, priorities and operational demands. Emvive brings the business functions behind them into a connected platform designed to support everyday operations.')}
+              {t('agenticHero.applicationsSub', 'From financials and supply chain to people, projects, POS, compliance, and automation, explore the applications that connect everyday operations across your business.')}
             </p>
           </div>
           <div className="ah-tiles-nav">
@@ -247,9 +360,12 @@ const AgenticHero = () => {
               <div className="ind-card" style={{ backgroundImage: ind.grad }}>
                 <span className="ind-ic">{ind.icon}</span>
                 <div className="ind-body">
-                  <h3 className="ind-title">{t(`agenticHero.industries.${i}.title`, ind.title)}</h3>
-                  <p className="ind-desc">{t(`agenticHero.industries.${i}.desc`, ind.desc)}</p>
-                  <a href="#platform" className="ind-link">{t(`agenticHero.industries.${i}.link`, ind.link)} <ArrowRight size={15} /></a>
+                  <h3 className="ind-title">{ind.title}</h3>
+                  <p className="ind-desc">{ind.desc}</p>
+                  <a href={`#${ind.key}`} className="ind-link">
+                    {ind.link}
+                    <ArrowRight size={16} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -274,7 +390,7 @@ const AgenticHero = () => {
             ref={videoRef}
             className="ah-modal-video"
             src={DEMO_VIDEO}
-            title="Discover Emvive"
+            title="Discover the Platform"
             allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
             allowFullScreen
           />

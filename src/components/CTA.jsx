@@ -16,15 +16,15 @@ const CTA = () => {
         </h2>
 
         <p className="cta-subtitle">
-          Discover how Emvive can bring your finance, supply chain, sales, people, projects, POS, compliance, reporting and workflows together around the way your business operates.
+          Discover how one connected platform can bring your finance, supply chain, sales, people, projects, POS, compliance, reporting and workflows together around the way your business operates.
         </p>
 
         <div className="cta-actions">
           <a className="cta-btn-primary" href="#demo">
-            Book Your Emvive Demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
+            Book Your Demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
           </a>
           <a className="cta-btn-secondary" href="#demo">
-            Talk to an Emvive Specialist
+            Talk to a Specialist
           </a>
         </div>
 

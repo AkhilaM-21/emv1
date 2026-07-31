@@ -62,12 +62,12 @@ const render = (d) => {
 const COLUMNS = [
   [
     { type: 'video', idx: 0, company: 'Lumen Health', name: 'Sarah Kim, Ops Director', i: 'LH', c: '#ec4899', img: IMG('1576091160550-2173dba999ef') },
-    { type: 'review', idx: 0, quote: 'Emvive replaced five disconnected tools. Our month-end close went from 9 days to 2.', name: 'Priya Nair', role: 'CFO · Northwind Logistics', i: 'PN', c: '#10b981' },
+    { type: 'review', idx: 0, quote: 'One platform replaced five disconnected tools. Our month-end close went from 9 days to 2.', name: 'Priya Nair', role: 'CFO · Northwind Logistics', i: 'PN', c: '#10b981' },
     { type: 'review', idx: 1, quote: 'Onboarding a new hire used to take a week of paperwork. Now it takes 20 minutes.', name: 'Marcus Lee', role: 'Head of People · Brightwave', i: 'ML', c: '#f59e0b' },
     { type: 'review', idx: 2, quote: 'Compliance audits that used to take weeks are now just a few clicks.', name: 'Hannah Weiss', role: 'Legal Counsel · Meridian Bank', i: 'HW', c: '#14b8a6' },
   ],
   [
-    { type: 'rating', idx: 0, platform: 'G2', platColor: '#ff5e2c', review: 'Emvive is the most complete platform we evaluated — and by far the easiest to roll out.' },
+    { type: 'rating', idx: 0, platform: 'G2', platColor: '#ff5e2c', review: 'The most complete platform we evaluated — and by far the easiest to roll out.' },
     { type: 'review', idx: 3, quote: 'One data model across finance, HR and operations finally gave us a single source of truth.', name: 'Elena Duarte', role: 'COO · Vantel Retail', i: 'ED', c: '#e86a2c' },
     { type: 'review', idx: 4, quote: 'Real-time inventory across every warehouse cut our stockouts by 40%.', name: 'David Okoro', role: 'Supply Chain Lead · Cobalt Foods', i: 'DO', c: '#6366f1' },
     { type: 'video', idx: 1, company: 'Nimbus Retail', name: 'Ava Chen, Head of Ops', i: 'NR', c: '#e8802e', img: IMG('1521737604893-d14cc237f11d') },

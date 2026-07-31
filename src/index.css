@@ -497,7 +497,8 @@ body.dark-theme .global-section-title {
 .cs-eyebrow-top,
 .ab-eyebrow,
 .ann-eyebrow,
-.emv-subtitle {
+.emv-subtitle,
+.ah-tiles-eyebrow {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -524,8 +525,10 @@ body.dark-theme .global-section-title {
 .cs-eyebrow-top::before,
 .ab-eyebrow::before,
 .ann-eyebrow::before,
-.emv-subtitle::before {
-  content: '';
+.emv-subtitle::before,
+.ah-tiles-eyebrow::before {
+  content: "";
+  display: block;
   width: 8px;
   height: 8px;
   flex-shrink: 0;

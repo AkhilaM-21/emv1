@@ -49,7 +49,7 @@ const Hero = () => {
     {
       eyebrow: t('hero.slides.2.eyebrow', 'REAL-TIME INSIGHTS'),
       title: t('hero.slides.2.title', 'Make faster decisions with live data'),
-      desc: t('hero.slides.2.desc', 'Track revenue, orders, inventory and workforce in real time. Emvive turns your operational data into clear, actionable insights the moment you need them.'),
+      desc: t('hero.slides.2.desc', 'Track revenue, orders, inventory and workforce in real time. Your operational data becomes clear, actionable insight the moment you need it.'),
       cta: t('hero.slides.2.cta', 'See Analytics'),
       Visual: ChartViz,
       BadgeIcon: BarChart3,

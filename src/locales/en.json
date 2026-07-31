@@ -46,19 +46,19 @@
       {
         "eyebrow": "REAL-TIME INSIGHTS",
         "title": "Make faster decisions with live data",
-        "desc": "Track revenue, orders, inventory and workforce in real time. Emvive turns your operational data into clear, actionable insights the moment you need them.",
+        "desc": "Track revenue, orders, inventory and workforce in real time. Your operational data becomes clear, actionable insight the moment you need it.",
         "cta": "See Analytics"
       }
     ]
   },
   "clients": {
     "trusted": "3600+ Trusted companies all over the world",
-    "meetEmvive": "MEET EMVIVE",
+    "meetEmvive": "MEET THE PLATFORM",
     "headline1": "Trusted by businesses that ",
-    "headline2": "run on Emvive.",
+    "headline2": "run on one platform.",
     "viewAllStories": "View Customer Stories",
     "brandsTrust": "TRUSTED BY",
-    "supporting": "From day-to-day operations to finance and people management, businesses use Emvive to bring critical processes into one connected environment."
+    "supporting": "From day-to-day operations to finance and people management, businesses use one platform to bring critical processes into a single connected environment."
   },
   "about": {
     "badge": "About Us",
@@ -169,7 +169,7 @@
       "description": "Six enterprise-grade applications on a single data model — from the general ledger to the customer record. No integrations to wire. No CSVs to import.",
       "newTag": "NEW",
       "introducing": "Introducing",
-      "agentStudio": "Emvive Agent Studio",
+      "agentStudio": "Agent Studio",
       "agentStudioDesc": "Build autonomous agents that reconcile ledgers, chase invoices, draft close notes and more.",
       "exploreAgentStudio": "Explore Agent Studio",
       "featuredApps": "FEATURED APPS",
@@ -331,12 +331,12 @@
     }
   },
   "why": {
-    "badge": "WHY EMVIVE?",
+    "badge": "WHY US?",
     "title1": "More Than ERP.",
     "title2": "One System for",
     "title3": "Running Your Business.",
-    "subtitle": "Emvive brings ERP, POS, HCM, compliance, automation, reporting and low-code capabilities into one cloud-based Business Operating System — so businesses can manage connected operations without treating every function as a separate system.",
-    "cta": "Explore the Emvive Platform"
+    "subtitle": "ERP, POS, HCM, compliance, automation, reporting and low-code capabilities come together in one cloud-based Business Operating System — so businesses can manage connected operations without treating every function as a separate system.",
+    "cta": "Explore the Platform"
   },
   "whyData": {
     "b1_label": "CONNECTED",
@@ -372,13 +372,13 @@
   },
   "faq": {
     "badge": "FAQ",
-    "title": "Ask Emvive Anything",
-    "subtitle": "Browse the questions our customers ask most — get clear, instant answers about running your enterprise on Emvive."
+    "title": "Ask Us Anything",
+    "subtitle": "Browse the questions our customers ask most — get clear, instant answers about running your enterprise on our platform."
   },
   "faqData": {
-    "q1": "How long does it take to implement Emvive?",
+    "q1": "How long does implementation take?",
     "a1": "Usually 2-4 weeks depending on data migration complexity. Our dedicated onboarding team handles the heavy lifting to ensure a smooth transition from your legacy systems.",
-    "q2": "Does Emvive integrate with legacy on-premise systems?",
+    "q2": "Does the platform integrate with legacy on-premise systems?",
     "a2": "Yes, via our secure API gateway and custom connectors. We routinely integrate with older ERPs and specialized local databases without disruption.",
     "q3": "Is my enterprise data secure on the cloud?",
     "a3": "Absolutely. We use AES-256 encryption at rest and in transit. We are fully SOC-2 Type II compliant with regular third-party penetration testing.",
@@ -436,14 +436,14 @@
   },
   "footer": {
     "emailLabel": "Email Address*",
-    "agree": "I agree to Emvive processing my personal data in accordance with Emvive's",
+    "agree": "I agree to the processing of my personal data in accordance with the",
     "privacy": "Privacy Policy",
     "subscribe": "SUBSCRIBE",
     "products": "PRODUCTS",
     "industries": "INDUSTRIES",
     "legal": "LEGAL & SOCIAL",
     "hugeText": "Unify. Automate. Scale.",
-    "copyright": "© 2026 Emvive Inc."
+    "copyright": "© 2026. All rights reserved."
   },
   "megaMenu": {
     "products": {
@@ -497,13 +497,13 @@
     "f1Title": "Connect & Discover",
     "f1Desc": "Map out your entire inventory network—from warehouse shelves to store fronts—in one unified view. Sync data across your POS systems and eCommerce platforms instantly.",
     "f2Title": "Identify Shrinkage & Risks",
-    "f2Desc": "Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. Emvive digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking.",
+    "f2Desc": "Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. The platform digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking.",
     "f3Title": "Automate Remediation",
     "f3Desc": "Reduce manual stock-taking and eliminate stockouts. Let AI-driven restocking alerts and automated purchase orders maintain optimal levels so you never miss a sale.",
     "c1Title": "Demand Forecasting",
     "c1Desc": "Use historical sales data across all channels to predict future inventory needs accurately.",
     "c2Title": "Automated Restocking",
-    "c2Desc": "Set minimum thresholds and let Emvive automatically generate POs when stock runs low.",
+    "c2Desc": "Set minimum thresholds and let the system automatically generate POs when stock runs low.",
     "c3Title": "Unified Stock Levels",
     "c3Desc": "Connect your POS, eCommerce, and warehouses into one centralized, real-time inventory ledger."
   },
@@ -515,15 +515,15 @@
     "accordionData": {
       "0": {
         "title": "Connect & Discover",
-        "desc": "Once connected, Emvive's first mission is discovery — automatically syncing with your POS systems, eCommerce platforms, and warehouses. Within minutes, you can map out your entire stock ecosystem and identify discrepancies before they impact customers."
+        "desc": "Once connected, the platform's first mission is discovery — automatically syncing with your POS systems, eCommerce platforms, and warehouses. Within minutes, you can map out your entire stock ecosystem and identify discrepancies before they impact customers."
       },
       "1": {
         "title": "Identify Shrinkage & Risks",
-        "desc": "Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. Emvive digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking."
+        "desc": "Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. The platform digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking."
       },
       "2": {
         "title": "Automate Remediation",
-        "desc": "Stop manually counting and ordering. Emvive automatically generates Purchase Orders when stock dips below critical thresholds and routes them to the correct suppliers, keeping your business operations uninterrupted."
+        "desc": "Stop manually counting and ordering. The system automatically generates Purchase Orders when stock dips below critical thresholds and routes them to the correct suppliers, keeping your business operations uninterrupted."
       }
     },
     "featureCards": {
@@ -533,7 +533,7 @@
       },
       "1": {
         "title": "Automated Restocking",
-        "desc": "Set minimum thresholds and let Emvive automatically generate POs when stock runs low."
+        "desc": "Set minimum thresholds and let the system automatically generate POs when stock runs low."
       },
       "2": {
         "title": "Demand Forecasting",
@@ -583,7 +583,7 @@
     "badge": "Powering Enterprises Globally",
     "titleLine1": "One Platform.",
     "titleLine2": "Infinite Possibilities.",
-    "subtitle": "Built for Saudi Arabia, the GCC and global enterprises — Emvive helps businesses connect, automate and grow across borders.",
+    "subtitle": "Built for Saudi Arabia, the GCC and global enterprises — helping businesses connect, automate and grow across borders.",
     "tabs": {
       "data": "Data Builder",
       "form": "Form Builder",
@@ -653,11 +653,11 @@
   },
   "testimonials": {
     "title": "10,000 companies have already made the move",
-    "subtitle": "Join the teams running finance, HR, IT and operations on Emvive.",
+    "subtitle": "Join the teams running finance, HR, IT and operations on one platform.",
     "button": "Read customer stories",
     "reviews": {
       "0": {
-        "quote": "Emvive replaced five disconnected tools. Our month-end close went from 9 days to 2.",
+        "quote": "One platform replaced five disconnected tools. Our month-end close went from 9 days to 2.",
         "role": "CFO · Northwind Logistics"
       },
       "1": {
@@ -687,7 +687,7 @@
     },
     "ratings": {
       "0": {
-        "review": "Emvive is the most complete platform we evaluated — and by far the easiest to roll out."
+        "review": "The most complete platform we evaluated — and by far the easiest to roll out."
       },
       "1": {
         "review": "Setup was painless and the support team felt like an extension of our own."
@@ -709,10 +709,10 @@
     "eyebrow": "ONE BUSINESS OPERATING SYSTEM",
     "headline1": "Run Your Entire Business on",
     "headline2": "One Connected Platform.",
-    "subtitle": "Emvive brings finance, supply chain, sales, HR, payroll, POS, e-invoicing, projects, manufacturing and business workflows together — so teams can run everyday operations with connected data and greater visibility across the business.",
+    "subtitle": "Finance, supply chain, sales, HR, payroll, POS, e-invoicing, projects, manufacturing and business workflows come together — so teams can run everyday operations with connected data and greater visibility across the business.",
     "requestDemo": "Request a Demo",
     "watchTitle": "Watch: The Agentic Enterprise.",
-    "watchDesc": "Emvive is the last operations software your team will ever need.",
+    "watchDesc": "The last operations software your team will ever need.",
     "tilesTitle1": "Built for the way",
     "tilesTitle2": "your industry works.",
     "metrics": {
@@ -809,8 +809,8 @@
         "link": "Explore Hospitality & Restaurants"
       }
     },
-    "secondaryCta": "Explore Emvive",
+    "secondaryCta": "Explore the Platform",
     "industriesEyebrow": "INDUSTRIES",
-    "industriesSub": "Different industries have different processes, priorities and operational demands. Emvive brings the business functions behind them into a connected platform designed to support everyday operations."
+    "industriesSub": "Different industries have different processes, priorities and operational demands. We bring the business functions behind them into a connected platform designed to support everyday operations."
   }
 }

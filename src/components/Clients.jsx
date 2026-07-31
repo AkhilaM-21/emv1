@@ -25,7 +25,7 @@ const Clients = () => {
       <div className="container emv-clients-container">
 
         <div className="emv-clients-top-block">
-          <div className="emv-subtitle">{t('clients.meetEmvive', 'MEET EMVIVE')}</div>
+          <div className="emv-subtitle">{t('clients.meetEmvive', 'MEET THE PLATFORM')}</div>
 
           <div className="emv-headline-row">
             <h2 className="emv-headline">
@@ -37,7 +37,7 @@ const Clients = () => {
           </div>
 
           <p className="emv-description">
-            {t('clients.supporting', 'From day-to-day operations to finance and people management, businesses use Emvive to bring critical processes into one connected environment.')}
+            {t('clients.supporting', 'From day-to-day operations to finance and people management, businesses use one platform to bring critical processes into a single connected environment.')}
           </p>
         </div>
 

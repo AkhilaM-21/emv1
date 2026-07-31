@@ -71,7 +71,7 @@ export const getMegaMenuData = (t) => ({
     }
   },
   [t('megaMenu.products.workflow', 'Workflow Automation')]: {
-    [t('megaMenu.flow.label', 'Emvive Flow')]: {
+    [t('megaMenu.flow.label', 'Flow')]: {
       title: t('megaMenu.flow.title', 'Workflow Automation'),
       subtitle: t('megaMenu.flow.subtitle', 'Automate approvals and processes across the platform.'),
       modules: [
@@ -85,7 +85,7 @@ export const getMegaMenuData = (t) => ({
     }
   },
   [t('megaMenu.products.noCode', 'No-Code App Builder')]: {
-    [t('megaMenu.studio.label', 'Emvive Studio')]: {
+    [t('megaMenu.studio.label', 'Studio')]: {
       title: t('megaMenu.studio.title', 'No-Code App Builder'),
       subtitle: t('megaMenu.studio.subtitle', 'Build custom apps on your ERP data — no code.'),
       modules: [

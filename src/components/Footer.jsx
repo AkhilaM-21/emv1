@@ -41,7 +41,7 @@ const Footer = () => {
                 <div className="checkbox-group">
                   <input type="checkbox" id="privacy-consent" required />
                   <label htmlFor="privacy-consent">
-                    {t('footer.privacyConsent1', 'I agree to Emvive processing my personal data in accordance with Emvive\'s')} <a href="#">{t('footer.privacyConsent2', 'Privacy Policy')}</a>.
+                    {t('footer.privacyConsent1', 'I agree to the processing of my personal data in accordance with the')} <a href="#">{t('footer.privacyConsent2', 'Privacy Policy')}</a>.
                   </label>
                 </div>
                 
@@ -71,7 +71,7 @@ const Footer = () => {
                 <li><a href="#products">CRM & Sales</a></li>
                 <li><a href="#products">Advanced Reporting</a></li>
                 <li><a href="#products">Workflow Automation</a></li>
-                <li><a href="#products">Emvive Studio</a></li>
+                <li><a href="#products">Studio</a></li>
               </ul>
             </div>
 
@@ -110,7 +110,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="footer-bottom">
           <div className="footer-copyright">
-            &copy; 2026 Emvive Inc.
+            &copy; 2026. All rights reserved.
           </div>
         </div>
 

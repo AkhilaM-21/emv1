@@ -70,7 +70,7 @@ const CustomerStory = () => {
               See how businesses are <span className="text-accent">transforming the way they work.</span>
             </h2>
             <p className="cs-sub">
-              See how organizations use Emvive to connect operations, improve visibility and manage everyday business processes from one platform.
+              See how organizations connect operations, improve visibility and manage everyday business processes from one platform.
             </p>
           </div>
           <div className="cs-nav-buttons">

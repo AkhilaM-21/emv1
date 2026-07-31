@@ -94,12 +94,6 @@ const APPS = [
     points: [[GitBranch, 'Planning with WBS', 'Break work into structured tasks'], [ClipboardList, 'Task Management', 'Assign, schedule and track work'], [Users, 'Resource Allocation', 'Plan people across projects'], [LineChart, 'Budget Tracking', 'Compare planned and actual cost'], [Clock, 'Time & Expense', 'Log hours and project spend'], [Flag, 'Milestone Billing', 'Invoice as stages complete'], [Percent, 'Retention Management', 'Track held project amounts']] },
   { key: 'mfg', tab: 'Manufacturing', title: 'Connect Production with Inventory and Cost', icon: Factory, color: '#be123c', link: 'Explore Manufacturing',
     points: [[ClipboardList, 'Bill of Materials', 'Define what each product needs'], [Factory, 'Production Orders', 'Plan and release production runs'], [Cog, 'Shop Floor Control', 'Track progress on the floor'], [Boxes, 'Material Consumption', 'Issue and record used stock'], [BadgeDollarSign, 'Production Costing', 'Cost of every finished item']] },
-  { key: 'studio', tab: 'Studio', title: 'Build Around the Way Your Business Works', icon: LayoutDashboard, color: '#ec4899', link: 'Explore Studio',
-    points: [[MousePointerClick, 'Drag-and-Drop Builder', 'Assemble apps without code'], [LayoutGrid, 'Custom Forms', 'Capture exactly the data you need'], [PenTool, 'UI Designer', 'Lay out screens your way']] },
-  { key: 'flow', tab: 'Flow', title: 'Automate the Processes Between Your Teams', icon: Workflow, color: '#4f46e5', link: 'Explore Flow',
-    points: [[Workflow, 'Workflow Automation', 'Route work between teams'], [GitMerge, 'Approval Chains', 'Multi-level review and sign-off'], [Zap, 'Event Triggers', 'Run actions when things change']] },
-  { key: 'insights', tab: 'Insights', title: 'Turn Business Data into Clearer Decisions', icon: BarChart3, color: '#e2601f', link: 'Explore Insights',
-    points: [[LayoutDashboard, 'Financial Dashboards', 'Live view of company numbers'], [TrendingUp, 'Sales Analytics', 'Pipeline, revenue and trends'], [ShoppingCart, 'POS Analytics', 'Performance by outlet and hour'], [Boxes, 'Inventory Insights', 'Movement, ageing and stock value'], [BadgeDollarSign, 'Project Profitability', 'Margin per project and client'], [PieChart, 'Custom Report Builder', 'Build reports without IT'], [Search, 'Drill-Down Analysis', 'Go from summary to transaction']] },
 ];
 
 /* Rotating tile colours for the point icons — one app's list cycles through
@@ -116,9 +110,6 @@ const BLURBS = {
   einv: 'Compliant e-invoicing with real-time ZATCA clearance.',
   projects: 'Plan, resource, track, and bill projects in one place.',
   mfg: 'Production, materials, and costing kept connected.',
-  studio: 'Build custom apps with drag-and-drop, not heavy code.',
-  flow: 'Automate approvals and processes between your teams.',
-  insights: 'Dashboards and analytics across your whole business.',
 };
 
 const CountUp = ({ end, duration = 2000, prefix='', suffix='', inView, isFloat=false }) => {
@@ -480,7 +471,7 @@ const Products = () => {
             </a>
           </div>
           <p className="emv-description">
-            From financials and supply chain to sales, people, projects, manufacturing, POS, compliance, and automation, Emvive brings the applications behind your business into one connected Business Operating System.
+            From financials and supply chain to sales, people, projects, manufacturing, POS, compliance, and automation, we bring the applications behind your business into one connected Business Operating System.
           </p>
         </div>
 

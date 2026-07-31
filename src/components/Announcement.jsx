@@ -116,11 +116,11 @@ const Announcement = () => {
               <span className="text-accent">Your Software Should Too.</span>
             </h2>
             <p className="ann-desc">
-              Finance, sales, procurement, inventory, people, and operations are part of the same business. Emvive connects these processes across one platform, helping information move with the work and giving teams greater visibility from one step to the next.
+              Finance, sales, procurement, inventory, people, and operations are part of the same business. One platform connects these processes end to end, helping information move with the work and giving teams greater visibility from one step to the next.
             </p>
             <div className="ann-actions">
               <a href="#platform" className="cta-btn-primary">
-                See How Emvive Works
+                See How It Works
                 <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
               </a>
               <a href="#demo" className="cta-btn-secondary">

@@ -17,7 +17,7 @@
 }
 .ah-dark {
   background: transparent;
-  padding: 11rem 6rem 4rem;
+  padding: 5rem 6rem 4rem;
   overflow: hidden;
 }
 /* faint vertical guide lines — six on the left, six on the right, tightly spaced */
@@ -830,9 +830,9 @@
 
 .ah-tiles-eyebrow {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   font-weight: 800;
-  letter-spacing: 1.4px;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
   color: #f2853f;
   margin-bottom: 0.9rem;
@@ -846,7 +846,7 @@
 }
 
 .ah-tiles-title {
-  font-size: 2.6rem;
+  font-size: 3.6rem;
   font-weight: 800;
   letter-spacing: -1.2px;
   line-height: 1.12;
@@ -1413,3 +1413,166 @@
       ah-pill-float 6.6s ease-in-out infinite;
   }
 }
+
+/* ==========================================================
+   COMPLEX LAYERED DASHBOARD & PILLS (ah-visual-complex)
+   ========================================================== */
+.ah-visual-complex {
+  position: relative;
+  width: 100%;
+  height: 660px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ah-connectors {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes ah-march {
+  to { stroke-dashoffset: -12; }
+}
+.ah-conn-line {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  animation: ah-march 1s linear infinite;
+}
+.ah-connectors circle {
+  fill: #fff;
+  stroke-width: 2;
+}
+.ah-dot-blue { stroke: #3b82f6; }
+.ah-dot-purple { stroke: #8b5cf6; }
+.ah-dot-green { stroke: #10b981; }
+.ah-dot-orange { stroke: #f59e0b; }
+.ah-dot-pink { stroke: #ec4899; }
+
+.ah-mock-card {
+  position: absolute;
+  background: linear-gradient(165deg, rgba(24, 40, 74, 0.9) 0%, rgba(14, 26, 52, 0.92) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.ah-card-left {
+  width: 320px; height: 380px;
+  left: -20px; top: 110px;
+  z-index: 5;
+  opacity: 0.85;
+  transform: scale(0.9);
+  filter: blur(1.5px);
+}
+.ah-card-right {
+  width: 340px; height: 360px;
+  right: -30px; top: 120px;
+  z-index: 5;
+  opacity: 0.85;
+  transform: scale(0.9);
+  filter: blur(1.5px);
+}
+.ah-card-center {
+  width: 380px; height: 440px;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.ah-mock-header {
+  height: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  justify-content: space-between;
+}
+.ah-header-main { height: 56px; }
+.ah-mock-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 0.9rem; color: #eef3fb;
+}
+.main-logo { font-size: 1rem; }
+.ah-mock-actions { display: flex; align-items: center; gap: 12px; color: #7f92b3; }
+.ah-mock-avatar-small { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); }
+
+.ah-mock-body {
+  display: flex;
+  flex: 1;
+}
+.ah-mock-sidebar {
+  width: 100px;
+  background: rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.main-sidebar { width: 120px; padding: 16px 10px; }
+.ah-mock-nav {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px;
+  font-size: 0.7rem; color: #7f92b3;
+  border-radius: 6px;
+}
+.main-sidebar .ah-mock-nav { font-size: 0.75rem; padding: 8px 10px; gap: 8px; }
+.ah-mock-nav.active { background: rgba(255, 255, 255, 0.1); color: #eef3fb; font-weight: 600; }
+
+.ah-mock-main {
+  flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 16px;
+}
+.main-content { padding: 20px; gap: 20px; }
+.ah-mock-title { margin: 0; font-size: 0.85rem; color: #eef3fb; font-weight: 700; }
+
+.ah-mock-kpi {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ah-kpi-label { font-size: 0.75rem; color: #7f92b3; font-weight: 600; }
+.ah-kpi-val { display: flex; align-items: baseline; gap: 8px; }
+.ah-kpi-val b { font-size: 1.6rem; color: #eef3fb; font-weight: 800; }
+.ah-kpi-trend { font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 20px; }
+.ah-kpi-trend.up { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+
+.ah-mock-chart {
+  height: 80px; width: 100%; border-radius: 8px; overflow: hidden;
+}
+
+.ah-mock-table { display: flex; flex-direction: column; gap: 12px; }
+.ah-mock-table-full { gap: 0; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; overflow: hidden; }
+.ah-mock-row { display: flex; align-items: center; gap: 10px; }
+.ah-mock-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #fff; font-weight: 700; }
+.bg-blue { background: #3b82f6; } .bg-purple { background: #8b5cf6; } .bg-green { background: #10b981; } .bg-orange { background: #f59e0b; }
+.ah-mock-txt { font-size: 0.75rem; color: #eef3fb; font-weight: 600; }
+
+.ah-mock-th, .ah-mock-tr { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 0.7rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.ah-mock-th { background: rgba(255, 255, 255, 0.02); color: #7f92b3; font-weight: 700; text-transform: uppercase; }
+.ah-mock-tr { color: #eef3fb; font-weight: 600; align-items: center; }
+.ah-mock-tr:last-child { border-bottom: none; }
+.ah-mock-badge { padding: 4px 8px; border-radius: 12px; font-size: 0.65rem; color: #fff; font-weight: 700; }
+
+.ah-float-pill {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; font-weight: 700; color: #1e293b;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  z-index: 20;
+}
+.pill-top { top: 0px; left: 50%; transform: translateX(-50%); border-color: #3b82f6; }
+.pill-tl { top: 20px; left: 20px; border-color: #8b5cf6; }
+.pill-tr { top: 20px; right: 20px; border-color: #10b981; }
+.pill-bl { bottom: 40px; left: 40px; border-color: #f59e0b; }
+.pill-bottom { bottom: 0px; left: 50%; transform: translateX(-50%); border-color: #3b82f6; }
+.pill-br { bottom: 40px; right: 40px; border-color: #ec4899; }
+

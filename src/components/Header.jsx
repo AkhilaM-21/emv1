@@ -37,8 +37,8 @@ const MEGA_META = {
   'SSO Integration': { icon: Lock, sub: 'Single sign-on', color: '#4f46e5' },
   'Mobile Optimized': { icon: Smartphone, sub: 'Works on any device', color: '#d97706' },
   'Custom Domains': { icon: Globe2, sub: 'Your own URL', color: '#059669' },
-  'Emvive Studio': { icon: LayoutGrid, sub: 'Drag & drop builder', color: '#7c3aed' },
-  'Emvive Flow': { icon: Workflow, sub: 'Workflow automation', color: '#0891b2' },
+  'Studio': { icon: LayoutGrid, sub: 'Drag & drop builder', color: '#7c3aed' },
+  'Flow': { icon: Workflow, sub: 'Workflow automation', color: '#0891b2' },
   'Integration Layer': { icon: Plug, sub: 'APIs & webhooks', color: '#e2601f' },
   'Security': { icon: ShieldCheck, sub: 'Roles & audit logs', color: '#4f46e5' },
   'Customer Portal': { icon: UserCheck, sub: 'Orders & payments', color: '#0d9488' },
@@ -67,7 +67,7 @@ const MEGA_META = {
    original Solutions list — only the interactivity changed, not the items. */
 const MEGA_PRODUCTS = [
   'ERP', 'HR & Payroll', 'CRM & Sales',
-  'Advanced Reporting', 'Workflow Automation', 'Emvive Studio',
+  'Advanced Reporting', 'Workflow Automation',
 ];
 const MEGA_CORE_APPS = [
   'Construction & Engineering', 'Retail & Commerce', 'Manufacturing',
@@ -565,8 +565,8 @@ const Header = () => {
             <div className="infor-column">
               <h3 className="infor-col-header">Platform & Builder</h3>
               <div className="mega-items">
-                <MegaItem title="Emvive Studio" />
-                <MegaItem title="Emvive Flow" />
+                <MegaItem title="Studio" />
+                <MegaItem title="Flow" />
               </div>
               <a href="#all-platforms" className="infor-all-link">
                 All platforms <ArrowRight size={15} />

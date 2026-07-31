@@ -1,77 +1,20 @@
 import React from 'react';
-import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight } from 'lucide-react';
+import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight, HardHat, ShoppingBag, Truck, Briefcase, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
 import './Features.css';
 
 /* Emvive applications (Master Document §4 / §6). Each app carries its own
    accent colour; `rgb` is the same colour as a raw triple so the CSS can
    build translucent tints from it. */
 const FEATURES = [
-  {
-    id: 1, icon: CircleDollarSign, title: 'Financials', color: '#7c3aed', rgb: '124, 58, 237',
-    desc: 'Run finance with greater visibility and control.',
-    points: ['General Ledger', 'Accounts Payable & Receivable', 'Cash & Bank Management', 'Fixed Assets', 'Budgeting & Forecasting'],
-    link: 'Explore Financials',
-  },
-  {
-    id: 2, icon: Package, title: 'Supply Chain', color: '#0891b2', rgb: '8, 145, 178',
-    desc: 'Connect purchasing, suppliers, inventory, and warehouses.',
-    points: ['Procurement Management', 'Vendor Management', 'Inventory Control', 'Warehouse Management', 'Demand Planning'],
-    link: 'Explore Supply Chain',
-  },
-  {
-    id: 3, icon: TrendingUp, title: 'Sales & CRM', color: '#059669', rgb: '5, 150, 105',
-    desc: 'Manage customer relationships from lead to order.',
-    points: ['Leads & Opportunities', 'Quotations', 'Sales Orders', 'Pricing & Discounts', 'Customer Management'],
-    link: 'Explore Sales & CRM',
-  },
-  {
-    id: 4, icon: Users, title: 'HCM', color: '#2563eb', rgb: '37, 99, 235',
-    desc: 'Manage people, payroll, attendance, and performance.',
-    points: ['Core HR & Payroll', 'Attendance & Leave', 'EOSB & GOSI', 'Employee Self-Service', 'Performance & Appraisals'],
-    link: 'Explore HCM',
-  },
-  {
-    id: 5, icon: FolderKanban, title: 'Projects', color: '#d97706', rgb: '217, 119, 6',
-    desc: 'Keep project work, resources, costs, and billing connected.',
-    points: ['Project Planning & WBS', 'Task Management', 'Resource Allocation', 'Budget Tracking', 'Time & Expense Tracking'],
-    link: 'Explore Projects',
-  },
-  {
-    id: 6, icon: Factory, title: 'Manufacturing', color: '#be123c', rgb: '190, 18, 60',
-    desc: 'Connect production planning with materials and costs.',
-    points: ['Bill of Materials', 'Production Orders', 'Shop Floor Control', 'Material Consumption', 'Production Costing'],
-    link: 'Explore Manufacturing',
-  },
-  {
-    id: 7, icon: Store, title: 'POS', color: '#9333ea', rgb: '147, 51, 234',
-    desc: 'Connect every sale with inventory and operations.',
-    points: ['Fast Billing', 'Offline Mode', 'Barcode Scanning', 'Multi-Branch POS', 'Real-Time Inventory Sync'],
-    link: 'Explore POS',
-  },
-  {
-    id: 8, icon: FileCheck, title: 'E-Invoicing', color: '#0d9488', rgb: '13, 148, 136',
-    desc: 'Manage electronic invoicing and ZATCA compliance.',
-    points: ['Electronic Invoices', 'QR Code Generation', 'XML / JSON Formats', 'Digital Signatures', 'ZATCA Phase 1 & 2'],
-    link: 'Explore E-Invoicing',
-  },
-  {
-    id: 9, icon: Blocks, title: 'Studio', color: '#ec4899', rgb: '236, 72, 153',
-    desc: 'Build business applications around your processes.',
-    points: ['Drag-and-Drop Builder', 'Custom Forms', 'UI Designer'],
-    link: 'Explore Studio',
-  },
-  {
-    id: 10, icon: Workflow, title: 'Flow', color: '#4f46e5', rgb: '79, 70, 229',
-    desc: 'Automate approvals and everyday business processes.',
-    points: ['Workflow Automation', 'Approval Chains', 'Event Triggers'],
-    link: 'Explore Flow',
-  },
-  {
-    id: 11, icon: BarChart3, title: 'Insights', color: '#e2601f', rgb: '226, 96, 31',
-    desc: 'Turn operational data into business visibility.',
-    points: ['Financial Dashboards', 'Sales Analytics', 'POS Analytics', 'Inventory Insights', 'Custom Report Builder'],
-    link: 'Explore Insights',
-  },
+  { id: 1, icon: HardHat, title: 'Construction & Engineering', color: '#cb8c1f', rgb: '203, 140, 31', desc: 'Connect projects, procurement, workforce, costs, and finance.', points: ['Project Costing', 'Subcontractor Management', 'Bill of Quantities (BOQ)', 'Equipment Tracking', 'Progress Billing'], link: 'Explore Construction & Engineering' },
+  { id: 2, icon: ShoppingBag, title: 'Retail & Commerce', color: '#b14a2f', rgb: '177, 74, 47', desc: 'Connect POS, inventory, purchasing, people, and finance.', points: ['Point of Sale (POS)', 'Inventory Optimization', 'Customer Loyalty', 'Multi-Store Management', 'E-commerce Integration'], link: 'Explore Retail & Commerce' },
+  { id: 3, icon: Factory, title: 'Manufacturing', color: '#c85a1e', rgb: '200, 90, 30', desc: 'Connect production, inventory, procurement, sales, and finance.', points: ['Production Planning', 'Bill of Materials (BOM)', 'Shop Floor Control', 'Quality Management', 'Equipment Maintenance'], link: 'Explore Manufacturing' },
+  { id: 4, icon: Truck, title: 'Supply Chain & Distribution', color: '#6c50b2', rgb: '108, 80, 178', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', points: ['Warehouse Management', 'Fleet Tracking', 'Vendor Portals', 'Order Fulfillment', 'Demand Forecasting'], link: 'Explore Supply Chain & Distribution' },
+  { id: 5, icon: Briefcase, title: 'Professional Services', color: '#d9722a', rgb: '217, 114, 42', desc: 'Connect projects, people, customers, expenses, and billing.', points: ['Time & Expense Tracking', 'Resource Scheduling', 'Project Profitability', 'Client Billing', 'Contract Management'], link: 'Explore Professional Services' },
+  { id: 6, icon: Wrench, title: 'Field Service Management', color: '#4f46e5', rgb: '79, 70, 229', desc: 'Connect scheduling, technicians, assets, billing, and finance.', points: ['Technician Dispatch', 'Mobile Work Orders', 'Route Optimization', 'Service Contracts', 'Warranty Management'], link: 'Explore Field Service Management' },
+  { id: 7, icon: HeartPulse, title: 'Healthcare', color: '#0ea5e9', rgb: '14, 165, 233', desc: 'Connect patients, staff, inventory, billing, and compliance.', points: ['Patient Records', 'Clinic Scheduling', 'Medical Inventory', 'Billing & Claims', 'Compliance Management'], link: 'Explore Healthcare' },
+  { id: 8, icon: Building2, title: 'Real Estate & Property', color: '#ec4899', rgb: '236, 72, 153', desc: 'Connect properties, leasing, tenants, payments, and finance.', points: ['Lease Management', 'Tenant Portals', 'Facility Maintenance', 'Rent Collection', 'Contract Renewals'], link: 'Explore Real Estate & Property' },
+  { id: 9, icon: Utensils, title: 'Hospitality & Restaurants', color: '#f97316', rgb: '249, 115, 22', desc: 'Connect POS, inventory, staff, bookings, and finance.', points: ['Table Management', 'Recipe Costing', 'Kitchen Display', 'Reservations', 'Staff Scheduling'], link: 'Explore Hospitality & Restaurants' },
 ];
 
 const Arrow = () => (
@@ -134,13 +77,13 @@ const Features = ({ variant = 'mono', id = 'features' }) => {
       <div className="features-container">
         <div className="features-header">
           <div className="features-header-text">
-            <span className="features-kicker">APPLICATIONS</span>
+            <span className="features-kicker">INDUSTRIES</span>
             <h2 className="features-heading">
-              Applications Built to Run{' '}
-              <span className="text-accent">Every Part of Your Business.</span>
+              Built for the way{' '}
+              <span className="text-accent">your industry works.</span>
             </h2>
             <p className="features-sub">
-              From financials and supply chain to people, projects, POS, compliance, and automation, explore the Emvive applications that connect everyday operations across your business.
+              Different industries have different processes, priorities and operational demands. We bring the business functions behind them into a connected platform designed to support everyday operations.
             </p>
           </div>
           <a href="#products" className="features-cta">
@@ -153,10 +96,7 @@ const Features = ({ variant = 'mono', id = 'features' }) => {
           {FEATURES.map((feature) => (
             <FeatureCard key={feature.id} feature={feature} variant={variant} />
           ))}
-          {/* fills the empty last grid cell */}
-          <div className="feature-video-card">
-            <img src="/images/application.gif" alt="Emvive applications" />
-          </div>
+
         </div>
       </div>
     </section>

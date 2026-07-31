@@ -6,12 +6,12 @@ import './FAQ.css';
 const faqs = [
   {
     id: 1,
-    question: "How long does it take to implement Emvive?",
+    question: "How long does implementation take?",
     answer: "Usually 2-4 weeks depending on data migration complexity. Our dedicated onboarding team handles the heavy lifting to ensure a smooth transition from your legacy systems."
   },
   {
     id: 2,
-    question: "Does Emvive integrate with legacy on-premise systems?",
+    question: "Does the platform integrate with legacy on-premise systems?",
     answer: "Yes, via our secure API gateway and custom connectors. We routinely integrate with older ERPs and specialized local databases without disruption."
   },
   {
@@ -42,12 +42,12 @@ const FAQ = () => {
   const faqs = [
     {
       id: 1,
-      question: t('faqData.q1', 'How long does it take to implement Emvive?'),
+      question: t('faqData.q1', 'How long does implementation take?'),
       answer: t('faqData.a1', 'Usually 2-4 weeks depending on data migration complexity. Our dedicated onboarding team handles the heavy lifting to ensure a smooth transition from your legacy systems.')
     },
     {
       id: 2,
-      question: t('faqData.q2', 'Does Emvive integrate with legacy on-premise systems?'),
+      question: t('faqData.q2', 'Does the platform integrate with legacy on-premise systems?'),
       answer: t('faqData.a2', 'Yes, via our secure API gateway and custom connectors. We routinely integrate with older ERPs and specialized local databases without disruption.')
     },
     {
@@ -123,9 +123,9 @@ const FAQ = () => {
             <span className="badge-dot-blue"></span>
             {t('faq.badge', 'FAQ')}
           </span>
-          <h2 className="faq-title">{t('faq.title', 'Ask Emvive Anything')}</h2>
+          <h2 className="faq-title">{t('faq.title', 'Ask Us Anything')}</h2>
           <p className="faq-subtitle">
-            {t('faq.subtitle', 'Browse the questions our customers ask most — get clear, instant answers about running your enterprise on Emvive.')}
+            {t('faq.subtitle', 'Browse the questions our customers ask most — get clear, instant answers about running your enterprise on our platform.')}
           </p>
         </div>
 

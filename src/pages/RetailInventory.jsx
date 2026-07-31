@@ -24,17 +24,17 @@ const useReveal = () => {
 const ACCORDION_DATA = [
   {
     title: 'Connect & Discover',
-    desc: "Once connected, Emvive's first mission is discovery — automatically syncing with your POS systems, eCommerce platforms, and warehouses. Within minutes, you can map out your entire stock ecosystem and identify discrepancies before they impact customers.",
+    desc: "Once connected, the platform's first mission is discovery — automatically syncing with your POS systems, eCommerce platforms, and warehouses. Within minutes, you can map out your entire stock ecosystem and identify discrepancies before they impact customers.",
     image: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800&h=600'
   },
   {
     title: 'Identify Shrinkage & Risks',
-    desc: 'Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. Emvive digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking.',
+    desc: 'Inventory discrepancies can be buried deep, obscured by miscounts, delayed vendor shipments, and returns. The platform digs through the layers to map out interdependencies and oversights to identify exactly where stock is leaking.',
     image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=600'
   },
   {
     title: 'Automate Remediation',
-    desc: 'Stop manually counting and ordering. Emvive automatically generates Purchase Orders when stock dips below critical thresholds and routes them to the correct suppliers, keeping your business operations uninterrupted.',
+    desc: 'Stop manually counting and ordering. The system automatically generates Purchase Orders when stock dips below critical thresholds and routes them to the correct suppliers, keeping your business operations uninterrupted.',
     image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800&h=600'
   }
 ];
@@ -98,7 +98,7 @@ const RetailInventory = () => {
     {
       icon: <RefreshCcw size={24} />,
       title: 'Automated Restocking',
-      desc: 'Set minimum thresholds and let Emvive automatically generate POs when stock runs low.',
+      desc: 'Set minimum thresholds and let the system automatically generate POs when stock runs low.',
       image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=400&h=250'
     },
     {

@@ -46,7 +46,7 @@ const AnnouncementOriginal = () => {
               Enterprise AI that doesn't just report problems — <span className="text-accent-original">it solves them.</span>
             </h2>
             <p className="ann-desc-original">
-              AI agents run inside your Emvive tenant with the same permissions as your users. They detect ledger exceptions, reconcile invoices end-to-end, chase vendors and post journals — escalating to humans only when judgement is required.
+              AI agents run inside your tenant with the same permissions as your users. They detect ledger exceptions, reconcile invoices end-to-end, chase vendors and post journals — escalating to humans only when judgement is required.
             </p>
             <div className="ann-actions-original">
               <a href="#blog" className="ann-btn-primary-original">
