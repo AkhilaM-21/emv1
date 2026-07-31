@@ -246,7 +246,7 @@ const Header = () => {
               const item = itemObj.key;
               const label = itemObj.label;
               const isOpen = openNav === item;
-              const hasMegaMenu = item === 'Products';
+              const hasMegaMenu = item === 'Products' || item === 'Enterprise';
               
               return (
                 <div
@@ -535,12 +535,22 @@ const Header = () => {
         >
           <div className="infor-mega-layout">
 
-            {/* Column 1: SOLUTIONS — original list, now static (no hover swap) */}
+            {/* Column 1: SOLUTIONS — interactive hover swap */}
             <div className="infor-column">
               <h3 className="infor-col-header">Business Suites</h3>
               <div className="mega-items">
-                {MEGA_PRODUCTS.map((title) => (
-                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
+                {productKeys.map((title, idx) => (
+                  <MegaItem 
+                    key={title} 
+                    title={title} 
+                    noSub 
+                    active={activeProductIndex === idx}
+                    onEnter={() => {
+                      setActiveProductIndex(idx);
+                      setActiveIndustryIndex(0);
+                    }}
+                    onClick={() => setOpenNav(null)} 
+                  />
                 ))}
               </div>
               <a href="#all-solutions" className="infor-all-link">
@@ -548,16 +558,16 @@ const Header = () => {
               </a>
             </div>
 
-            {/* Column 2: INDUSTRIES — static list */}
+            {/* Column 2: FEATURED PRODUCTS */}
             <div className="infor-column">
-              <h3 className="infor-col-header">Industries</h3>
+              <h3 className="infor-col-header">Core Applications</h3>
               <div className="mega-items">
-                {MEGA_CORE_APPS.map((title) => (
-                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
+                {activeIndustryData.modules && activeIndustryData.modules.slice(0, 7).map((mod) => (
+                  <MegaItem key={mod.title} title={mod.title} noSub onClick={() => setOpenNav(null)} />
                 ))}
               </div>
-              <a href="#industries" className="infor-all-link" onClick={() => setOpenNav(null)}>
-                All industries <ArrowRight size={15} />
+              <a href="#featured-products" className="infor-all-link" onClick={() => setOpenNav(null)}>
+                All applications <ArrowRight size={15} />
               </a>
             </div>
 
@@ -588,6 +598,40 @@ const Header = () => {
 
           </div>
 
+        </div>
+      )}
+
+      {/* ENTERPRISE MEGA MENU */}
+      {openNav === 'Enterprise' && (
+        <div
+          className="mega-menu-wrapper infor-mega-wrapper"
+          onMouseEnter={cancelMegaClose}
+          onMouseLeave={scheduleMegaClose}
+        >
+          <div className="infor-mega-layout">
+            
+            <div className="infor-column">
+              <h3 className="infor-col-header">Industries</h3>
+              <div className="mega-items">
+                {MEGA_CORE_APPS.slice(0, 5).map((title) => (
+                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
+                ))}
+              </div>
+            </div>
+
+            <div className="infor-column">
+              <h3 className="infor-col-header">&nbsp;</h3>
+              <div className="mega-items">
+                {MEGA_CORE_APPS.slice(5).map((title) => (
+                  <MegaItem key={title} title={title} noSub onClick={() => setOpenNav(null)} />
+                ))}
+              </div>
+              <a href="#industries" className="infor-all-link" onClick={() => setOpenNav(null)}>
+                All industries <ArrowRight size={15} />
+              </a>
+            </div>
+
+          </div>
         </div>
       )}
 

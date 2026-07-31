@@ -83,18 +83,5 @@ export const getMegaMenuData = (t) => ({
         { icon: FileText, title: t('megaMenu.flow.audit', 'Audit Trails'), desc: t('megaMenu.flow.auditDesc', 'Full history of every workflow action.') }
       ]
     }
-  },
-  [t('megaMenu.products.noCode', 'No-Code App Builder')]: {
-    [t('megaMenu.studio.label', 'Studio')]: {
-      title: t('megaMenu.studio.title', 'No-Code App Builder'),
-      subtitle: t('megaMenu.studio.subtitle', 'Build custom apps on your ERP data — no code.'),
-      modules: [
-        { icon: PenTool, title: t('megaMenu.studio.builder', 'Drag & Drop Builder'), desc: t('megaMenu.studio.builderDesc', 'Compose apps from ready-made blocks.') },
-        { icon: FileText, title: t('megaMenu.studio.forms', 'Custom Forms'), desc: t('megaMenu.studio.formsDesc', 'Capture any data with tailored forms.') },
-        { icon: Layout, title: t('megaMenu.studio.ui', 'UI Designer'), desc: t('megaMenu.studio.uiDesc', 'Design polished interfaces visually.') },
-        { icon: Link2, title: t('megaMenu.studio.apis', 'APIs & Webhooks'), desc: t('megaMenu.studio.apisDesc', 'Connect anything with open APIs.') },
-        { icon: Shield, title: t('megaMenu.studio.access', 'Role-Based Access'), desc: t('megaMenu.studio.accessDesc', 'Field-level security and audit logs.') }
-      ]
-    }
   }
 });
