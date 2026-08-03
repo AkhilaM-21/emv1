@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+/* HashRouter, not BrowserRouter: the Render static site has no history
+   fallback, so a direct hit on /home is answered by Render's own 404 before
+   the app loads. Routing through the hash keeps every deep link working with
+   no host config. Swap back to BrowserRouter once the Render rewrite rule
+   (/*  ->  /index.html, action Rewrite) is in place. */
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -9,7 +14,7 @@ import './index.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Header />
         
@@ -23,7 +28,7 @@ function App() {
 
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

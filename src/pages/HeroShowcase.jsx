@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, Check } from 'lucide-react';
 import HeroCrisp from '../components/herostyles/HeroCrisp';
 import HeroWipro from '../components/herostyles/HeroWipro';
@@ -16,23 +17,22 @@ const STYLES = [
   { id: 4, name: 'Home 4', sub: 'Framed screen', Component: HeroCoframe },
 ];
 
-const readInitial = () => {
-  if (typeof window === 'undefined') return 1;
-  const v = Number(new URLSearchParams(window.location.search).get('style'));
-  return STYLES.some((s) => s.id === v) ? v : 1;
-};
-
 const HeroShowcase = () => {
-  const [active, setActive] = useState(readInitial);
+  /* the router's params, not window.location.search — under HashRouter the
+     query lives inside the hash (#/home?style=3), where window.location
+     .search is always empty and history.replaceState would blow the route away */
+  const [params, setParams] = useSearchParams();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
+  const requested = Number(params.get('style'));
+  const active = STYLES.some((s) => s.id === requested) ? requested : 1;
+
   const select = useCallback((id) => {
-    setActive(id);
     setOpen(false);
-    window.history.replaceState(null, '', `${window.location.pathname}?style=${id}`);
+    setParams({ style: String(id) }, { replace: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [setParams]);
 
   /* close on outside click */
   useEffect(() => {
