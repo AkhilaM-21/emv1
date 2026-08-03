@@ -1,0 +1,10 @@
+# SPA history fallback — serve index.html for any path that is not a real
+# file or directory, so deep links like /home resolve instead of 404ing.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
