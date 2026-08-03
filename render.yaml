@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: emv1
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    # SPA history fallback — without this Render looks for a real /home file,
+    # doesn't find one, and returns its plain "Not Found" page before React
+    # Router ever loads.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
