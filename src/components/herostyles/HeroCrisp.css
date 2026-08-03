@@ -1,0 +1,167 @@
+/* ==========================================================================
+   STYLE 1 — crisp.chat
+   Metrics below are the real values read off crisp.chat's own stylesheet
+   (panel #71b9ed / radius 46px, wrapper gap 32px + padding-top 72px,
+   pill margin-top -56px, hero min-height 1140px, inner 920px, app margin-top
+   50px, screenshot border 8px hsla(0,0%,100%,.46) + 22px 22px 0 0 + 80px
+   bottom mask, play title 15px/18px, play description 12.5px/16px #ffffffa6,
+   grid overlay .03 / grain overlay .04, ink #030d26).
+   ========================================================================== */
+
+.hcx-hero {
+  /* sampled from hero-custom.png so the panel edges blend into the artwork */
+  --hcx-sky: #61bef5;
+  --hcx-ink: #030d26;
+  --hcx-blue: #2f6bff;
+  --hcx-blue-dark: #1e4fd8;
+  /* Emvive brand orange, matching the site's gradient */
+  --hcx-orange: #e2601f;
+  /* headline brush stroke stays blue against the orange CTA */
+  --hcx-brush: #2f6bff;
+  position: relative;
+  background: #fcfcfd;
+  /* their hero pulls up under the nav; ours must clear the fixed header */
+  padding-top: 84px;
+  /* padding, not margin — a margin here leaks the dark body colour through */
+  padding-bottom: 90px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+}
+
+/* the rounded sky panel */
+.hcx-panel {
+  position: relative;
+  isolation: isolate;
+  margin: 0 34px;
+  /* height comes from the content — a fixed min-height just left a band of
+     spare meadow under the dashboard */
+  padding-bottom: 34px;
+  border-radius: 46px;
+  overflow: hidden;
+  background-color: var(--hcx-sky);
+}
+
+/* ---------------- scenery ---------------- */
+/* project artwork, anchored low so the horizon sits under the content */
+.hcx-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 78%;
+}
+
+/* grid pattern @ 3% + grain @ 4%, matching their decor layers */
+.hcx-texture {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.4px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0 1px, transparent 1px 42px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0 1px, transparent 1px 42px);
+  background-size: 7px 7px, auto, auto;
+  opacity: 0.03;
+}
+
+/* ---------------- content ---------------- */
+.hcx-inner {
+  position: relative;
+  z-index: 10;
+  /* content block spans 80% of the screen */
+  width: 80%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 72px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+/* ---- headline ---- */
+.hcx-title {
+  margin: 0;
+  /* scales with the viewport so both lines span the 80% column instead of
+     sitting in the middle of it — 3.75vw is tuned to the longer line */
+  font-size: clamp(22px, 3.75vw, 88px);
+  line-height: 1.18;
+  letter-spacing: -0.024em;
+  font-weight: 800;
+  color: var(--hcx-ink);
+  width: 100%;
+  max-width: 100%;
+}
+/* locked lines — the break stays exactly where the markup puts it */
+.hcx-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* the hand-drawn emphasis stroke — filled + tapered, not a plain rule */
+.hcx-line { position: relative; display: inline-block; }
+.hcx-line-text { position: relative; z-index: 1; }
+.hcx-brush {
+  position: absolute;
+  left: 0;
+  top: calc(100% - 14px);
+  width: 100%;
+  height: 20px;
+  z-index: 0;
+  overflow: visible;
+}
+.hcx-brush path {
+  fill: var(--hcx-brush);
+  opacity: 0.82;
+}
+
+/* ---- CTA row ---- */
+.hcx-props {
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+/* CTA buttons reuse .btn-get-started / .arrow-circle from Header.css */
+
+/* ---- demo box wrapper ---- */
+.hcx-shot {
+  position: relative;
+  z-index: 10;
+  /* a direct child of the panel, so plain auto margins centre it.
+     10px of padding is just enough for the card's 8px white ring to sit
+     inside the mask without being clipped */
+  width: 91%;
+  padding: 10px;
+  margin: 6px auto 0;
+}
+
+/* ---------------- their breakpoints ---------------- */
+@media (max-width: 1080px) {
+  .hcx-panel { border-radius: 40px; }
+  /* title size is handled by the clamp above at every width */
+}
+@media (max-width: 880px) {
+  .hcx-panel { border-radius: 32px; margin: 0 16px; padding-bottom: 24px; }
+  /* below this width nowrap would overflow, so let the lines wrap again */
+  .hcx-title { letter-spacing: -0.012em; font-size: clamp(26px, 5.4vw, 44px); }
+  .hcx-title-line { white-space: normal; }
+  .hcx-brush { top: calc(100% - 10px); height: 16px; }
+  .hcx-texture { display: none; }
+}
+@media (max-width: 640px) {
+  .hcx-hero { padding-top: 72px; }
+  .hcx-panel { border-radius: 24px; margin: 0 10px; }
+  .hcx-inner { width: 92%; max-width: 92%; padding: 40px 0 0; gap: 22px; }
+  .hcx-title { line-height: 1.24; }
+  .hcx-props { margin: 12px 0 0; gap: 12px; }
+  .hcx-props .btn-get-started { font-size: 0.85rem; padding: 0.3rem 0.3rem 0.3rem 1.1rem; }
+  .hcx-shot { width: 97%; padding: 8px 8px 0; margin: 6px auto 0; }
+}

@@ -414,7 +414,8 @@ const ProductsDecor = () => (
   </svg>
 );
 
-const DashboardWrapper = ({ product, inView }) => {
+/* exported so the /home hero showcase can render the very same dashboards */
+export const DashboardWrapper = ({ product, inView }) => {
   switch(product.id) {
     case 1: return <DashboardERP inView={inView} />;
     case 2: return <DashboardHR inView={inView} />;

@@ -1,0 +1,322 @@
+/* ============ STYLE 4 — outlined screen + floating product cards ============ */
+
+.hfr-hero {
+  --hfr-accent: #e2601f;
+  --hfr-line: rgba(226, 96, 31, 0.42);
+  position: relative;
+  isolation: isolate;
+  padding: 8.5rem 3.5rem 3rem;
+  background: linear-gradient(180deg, #fff6ef 0%, #ffeee2 55%, #ffe7d7 100%);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.hfr-glow {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 90%;
+  z-index: -1;
+  background:
+    radial-gradient(38% 46% at 78% 18%, rgba(242, 133, 63, 0.24) 0%, rgba(242, 133, 63, 0) 70%),
+    radial-gradient(32% 40% at 12% 8%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 72%);
+}
+
+/* three guides down each edge, in a light orange for this warm background */
+.hfr-vlines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 96, 31, 0.16) 1px, transparent 1px);
+  background-repeat: no-repeat;
+  background-position:
+    3% 0, 6% 0, 9% 0,
+    91% 0, 94% 0, 97% 0;
+  background-size: 1px 100%;
+}
+
+.hfr-grid {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.18fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* ---------------- left copy ---------------- */
+.hfr-copy { max-width: 560px; }
+
+.hfr-title {
+  margin: 0 0 1.4rem;
+  font-size: clamp(2.3rem, 3.4vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -1.6px;
+  font-weight: 800;
+  color: #16181d;
+}
+.hfr-accent { color: var(--hfr-accent); }
+
+.hfr-sub {
+  margin: 0 0 2.1rem;
+  max-width: 500px;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: #5c6270;
+}
+
+.hfr-cta { font-size: 1rem; }
+
+/* ---------------- right visual ---------------- */
+.hfr-visual {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+/* the outlined browser shell — a faint fill so it reads as a screen even
+   where cards sit over it */
+.hfr-frame {
+  position: absolute;
+  /* inset on BOTH sides so the left and right card columns each straddle a
+     border — roughly half the card inside the frame, half outside */
+  left: 13%;
+  right: 18%;
+  top: 0;
+  bottom: 20px;
+  border: 1.5px solid var(--hfr-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.34);
+}
+.hfr-frame-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 20px;
+  border-bottom: 1.5px solid var(--hfr-line);
+}
+.hfr-frame-pill {
+  width: 128px;
+  height: 15px;
+  border-radius: 999px;
+  border: 1.5px solid var(--hfr-line);
+}
+.hfr-frame-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--hfr-line);
+}
+
+/* ---------------- floating cards ---------------- */
+.hfr-card {
+  position: absolute;
+  z-index: 2;
+  padding: 12px;
+  border-radius: 13px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.45);
+}
+
+.hfr-card-head { display: flex; align-items: center; gap: 10px; }
+.hfr-card-ic {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 13%, #fff);
+}
+.hfr-card-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.88rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #16181d;
+  /* wraps rather than truncating — "Workflow Automation" needs two lines */
+  white-space: normal;
+}
+.hfr-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 7px;
+  background: #fdeee4;
+  color: var(--hfr-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.hfr-card-alert {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(15, 23, 42, 0.07);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #d97706;
+}
+
+.hfr-card-body { margin-top: 11px; }
+.hfr-card-label { display: block; font-size: 0.72rem; font-weight: 600; color: #8a91a0; }
+.hfr-card-value {
+  display: block;
+  margin-top: 2px;
+  font-size: 1.42rem;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: #16181d;
+}
+.hfr-card-note { display: block; margin-top: 2px; font-size: 0.68rem; color: #98a0ae; }
+
+.hfr-card-people { display: flex; flex-direction: column; gap: 9px; margin-top: 13px; }
+.hfr-card-people span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #4b5160;
+}
+.hfr-card-people i { width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0; }
+.av-blue { background: #3b82f6; }
+.av-violet { background: #8b5cf6; }
+.av-green { background: #10b981; }
+
+/* ---------------- chart widgets ---------------- */
+.hfr-w-title {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #8a91a0;
+}
+
+.hfr-donut-row { display: flex; align-items: center; gap: 12px; }
+.hfr-donut { width: 76px; height: 76px; flex-shrink: 0; }
+
+.hfr-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.hfr-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #5c6270;
+  white-space: nowrap;
+}
+.hfr-legend i { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+.hfr-legend b { margin-left: auto; font-weight: 800; color: #16181d; }
+
+.hfr-bars { display: flex; align-items: flex-end; gap: 7px; height: 76px; }
+.hfr-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+.hfr-bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #f7a35f 0%, #e2601f 100%);
+}
+.hfr-bar-col em {
+  margin-top: 5px;
+  font-style: normal;
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: #a4abb8;
+}
+
+/* small stat tile */
+.hfr-tile { display: flex; align-items: center; gap: 9px; }
+.hfr-tile-ic {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 13%, #fff);
+}
+.hfr-tile b { font-size: 1.05rem; font-weight: 800; color: #16181d; }
+.hfr-tile-lbl { font-size: 0.7rem; font-weight: 500; color: #8a91a0; white-space: nowrap; }
+
+/* ---------------- placement — scattered, not stacked ---------------- */
+.hfr-card-a { left: 0; top: 78px; width: 218px; }
+.hfr-card-b { left: 0; top: 152px; width: 234px; }
+.hfr-card-g { left: 14px; top: 372px; width: 214px; }
+
+.hfr-card-d { left: 256px; top: 92px; width: 208px; }
+.hfr-card-f { left: 250px; top: 292px; width: 206px; }
+.hfr-card-h { left: 262px; top: 386px; width: 190px; }
+
+.hfr-card-c { right: 34px; top: 74px; width: 226px; }
+.hfr-card-e { right: 34px; top: 250px; width: 226px; }
+.hfr-card-i { right: 48px; top: 412px; width: 198px; }
+
+/* ---------------- feature strip ---------------- */
+.hfr-features {
+  position: relative;
+  max-width: 1440px;
+  margin: 2.5rem auto 0;
+  padding: 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(226, 96, 31, 0.12);
+}
+.hfr-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3f4553;
+}
+.hfr-feature-ic {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--hfr-accent);
+  border: 1.5px solid rgba(226, 96, 31, 0.3);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 1180px) {
+  .hfr-hero { padding: 7.5rem 1.5rem 2.5rem; }
+  .hfr-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .hfr-copy { max-width: none; }
+  .hfr-features { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .hfr-visual { height: 400px; transform: scale(0.78); transform-origin: top left; margin-bottom: -5rem; }
+  .hfr-features { grid-template-columns: 1fr; padding: 1.2rem 1.2rem; }
+  .hfr-title { letter-spacing: -0.8px; }
+}

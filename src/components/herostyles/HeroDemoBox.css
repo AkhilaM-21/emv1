@@ -1,0 +1,190 @@
+/* =========================================================================
+   Tabbed product demo box.
+   Metrics are the real values from the crisp.chat showcase block:
+     box       radius 12px, 1px rgba(0,0,0,.1), shadow 0 0 0 8px #fff9,
+               0 2px 8px #00000014, 0 8px 40px #0000001a, margin-top 58px
+     strip     padding 8px, column-gap 4px, bottom border rgba(0,0,0,.08)
+     tab       radius 10px, flex 1 1 0, min-width 150px, padding 10px, centred
+     icon      46 x 46, radius 10px, margin-bottom 14px, gradient fill
+     title     16px #000        explain  13.5px rgba(0,0,0,.4), margin-top 6px
+     hover     #f9f9fb          active   #f7f7fa
+     underline inset-inline 20px, height 0 -> 4px, top radius 5px
+     sneakpeak grid-pattern backdrop, bottom radius 12px, media inset on top
+   ========================================================================= */
+
+.hdb-box {
+  width: 100%;
+  margin-top: 58px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 8px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: left;
+}
+
+/* ---------------- tab strip ---------------- */
+.hdb-tabs {
+  display: flex;
+  column-gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px 12px 0 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.hdb-tabs::-webkit-scrollbar { display: none; }
+
+.hdb-tab {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  background: transparent;
+  text-align: center;
+  line-height: 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s linear;
+}
+.hdb-tab:hover { background-color: #f9f9fb; }
+.hdb-tab.on, .hdb-tab.on:hover { background-color: #f7f7fa; }
+
+/* icon chip — gradient tint of the product's own accent */
+.hdb-tab-ic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-inline: auto;
+  margin-bottom: 11px;
+  border-radius: 9px;
+  color: var(--acc);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--acc) 12%, #fff),
+    color-mix(in srgb, var(--acc) 28%, #fff)
+  );
+  transition: transform 0.1s linear;
+}
+.hdb-tab:active .hdb-tab-ic { transform: scale(0.94); }
+
+.hdb-tab-name {
+  display: block;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 700;
+  color: #000;
+}
+
+.hdb-tab-blurb {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* the active tab's underline doubles as the auto-advance timer */
+.hdb-tab-progress {
+  position: absolute;
+  inset-inline: 20px;
+  bottom: 0;
+  height: 0;
+  border-radius: 5px 5px 0 0;
+  background-color: rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+}
+.hdb-tab.on .hdb-tab-progress { height: 4px; }
+.hdb-tab-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 5px 5px 0 0;
+  background: var(--acc);
+}
+.hdb-tab.on .hdb-tab-progress i { animation: hdb-fill 4.2s linear forwards; }
+.hdb-box.is-paused .hdb-tab.on .hdb-tab-progress i { animation-play-state: paused; }
+@keyframes hdb-fill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ---------------- stage: grid backdrop, media inset on top ------------- */
+.hdb-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  /* white frame down both sides — background-clip stops the grid at the
+     padding box so the border reads as a margin, not as more pattern */
+  border-left: 12px solid #fff;
+  border-right: 12px solid #fff;
+  background-color: #fff;
+  background-clip: padding-box;
+}
+.hdb-slide {
+  position: absolute;
+  inset: 0;
+  /* the inset is what makes the dashboard read as its own card */
+  padding: 30px 3.5%;
+  /* soft wash tinted with whichever product is showing */
+  background:
+    radial-gradient(78% 68% at 50% 0%, color-mix(in srgb, var(--acc) 17%, #fff) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #fbfcfe 0%, #eef3f9 100%);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.hdb-slide.on {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ------- the dashboards are Products.jsx's own; only the framing is ours ---- */
+@keyframes hdb-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.hdb-slide.on .detailed-dashboard {
+  animation: hdb-rise 0.45s ease-out backwards;
+}
+/* Products.css parks .detailed-dashboard at opacity 0 / tilted, and only an
+   ancestor .active reveals it. There's no .active here, so make it visible
+   ourselves — otherwise it shows only for the length of the rise animation
+   and then vanishes. */
+.hdb-slide .detailed-dashboard {
+  opacity: 1;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  height: 420px;
+  box-shadow: 0 10px 34px rgba(15, 23, 42, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hdb-slide.on .detailed-dashboard,
+  .hdb-tab.on .hdb-tab-progress i { animation: none !important; }
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 900px) {
+  .hdb-box { margin-top: 28px; }
+  .hdb-tab { min-width: 128px; }
+  .hdb-tab-ic { width: 32px; height: 32px; margin-bottom: 8px; }
+  .hdb-tab-name { font-size: 12.5px; line-height: 17px; }
+  .hdb-tab-blurb { display: none; }
+  .hdb-stage { border-left-width: 6px; border-right-width: 6px; }
+  .hdb-slide { padding: 16px 2%; }
+  .hdb-slide .detailed-dashboard { height: 360px; }
+}
