@@ -9,6 +9,9 @@ import {
   NetworkScreen, SiteScreen, TaskScreen,
   ProcurementScreen, FleetScreen, ForecastScreen, SupplierScreen,
 } from './SupplyApp';
+import {
+  NetworkMap, WarehouseFloor, ControlRoom, AiPanel, IntegrationWeb, BeforeAfter, ScalePanel,
+} from './SupplyOps';
 import './SupplyApp.css';
 import './SupplyChain.css';
 
@@ -36,12 +39,26 @@ const FEED_POOL = [
   { t: 'Cycle count closed', m: 'Aisle C · variance 0.02%' },
 ];
 
+const EVENT_POOL = [
+  { code: 'SHP-20419', text: 'berthed at Dammam', tone: 'ok' },
+  { code: 'PO-8842', text: 'acknowledged by Nexa', tone: 'ok' },
+  { code: 'REF-042', text: 'excursion cleared', tone: 'warn' },
+  { code: 'WO-4414', text: 'run complete · 12,400 u', tone: 'ok' },
+  { code: 'DC-RUH', text: 'wave 42 released', tone: 'ok' },
+  { code: 'SKU-44192', text: 'reorder point breached', tone: 'bad' },
+];
+
 const mk = (pool) => (i) => ({ ...pool[i % pool.length], id: i });
 const mkAlert = mk(ALERT_POOL);
 const mkFeed = mk(FEED_POOL);
+const mkEvent = mk(EVENT_POOL);
 
 const useOpsLive = () => useLive(
-  { n: 0, temp: 3.1, pickers: 38, rate: 412, alerts: [0, 1, 2].map(mkAlert), feed: [0, 1, 2, 3].map(mkFeed) },
+  {
+    n: 0, temp: 3.1, pickers: 38, rate: 412, transit: 342, otif: 96.4,
+    alerts: [0, 1, 2].map(mkAlert), feed: [0, 1, 2, 3].map(mkFeed),
+    events: [0, 1, 2].map(mkEvent),
+  },
   (s) => {
     const n = s.n + 1;
     const w = Math.sin(n * 1.1) * 0.6 + Math.sin(n * 0.7) * 0.4;
@@ -50,8 +67,11 @@ const useOpsLive = () => useLive(
       temp: 3.1 + w * 0.25,
       pickers: Math.round(38 + w * 3),
       rate: Math.round(412 + w * 26),
+      transit: Math.round(342 + w * 12),
+      otif: 96.4 + w * 0.4,
       alerts: [mkAlert(s.alerts[0].id + 1), ...s.alerts.slice(0, 2)],
       feed: [mkFeed(s.feed[0].id + 1), ...s.feed.slice(0, 3)],
+      events: [mkEvent(s.events[0].id + 1), ...s.events.slice(0, 2)],
     };
   },
   3200
@@ -214,6 +234,30 @@ const Bento = () => (
 );
 
 /* ---------------------------------------------------------------
+   A dark instrumentation section. Used for every immersive band so
+   they read as one wallboard family rather than assorted panels.
+   --------------------------------------------------------------- */
+const Band = ({ id, kicker, title, lede, height, wide, children, foot }) => (
+  <section className={`sn-band ${wide ? 'wide' : ''}`} id={id}>
+    <div className="sn-band-inner">
+      <div className="sn-band-head">
+        <div>
+          <Reveal><span className="sn-kick"><i /> {kicker}</span></Reveal>
+          <MaskText text={title} as="h2" className="sn-h2" />
+        </div>
+        {lede && <Reveal delay={0.14} y={14}><p>{lede}</p></Reveal>}
+      </div>
+
+      <Reveal delay={0.08} y={26}>
+        <div className="so-panel" style={height ? { height } : undefined}>{children}</div>
+      </Reveal>
+
+      {foot && <div className="sn-band-foot">{foot}</div>}
+    </div>
+  </section>
+);
+
+/* ---------------------------------------------------------------
    READOUT — metrics as an instrument strip, not big-number rows
    --------------------------------------------------------------- */
 const Readout = () => (
@@ -275,11 +319,93 @@ const SupplyChain = () => {
 
       <div ref={ref}>
         <Opening live={live} />
+
+        {/* NEW — the network before you descend into it */}
+        <Band
+          id="network"
+          kicker="Global supply network"
+          title="Forty-two lanes, live."
+          lede="Suppliers, ports and distribution centres on one map, with every route carrying its own telemetry. Hover any location to read it."
+          height="min(70vh, 660px)"
+          wide
+        >
+          <NetworkMap live={live} />
+        </Band>
+
+        {/* KEPT — the drill-down stack, untouched */}
         <Drill live={live} />
+
+        {/* NEW — inside the building */}
+        <Band
+          id="warehouse"
+          kicker="Warehouse intelligence"
+          title="Every bin, every cart, every dock."
+          lede="Receiving on the left, dispatch on the right, six aisles of live bin status in between — and the equipment moving through them."
+          height="min(64vh, 600px)"
+          wide
+        >
+          <WarehouseFloor live={live} />
+        </Band>
       </div>
 
       <Bento />
+
+      {/* NEW — the wallboard everything reports into */}
+      <Band
+        id="control"
+        kicker="Control room"
+        title="One desk, the whole operation."
+        lede="Orders, shipments, inventory cover and risk on layered windows that update while you watch."
+        height="min(74vh, 700px)"
+        wide
+      >
+        <ControlRoom live={live} />
+      </Band>
+
+      {/* NEW — the system's own opinion */}
+      <Band
+        id="intelligence"
+        kicker="Predictive intelligence"
+        title="It tells you what to do next."
+        lede="Recommendations scored by confidence and cash impact, built from your own lead times, demand history and supplier behaviour."
+        height="min(70vh, 640px)"
+      >
+        <AiPanel />
+      </Band>
+
+      {/* NEW — the ecosystem */}
+      <Band
+        id="integrations"
+        kicker="Connected"
+        title="Wired to everything you already run."
+        lede="ERP, CRM, accounting, transport, IoT sensors and your suppliers — reading and writing one supply chain record."
+        height="min(60vh, 520px)"
+      >
+        <IntegrationWeb />
+      </Band>
+
       <Readout />
+
+      {/* NEW — before and after, on one surface */}
+      <Band
+        id="change"
+        kicker="Customer success"
+        title="What actually changes."
+        lede="Measured across retail and distribution networks in their first year on the platform."
+      >
+        <BeforeAfter />
+      </Band>
+
+      {/* NEW — the enterprise questions */}
+      <Band
+        id="scale"
+        kicker="Enterprise scale"
+        title="Built for the whole group."
+        lede="Regional residency, enterprise security and the throughput a national network actually generates."
+      >
+        <ScalePanel />
+      </Band>
+
       <Proof />
 
       <ClosingCta

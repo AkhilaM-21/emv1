@@ -284,3 +284,40 @@ body.dark-theme .sw-nav.on { background: rgba(255, 255, 255, 0.07); }
 body.dark-theme .sw-row:hover,
 body.dark-theme .sw-th,
 body.dark-theme .sw-hh-item div { background: rgba(255, 255, 255, 0.045); }
+
+/* =====================================================================
+   IMMERSIVE BANDS — the new sections between the existing scroll beats.
+   One family so they read as a set of wallboards, not assorted panels.
+   ===================================================================== */
+.sn-band { padding: 7.5rem 0; }
+.sn-band:nth-of-type(even) { background: var(--bg-2); }
+.sn-band-inner { padding: 0 max(40px, calc((100vw - 1560px) / 2)); }
+.sn-band.wide .sn-band-inner { padding: 0 max(32px, calc((100vw - 1720px) / 2)); }
+
+.sn-band-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 3.5rem;
+  align-items: end;
+  margin-bottom: 2.75rem;
+}
+.sn-band-head .sn-kick { margin-bottom: 1.35rem; }
+.sn-band-head p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+
+.sn-band-foot {
+  display: flex; flex-wrap: wrap; gap: 1.75rem;
+  margin-top: 1.5rem;
+  font-size: 0.83rem; color: var(--ink-3);
+}
+
+@media (max-width: 1000px) {
+  .sn-band { padding: 4.5rem 0; }
+  .sn-band-head { grid-template-columns: 1fr; gap: 1.25rem; }
+  .so-panel { height: auto !important; min-height: 26rem; }
+}
