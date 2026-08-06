@@ -17,6 +17,36 @@ import Lenis from 'lenis';
 export const EASE = [0.16, 1, 0.3, 1];
 export const DUR = { fast: 0.5, base: 0.9, slow: 1.25 };
 
+/* ---------------------------------------------------------------
+   Scroll input ranges must be safe for the Web Animations API.
+   Framer converts a scroll-linked useTransform into a native
+   scroll-driven animation, and the input range becomes keyframe
+   offsets — which WAAPI requires to sit inside [0,1] AND be
+   monotonically non-decreasing. A range like [-0.08 … 1.09] throws
+   "Offsets must be null or in the range [0,1]" and blanks the page.
+   Always build scroll ranges through this.
+   --------------------------------------------------------------- */
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
+
+export const safeRange = (values) => {
+  const eps = 1e-4;
+  const out = values.map(clamp01);
+
+  for (let i = 1; i < out.length; i += 1) {
+    if (out[i] <= out[i - 1]) out[i] = out[i - 1] + eps;
+  }
+
+  /* if nudging pushed the tail past 1, walk the correction backwards */
+  if (out[out.length - 1] > 1) {
+    out[out.length - 1] = 1;
+    for (let i = out.length - 2; i >= 0; i -= 1) {
+      if (out[i] >= out[i + 1]) out[i] = out[i + 1] - eps;
+    }
+  }
+
+  return out;
+};
+
 const VIEWPORT = { once: true, margin: '0px 0px -12% 0px' };
 
 /* ---------------------------------------------------------------

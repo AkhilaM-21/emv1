@@ -3,7 +3,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import {
   motion, Reveal, Stagger, StaggerItem, MaskText, CountUp, HeroStage,
   useSteps, useSmoothScroll, useScrollTop, useReducedMotion, useTransform,
-  scrollToY, EASE,
+  scrollToY, safeRange, EASE,
 } from './motion';
 import './system.css';
 
@@ -185,7 +185,7 @@ export const StatRow = ({ stats }) => (
    which is what makes the narration feel tracked rather than switched. */
 const StoryStep = ({ step, i, count, progress, active, onJump }) => {
   const reduced = useReducedMotion();
-  const fill = useTransform(progress, [i / count, (i + 1) / count], ['0%', '100%'], { clamp: true });
+  const fill = useTransform(progress, safeRange([i / count, (i + 1) / count]), ['0%', '100%'], { clamp: true });
 
   return (
     <button

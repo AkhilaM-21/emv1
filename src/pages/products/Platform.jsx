@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useScroll, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
-import { Blocks, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { motion, MaskText, Reveal, EASE } from './motion';
-import { ProductPage, SubNav, Footer } from './system';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { motion, MaskText, Reveal, safeRange, EASE } from './motion';
+import { ProductPage, Footer } from './system';
 import {
   TopBar, LeftRail, RightRail, Console, Artboard, DataNode,
   FlowGraph, DevicePreview, DeployCard, RunBadge,
@@ -19,7 +19,7 @@ import './Platform.css';
 /* camera targets in canvas coordinates */
 const STEPS = [
   {
-    id: 'BLANK', label: 'Blank canvas', cam: { x: 610, y: 400, s: 1 },
+    id: 'BLANK', pin: { x: 300, y: 170 }, label: 'Blank canvas', cam: { x: 610, y: 400, s: 1 },
     title: 'Start with nothing.',
     accent: 'Finish with production software.',
     line: 'Studio is an infinite canvas that happens to be wired to your ERP. Everything you place on it is real from the first minute.',
@@ -27,7 +27,7 @@ const STEPS = [
     lead: true,
   },
   {
-    id: 'COMPONENTS', label: 'Drag components', cam: { x: 610, y: 380, s: 1.18 },
+    id: 'COMPONENTS', pin: { x: 300, y: 170 }, label: 'Drag components', cam: { x: 610, y: 380, s: 1.18 },
     title: 'Drag what the process needs.',
     line: 'Fields arrive knowing how to validate, lay out and behave. A working form exists before anyone writes a requirement.',
     logs: [
@@ -36,7 +36,7 @@ const STEPS = [
     ],
   },
   {
-    id: 'DATA', label: 'Connect data', cam: { x: 900, y: 340, s: 0.86 },
+    id: 'DATA', pin: { x: 930, y: 130 }, label: 'Connect data', cam: { x: 900, y: 340, s: 0.86 },
     title: 'Point it at real records.',
     line: 'No import, no nightly sync. The object you bind to is the one finance and supply chain are already writing to.',
     logs: [
@@ -45,7 +45,7 @@ const STEPS = [
     ],
   },
   {
-    id: 'LOGIC', label: 'Build the workflow', cam: { x: 880, y: 800, s: 0.78 },
+    id: 'LOGIC', pin: { x: 330, y: 620 }, label: 'Build the workflow', cam: { x: 880, y: 800, s: 0.78 },
     title: 'Wire the process behind it.',
     line: 'Triggers, conditions and actions on the same canvas as the screen, reading the same records the form just wrote.',
     logs: [
@@ -54,7 +54,7 @@ const STEPS = [
     ],
   },
   {
-    id: 'RUN', label: 'Test the automation', cam: { x: 880, y: 790, s: 0.9 },
+    id: 'RUN', pin: { x: 330, y: 620 }, label: 'Test the automation', cam: { x: 880, y: 790, s: 0.9 },
     title: 'Watch it execute.',
     line: 'Every run is logged step by step — duration, outcome, and whoever is sitting on an approval.',
     logs: [
@@ -64,7 +64,7 @@ const STEPS = [
     ],
   },
   {
-    id: 'PREVIEW', label: 'Preview anywhere', cam: { x: 1560, y: 430, s: 0.92 },
+    id: 'PREVIEW', pin: { x: 1520, y: 130 }, label: 'Preview anywhere', cam: { x: 1560, y: 430, s: 0.92 },
     title: 'One build, every surface.',
     line: 'Web, the Emvive mobile app and a REST endpoint come from the same definition. Offline capture included.',
     logs: [
@@ -73,7 +73,7 @@ const STEPS = [
     ],
   },
   {
-    id: 'PUBLISH', label: 'Ship it', cam: { x: 900, y: 780, s: 0.5 },
+    id: 'PUBLISH', pin: { x: 330, y: 940 }, label: 'Ship it', cam: { x: 900, y: 780, s: 0.5 },
     title: 'Live before the meeting ends.',
     line: 'Promote through environments with approval, roll back in one click, and watch the first users arrive.',
     logs: [
@@ -105,19 +105,26 @@ const Editor = () => {
     if (next === 4) setRunIndex(Math.floor((raw - next) * 6));
   });
 
-  /* camera: spring-damped pan and zoom between regions */
-  const camX = useSpring(useTransform(scrollYProgress, STEPS.map((_, i) => i / (STEPS.length - 1)), STEPS.map((s) => s.cam.x)), { stiffness: 60, damping: 22, mass: 0.9 });
-  const camY = useSpring(useTransform(scrollYProgress, STEPS.map((_, i) => i / (STEPS.length - 1)), STEPS.map((s) => s.cam.y)), { stiffness: 60, damping: 22, mass: 0.9 });
-  const camS = useSpring(useTransform(scrollYProgress, STEPS.map((_, i) => i / (STEPS.length - 1)), STEPS.map((s) => s.cam.s)), { stiffness: 60, damping: 22, mass: 0.9 });
+  /* Camera. The input range uses step centres so the camera and the
+     discrete step index agree — mapping to i/(n-1) put them out of sync.
+     The canvas origin is pinned to the viewport centre in CSS, so the
+     transform is simply scale-then-offset: point (x,y) lands dead centre. */
+  const RANGE = safeRange(STEPS.map((_, i) => (i + 0.5) / STEPS.length));
+  const spring = { stiffness: 58, damping: 24, mass: 0.9 };
+  const camX = useSpring(useTransform(scrollYProgress, RANGE, STEPS.map((s) => s.cam.x)), spring);
+  const camY = useSpring(useTransform(scrollYProgress, RANGE, STEPS.map((s) => s.cam.y)), spring);
+  const camS = useSpring(useTransform(scrollYProgress, RANGE, STEPS.map((s) => s.cam.s)), spring);
 
   const transform = useTransform([camX, camY, camS], ([x, y, s]) =>
-    `translate(calc(50% - ${x * s}px), calc(50% - ${y * s}px)) scale(${s})`);
+    `scale(${s}) translate(${-x}px, ${-y}px)`);
+
+  /* comment pins live on the canvas, so they must be counter-scaled to
+     stay readable as the camera zooms out */
+  const inv = useTransform(camS, (s) => 1 / s);
 
   const zoomPct = useTransform(camS, (s) => Math.round(s * 100));
   const [zoomLabel, setZoomLabel] = useState(100);
   useMotionValueEvent(zoomPct, 'change', (v) => setZoomLabel(v));
-
-  const cur = STEPS[step];
 
   return (
     <section className="pi" id="canvas" ref={ref} style={{ height: `${STEPS.length * 100}vh` }}>
@@ -148,58 +155,37 @@ const Editor = () => {
                   transition={{ duration: 0.8, ease: EASE }}
                 />
               </svg>
-            </motion.div>
 
-            {/* narration, as an editor annotation rather than page copy */}
-            <div className="pi-note">
-              <motion.span
-                className="pi-note-k"
-                key={`k${cur.id}`}
-                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: EASE }}
-              >
-                <i>{String(step + 1).padStart(2, '0')}</i> {cur.label}
-              </motion.span>
-
-              <motion.h2
-                key={`t${cur.id}`}
-                className={cur.lead ? 'pi-note-h lead' : 'pi-note-h'}
-                initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.7, ease: EASE }}
-              >
-                {cur.title}
-                {cur.accent && <em>{cur.accent}</em>}
-              </motion.h2>
-
-              <motion.p
-                key={`l${cur.id}`}
-                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, delay: 0.08, ease: EASE }}
-              >
-                {cur.line}
-              </motion.p>
-
-              {cur.lead && (
-                <motion.div
-                  className="pi-note-cta"
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-                >
-                  <a href="#ship" className="px-btn px-btn-solid">Book a build session <ArrowRight size={16} /></a>
-                  <span className="pi-scrollhint">Scroll to build</span>
-                </motion.div>
-              )}
-            </div>
-
-            {/* step rail down the right edge of the canvas */}
-            <div className="pi-steps">
+              {/* Narration lives on the canvas as comment pins, the way it
+                  would in a design tool — counter-scaled so it stays
+                  readable while the camera zooms from 118% down to 50%. */}
               {STEPS.map((s, i) => (
-                <span className={`pi-step ${i === step ? 'on' : ''} ${i < step ? 'past' : ''}`} key={s.id}>
-                  <em>{s.id}</em><i />
-                </span>
+                <div className="pi-pin" key={s.id} style={{ left: s.pin.x, top: s.pin.y }}>
+                  <motion.div
+                    className="pi-pin-body"
+                    style={{ scale: inv }}
+                    animate={{ opacity: step === i ? 1 : 0, y: step === i ? 0 : 10 }}
+                    transition={{ duration: 0.55, ease: EASE }}
+                  >
+                    <span className="pi-pin-n">{String(i + 1).padStart(2, '0')}</span>
+                    <div className="pi-pin-card">
+                      <span className="pi-pin-k">{s.label}</span>
+                      <h2 className={s.lead ? 'pi-pin-h lead' : 'pi-pin-h'}>
+                        {s.title}
+                        {s.accent && <em>{s.accent}</em>}
+                      </h2>
+                      <p>{s.line}</p>
+                      {s.lead && (
+                        <div className="pi-pin-cta">
+                          <a href="#ship" className="px-btn px-btn-solid">Book a build session <ArrowRight size={16} /></a>
+                          <span className="pi-scrollhint">Scroll to build</span>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <RightRail step={step} />
@@ -256,12 +242,6 @@ const Ship = () => (
 /* ===================================================================== */
 const Platform = () => (
   <ProductPage accent="#a78bfa" accent2="#c4b5fd" wash="rgba(167,139,250,0.14)" className="pf">
-    <SubNav
-      icon={Blocks}
-      name="Emvive Studio & Flow"
-      links={[{ href: '#canvas', label: 'The canvas' }, { href: '#ship', label: 'Ship' }]}
-      cta="Book a session"
-    />
     <Editor />
     <Ship />
     <Footer />

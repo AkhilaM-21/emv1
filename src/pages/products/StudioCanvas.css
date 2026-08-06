@@ -9,7 +9,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-kbd {
+.pf kbd {
   font-family: inherit; font-size: 0.58rem;
   padding: 0.04rem 0.26rem; border-radius: 3px;
   color: var(--pi-3); background: rgba(255, 255, 255, 0.06);

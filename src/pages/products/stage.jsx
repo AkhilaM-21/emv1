@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   motion, useScroll, useTransform, useSpring, useMotionValueEvent, useReducedMotion,
 } from 'framer-motion';
-import { EASE } from './motion';
+import { EASE, safeRange } from './motion';
 import './stage.css';
 
 /* =====================================================================
@@ -45,7 +45,7 @@ export const Pin = ({ count, children, className = '', id }) => {
 /* Progress of the current beat, 0..1 — for anything that should track
    scroll continuously rather than snap between beats. */
 export const useBeatProgress = (progress, beat, count) =>
-  useTransform(progress, [beat / count, (beat + 1) / count], [0, 1], { clamp: true });
+  useTransform(progress, safeRange([beat / count, (beat + 1) / count]), [0, 1], { clamp: true });
 
 /* ---------------------------------------------------------------
    Narration that crossfades with the beat. Lines rise out of a mask.
