@@ -1,0 +1,220 @@
+/* =====================================================================
+   STAGE ENGINE — pinned acts, morphing canvas, horizontal rail,
+   cursor-aware surfaces. Prefix `stg-`.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------
+   Editorial type. Larger and tighter than the section scale — these
+   are the sizes that carry a full viewport on their own.
+   --------------------------------------------------------------- */
+.stg-display {
+  margin: 0;
+  font-size: clamp(3.4rem, 8.6vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.052em;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.stg-h2 {
+  margin: 0;
+  font-size: clamp(2.3rem, 4.4vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.046em;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------
+   PIN
+   --------------------------------------------------------------- */
+.stg-pin { position: relative; }
+
+.stg-pin-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   NARRATION
+   --------------------------------------------------------------- */
+.stg-narr { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.stg-narr-index {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  color: var(--ink-4);
+}
+
+.stg-narr-num { color: var(--accent); font-weight: 500; }
+
+.stg-narr-rule {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+.stg-narr-rule i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* items are stacked, only one is opaque — the block never reflows */
+.stg-narr-body { position: relative; min-height: 20rem; }
+
+.stg-narr-item { position: absolute; inset: 0; }
+
+.stg-narr-kicker {
+  display: block;
+  font-size: 0.755rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.stg-narr-item h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 2.9vw, 2.9rem);
+  line-height: 1.06;
+  letter-spacing: -0.042em;
+  font-weight: 500;
+  color: var(--ink);
+  max-width: 15ch;
+}
+
+.stg-narr-item p {
+  margin: 1.5rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 36ch;
+}
+
+/* ---------------------------------------------------------------
+   CANVAS + MODULES
+   --------------------------------------------------------------- */
+.stg-canvas {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: min(76vh, 780px);
+  gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.stg-mod { position: relative; min-width: 0; min-height: 0; }
+
+.stg-mod-inner {
+  height: 100%;
+  border-radius: 13px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px rgba(9, 9, 11, 0.03),
+    0 16px 34px -22px rgba(9, 9, 11, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* a module that should read as part of the shell, not a floating card */
+.stg-mod.flush .stg-mod-inner { box-shadow: none; background: transparent; border-color: transparent; }
+
+@media (max-width: 1100px) {
+  .stg-canvas { height: min(68vh, 640px); gap: 8px; }
+}
+
+/* ---------------------------------------------------------------
+   HORIZONTAL RAIL
+   --------------------------------------------------------------- */
+.stg-hrail { position: relative; }
+
+.stg-hrail-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.stg-hrail-track {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0 max(48px, calc((100vw - 1320px) / 2));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stg-hrail-sticky { position: static; height: auto; overflow-x: auto; }
+  .stg-hrail-track { transform: none !important; }
+}
+
+/* ---------------------------------------------------------------
+   SPOTLIGHT
+   --------------------------------------------------------------- */
+.stg-spot {
+  position: relative;
+  --mx: 50%;
+  --my: -20%;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.stg-spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--accent) 24%, transparent) 0%,
+    transparent 62%
+  );
+  transition: opacity 0.5s ease;
+}
+
+.stg-spot > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) { .stg-spot::before { display: none; } }
+
+/* ---------------------------------------------------------------
+   ACT RULE
+   --------------------------------------------------------------- */
+.stg-actrule {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 2.25rem;
+}
+.stg-actrule i {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+}
+.stg-actrule span {
+  font-size: 0.755rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  order: -1;
+}
