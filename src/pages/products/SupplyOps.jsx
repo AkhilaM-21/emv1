@@ -222,11 +222,7 @@ export const WarehouseFloor = ({ live }) => (
             <div className="so-racks">
               {Array.from({ length: 22 }).map((_, b) => {
                 const n = (aisle * 22 + b);
-                const base = n % 17 === 0 ? 'empty' : n % 7 === 0 ? 'low' : n % 5 === 0 ? 'pick' : 'full';
-                /* a rolling handful of bins change state on every tick, so the
-                   floor reads as operating rather than as a screenshot */
-                const touched = (n + live.n * 13) % 41 === 0;
-                const state = touched ? 'flash' : base;
+                const state = n % 17 === 0 ? 'empty' : n % 7 === 0 ? 'low' : n % 5 === 0 ? 'pick' : 'full';
                 return (
                   <motion.i
                     key={b} className={`so-bin ${state}`}
@@ -260,24 +256,6 @@ export const WarehouseFloor = ({ live }) => (
           </div>
         ))}
       </div>
-    </div>
-
-    {/* activity popups — receiving and dispatch as they happen */}
-    <div className="so-wh-pops">
-      <AnimatePresence initial={false}>
-        {live.feed.slice(0, 2).map((f, i) => (
-          <motion.div
-            className="so-pop" key={f.id}
-            initial={{ opacity: 0, x: 26, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 20, transition: { duration: 0.3 } }}
-            transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
-          >
-            <span className="so-pop-ic"><Package size={11} /></span>
-            <span><b>{f.t}</b><em>{f.m}</em></span>
-          </motion.div>
-        ))}
-      </AnimatePresence>
     </div>
 
     <div className="so-wh-foot">

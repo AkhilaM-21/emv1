@@ -390,39 +390,3 @@
 
 @media (max-width: 900px) { .so-es { grid-template-columns: 1fr; } .so-es-grid { grid-template-columns: 1fr; } }
 
-/* --- the floor is operating, not photographed --- */
-.so-bin.flash {
-  background: #fff;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
-  animation: so-flash 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes so-flash {
-  0% { background: #4ade80; box-shadow: 0 0 18px rgba(74, 222, 128, 0.9); }
-  100% { background: #fff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.7); }
-}
-@media (prefers-reduced-motion: reduce) { .so-bin.flash { animation: none; } }
-
-.so-wh-pops {
-  position: absolute; right: 1.1rem; top: 4.2rem;
-  display: grid; gap: 0.45rem;
-  z-index: 6; pointer-events: none;
-}
-.so-pop {
-  display: flex; align-items: center; gap: 0.55rem;
-  width: 15rem; padding: 0.5rem 0.65rem;
-  border-radius: 9px;
-  background: rgba(16, 22, 38, 0.94);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(94, 130, 255, 0.28);
-  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.95);
-}
-.so-pop-ic {
-  width: 22px; height: 22px; border-radius: 6px;
-  display: grid; place-items: center; flex-shrink: 0;
-  color: #0a0e1a; background: #5e82ff;
-}
-.so-pop b { display: block; font-size: 0.68rem; font-weight: 500; color: #fff; }
-.so-pop em { display: block; font-style: normal; font-size: 0.6rem; color: rgba(255, 255, 255, 0.42); }
-
-.so-wh { position: relative; }
-@media (max-width: 1000px) { .so-wh-pops { display: none; } }
