@@ -1,17 +1,15 @@
-import React, { useRef } from 'react';
-import { useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import {
   Truck, ArrowRight, ArrowUpRight, Warehouse, ScanLine, Globe,
 } from 'lucide-react';
-import { motion, Reveal, MaskText, useLive, safeRange, EASE } from './motion';
+import { motion, Reveal, MaskText, useLive, EASE } from './motion';
 import { ProductPage, SubNav, ClosingCta, Footer } from './system';
+import { NetworkScreen, SiteScreen, TaskScreen } from './SupplyApp';
 import {
-  NetworkScreen, SiteScreen, TaskScreen,
-  ProcurementScreen, FleetScreen, ForecastScreen, SupplierScreen,
-} from './SupplyApp';
-import {
-  NetworkMap, WarehouseFloor, ControlRoom, AiPanel, IntegrationWeb, BeforeAfter, ScalePanel,
+  NetworkMap, WarehouseFloor, ControlRoom, AiPanel, BeforeAfter, ScalePanel,
 } from './SupplyOps';
+import { OperationsWorkspace, EcosystemFlow, Spotlit } from './SupplyWorkspace';
 import './SupplyApp.css';
 import './SupplyChain.css';
 
@@ -52,12 +50,27 @@ const mk = (pool) => (i) => ({ ...pool[i % pool.length], id: i });
 const mkAlert = mk(ALERT_POOL);
 const mkFeed = mk(FEED_POOL);
 const mkEvent = mk(EVENT_POOL);
+const PO_POOL = [
+  { code: 'PO-8841', sup: 'Al Faisal Trading', val: '184,200', pct: 100, tone: 'ok', state: 'Delivered' },
+  { code: 'PO-8842', sup: 'Nexa Components', val: '311,450', pct: 74, tone: 'info', state: 'Shipping' },
+  { code: 'PO-8843', sup: 'Gulf Packaging', val: '62,900', pct: 22, tone: 'warn', state: 'Awaiting ack' },
+  { code: 'PO-8844', sup: 'Delta Chemicals', val: '128,700', pct: 48, tone: 'info', state: 'In approval' },
+  { code: 'PO-8845', sup: 'Meridian Labels', val: '94,300', pct: 88, tone: 'ok', state: 'Manufacturing' },
+  { code: 'PO-8846', sup: 'Orbit Textiles', val: '41,600', pct: 12, tone: 'warn', state: 'Raised' },
+];
+
+const mkPo = mk(PO_POOL);
+
 
 const useOpsLive = () => useLive(
   {
     n: 0, temp: 3.1, pickers: 38, rate: 412, transit: 342, otif: 96.4,
     alerts: [0, 1, 2].map(mkAlert), feed: [0, 1, 2, 3].map(mkFeed),
     events: [0, 1, 2].map(mkEvent),
+    pos: [0, 1, 2, 3, 4].map(mkPo),
+    poStage: 1,
+    demand: [42, 48, 45, 56, 52, 64, 61, 72, 78, 74, 86, 92],
+    sync: 1284,
   },
   (s) => {
     const n = s.n + 1;
@@ -72,6 +85,10 @@ const useOpsLive = () => useLive(
       alerts: [mkAlert(s.alerts[0].id + 1), ...s.alerts.slice(0, 2)],
       feed: [mkFeed(s.feed[0].id + 1), ...s.feed.slice(0, 3)],
       events: [mkEvent(s.events[0].id + 1), ...s.events.slice(0, 2)],
+      pos: [...s.pos.slice(1), mkPo(s.pos[s.pos.length - 1].id + 1)],
+      poStage: (s.poStage + 1) % 5,
+      demand: s.demand.map((d, i) => Math.max(28, Math.min(99, d + Math.sin(n * 0.8 + i) * 5))),
+      sync: Math.round(1284 + w * 90),
     };
   },
   3200
@@ -137,48 +154,22 @@ const LEVELS = [
   },
 ];
 
-/* One layer of the stack. A component rather than a loop body, so the
-   scroll transforms are real hook calls at a stable call site. */
-const DrillLayer = ({ level, index, count, progress, children }) => {
-  const from = index / count;
-  const to = (index + 0.62) / count;
-  const y = useTransform(progress, safeRange([from, to]), index === 0 ? ['0%', '0%'] : ['104%', '0%']);
-  const Icon = level.icon;
-
-  return (
-    <motion.div
-      className="sn-layer"
-      style={{ y, zIndex: index + 1, top: `${index * 24}px` }}
-    >
-      <div className="sn-layer-tab"><Icon size={11} />{level.tag}</div>
-      <div className="sn-frame flush">{children}</div>
-    </motion.div>
-  );
-};
-
-const DrillNote = ({ level, index, count, progress }) => {
-  const from = index / count;
-  const to = (index + 0.62) / count;
-  const opacity = useTransform(
-    progress,
-    safeRange([from - 0.08, from + 0.05, to + 0.1, to + 0.22]),
-    index === 0 ? [1, 1, 1, 0] : [0, 1, 1, 0]
-  );
-
-  return (
-    <motion.div className="sn-drill-note" style={{ opacity }}>
-      <span className="sn-note-tag">{level.tag}</span>
-      <h2>{level.title}</h2>
-      <p>{level.line}</p>
-    </motion.div>
-  );
-};
-
+/* The stack is driven by a discrete active index rather than scroll-linked
+   motion values. Motion values bound to style go through framer's native
+   scroll-animation path, and when that bails the elements fall back to
+   their static state — which stacked all three screens and all three
+   captions on top of each other. A class change plus a CSS transition
+   cannot fail that way, and the movement is identical. */
 const Drill = ({ live }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  /* the three levels, in order — rendered inside their own layer, so no
-     key is needed on the elements themselves */
+  const [active, setActive] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    const next = Math.min(LEVELS.length - 1, Math.max(0, Math.floor(v * LEVELS.length * 0.999)));
+    setActive((cur) => (cur === next ? cur : next));
+  });
+
   const screens = [
     <NetworkScreen key="network" live={live} />,
     <SiteScreen key="site" live={live} />,
@@ -189,49 +180,36 @@ const Drill = ({ live }) => {
     <section className="sn-drill" id="drill" ref={ref}>
       <div className="sn-drill-port">
         <div className="sn-drill-stack">
-          {LEVELS.map((lv, i) => (
-            <DrillLayer key={lv.id} level={lv} index={i} count={LEVELS.length} progress={scrollYProgress}>
-              {screens[i]}
-            </DrillLayer>
-          ))}
+          {LEVELS.map((lv, i) => {
+            const Icon = lv.icon;
+            /* below = still waiting off-stage, laid = settled in the pile */
+            const state = i > active ? 'below' : 'laid';
+            return (
+              <div
+                className={`sn-layer ${state}`}
+                key={lv.id}
+                style={{ zIndex: i + 1, paddingTop: `${i * 30}px` }}
+              >
+                <div className="sn-layer-tab"><Icon size={11} />{lv.tag}</div>
+                <div className="sn-frame flush">{screens[i]}</div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="sn-drill-copy">
           {LEVELS.map((lv, i) => (
-            <DrillNote key={lv.id} level={lv} index={i} count={LEVELS.length} progress={scrollYProgress} />
+            <div className={`sn-drill-note ${active === i ? 'on' : ''}`} key={lv.id}>
+              <span className="sn-note-tag">{lv.tag}</span>
+              <h2>{lv.title}</h2>
+              <p>{lv.line}</p>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-/* ---------------------------------------------------------------
-   BENTO — four more real screens, deliberately unequal
-   --------------------------------------------------------------- */
-const Bento = () => (
-  <section className="sn-bento" id="modules">
-    <div className="sn-bento-inner">
-      <div className="sn-bento-head">
-        <Reveal><span className="sn-kick"><i /> The rest of the system</span></Reveal>
-        <MaskText text="Four more screens, one record." as="h2" className="sn-h2" />
-        <Reveal delay={0.16} y={14}>
-          <p>
-            Procurement, fleet, planning and supplier performance read and write the
-            same stock ledger the warehouse does. No interfaces between them.
-          </p>
-        </Reveal>
-      </div>
-
-      <div className="sn-bento-grid">
-        <Reveal className="sn-b sn-b-wide"><div className="sn-frame sm"><ProcurementScreen /></div></Reveal>
-        <Reveal className="sn-b" delay={0.08}><div className="sn-frame sm"><SupplierScreen /></div></Reveal>
-        <Reveal className="sn-b" delay={0.14}><div className="sn-frame sm"><FleetScreen /></div></Reveal>
-        <Reveal className="sn-b sn-b-wide" delay={0.2}><div className="sn-frame sm"><ForecastScreen /></div></Reveal>
-      </div>
-    </div>
-  </section>
-);
 
 /* ---------------------------------------------------------------
    A dark instrumentation section. Used for every immersive band so
@@ -253,6 +231,62 @@ const Band = ({ id, kicker, title, lede, height, wide, children, foot }) => (
       </Reveal>
 
       {foot && <div className="sn-band-foot">{foot}</div>}
+    </div>
+  </section>
+);
+
+
+/* ---------------------------------------------------------------
+   OPERATIONS WORKSPACE — asymmetric, not a card grid
+   --------------------------------------------------------------- */
+const OpsWorkspaceBand = ({ live }) => (
+  <section className="sn-band" id="modules">
+    <div className="sn-band-inner">
+      <div className="sn-band-head">
+        <div>
+          <Reveal><span className="sn-kick"><i /> Operations workspace</span></Reveal>
+          <MaskText text="Buy, score, forecast, dispatch." as="h2" className="sn-h2" />
+        </div>
+        <Reveal delay={0.14} y={14}>
+          <p>
+            One desk for the commercial side of the network. Orders advance through
+            their lifecycle while you watch, suppliers are scored on what they
+            actually delivered, and the fleet window is the same one dispatch works from.
+          </p>
+        </Reveal>
+      </div>
+
+      <Reveal delay={0.08} y={26}>
+        <div className="so-panel"><OperationsWorkspace live={live} /></div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ---------------------------------------------------------------
+   ECOSYSTEM — replaces the radial diagram, lit by the cursor
+   --------------------------------------------------------------- */
+const EcosystemBand = ({ live }) => (
+  <section className="sn-band" id="ecosystem">
+    <div className="sn-band-inner">
+      <div className="sn-band-head">
+        <div>
+          <Reveal><span className="sn-kick"><i /> The ecosystem</span></Reveal>
+          <MaskText text="Nine stages. One record." as="h2" className="sn-h2" />
+        </div>
+        <Reveal delay={0.14} y={14}>
+          <p>
+            Data does not stop at a module boundary, because there are none. Move your
+            cursor across the chain — the light follows.
+          </p>
+        </Reveal>
+      </div>
+
+      <Reveal delay={0.08} y={26}>
+        <div className="so-panel">
+          <Spotlit><EcosystemFlow live={live} /></Spotlit>
+        </div>
+      </Reveal>
     </div>
   </section>
 );
@@ -348,7 +382,7 @@ const SupplyChain = () => {
         </Band>
       </div>
 
-      <Bento />
+      <OpsWorkspaceBand live={live} />
 
       {/* NEW — the wallboard everything reports into */}
       <Band
@@ -373,16 +407,7 @@ const SupplyChain = () => {
         <AiPanel />
       </Band>
 
-      {/* NEW — the ecosystem */}
-      <Band
-        id="integrations"
-        kicker="Connected"
-        title="Wired to everything you already run."
-        lede="ERP, CRM, accounting, transport, IoT sensors and your suppliers — reading and writing one supply chain record."
-        height="min(60vh, 520px)"
-      >
-        <IntegrationWeb />
-      </Band>
+      <EcosystemBand live={live} />
 
       <Readout />
 
