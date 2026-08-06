@@ -1,0 +1,636 @@
+/* =====================================================================
+   EMVIVE FINANCE — CFO workspace surfaces. Prefix `fx-`.
+   Product UI is deliberately dense and small-typed: real finance
+   software is, and the contrast against the 90px headlines is what
+   sells the page.
+   ===================================================================== */
+
+.fx { --ink-panel: #0b1220; }
+
+.fx-txt { display: flex; flex-direction: column; line-height: 1.32; min-width: 0; }
+.fx-txt b { font-size: 0.775rem; font-weight: 500; color: var(--ink); letter-spacing: -0.012em; }
+.fx-txt i { font-style: normal; font-size: 0.685rem; color: var(--ink-3); }
+
+.fx-amt { font-size: 0.775rem; font-weight: 500; color: var(--ink); text-align: right; white-space: nowrap; }
+.fx-dim { color: var(--ink-3); }
+.num { text-align: right; }
+
+/* ---------------------------------------------------------------
+   HERO WORKSPACE
+   --------------------------------------------------------------- */
+.fx-ws { display: grid; grid-template-columns: 196px 1fr; min-height: 486px; }
+
+.fx-rail {
+  display: flex;
+  flex-direction: column;
+  padding: 0.9rem 0.7rem;
+  background: var(--bg-2);
+  border-right: 1px solid var(--hair);
+}
+
+.fx-rail-org { display: flex; align-items: center; gap: 0.55rem; padding: 0.25rem 0.4rem 1rem; }
+
+.fx-rail-mark {
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  display: grid; place-items: center;
+  font-size: 0.635rem; font-weight: 500; letter-spacing: 0.02em;
+  color: #fff; background: var(--accent);
+  flex-shrink: 0;
+}
+
+.fx-rail nav { display: flex; flex-direction: column; gap: 1px; }
+
+.fx-rail-item {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.44rem 0.55rem;
+  border-radius: 7px;
+  font-size: 0.765rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.fx-rail-item svg { color: var(--ink-4); flex-shrink: 0; }
+.fx-rail-item:hover { background: rgba(9, 9, 11, 0.035); color: var(--ink); }
+.fx-rail-item.on { color: var(--ink); background: rgba(9, 9, 11, 0.05); }
+.fx-rail-item.on svg { color: var(--accent); }
+
+.fx-rail-foot { margin-top: auto; display: flex; align-items: center; gap: 0.5rem; padding-top: 1rem; }
+.fx-rail-foot i { font-style: normal; font-size: 0.68rem; color: var(--ink-3); }
+
+/* --- main --- */
+.fx-main { display: flex; flex-direction: column; gap: 0.85rem; padding: 1rem 1.1rem 1.15rem; min-width: 0; }
+
+.fx-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.fx-head h4 { font-size: 0.92rem; font-weight: 500; letter-spacing: -0.024em; }
+.fx-head p { margin: 0.2rem 0 0; font-size: 0.71rem; color: var(--ink-3); }
+.fx-head-tools { display: flex; gap: 0.35rem; flex-shrink: 0; }
+
+/* --- kpis --- */
+.fx-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hair); border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; }
+
+.fx-kpi { padding: 0.7rem 0.8rem 0.75rem; background: var(--bg); }
+
+.fx-kpi-k {
+  display: block;
+  font-size: 0.655rem;
+  color: var(--ink-3);
+  letter-spacing: -0.004em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.fx-kpi-v {
+  display: block;
+  margin: 0.34rem 0 0.32rem;
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.034em;
+  color: var(--ink);
+}
+
+.fx-kpi-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.fx-kpi-row i { font-style: normal; font-size: 0.665rem; font-weight: 500; }
+.fx-kpi-row i.up { color: #047857; }
+.fx-kpi-row i.down { color: #b91c1c; }
+
+/* --- panels --- */
+.fx-body { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: auto auto; gap: 0.7rem; flex: 1; }
+
+.fx-panel {
+  display: flex; flex-direction: column;
+  padding: 0.8rem 0.85rem 0.85rem;
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  background: var(--bg);
+  min-width: 0;
+}
+
+.fx-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.7rem; }
+.fx-panel-head h5 { margin: 0; font-size: 0.755rem; font-weight: 500; letter-spacing: -0.012em; color: var(--ink); }
+
+.fx-legend { display: flex; align-items: center; gap: 0.3rem; font-size: 0.645rem; color: var(--ink-3); }
+.fx-legend i { width: 9px; height: 2px; border-radius: 2px; background: var(--accent); }
+.fx-legend i.ghost { opacity: 0.4; margin-left: 0.35rem; }
+
+.fx-axis { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.615rem; color: var(--ink-4); }
+
+.fx-panel-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin-top: auto; padding-top: 0.7rem;
+  font-size: 0.685rem; color: var(--ink-3);
+}
+.fx-panel-foot b { color: var(--ink); font-weight: 500; }
+
+/* --- approvals queue --- */
+.fx-queue { display: grid; gap: 0.3rem; }
+
+.fx-queue-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.44rem 0.5rem;
+  border-radius: 8px;
+  background: var(--bg-2);
+}
+
+.fx-avatar {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 0.585rem; font-weight: 500;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+  flex-shrink: 0;
+}
+
+/* --- activity feed --- */
+.fx-panel-feed .vz-ring { margin-left: auto; }
+.fx-feed { display: grid; gap: 0.5rem; }
+
+.fx-feed-row {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.7rem; line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.fx-feed-dot {
+  width: 5px; height: 5px; margin-top: 0.35rem;
+  border-radius: 50%; flex-shrink: 0;
+  background: var(--accent);
+}
+
+@media (max-width: 1000px) {
+  .fx-ws { grid-template-columns: 1fr; }
+  .fx-rail { display: none; }
+  .fx-kpis { grid-template-columns: repeat(2, 1fr); }
+  .fx-body { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------------------------------------------
+   HERO SCALE
+   The hero frame runs to 1520px — far wider than the story panels.
+   The same type sizes would read as a shrunken screenshot there, so
+   the product UI scales up with the frame. Density is unchanged.
+   --------------------------------------------------------------- */
+.px-hero-frame .fx-ws { grid-template-columns: 226px 1fr; min-height: 566px; }
+.px-hero-frame .fx-rail { padding: 1.1rem 0.85rem; }
+.px-hero-frame .fx-rail-item { font-size: 0.85rem; padding: 0.55rem 0.65rem; }
+.px-hero-frame .fx-rail-mark { width: 30px; height: 30px; font-size: 0.72rem; }
+.px-hero-frame .fx-rail-org b { font-size: 0.875rem; }
+.px-hero-frame .fx-rail-org i { font-size: 0.755rem; }
+.px-hero-frame .fx-main { padding: 1.25rem 1.4rem 1.4rem; gap: 1rem; }
+.px-hero-frame .fx-head h4 { font-size: 1.1rem; }
+.px-hero-frame .fx-head p { font-size: 0.8rem; }
+.px-hero-frame .fx-kpi { padding: 0.9rem 1rem 0.95rem; }
+.px-hero-frame .fx-kpi-k { font-size: 0.745rem; }
+.px-hero-frame .fx-kpi-v { font-size: 1.42rem; margin: 0.45rem 0 0.4rem; }
+.px-hero-frame .fx-kpi-row i { font-size: 0.75rem; }
+.px-hero-frame .fx-panel { padding: 1rem 1.1rem 1.05rem; }
+.px-hero-frame .fx-panel-head h5 { font-size: 0.875rem; }
+.px-hero-frame .fx-txt b { font-size: 0.865rem; }
+.px-hero-frame .fx-txt i { font-size: 0.765rem; }
+.px-hero-frame .fx-amt { font-size: 0.875rem; }
+.px-hero-frame .fx-avatar { width: 28px; height: 28px; font-size: 0.68rem; }
+.px-hero-frame .fx-queue-row { padding: 0.56rem 0.6rem; }
+.px-hero-frame .fx-feed-row { font-size: 0.795rem; }
+.px-hero-frame .fx-panel-foot { font-size: 0.775rem; }
+.px-hero-frame .fx-axis { font-size: 0.7rem; }
+.px-hero-frame .fx-legend { font-size: 0.72rem; }
+.px-hero-frame .px-tag { font-size: 0.74rem; padding: 0.18rem 0.5rem; }
+.px-hero-frame .px-chrome-tag { font-size: 0.76rem; padding: 0.24rem 0.6rem; }
+
+/* ---------------------------------------------------------------
+   SHARED PANEL BODY (story + splits)
+   --------------------------------------------------------------- */
+.fx-pane { padding: 1.05rem 1.1rem 1.15rem; display: flex; flex-direction: column; gap: 0.95rem; }
+
+.fx-callout {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 9px;
+  font-size: 0.755rem; line-height: 1.45;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+}
+.fx-callout svg { flex-shrink: 0; }
+
+/* --- ledger sheet --- */
+.fx-sheet { padding: 0.4rem 0.3rem 0.75rem; }
+
+.fx-tr {
+  display: grid;
+  grid-template-columns: 0.8fr 1.5fr 0.85fr 0.85fr 0.8fr;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.52rem 0.8rem;
+  font-size: 0.755rem;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--hair);
+}
+.fx-tr:last-of-type { border-bottom: 0; }
+.fx-tr > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.fx-th {
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  border-bottom: 1px solid var(--line);
+}
+.fx-th span:nth-child(3), .fx-th span:nth-child(4) { text-align: right; }
+
+.fx-sheet-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin: 0.55rem 0.5rem 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  background: var(--bg-2);
+}
+.fx-sheet-foot b { color: var(--ink); font-weight: 500; }
+
+/* --- approval chain --- */
+.fx-chain { display: grid; gap: 0.9rem; padding-left: 0.2rem; }
+
+.fx-chain-row { position: relative; display: flex; align-items: center; gap: 0.75rem; padding-left: 1.4rem; }
+
+.fx-chain-node {
+  position: absolute; left: 0; top: 50%;
+  width: 15px; height: 15px; margin-top: -7.5px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  color: #fff;
+}
+
+.fx-chain-row::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 50%;
+  width: 1px; height: calc(100% + 0.9rem);
+  background: var(--hair);
+}
+.fx-chain-row:last-child::before { display: none; }
+
+.fx-chain-row.done .fx-chain-node { background: var(--accent); border-color: var(--accent); }
+.fx-chain-row.done::before { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+.fx-chain-row.live .fx-chain-node { border-color: #d97706; border-right-color: transparent; animation: fx-turn 1.6s linear infinite; }
+.fx-chain-row.next { opacity: 0.5; }
+
+@keyframes fx-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .fx-chain-row.live .fx-chain-node { animation: none; } }
+
+/* --- banks --- */
+.fx-banks { display: grid; gap: 0.45rem; }
+
+.fx-bank {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 9px;
+  background: var(--bg-2);
+}
+.fx-bank .vz-meter { grid-column: 1 / -1; margin-top: 0.15rem; }
+
+.fx-bank-ic {
+  width: 25px; height: 25px;
+  border-radius: 7px;
+  display: grid; place-items: center;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+}
+
+/* --- close --- */
+.fx-close-top { display: flex; align-items: center; gap: 1rem; }
+.fx-close-top b { display: block; font-size: 0.875rem; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
+.fx-close-top i { display: block; font-style: normal; font-size: 0.715rem; color: var(--ink-3); margin-top: 0.2rem; }
+
+.fx-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+.fx-check {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.735rem;
+  color: var(--ink-2);
+  background: var(--bg-2);
+}
+
+.fx-check-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--line);
+  color: #fff;
+}
+.fx-check.done .fx-check-dot { background: var(--accent); border-color: var(--accent); }
+.fx-check.done { color: var(--ink-3); }
+.fx-check.live .fx-check-dot { border-color: #d97706; border-right-color: transparent; animation: fx-turn 1.6s linear infinite; }
+.fx-check.next { opacity: 0.55; }
+
+/* ---------------------------------------------------------------
+   CONSOLIDATION TREE
+   --------------------------------------------------------------- */
+.fx-parent {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: var(--accent-wash);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.fx-parent-ic {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  color: #fff; background: var(--accent);
+}
+
+.fx-tree { padding-left: 1.1rem; display: grid; gap: 0.4rem; }
+.fx-node { position: relative; }
+
+.fx-node-line {
+  position: absolute;
+  left: -0.68rem; top: -0.5rem; bottom: 50%;
+  width: 0.68rem;
+  border-left: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-bottom-left-radius: 7px;
+}
+
+.fx-node-body {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 9px;
+  background: var(--bg-2);
+}
+
+/* ---------------------------------------------------------------
+   E-INVOICE
+   --------------------------------------------------------------- */
+.fx-invoice { padding: 1rem 1.05rem 1.05rem; border-radius: 11px; background: var(--bg-2); border: 1px solid var(--hair); }
+
+.fx-invoice-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--line);
+}
+.fx-invoice-label { display: block; font-size: 0.63rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-4); }
+.fx-invoice-head b { font-size: 0.95rem; font-weight: 500; letter-spacing: -0.028em; color: var(--ink); }
+
+.fx-qr {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+  width: 52px; height: 52px; padding: 4px;
+  border-radius: 6px; background: var(--bg); border: 1px solid var(--hair);
+  flex-shrink: 0;
+}
+.fx-qr i { border-radius: 1px; }
+.fx-qr i.on { background: var(--ink); }
+
+.fx-invoice-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.fx-invoice-grid span { display: block; font-size: 0.635rem; color: var(--ink-4); }
+.fx-invoice-grid b { display: block; font-size: 0.765rem; font-weight: 500; color: var(--ink); }
+
+.fx-invoice-total { padding-top: 0.8rem; display: grid; gap: 0.35rem; }
+.fx-invoice-total div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.fx-invoice-total span { font-size: 0.735rem; color: var(--ink-2); }
+.fx-invoice-total b { font-size: 0.765rem; font-weight: 500; color: var(--ink); }
+.fx-invoice-total .grand { margin-top: 0.3rem; padding-top: 0.55rem; border-top: 1px solid var(--line); }
+.fx-invoice-total .grand b { font-size: 0.95rem; color: var(--accent-2); }
+
+.fx-stamp {
+  display: flex; align-items: center; gap: 0.55rem;
+  margin-top: 0.9rem; padding: 0.6rem 0.75rem;
+  border-radius: 9px;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.fx-stamp b { display: block; font-size: 0.765rem; font-weight: 500; }
+.fx-stamp i { display: block; font-style: normal; font-size: 0.665rem; opacity: 0.75; }
+
+/* ---------------------------------------------------------------
+   TIMELINE
+   --------------------------------------------------------------- */
+.fx-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+  margin-top: 7rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+.fx-tl-item { position: relative; padding-top: 1.5rem; }
+
+.fx-tl-when {
+  position: absolute; top: -4.4rem; left: 0;
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fx-tl-dot {
+  position: absolute; top: -3.56rem; left: 0;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+
+.fx-timeline h3 { font-size: 1.05rem; font-weight: 500; letter-spacing: -0.024em; margin-bottom: 0.6rem; }
+.fx-timeline p { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--ink-2); max-width: 30ch; }
+
+@media (max-width: 1000px) {
+  .fx-timeline { grid-template-columns: 1fr 1fr; row-gap: 4.5rem; }
+}
+@media (max-width: 620px) {
+  .fx-timeline { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------------------------------------------
+   SHOWCASE DECK
+   --------------------------------------------------------------- */
+.fx-deck { position: relative; }
+
+.fx-deck-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.fx-deck-tabs button {
+  position: relative;
+  padding: 0.85rem 1.05rem;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.016em;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fx-deck-tabs button:hover,
+.fx-deck-tabs button.on { color: var(--ink); }
+
+.fx-deck-underline {
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* the two offset ghost windows behind the live one */
+.fx-deck-stage { position: relative; }
+
+.fx-deck-back,
+.fx-deck-back2 {
+  position: absolute;
+  left: 50%;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  pointer-events: none;
+}
+.fx-deck-back { top: -18px; width: calc(100% - 56px); height: 40px; transform: translateX(-50%); opacity: 0.65; }
+.fx-deck-back2 { top: -34px; width: calc(100% - 116px); height: 40px; transform: translateX(-50%); opacity: 0.35; }
+
+/* ---------------------------------------------------------------
+   INTEGRATION FLOW
+   --------------------------------------------------------------- */
+.fx-flow {
+  position: relative;
+  height: 400px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--hair) 1px, transparent 0) 0 0 / 26px 26px,
+    var(--bg);
+  overflow: hidden;
+}
+
+.fx-flow-wires { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fx-wire { fill: none; stroke: var(--line); stroke-width: 1; }
+.fx-wire-pulse { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
+
+.fx-flow-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.815rem;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm), 0 8px 20px -14px rgba(9, 9, 11, 0.4);
+}
+
+.fx-flow-ic {
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  display: grid; place-items: center;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+}
+
+.fx-flow-core {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1.15rem 1.6rem;
+  border-radius: 13px;
+  text-align: center;
+  color: #fff;
+  background: var(--ink-panel);
+  box-shadow: 0 18px 44px -20px rgba(11, 18, 32, 0.7);
+}
+.fx-flow-core b { display: block; font-size: 0.95rem; font-weight: 500; letter-spacing: -0.024em; }
+.fx-flow-core i { display: block; font-style: normal; font-size: 0.72rem; color: #8f97a8; margin-top: 0.25rem; }
+
+@media (max-width: 800px) {
+  .fx-flow { height: 520px; }
+  .fx-flow-node { font-size: 0.72rem; padding: 0.4rem 0.6rem 0.4rem 0.4rem; }
+}
+
+/* ---------------------------------------------------------------
+   CUSTOMER SUCCESS
+   --------------------------------------------------------------- */
+.fx-case { display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 5rem; align-items: center; }
+
+.fx-quote {
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.24;
+  letter-spacing: -0.034em;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.fx-quote-by { display: flex; align-items: center; gap: 0.85rem; margin-top: 2.25rem; }
+
+.fx-quote-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 0.85rem; font-weight: 500;
+  color: #fff; background: var(--accent);
+}
+.fx-quote-by .fx-txt b { font-size: 0.925rem; }
+.fx-quote-by .fx-txt i { font-size: 0.83rem; }
+
+.fx-case-metrics { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+
+.fx-case-metric {
+  padding: 1.85rem 1.5rem 1.85rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+.fx-case-metric b {
+  display: block;
+  font-size: 1.9rem; font-weight: 500;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+}
+.fx-case-metric span { display: block; margin-top: 0.5rem; font-size: 0.83rem; color: var(--ink-3); }
+
+@media (max-width: 1000px) {
+  .fx-case { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+/* ---------------------------------------------------------------
+   DARK
+   --------------------------------------------------------------- */
+body.dark-theme .fx { --ink-panel: #0d1220; }
+body.dark-theme .fx-rail { background: var(--bg-2); }
+body.dark-theme .fx-kpi,
+body.dark-theme .fx-panel,
+body.dark-theme .fx-flow-node,
+body.dark-theme .fx-qr { background: var(--bg-2); }
+body.dark-theme .fx-queue-row,
+body.dark-theme .fx-bank,
+body.dark-theme .fx-check,
+body.dark-theme .fx-node-body,
+body.dark-theme .fx-invoice,
+body.dark-theme .fx-sheet-foot { background: rgba(255, 255, 255, 0.035); }
+body.dark-theme .fx-rail-item:hover { background: rgba(255, 255, 255, 0.05); }
+body.dark-theme .fx-rail-item.on { background: rgba(255, 255, 255, 0.07); }
+body.dark-theme .fx-qr i.on { background: var(--ink); }
+body.dark-theme .fx-deck-back,
+body.dark-theme .fx-deck-back2 { background: var(--bg-2); }

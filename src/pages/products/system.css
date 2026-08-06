@@ -1,0 +1,1113 @@
+/* =====================================================================
+   EMVIVE PRODUCT PAGES — DESIGN SYSTEM
+   Namespace: `px-`. Deliberately outside every selector list in
+   index.css, so none of the site-wide !important layout rules apply.
+
+   The rules that make this read as premium rather than as a template:
+     · display type is weight 500, never 700+, with -0.045em tracking
+     · ink is near-black (#08090A), never pure black, never navy-gray
+     · colour appears in data and status only — chrome stays greyscale
+     · hairlines instead of cards; 1px at 6-8% opacity
+     · 160px section rhythm; nothing is allowed to feel crowded
+   ===================================================================== */
+
+.px {
+  /* ink */
+  --ink: #08090a;
+  --ink-2: #52525b;
+  --ink-3: #8b8b94;
+  --ink-4: #b4b4bb;
+
+  /* surfaces */
+  --bg: #ffffff;
+  --bg-2: #fafafa;
+  --bg-3: #f4f4f5;
+  --ink-panel: #0b0c0e;
+
+  /* hairlines */
+  --line: rgba(9, 9, 11, 0.09);
+  --hair: rgba(9, 9, 11, 0.055);
+
+  /* per-page accent — overridden on each page root */
+  --accent: #08090a;
+  --accent-2: #08090a;
+  --accent-wash: rgba(9, 9, 11, 0.05);
+
+  --gutter: 40px;
+  --measure: 1320px;
+
+  --shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.04);
+  --shadow-panel:
+    0 1px 2px rgba(9, 9, 11, 0.04),
+    0 14px 34px -18px rgba(9, 9, 11, 0.16),
+    0 54px 100px -60px rgba(9, 9, 11, 0.32);
+
+  /* clears the fixed site header. Without this the sticky sub-nav starts
+     at y=0 — behind the header — and the whole top of the page is clipped. */
+  padding-top: 90px;
+
+  background: var(--bg);
+  color: var(--ink-2);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02' 1, 'cv03' 1, 'cv04' 1, 'ss03' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+.px *,
+.px *::before,
+.px *::after { box-sizing: border-box; }
+
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------
+   TYPE SCALE
+   --------------------------------------------------------------- */
+.px h1, .px h2, .px h3, .px h4 {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.px-display {
+  font-size: clamp(3.1rem, 6.3vw, 5.6rem);
+  line-height: 0.97;
+  letter-spacing: -0.046em;
+  font-weight: 500;
+}
+
+.px-h2 {
+  font-size: clamp(2.05rem, 3.9vw, 3.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.042em;
+  font-weight: 500;
+}
+
+.px-h3 {
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.028em;
+  font-weight: 500;
+}
+
+.px-lede {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.28vw, 1.2rem);
+  line-height: 1.58;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 40ch;
+}
+
+.px-body {
+  margin: 0;
+  font-size: 0.955rem;
+  line-height: 1.62;
+  letter-spacing: -0.008em;
+  color: var(--ink-2);
+}
+
+.px-small {
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+/* Editorial eyebrow: an index number, a hairline, a label. No pills. */
+.px-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.735rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.px-eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.px-eyebrow .idx { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* Mask-reveal word wrapper. The padding/margin pair keeps descenders
+   from being clipped by the overflow. */
+.mk {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.24em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.mk > span { display: inline-block; will-change: transform; }
+.mk-em { color: var(--accent); }
+
+.draw-line { height: 1px; background: var(--line); width: 100%; }
+
+/* ---------------------------------------------------------------
+   LAYOUT
+   --------------------------------------------------------------- */
+.px-shell {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.px-band { padding: 10rem 0; }
+.px-band-sm { padding: 6.5rem 0; }
+.px-band-tight { padding: 4.5rem 0; }
+.px-band-alt { background: var(--bg-2); }
+
+.px section[id] { scroll-margin-top: 120px; }
+
+/* Section header: label column beside the statement. Editorial, and it
+   stops every section starting with a centred title. */
+.px-sec-head {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 3.5rem;
+  align-items: start;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.px-sec-head-body { max-width: 46rem; }
+.px-sec-head .px-lede { margin-top: 1.35rem; max-width: 46ch; }
+
+@media (max-width: 900px) {
+  .px-sec-head { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   BUTTONS — solid ink, no gradient, no pill
+   --------------------------------------------------------------- */
+.px-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 46px;
+  padding: 0 1.35rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.925rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.px-btn svg { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.px-btn-solid {
+  color: #fff;
+  background: var(--ink);
+  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.16), 0 10px 22px -14px rgba(9, 9, 11, 0.7);
+}
+.px-btn-solid:hover {
+  background: #26262c;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.18), 0 16px 30px -16px rgba(9, 9, 11, 0.75);
+}
+.px-btn-solid:hover svg { transform: translateX(3px); }
+
+.px-btn-quiet {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
+}
+.px-btn-quiet:hover {
+  background: var(--bg-2);
+  border-color: rgba(9, 9, 11, 0.16);
+  transform: translateY(-1px);
+}
+
+.px-btn-invert {
+  color: var(--ink);
+  background: #fff;
+}
+.px-btn-invert:hover { transform: translateY(-1px); background: #f0f0f2; }
+
+.px-btn-ghost-invert {
+  color: #fff;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.px-btn-ghost-invert:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.px-btn:active { transform: translateY(0); }
+
+/* text link with a travelling arrow */
+.px-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.012em;
+}
+.px-link svg { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); color: var(--accent); }
+.px-link:hover svg { transform: translateX(4px); }
+
+/* ---------------------------------------------------------------
+   PRODUCT CHROME — the app window every mock lives in
+   --------------------------------------------------------------- */
+.px-chrome {
+  position: relative;
+  border-radius: 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.px-chrome-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 42px;
+  padding: 0 0.9rem;
+  background: #fcfcfd;
+  border-bottom: 1px solid var(--hair);
+}
+
+.px-dots { display: flex; gap: 0.4rem; }
+.px-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(9, 9, 11, 0.11); }
+
+.px-chrome-title {
+  font-size: 0.755rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: -0.008em;
+}
+
+.px-chrome-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.px-chrome-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  background: var(--bg-3);
+}
+
+.px-chrome-body { position: relative; }
+
+/* a live dot, used sparingly */
+.px-live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: relative;
+}
+.px-live::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: px-halo 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes px-halo {
+  0% { opacity: 0.7; transform: scale(0.6); }
+  70%, 100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* ---------------------------------------------------------------
+   STATUS + MICRO TYPE inside product surfaces
+   --------------------------------------------------------------- */
+.px-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.14rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: -0.004em;
+  white-space: nowrap;
+  color: var(--ink-2);
+  background: var(--bg-3);
+}
+.px-tag.pos { color: #0a6c4a; background: rgba(16, 185, 129, 0.11); }
+.px-tag.neg { color: #a12b32; background: rgba(220, 38, 38, 0.09); }
+.px-tag.warn { color: #8a5510; background: rgba(217, 119, 6, 0.11); }
+.px-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.1); }
+.px-tag.accent { color: var(--accent-2); background: var(--accent-wash); }
+
+.px-mono {
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ---------------------------------------------------------------
+   HAIRLINE GRID — replaces feature cards everywhere
+   --------------------------------------------------------------- */
+.px-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.px-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.px-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.px-cell {
+  padding: 2.25rem 0 2.5rem;
+  border-bottom: 1px solid var(--hair);
+}
+
+.px-cell-ic {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+.px-cell h3 {
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  margin-bottom: 0.55rem;
+}
+
+.px-cell p {
+  margin: 0;
+  font-size: 0.925rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 34ch;
+}
+
+@media (max-width: 1000px) {
+  .px-grid, .px-grid-4 { grid-template-columns: repeat(2, 1fr); column-gap: 2rem; }
+}
+@media (max-width: 620px) {
+  .px-grid, .px-grid-2, .px-grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------------------------------------------
+   STAT ROW — big numerals on hairlines, no boxes
+   --------------------------------------------------------------- */
+.px-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.px-stat {
+  padding: 2.75rem 2.25rem 2.5rem 0;
+  border-right: 1px solid var(--hair);
+}
+.px-stat:last-child { border-right: 0; }
+
+.px-stat b {
+  display: block;
+  font-size: clamp(2.4rem, 4.2vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.px-stat span {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: 24ch;
+}
+
+@media (max-width: 900px) {
+  .px-stats { grid-template-columns: repeat(2, 1fr); }
+  .px-stat { padding-right: 1.5rem; }
+  .px-stat:nth-child(2n) { border-right: 0; }
+}
+
+/* ---------------------------------------------------------------
+   PINNED STORY — sticky product surface, scrolling narration
+   --------------------------------------------------------------- */
+/* fixed site header (90px) + sticky product sub-nav (56px) + breathing room.
+   Anything pinned has to start below this or it slides under the chrome. */
+.px-story { position: relative; --pin-top: 172px; }
+
+/* Both columns must stretch to the full height of the tall story
+   section, otherwise `position: sticky` inside them has no room to
+   travel and the visual never pins. */
+.px-story-inner {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 5rem;
+  align-items: stretch;
+}
+
+.px-story-rail { position: relative; }
+
+.px-story-sticky {
+  position: sticky;
+  top: max(var(--pin-top), 20vh);
+  padding-bottom: 2rem;
+}
+
+.px-story-steps { display: grid; }
+
+/* a real <button>, so the pointer affordance is honest and the steps
+   are reachable by keyboard */
+.px-story-step {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 1.75rem 0 1.75rem 2rem;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.32;
+}
+
+.px-story-step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+.px-story-step.on { opacity: 1; }
+
+/* the progress rail that fills as the step plays */
+.px-story-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 1px;
+  height: calc(100% + 1px);
+  background: var(--line);
+}
+
+/* height is driven frame-by-frame from the scroll motion value, so a CSS
+   transition here would lag behind the scroll rather than smooth it */
+.px-story-step .fill {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 1px;
+  height: 0;
+  background: var(--accent);
+}
+
+.px-story-step h3 {
+  font-size: 1.12rem;
+  font-weight: 500;
+  letter-spacing: -0.026em;
+  margin-bottom: 0.6rem;
+}
+
+.px-story-step p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 40ch;
+}
+
+/* `align-self: start` is load-bearing. The parent grid stretches its items
+   to the full height of the tall story section, and a sticky element that
+   is already as tall as its container has no room to travel — it silently
+   scrolls away instead of pinning. Opting this column out of the stretch
+   gives it its natural height back, so it pins across all four steps.
+   (The rail column keeps the stretch because its sticky node is a child.) */
+.px-story-stage {
+  position: sticky;
+  top: var(--pin-top);
+  align-self: start;
+}
+
+.px-story-panel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.99);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.px-story-panel.on {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+@media (max-width: 1000px) {
+  .px-story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .px-story-sticky, .px-story-stage { position: static; }
+  .px-story-panel { position: relative; opacity: 1; transform: none; }
+  .px-story-panel:not(.on) { display: none; }
+}
+
+/* ---------------------------------------------------------------
+   SPLIT — alternating editorial feature blocks
+   --------------------------------------------------------------- */
+.px-split {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 5rem;
+  align-items: center;
+}
+.px-split + .px-split { margin-top: 9rem; }
+.px-split.flip .px-split-copy { order: 2; }
+
+.px-split-copy h3 { margin: 1.5rem 0 0; }
+.px-split-copy .px-body { margin-top: 1.15rem; max-width: 42ch; }
+
+.px-points { margin: 2rem 0 0; }
+
+.px-point {
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--hair);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  display: flex;
+  gap: 0.85rem;
+}
+
+.px-point span:first-child {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.22rem;
+  min-width: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .px-split { grid-template-columns: 1fr; gap: 2.75rem; }
+  .px-split.flip .px-split-copy { order: 0; }
+  .px-split + .px-split { margin-top: 5.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   CLOSING CTA — ink panel, large type, restrained glow
+   --------------------------------------------------------------- */
+.px-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 8rem 3rem;
+  border-radius: 20px;
+  text-align: center;
+  background: var(--ink-panel);
+  isolation: isolate;
+}
+
+.px-cta::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -60%;
+  width: 120%;
+  height: 120%;
+  transform: translateX(-50%);
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 42% 46% at 50% 50%,
+    color-mix(in srgb, var(--accent) 42%, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 0.5;
+}
+
+.px-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 62px 62px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000, transparent 76%);
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000, transparent 76%);
+}
+
+.px-cta h2 { color: #fff; margin: 0 auto; max-width: 15ch; }
+.px-cta .px-lede { margin: 1.5rem auto 0; color: #9b9ba5; max-width: 44ch; }
+.px-cta .px-eyebrow { justify-content: center; color: #75757f; margin-bottom: 2rem; }
+
+.px-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 2.75rem;
+}
+
+@media (max-width: 700px) {
+  .px-cta { padding: 5rem 1.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------------- */
+.px-footer { border-top: 1px solid var(--line); padding: 6.5rem 0 3rem; }
+
+.px-footer-top {
+  display: grid;
+  grid-template-columns: 1.25fr repeat(4, 0.75fr);
+  gap: 3rem;
+  padding-bottom: 5rem;
+}
+
+.px-footer-brand { max-width: 26ch; }
+
+.px-footer-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+.px-news { margin-top: 1.75rem; display: flex; gap: 0.5rem; max-width: 22rem; }
+
+.px-news input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.px-news input::placeholder { color: var(--ink-4); }
+.px-news input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+.px-news button { height: 42px; padding: 0 1rem; }
+
+.px-footer-col h4 {
+  font-size: 0.735rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1.35rem;
+}
+
+.px-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+
+.px-footer-col a {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.22s ease;
+}
+.px-footer-col a:hover { color: var(--ink); }
+
+.px-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--hair);
+  font-size: 0.83rem;
+  color: var(--ink-3);
+}
+
+.px-socials { display: flex; gap: 0.4rem; }
+
+.px-socials button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.px-socials button:hover {
+  color: var(--ink);
+  border-color: rgba(9, 9, 11, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1000px) {
+  .px-footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+@media (max-width: 620px) {
+  .px-footer-top { grid-template-columns: 1fr; }
+  .px-footer-bottom { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+}
+
+/* ---------------------------------------------------------------
+   PRODUCT SUB-NAV
+   --------------------------------------------------------------- */
+.px-subnav {
+  position: sticky;
+  top: 90px;
+  z-index: 700;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+
+.px-subnav.stuck {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom-color: var(--line);
+}
+
+.px-subnav-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 56px;
+}
+
+.px-subnav-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.925rem;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.px-subnav-name .dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--accent);
+}
+
+.px-subnav-links { display: flex; gap: 1.75rem; margin-left: auto; }
+
+.px-subnav-links a {
+  position: relative;
+  font-size: 0.875rem;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.24s ease;
+}
+.px-subnav-links a:hover { color: var(--ink); }
+
+.px-subnav .px-btn { height: 36px; padding: 0 0.95rem; font-size: 0.865rem; }
+
+@media (max-width: 860px) { .px-subnav-links { display: none; } }
+
+/* ---------------------------------------------------------------
+   HERO
+   One statement, one oversized product surface. Everything else is
+   subordinate — no competing stats column, no second eyebrow.
+   --------------------------------------------------------------- */
+.px-hero {
+  position: relative;
+  padding: 5.5rem 0 0;
+  text-align: center;
+  isolation: isolate;
+}
+
+.px-hero-bg {
+  position: absolute;
+  inset: -90px 0 auto;
+  height: 62rem;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.px-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--hair) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 46% at 50% 4%, #000 12%, transparent 70%);
+  mask-image: radial-gradient(ellipse 70% 46% at 50% 4%, #000 12%, transparent 70%);
+}
+
+/* two slow-drifting blooms. Kept under 24% opacity so this reads as
+   light in the room rather than as a gradient background. */
+.px-hero-aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  will-change: transform;
+}
+
+.px-hero-aurora.a {
+  top: -20rem;
+  left: 50%;
+  width: 60rem;
+  height: 40rem;
+  margin-left: -30rem;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 26%, transparent) 0%,
+    transparent 66%
+  );
+  animation: px-drift-a 22s ease-in-out infinite alternate;
+}
+
+.px-hero-aurora.b {
+  top: -14rem;
+  left: 50%;
+  width: 44rem;
+  height: 30rem;
+  margin-left: -8rem;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent) 14%, transparent) 0%,
+    transparent 68%
+  );
+  animation: px-drift-b 28s ease-in-out infinite alternate;
+}
+
+@keyframes px-drift-a {
+  from { transform: translate3d(-4%, 0, 0) scale(1); }
+  to   { transform: translate3d(5%, 3%, 0) scale(1.08); }
+}
+@keyframes px-drift-b {
+  from { transform: translate3d(3%, 2%, 0) scale(1.05); }
+  to   { transform: translate3d(-6%, -2%, 0) scale(0.95); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-hero-aurora { animation: none; }
+}
+
+/* --- copy --- */
+.px-hero-copy { position: relative; }
+
+.px-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.32rem 0.85rem 0.32rem 0.34rem;
+  border-radius: 999px;
+  font-size: 0.83rem;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  text-decoration: none;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm), 0 6px 18px -12px rgba(9, 9, 11, 0.5);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.px-hero-pill:hover { transform: translateY(-1px); border-color: rgba(9, 9, 11, 0.18); }
+.px-hero-pill svg { color: var(--ink-4); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.px-hero-pill:hover svg { transform: translateX(3px); }
+
+.px-hero-pill-tag {
+  padding: 0.16rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: -0.004em;
+  color: var(--accent-2);
+  background: var(--accent-wash);
+}
+
+.px-hero h1 {
+  margin: 2rem auto 0;
+  max-width: 17ch;
+  font-size: clamp(3.1rem, 6.6vw, 5.9rem);
+}
+
+.px-hero .px-lede {
+  margin: 1.9rem auto 0;
+  max-width: 46ch;
+  font-size: clamp(1.08rem, 1.35vw, 1.3rem);
+}
+
+.px-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 2.6rem;
+}
+
+/* --- product surface --- */
+.px-hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1520px;
+  margin: 5.5rem auto 0;
+  padding: 0 var(--gutter);
+  perspective: 2400px;
+}
+
+.px-hero-frame {
+  position: relative;
+  border-radius: 18px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 4px rgba(9, 9, 11, 0.04),
+    0 18px 40px -20px rgba(9, 9, 11, 0.22),
+    0 70px 130px -60px rgba(9, 9, 11, 0.4);
+}
+
+/* the frame carries the chrome itself, so the nested panel loses its own */
+.px-hero-frame > .px-chrome {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* --- trust bar --- */
+.px-trust {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  margin-top: 5.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--hair);
+  text-align: left;
+}
+
+.px-trust-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  max-width: 12ch;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.px-trust-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  flex: 1;
+}
+
+.px-trust-metrics div { display: grid; gap: 0.4rem; }
+.px-trust-metrics b {
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  font-weight: 500;
+  letter-spacing: -0.042em;
+  line-height: 1;
+  color: var(--ink);
+}
+.px-trust-metrics span { font-size: 0.83rem; color: var(--ink-3); }
+
+@media (max-width: 800px) {
+  .px-trust { flex-direction: column; align-items: flex-start; gap: 1.75rem; }
+  .px-trust-metrics { grid-template-columns: 1fr; gap: 1.5rem; width: 100%; }
+  .px-hero-stage { margin-top: 3.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE RHYTHM
+   --------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .px { --gutter: 28px; }
+  .px-band { padding: 7rem 0; }
+  .px-band-sm { padding: 5rem 0; }
+}
+
+@media (max-width: 700px) {
+  .px { --gutter: 20px; }
+  .px-band { padding: 5rem 0; }
+  .px-hero { padding-top: 4.5rem; }
+  .px-hero-stage { margin-top: 3rem; }
+}
+
+/* ---------------------------------------------------------------
+   DARK THEME
+   --------------------------------------------------------------- */
+body.dark-theme .px {
+  --ink: #f4f4f6;
+  --ink-2: #a1a1ac;
+  --ink-3: #71717c;
+  --ink-4: #52525b;
+  --bg: #08090a;
+  --bg-2: #0d0e10;
+  --bg-3: #17181b;
+  --ink-panel: #0d0e10;
+  --line: rgba(255, 255, 255, 0.1);
+  --hair: rgba(255, 255, 255, 0.062);
+  --shadow-panel:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 14px 34px -18px rgba(0, 0, 0, 0.7),
+    0 54px 100px -60px rgba(0, 0, 0, 0.9);
+}
+
+body.dark-theme .px-chrome-bar { background: #0d0e10; }
+body.dark-theme .px-dots i { background: rgba(255, 255, 255, 0.13); }
+body.dark-theme .px-subnav.stuck { background: rgba(8, 9, 10, 0.72); }
+body.dark-theme .px-btn-solid { color: var(--ink); background: #f4f4f6; }
+body.dark-theme .px-btn-solid:hover { background: #ffffff; }
+body.dark-theme .px-btn-invert { color: #08090a; background: #f4f4f6; }
+body.dark-theme .px-news input { background: var(--bg-2); }

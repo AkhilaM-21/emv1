@@ -12,7 +12,9 @@
   "dependencies": {
     "cobe": "^2.0.1",
     "d3-geo": "^3.1.1",
+    "framer-motion": "^13.0.0",
     "i18next": "^26.3.4",
+    "lenis": "^1.3.26",
     "lucide-react": "^1.23.0",
     "ogl": "^1.0.11",
     "react": "^19.2.7",

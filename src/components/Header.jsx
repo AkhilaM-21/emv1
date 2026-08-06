@@ -150,6 +150,29 @@ const Header = () => {
 
   const MEGA_MENU_DATA = getMegaMenuData(t);
 
+  /* Mega-menu entries that have a landing page behind them. Both the
+     English label and the translated one are keyed, so the menu still
+     routes correctly when the UI is in Arabic. */
+  const PRODUCT_ROUTES = {
+    'Financial Management': '/products/finance',
+    [t('megaMenu.erp.financials', 'Financial Management')]: '/products/finance',
+    'Supply Chain': '/products/supply-chain',
+    [t('megaMenu.erp.supplyChain', 'Supply Chain')]: '/products/supply-chain',
+    'Inventory for Retail & POS': '/products/retail-inventory',
+    [t('megaMenu.retail.inventory', 'Inventory for Retail & POS')]: '/products/retail-inventory',
+    Studio: '/products/platform',
+    Flow: '/products/platform',
+  };
+
+  /* `section` scrolls the target page to one of its anchors (Studio / Flow
+     share the Platform & Builder page). */
+  const goProduct = (title, section) => {
+    setOpenNav(null);
+    setMobileOpen(false);
+    const to = PRODUCT_ROUTES[title];
+    if (to) navigate(to, section ? { state: { section } } : undefined);
+  };
+
   // Apply / persist the dark theme
   useEffect(() => {
     const stored = localStorage.getItem('emvive-theme');
@@ -433,11 +456,12 @@ const Header = () => {
                                   key={i}
                                   className="mobile-module-card"
                                   onClick={() => {
-                                    // Use a stable identifier or check if the title matches either language
-                                    if (mod.id === 'retail-inventory' || mod.title === 'Inventory for Retail & POS' || mod.title === t('megaMenu.retail.inventory', "Inventory for Retail & POS")) {
-                                      navigate('/products/retail-inventory');
+                                    if (mod.id === 'retail-inventory') {
                                       setMobileOpen(false);
+                                      navigate('/products/retail-inventory');
+                                      return;
                                     }
+                                    goProduct(mod.title);
                                   }}
                                 >
                                   <div className="module-icon"><Icon size={20} /></div>
@@ -448,6 +472,25 @@ const Header = () => {
                                 </div>
                               );
                             })}
+
+                            {/* Platform & Builder has no ERP module entry of its
+                                own, so surface Studio and Flow directly. */}
+                            {[
+                              { title: 'Studio', section: 'studio', Icon: LayoutGrid, desc: 'Drag-and-drop app builder' },
+                              { title: 'Flow', section: 'flow', Icon: Workflow, desc: 'Workflow automation' },
+                            ].map(({ title, section, Icon, desc }) => (
+                              <div
+                                key={title}
+                                className="mobile-module-card"
+                                onClick={() => goProduct(title, section)}
+                              >
+                                <div className="module-icon"><Icon size={20} /></div>
+                                <div className="module-text">
+                                  <h3>{title}</h3>
+                                  <p>{desc}</p>
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>
@@ -563,7 +606,7 @@ const Header = () => {
               <h3 className="infor-col-header">Core Applications</h3>
               <div className="mega-items">
                 {activeIndustryData.modules && activeIndustryData.modules.slice(0, 7).map((mod) => (
-                  <MegaItem key={mod.title} title={mod.title} noSub onClick={() => setOpenNav(null)} />
+                  <MegaItem key={mod.title} title={mod.title} noSub onClick={() => goProduct(mod.title)} />
                 ))}
               </div>
               <a href="#featured-products" className="infor-all-link" onClick={() => setOpenNav(null)}>
@@ -575,10 +618,14 @@ const Header = () => {
             <div className="infor-column">
               <h3 className="infor-col-header">Platform & Builder</h3>
               <div className="mega-items">
-                <MegaItem title="Studio" />
-                <MegaItem title="Flow" />
+                <MegaItem title="Studio" onClick={() => goProduct('Studio', 'studio')} />
+                <MegaItem title="Flow" onClick={() => goProduct('Flow', 'flow')} />
               </div>
-              <a href="#all-platforms" className="infor-all-link">
+              <a
+                href="#all-platforms"
+                className="infor-all-link"
+                onClick={(e) => { e.preventDefault(); goProduct('Studio'); }}
+              >
                 All platforms <ArrowRight size={15} />
               </a>
             </div>

@@ -10,6 +10,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import HeroShowcase from './pages/HeroShowcase';
 import RetailInventory from './pages/RetailInventory';
+import Finance from './pages/products/Finance';
+import SupplyChain from './pages/products/SupplyChain';
+import Platform from './pages/products/Platform';
 import './index.css';
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<HeroShowcase />} />
             <Route path="/products/retail-inventory" element={<RetailInventory />} />
+            <Route path="/products/finance" element={<Finance />} />
+            <Route path="/products/supply-chain" element={<SupplyChain />} />
+            <Route path="/products/platform" element={<Platform />} />
           </Routes>
         </main>
 
