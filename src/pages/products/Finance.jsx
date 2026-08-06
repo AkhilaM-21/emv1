@@ -1,400 +1,29 @@
 import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import {
-  Wallet, BookOpen, Receipt, CreditCard, Landmark, Building2, Percent,
-  FileText, ShieldCheck, ChartPie, Check, Zap, ArrowUpRight, ArrowRight,
-  Lock, Database, Layers, GitBranch, TrendingUp,
+  Wallet, Receipt, CreditCard, Landmark, Building2, Percent,
+  FileText, ShieldCheck, ChartPie, ArrowUpRight, ArrowRight, Lock, Database,
+  Layers, TrendingUp, Users, Check, RefreshCw,
 } from 'lucide-react';
 import { motion, Reveal, MaskText, useLive, EASE } from './motion';
-import {
-  Pin, Narration, Canvas, Module, HRail, Spotlight, ScrollNumber, ActRule,
-} from './stage';
+import { Pin, Narration, Canvas, Module, HRail, Spotlight, ScrollNumber, ActRule } from './stage';
 import { ProductPage, SubNav, ClosingCta, Footer } from './system';
-import { AreaChart, LiveBars, Meter, Ring, Spark } from './viz';
+import { LiveBars, Ring, Spark, Meter } from './viz';
+import {
+  Sidebar, Toolbar, LedgerTable, Inspector, KpiWidgets, ChartPanel,
+  ApprovalPanel, RulesPanel, LogPanel, TreePanel, StatementPanel,
+  AiCard, Toast, Palette, CloseWidget,
+} from './FinanceApp';
+import './FinanceApp.css';
 import './Finance.css';
 
 const CUR = 'SAR';
 
 /* =====================================================================
-   ACT I — OVERTURE
-   Asymmetric. Type owns the left, the workspace enters from the right
-   edge and runs off it. Nothing is centred.
+   LIVE DATA — one interval feeds every surface on the page
    ===================================================================== */
 
-const Overture = () => (
-  <section className="fn-overture" id="top">
-    <div className="fn-overture-bg" aria-hidden="true">
-      <div className="fn-grid" />
-      <div className="fn-bloom" />
-    </div>
-
-    <div className="fn-overture-inner">
-      <div className="fn-overture-copy">
-        <Reveal duration={0.7}>
-          <span className="fn-kicker">
-            <span className="fn-kicker-dot" /> Emvive Finance
-          </span>
-        </Reveal>
-
-        <MaskText
-          text="The financial operating"
-          as="h1"
-          className="stg-display"
-          delay={0.06}
-        />
-        <MaskText
-          text="system for groups that"
-          as="h1"
-          className="stg-display"
-          delay={0.14}
-        />
-        <MaskText
-          text="close"
-          accent="continuously."
-          as="h1"
-          className="stg-display"
-          delay={0.22}
-        />
-
-        <Reveal delay={0.42} y={16}>
-          <p className="fn-lede">
-            One ledger. Every entity, currency and regulator.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.5} y={16}>
-          <div className="fn-actions">
-            <a href="#start" className="px-btn px-btn-solid">Book a demo <ArrowRight size={16} /></a>
-            <a href="#system" className="px-btn px-btn-quiet">Explore the system</a>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* a slice of the real workspace, bleeding off the right edge */}
-      <motion.div
-        className="fn-overture-slice"
-        initial={{ opacity: 0, x: 90 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.6, delay: 0.35, ease: EASE }}
-      >
-        <div className="fn-slice-frame">
-          <ModuleChrome title="Financial control" tag="Live" />
-          <KpiStrip compact />
-          <LedgerTable rows={7} />
-        </div>
-      </motion.div>
-    </div>
-
-    <Reveal delay={0.7} className="fn-overture-foot">
-      <span className="fn-foot-label">In production today</span>
-      <div className="fn-foot-metrics">
-        {[
-          ['3 days', 'Average group close'],
-          ['99.8%', 'Cleared on first submission'],
-          ['18', 'Countries, one ledger'],
-        ].map(([v, l]) => (
-          <div key={l}><b>{v}</b><span>{l}</span></div>
-        ))}
-      </div>
-    </Reveal>
-  </section>
-);
-
-/* =====================================================================
-   CANVAS MODULES — the same surfaces reappear across every beat
-   ===================================================================== */
-
-const ModuleChrome = ({ title, tag, right }) => (
-  <div className="fn-mchrome">
-    <span className="fn-mchrome-title">{title}</span>
-    {right}
-    {tag && <span className="fn-mchrome-tag">{tag === 'Live' && <i className="fn-live" />}{tag}</span>}
-  </div>
-);
-
-const NavRail = () => (
-  <>
-    <div className="fn-rail-org">
-      <span className="fn-rail-mark">EM</span>
-      <span className="fn-txt"><b>Emvive Group</b><i>7 entities</i></span>
-    </div>
-    <nav className="fn-rail-nav">
-      {[
-        [ChartPie, 'Overview'], [BookOpen, 'Ledger'], [Receipt, 'Payables'],
-        [CreditCard, 'Receivables'], [Wallet, 'Cash'], [Building2, 'Assets'],
-        [Percent, 'Tax'], [FileText, 'Reports'],
-      ].map(([Icon, label], i) => (
-        <span className={`fn-rail-item ${i === 0 ? 'on' : ''}`} key={label}>
-          <Icon size={14} strokeWidth={1.7} /> {label}
-        </span>
-      ))}
-    </nav>
-    <div className="fn-rail-foot">
-      <span className="px-tag pos">Period open</span>
-    </div>
-  </>
-);
-
-const KpiStrip = ({ live, compact }) => {
-  const set = [
-    { k: 'Cash position', v: live ? `${CUR} ${live.cash.toFixed(1)}M` : `${CUR} 42.8M`, d: '+6.4%', s: [32, 38, 35, 44, 41, 52, 49, 58] },
-    { k: 'DSO', v: live ? `${live.dso} days` : '31 days', d: '−9 days', s: [58, 54, 49, 46, 42, 38, 34, 31] },
-    { k: 'Net margin', v: live ? `${live.margin.toFixed(1)}%` : '18.6%', d: '+2.1pp', s: [12, 14, 13, 16, 15, 17, 18, 19] },
-    { k: 'Unposted', v: '4', d: '−128', s: [88, 62, 44, 31, 22, 14, 8, 4] },
-  ];
-
-  return (
-    <div className={`fn-kpis ${compact ? 'compact' : ''}`}>
-      {set.map((kpi) => (
-        <div className="fn-kpi" key={kpi.k}>
-          <span className="fn-kpi-k">{kpi.k}</span>
-          <motion.b
-            key={kpi.v}
-            initial={{ opacity: 0.4, y: -3 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="tnum"
-          >
-            {kpi.v}
-          </motion.b>
-          <span className="fn-kpi-row">
-            <i>{kpi.d}</i>
-            <Spark values={kpi.s} width={52} height={16} />
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const LEDGER_ROWS = [
-  ['JV-10428', 'Revenue — Retail KSA', '—', '1,284,500', 'pos', 'Posted'],
-  ['JV-10429', 'Trade receivables', '1,284,500', '—', 'pos', 'Posted'],
-  ['JV-10430', 'FX revaluation — AED', '18,240', '—', 'warn', 'Review'],
-  ['JV-10431', 'Depreciation — Fleet', '96,700', '—', 'pos', 'Posted'],
-  ['JV-10432', 'Intercompany — EM-DXB', '—', '412,000', 'info', 'Matching'],
-  ['JV-10433', 'Accrued expenses', '54,120', '—', 'pos', 'Posted'],
-  ['JV-10434', 'Payroll accrual — Oct', '742,900', '—', 'pos', 'Posted'],
-  ['JV-10435', 'Deferred revenue', '—', '318,600', 'pos', 'Posted'],
-];
-
-const LedgerTable = ({ rows = 8 }) => (
-  <div className="fn-sheet">
-    <div className="fn-tr fn-th">
-      <span>Journal</span><span>Account</span><span>Debit</span><span>Credit</span><span>Status</span>
-    </div>
-    <div className="fn-sheet-body">
-      {LEDGER_ROWS.slice(0, rows).map(([id, acct, dr, cr, tone, status]) => (
-        <div className="fn-tr" key={id}>
-          <span className="px-mono fn-dim">{id}</span>
-          <span>{acct}</span>
-          <span className="px-mono num">{dr}</span>
-          <span className="px-mono num">{cr}</span>
-          <span><i className={`px-tag ${tone}`}>{status}</i></span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const CashChart = () => (
-  <div className="fn-chartwrap">
-    <div className="fn-chart-head">
-      <div>
-        <span className="fn-chart-label">Net cash position</span>
-        <b className="tnum">{CUR} 42.8M</b>
-      </div>
-      <span className="fn-legend"><i /> Actual <i className="ghost" /> Forecast</span>
-    </div>
-    <AreaChart
-      series={[38, 44, 41, 52, 48, 61, 57, 68, 74, 71, 82, 88, 94]}
-      forecastFrom={9}
-      height={190}
-    />
-    <div className="fn-axis">
-      {['Nov', 'Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'].map((m) => <span key={m}>{m}</span>)}
-    </div>
-  </div>
-);
-
-const ApprovalFlow = () => (
-  <div className="fn-flowwrap">
-    <ModuleChrome title="Approval routing" tag="Policy v4" />
-    <div className="fn-chain">
-      {[
-        ['Invoice captured', 'OCR matched to PO-8841', 'done'],
-        ['Three-way match', 'PO · GRN · Invoice agree', 'done'],
-        ['Cost centre owner', 'Approved in 4 minutes', 'done'],
-        ['Finance controller', 'Awaiting · SLA 6h', 'live'],
-        ['Payment run', 'Scheduled Thursday', 'next'],
-      ].map(([t, m, state]) => (
-        <div className={`fn-chain-row ${state}`} key={t}>
-          <span className="fn-chain-node">{state === 'done' && <Check size={10} strokeWidth={3.5} />}</span>
-          <span className="fn-txt"><b>{t}</b><i>{m}</i></span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const RulesPanel = () => (
-  <>
-    <ModuleChrome title="Posting rules" tag="14 active" />
-    <div className="fn-rules">
-      {[
-        ['Invoice under 50,000', 'Auto-approve on match', 'pos'],
-        ['Price variance > 2%', 'Hold for controller', 'warn'],
-        ['Intercompany', 'Match and eliminate', 'info'],
-        ['FX revaluation', 'Run nightly at 02:00', 'pos'],
-        ['Depreciation', 'Post on period close', 'pos'],
-      ].map(([cond, act, tone]) => (
-        <div className="fn-rule" key={cond}>
-          <span className="fn-rule-when">{cond}</span>
-          <GitBranch size={12} className="fn-dim" />
-          <span className="fn-rule-then">{act}</span>
-          <i className={`px-tag ${tone}`}>on</i>
-        </div>
-      ))}
-    </div>
-  </>
-);
-
-const LogPanel = ({ feed }) => (
-  <>
-    <ModuleChrome title="Execution log" tag="Live" />
-    <div className="fn-log">
-      <AnimatePresence initial={false}>
-        {feed.map((f) => (
-          <motion.div
-            className="fn-log-row"
-            key={f.id}
-            layout
-            initial={{ opacity: 0, y: -12, filter: 'blur(2px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
-            <span className="fn-log-dot" />
-            <span className="fn-txt"><b>{f.text}</b><i>{f.meta}</i></span>
-            <span className="px-mono fn-dim">{f.ms}</span>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
-  </>
-);
-
-const EntityTree = () => (
-  <>
-    <ModuleChrome title="Group structure" tag="IFRS" />
-    <div className="fn-tree">
-      <div className="fn-tree-parent">
-        <span className="fn-tree-ic"><Building2 size={14} /></span>
-        <span className="fn-txt"><b>Emvive Holding</b><i>Consolidated · SAR</i></span>
-      </div>
-      {[
-        ['Emvive KSA', 'SAR · 100%', '214M'],
-        ['Emvive UAE', 'AED · 100%', '96M'],
-        ['Emvive Qatar', 'QAR · 75%', '38M'],
-        ['Emvive Logistics', 'SAR · 60%', '27M'],
-      ].map(([n, m, v]) => (
-        <div className="fn-tree-node" key={n}>
-          <span className="fn-tree-line" aria-hidden="true" />
-          <span className="fn-tree-body">
-            <span className="fn-txt"><b>{n}</b><i>{m}</i></span>
-            <span className="fn-amt tnum">{CUR} {v}</span>
-          </span>
-        </div>
-      ))}
-    </div>
-  </>
-);
-
-const StatementPanel = () => (
-  <>
-    <ModuleChrome title="Consolidated P&L" tag="Q4 FY25" />
-    <div className="fn-stmt">
-      {[
-        ['Revenue', '1,284,500', 100, false],
-        ['Cost of sales', '(742,900)', 58, false],
-        ['Gross profit', '541,600', 42, true],
-        ['Operating expenses', '(298,400)', 23, false],
-        ['EBITDA', '243,200', 19, true],
-        ['Net profit', '238,900', 18.6, true],
-      ].map(([label, amt, pct, strong]) => (
-        <div className={`fn-stmt-row ${strong ? 'strong' : ''}`} key={label}>
-          <span>{label}</span>
-          <span className="px-mono fn-stmt-amt">{amt}</span>
-          <Meter value={pct} />
-        </div>
-      ))}
-      <div className="fn-stmt-foot">
-        <span>Eliminations applied · 4 entities</span>
-        <span className="px-tag pos">Balanced</span>
-      </div>
-    </div>
-  </>
-);
-
-/* =====================================================================
-   ACT II — THE MORPH
-   One canvas, five configurations. Modules are declared once and simply
-   given a different grid area per beat; Framer FLIPs them between them.
-   ===================================================================== */
-
-const BEATS = [
-  {
-    kicker: 'Record',
-    title: 'Everything lands in one ledger.',
-    body: 'Sales, procurement, payroll and inventory post directly. The trial balance is produced, never reassembled.',
-  },
-  {
-    kicker: 'Analyse',
-    title: 'The ledger becomes the analytics.',
-    body: 'No warehouse, no nightly export. The chart you steer by is reading the journals you just posted.',
-  },
-  {
-    kicker: 'Approve',
-    title: 'Analytics become the workflow.',
-    body: 'Variances raise themselves. Matching, thresholds and delegation decide who signs, and when.',
-  },
-  {
-    kicker: 'Automate',
-    title: 'The workflow becomes automation.',
-    body: 'Rules run against live balances every night. Routine entries stop touching a person at all.',
-  },
-  {
-    kicker: 'Report',
-    title: 'Automation becomes the statutory pack.',
-    body: 'Elimination, translation and consolidation are already done. The group report is a view, not a project.',
-  },
-];
-
-/* module → grid area per beat. `null` means the module steps back. */
-const LAYOUT = {
-  rail: ['1/1/9/3', '1/1/9/3', '1/1/9/3', '1/1/9/3', '1/1/9/3'],
-  kpis: ['1/3/3/13', '1/3/4/6', '1/3/3/8', null, null],
-  table: ['3/3/9/13', '6/6/9/13', null, null, null],
-  chart: ['1/13/9/13', '1/6/6/13', '1/8/3/13', null, null],
-  flow: [null, null, '3/3/9/13', null, null],
-  rules: [null, null, null, '1/3/9/8', null],
-  log: [null, null, null, '1/8/9/13', null],
-  tree: [null, null, null, null, '1/3/9/8'],
-  stmt: [null, null, null, null, '1/8/9/13'],
-};
-
-/* where a hidden module parks — kept near where it will appear so the
-   entrance reads as a slide rather than a pop */
-const PARK = {
-  kpis: '1/3/3/8', table: '5/3/9/13', chart: '1/8/5/13',
-  flow: '3/3/9/13', rules: '1/3/9/8', log: '1/8/9/13',
-  tree: '1/3/9/8', stmt: '1/8/9/13',
-};
-
-const area = (key, beat) => LAYOUT[key][beat] || PARK[key] || '1/1/2/2';
-const shown = (key, beat) => Boolean(LAYOUT[key][beat]);
-
-const FEED_POOL = [
+const LOG_POOL = [
   { text: 'Bank feed reconciled', meta: 'Al Rajhi · 412 lines', ms: '0.4s' },
   { text: 'Invoice cleared by ZATCA', meta: 'INV-2025-04412', ms: '0.9s' },
   { text: 'FX revaluation posted', meta: 'AED, QAR', ms: '1.2s' },
@@ -403,24 +32,171 @@ const FEED_POOL = [
   { text: 'Payment run released', meta: '34 suppliers', ms: '0.8s' },
 ];
 
-const makeFeed = (i) => ({ ...FEED_POOL[i % FEED_POOL.length], id: i });
+const ACT_POOL = [
+  { who: 'MK', text: 'M. Khalid edited amount', meta: '18,240 → 18,240.00', ago: '2s' },
+  { who: 'RH', text: 'R. Haddad approved', meta: 'Within delegation', ago: '1m' },
+  { who: 'AS', text: 'A. Salem attached file', meta: 'fx-rates-oct.pdf', ago: '4m' },
+  { who: 'SY', text: 'System posted journal', meta: 'Rule: FX revaluation', ago: '9m' },
+  { who: 'MK', text: 'M. Khalid left a comment', meta: '"Check the closing rate"', ago: '12m' },
+];
+
+const POST_POOL = [
+  { text: 'Invoice #2189', meta: 'Al Faisal Trading', amt: '184,200' },
+  { text: 'Payroll batch', meta: 'October · 412 staff', amt: '742,900' },
+  { text: 'Vendor payment', meta: 'Nexa Components', amt: '311,450' },
+  { text: 'Customer receipt', meta: 'Landmark Retail', amt: '96,300' },
+  { text: 'Asset acquisition', meta: 'Fleet · 4 units', amt: '428,000' },
+];
+
+const pick = (pool) => (i) => ({ ...pool[i % pool.length], id: i });
+const makeLog = pick(LOG_POOL);
+const makeAct = pick(ACT_POOL);
+const makePost = pick(POST_POOL);
+
+const useFinanceLive = () => useLive(
+  {
+    n: 0, cash: 42.8, dso: 31, margin: 18.6, pct: 2.4,
+    log: [0, 1, 2, 3].map(makeLog),
+    act: [0, 1, 2, 3].map(makeAct),
+    posts: [0, 1, 2].map(makePost),
+  },
+  (s) => {
+    const n = s.n + 1;
+    const w = Math.sin(n * 0.9) * 0.55 + Math.sin(n * 1.7) * 0.45;
+    return {
+      n,
+      cash: 42.8 * (1 + w * 0.011),
+      dso: Math.round(31 + w * 1.4),
+      margin: 18.6 * (1 + w * 0.008),
+      pct: 2.4 + w * 0.5,
+      log: [makeLog(s.log[0].id + 1), ...s.log.slice(0, 3)],
+      act: [makeAct(s.act[0].id + 1), ...s.act.slice(0, 3)],
+      posts: [makePost(s.posts[0].id + 1), ...s.posts.slice(0, 2)],
+    };
+  },
+  3000
+);
+
+/* =====================================================================
+   ACT I — OVERTURE
+   ===================================================================== */
+
+const Overture = () => {
+  const [live, ref] = useFinanceLive();
+
+  return (
+    <section className="fn-overture" id="top" ref={ref}>
+      <div className="fn-overture-bg" aria-hidden="true">
+        <div className="fn-grid" />
+        <div className="fn-bloom" />
+      </div>
+
+      <div className="fn-overture-inner">
+        <div className="fn-overture-copy">
+          <Reveal duration={0.7}>
+            <span className="fn-kicker"><span className="fn-kicker-dot" /> Emvive Finance</span>
+          </Reveal>
+
+          <MaskText text="The financial operating" as="h1" className="stg-display" delay={0.06} />
+          <MaskText text="system for groups that" as="h1" className="stg-display" delay={0.14} />
+          <MaskText text="close" accent="continuously." as="h1" className="stg-display" delay={0.22} />
+
+          <Reveal delay={0.42} y={16}>
+            <p className="fn-lede">One ledger. Every entity, currency and regulator.</p>
+          </Reveal>
+
+          <Reveal delay={0.5} y={16}>
+            <div className="fn-actions">
+              <a href="#start" className="px-btn px-btn-solid">Book a demo <ArrowRight size={16} /></a>
+              <a href="#system" className="px-btn px-btn-quiet">Explore the system</a>
+            </div>
+          </Reveal>
+        </div>
+
+        <motion.div
+          className="fn-overture-slice"
+          initial={{ opacity: 0, x: 90 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.6, delay: 0.35, ease: EASE }}
+        >
+          <div className="fn-slice-frame">
+            <div className="fn-slice-grid">
+              <div className="fn-slice-side"><Sidebar /></div>
+              <div className="fn-slice-bar"><Toolbar /></div>
+              <div className="fn-slice-main"><LedgerTable /></div>
+              <div className="fn-slice-insp"><Inspector feed={live.act} /></div>
+            </div>
+            <motion.div
+              className="fn-slice-float"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.5, ease: EASE }}
+            >
+              <AiCard />
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      <Reveal delay={0.7} className="fn-overture-foot">
+        <span className="fn-foot-label">In production today</span>
+        <div className="fn-foot-metrics">
+          {[['3 days', 'Average group close'], ['99.8%', 'Cleared on first submission'], ['18', 'Countries, one ledger']].map(([v, l]) => (
+            <div key={l}><b>{v}</b><span>{l}</span></div>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+};
+
+/* =====================================================================
+   ACT II — THE MORPH
+   The shell (sidebar + toolbar) persists across every beat. Only the
+   work area reconfigures, and floating layers drift above it.
+   ===================================================================== */
+
+const BEATS = [
+  { kicker: 'Record', title: 'Everything lands in one ledger.', body: 'Sales, procurement, payroll and inventory post directly. The trial balance is produced, never reassembled.' },
+  { kicker: 'Analyse', title: 'The ledger becomes the analytics.', body: 'No warehouse, no nightly export. The chart you steer by is reading the journals you just posted.' },
+  { kicker: 'Approve', title: 'Analytics become the workflow.', body: 'Variances raise themselves. Matching, thresholds and delegation decide who signs, and when.' },
+  { kicker: 'Automate', title: 'The workflow becomes automation.', body: 'Rules run against live balances every night. Routine entries stop touching a person at all.' },
+  { kicker: 'Report', title: 'Automation becomes the statutory pack.', body: 'Elimination, translation and consolidation are already done. The group report is a view, not a project.' },
+];
+
+const LAYOUT = {
+  side: ['1/1/9/3', '1/1/9/3', '1/1/9/3', '1/1/9/3', '1/1/9/3'],
+  bar: ['1/3/2/13', '1/3/2/13', '1/3/2/13', '1/3/2/13', '1/3/2/13'],
+  table: ['2/3/9/10', null, null, null, null],
+  kpis: [null, '2/3/4/10', null, null, null],
+  chart: [null, '4/3/9/10', null, null, null],
+  flow: [null, null, '2/3/9/9', null, null],
+  rules: [null, null, null, '2/3/9/8', null],
+  log: [null, null, null, '2/8/9/13', null],
+  tree: [null, null, null, null, '2/3/9/8'],
+  stmt: [null, null, null, null, '2/8/9/13'],
+  insp: ['2/10/9/13', '2/10/9/13', '2/9/9/13', null, null],
+};
+
+const PARK = {
+  table: '2/3/9/10', kpis: '2/3/4/10', chart: '4/3/9/10', flow: '2/3/9/9',
+  rules: '2/3/9/8', log: '2/8/9/13', tree: '2/3/9/8', stmt: '2/8/9/13',
+  insp: '2/10/9/13',
+};
+
+const at = (k, b) => LAYOUT[k][b] || PARK[k] || '1/1/2/2';
+const on = (k, b) => Boolean(LAYOUT[k][b]);
+
+const FLOATS = [
+  null,
+  { key: 'ai', style: { right: '24%', bottom: '6%' }, el: <AiCard /> },
+  { key: 'toast', style: { right: '2.5%', top: '13%' }, el: <Toast /> },
+  { key: 'pal', style: { left: '31%', top: '17%' }, el: <Palette /> },
+  { key: 'close', style: { left: '23%', bottom: '7%' }, el: <CloseWidget /> },
+];
 
 const TheSystem = () => {
-  const [live, liveRef] = useLive(
-    { n: 0, cash: 42.8, dso: 31, margin: 18.6, feed: [0, 1, 2, 3].map(makeFeed) },
-    (s) => {
-      const n = s.n + 1;
-      const w = Math.sin(n * 0.9) * 0.55 + Math.sin(n * 1.7) * 0.45;
-      return {
-        n,
-        cash: 42.8 * (1 + w * 0.011),
-        dso: Math.round(31 + w * 1.4),
-        margin: 18.6 * (1 + w * 0.008),
-        feed: [makeFeed(s.feed[0].id + 1), ...s.feed.slice(0, 3)],
-      };
-    },
-    3200
-  );
+  const [live, liveRef] = useFinanceLive();
 
   return (
     <Pin count={BEATS.length} id="system">
@@ -431,44 +207,42 @@ const TheSystem = () => {
           </div>
 
           <div className="fn-act-canvas">
-            <Canvas>
-              <Module area={area('rail', beat)} show={shown('rail', beat)} className="fn-m-rail">
-                <NavRail />
-              </Module>
+            <div className="fn-appframe">
+              <Canvas>
+                <Module area={at('side', beat)} show className="fn-pane"><Sidebar /></Module>
+                <Module area={at('bar', beat)} show className="fn-pane">
+                  <Toolbar crumb={['General ledger', 'Cash flow', 'Approvals', 'Automations', 'Consolidation'][beat]} />
+                </Module>
 
-              <Module area={area('kpis', beat)} show={shown('kpis', beat)} className="fn-m-flush">
-                <KpiStrip live={live} />
-              </Module>
+                <Module area={at('table', beat)} show={on('table', beat)} className="fn-pane"><LedgerTable /></Module>
+                <Module area={at('kpis', beat)} show={on('kpis', beat)} className="fn-pane flush"><KpiWidgets live={live} /></Module>
+                <Module area={at('chart', beat)} show={on('chart', beat)} className="fn-pane"><ChartPanel /></Module>
+                <Module area={at('flow', beat)} show={on('flow', beat)} className="fn-pane"><ApprovalPanel /></Module>
+                <Module area={at('rules', beat)} show={on('rules', beat)} className="fn-pane"><RulesPanel /></Module>
+                <Module area={at('log', beat)} show={on('log', beat)} className="fn-pane"><LogPanel feed={live.log} /></Module>
+                <Module area={at('tree', beat)} show={on('tree', beat)} className="fn-pane"><TreePanel /></Module>
+                <Module area={at('stmt', beat)} show={on('stmt', beat)} className="fn-pane"><StatementPanel /></Module>
+                <Module area={at('insp', beat)} show={on('insp', beat)} className="fn-pane">
+                  <Inspector mode={beat === 2 ? 'activity' : 'record'} feed={live.act} />
+                </Module>
 
-              <Module area={area('table', beat)} show={shown('table', beat)}>
-                <ModuleChrome title="General ledger" tag="Auto-posted" />
-                <LedgerTable rows={beat === 0 ? 8 : 4} />
-              </Module>
-
-              <Module area={area('chart', beat)} show={shown('chart', beat)}>
-                <CashChart />
-              </Module>
-
-              <Module area={area('flow', beat)} show={shown('flow', beat)}>
-                <ApprovalFlow />
-              </Module>
-
-              <Module area={area('rules', beat)} show={shown('rules', beat)}>
-                <RulesPanel />
-              </Module>
-
-              <Module area={area('log', beat)} show={shown('log', beat)}>
-                <LogPanel feed={live.feed} />
-              </Module>
-
-              <Module area={area('tree', beat)} show={shown('tree', beat)}>
-                <EntityTree />
-              </Module>
-
-              <Module area={area('stmt', beat)} show={shown('stmt', beat)}>
-                <StatementPanel />
-              </Module>
-            </Canvas>
+                <AnimatePresence mode="wait">
+                  {FLOATS[beat] && (
+                    <motion.div
+                      key={FLOATS[beat].key}
+                      className="fn-float"
+                      style={FLOATS[beat].style}
+                      initial={{ opacity: 0, y: 16, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                      transition={{ duration: 0.55, ease: EASE, delay: 0.2 }}
+                    >
+                      {FLOATS[beat].el}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Canvas>
+            </div>
           </div>
         </div>
       )}
@@ -481,41 +255,11 @@ const TheSystem = () => {
    ===================================================================== */
 
 const RAIL_PANELS = [
-  {
-    k: 'Payables',
-    title: 'Match before you pay',
-    body: 'Three-way matching against the purchase order and goods receipt, with variances held rather than approved.',
-    body2: '18 invoices awaiting approval',
-    icon: Receipt,
-  },
-  {
-    k: 'Receivables',
-    title: 'Shorten the cash cycle',
-    body: 'Credit limits enforced before dispatch, with reminder sequences that fire without a collector chasing them.',
-    body2: 'DSO down from 40 to 31 days',
-    icon: CreditCard,
-  },
-  {
-    k: 'Treasury',
-    title: 'Liquidity you can plan against',
-    body: 'Bank feeds reconcile daily and roll into a thirteen-week forecast built from committed and expected flows.',
-    body2: '4 banks · 3 currencies connected',
-    icon: Landmark,
-  },
-  {
-    k: 'Assets',
-    title: 'Acquisition to disposal',
-    body: 'Componentised assets with automated depreciation, revaluation and disposal posting straight to the ledger.',
-    body2: '1,284 assets under management',
-    icon: Building2,
-  },
-  {
-    k: 'Tax',
-    title: 'Cleared before it leaves',
-    body: 'Every invoice signed, QR-stamped and cleared with the authority in under a second, response stored for audit.',
-    body2: 'ZATCA Phase 2 certified',
-    icon: ShieldCheck,
-  },
+  { k: 'Payables', title: 'Match before you pay', body: 'Three-way matching against the purchase order and goods receipt, with variances held rather than approved.', stat: '18 invoices awaiting approval', icon: Receipt },
+  { k: 'Receivables', title: 'Shorten the cash cycle', body: 'Credit limits enforced before dispatch, with reminder sequences that fire without a collector chasing them.', stat: 'DSO down from 40 to 31 days', icon: CreditCard },
+  { k: 'Treasury', title: 'Liquidity you can plan against', body: 'Bank feeds reconcile daily and roll into a thirteen-week forecast built from committed and expected flows.', stat: '4 banks · 3 currencies connected', icon: Landmark },
+  { k: 'Assets', title: 'Acquisition to disposal', body: 'Componentised assets with automated depreciation, revaluation and disposal posting straight to the ledger.', stat: '1,284 assets under management', icon: Building2 },
+  { k: 'Tax', title: 'Cleared before it leaves', body: 'Every invoice signed, QR-stamped and cleared with the authority in under a second, response stored for audit.', stat: 'ZATCA Phase 2 certified', icon: ShieldCheck },
 ];
 
 const Gallery = () => (
@@ -526,7 +270,7 @@ const Gallery = () => (
       <p className="fn-rail-intro-p">Keep scrolling — this moves sideways.</p>
     </div>
 
-    {RAIL_PANELS.map(({ k, title, body, body2, icon: Icon }, i) => (
+    {RAIL_PANELS.map(({ k, title, body, stat, icon: Icon }, i) => (
       <article className="fn-rpanel" key={k}>
         <header>
           <span className="fn-rpanel-n">{String(i + 1).padStart(2, '0')}</span>
@@ -534,61 +278,121 @@ const Gallery = () => (
         </header>
         <h3>{title}</h3>
         <p>{body}</p>
-        <footer>
-          <span className="fn-rpanel-stat">{body2}</span>
-        </footer>
+        <footer><span className="fn-rpanel-stat">{stat}</span></footer>
       </article>
     ))}
   </HRail>
 );
 
 /* =====================================================================
-   ACT IV — CONTROLS, on a cursor-lit dark surface
+   ACT IV — CONTROLS
+   The middle is now the point: a live audit chain with glowing links
+   and a trail that writes itself, revealed by the cursor light.
    ===================================================================== */
 
-const Controls = () => (
-  <section className="fn-controls">
-    <Spotlight className="fn-controls-panel">
-      <div className="fn-controls-head">
-        <Reveal><span className="fn-kicker dark"><span className="fn-kicker-dot" /> Controls &amp; assurance</span></Reveal>
-        <MaskText
-          text="Every field that changes leaves a record."
-          as="h2"
-          className="stg-h2"
-        />
-      </div>
+const CHAIN = [
+  { icon: FileText, label: 'Record', meta: 'Invoice created', tone: '' },
+  { icon: ShieldCheck, label: 'Validation', meta: '3-way match passed', tone: '' },
+  { icon: Users, label: 'Approval', meta: 'Controller signed', tone: '' },
+  { icon: Lock, label: 'Locked', meta: 'Period closed', tone: '' },
+  { icon: ChartPie, label: 'Analytics', meta: 'Report refreshed', tone: '' },
+];
 
-      <div className="fn-controls-grid">
-        {[
-          [Lock, 'Segregation of duties', 'Maker and checker are enforced per entity, and an administrator cannot quietly bypass it.'],
-          [ShieldCheck, 'Immutable audit trail', 'User, timestamp, device, before and after values — on every create, edit and deletion.'],
-          [Layers, 'Period locks', 'Closed periods reject postings outright rather than warning and letting them through.'],
-          [Database, 'Data residency', 'Saudi Arabia, the UAE or India. Private cloud where shared infrastructure is ruled out.'],
-        ].map(([Icon, t, d], i) => (
-          <Reveal className="fn-control" delay={i * 0.07} key={t}>
-            <Icon size={18} strokeWidth={1.6} />
-            <h3>{t}</h3>
-            <p>{d}</p>
-          </Reveal>
-        ))}
-      </div>
-    </Spotlight>
-  </section>
-);
+const Controls = () => {
+  const [live, ref] = useFinanceLive();
+
+  return (
+    <section className="fn-controls">
+      <Spotlight className="fn-controls-panel">
+        <div className="fn-controls-head">
+          <Reveal><span className="fn-kicker dark"><span className="fn-kicker-dot" /> Controls &amp; assurance</span></Reveal>
+          <MaskText text="Every field that changes leaves a record." as="h2" className="stg-h2" />
+        </div>
+
+        {/* the chain */}
+        <div className="fn-chain-rail" ref={ref}>
+          {CHAIN.map(({ icon: Icon, label, meta }, i) => (
+            <React.Fragment key={label}>
+              {i > 0 && (
+                <span className="fn-chain-link" aria-hidden="true">
+                  <motion.i
+                    initial={{ x: '-130%' }}
+                    animate={{ x: '130%' }}
+                    transition={{ duration: 1.9, delay: i * 0.42, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
+                  />
+                </span>
+              )}
+              <motion.div
+                className="fn-chain-node"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
+              >
+                <span className="fn-chain-ic"><Icon size={15} strokeWidth={1.7} /></span>
+                <b>{label}</b>
+                <i>{meta}</i>
+              </motion.div>
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* the trail */}
+        <div className="fn-audit">
+          <div className="fn-audit-head">
+            <span className="fn-audit-label">Audit trail</span>
+            <span className="fn-audit-live"><i />Recording</span>
+          </div>
+          <div className="fn-audit-rows">
+            <AnimatePresence initial={false}>
+              {live.act.map((a) => (
+                <motion.div
+                  className="fn-audit-row"
+                  key={a.id}
+                  layout
+                  initial={{ opacity: 0, y: -12, filter: 'blur(3px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: EASE }}
+                >
+                  <span className="fn-audit-avatar">{a.who}</span>
+                  <span className="fn-audit-text"><b>{a.text}</b><i>{a.meta}</i></span>
+                  <span className="fn-audit-time">{a.ago} ago</span>
+                  <span className="fn-audit-hash">0x{(a.id * 7919).toString(16).padStart(6, '0').slice(-6)}</span>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="fn-controls-grid">
+          {[
+            [Lock, 'Segregation of duties', 'Maker and checker enforced per entity. An administrator cannot quietly bypass it.'],
+            [ShieldCheck, 'Immutable trail', 'User, timestamp, device, before and after values on every change.'],
+            [Layers, 'Period locks', 'Closed periods reject postings outright rather than warning and letting them through.'],
+            [Database, 'Data residency', 'Saudi Arabia, the UAE or India. Private cloud where shared infrastructure is ruled out.'],
+          ].map(([Icon, t, d], i) => (
+            <Reveal className="fn-control" delay={i * 0.07} key={t}>
+              <Icon size={17} strokeWidth={1.6} />
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </Reveal>
+          ))}
+        </div>
+      </Spotlight>
+    </section>
+  );
+};
 
 /* =====================================================================
    ACT V — SCALE
    ===================================================================== */
 
 const Scale = () => (
-  <section className="fn-scale">
+  <section className="fn-scale" id="scale">
     <div className="fn-scale-inner">
       <ActRule label="Enterprise scale" />
-      <MaskText
-        text="What changes in the first year."
-        as="h2"
-        className="stg-h2"
-      />
+      <MaskText text="What changes in the first year." as="h2" className="stg-h2" />
 
       <div className="fn-scale-rows">
         {[
@@ -598,10 +402,7 @@ const Scale = () => (
           { v: 99.8, decimals: 1, suffix: '%', label: 'Cleared on first submission', sub: 'Signed, stamped and accepted by the authority in under a second' },
         ].map((s) => (
           <Reveal className="fn-scale-row" key={s.label}>
-            <b>
-              {s.pre}
-              <ScrollNumber to={s.v} decimals={s.decimals || 0} prefix={s.prefix || ''} suffix={s.suffix} />
-            </b>
+            <b>{s.pre}<ScrollNumber to={s.v} decimals={s.decimals || 0} prefix={s.prefix || ''} suffix={s.suffix} /></b>
             <div>
               <h3>{s.label}</h3>
               <p>{s.sub}</p>
@@ -615,44 +416,149 @@ const Scale = () => (
 
 /* =====================================================================
    ACT VI — ARCHITECTURE
+   The centre is a working application panel; the flanks are live
+   connection registers, not empty boxes.
    ===================================================================== */
 
-const Architecture = () => (
-  <section className="fn-arch">
-    <div className="fn-arch-inner">
-      <ActRule label="Connected" />
-      <MaskText text="One ledger, wired to everything else." as="h2" className="stg-h2" />
+const SOURCES = [
+  [Landmark, 'Bank feeds', 'connected', '4 banks'],
+  [Receipt, 'Supplier invoices', 'syncing', '128 today'],
+  [CreditCard, 'Payment gateways', 'connected', 'Live'],
+  [Database, 'Legacy ERP', 'connected', 'Nightly'],
+  [FileText, 'Expense claims', 'connected', '42 pending'],
+];
 
-      <div className="fn-arch-diagram">
-        {[
-          ['Sources', [[Landmark, 'Bank feeds'], [Receipt, 'Supplier invoices'], [CreditCard, 'Payment gateways']]],
-          ['Emvive Finance', [[BookOpen, 'General ledger'], [Zap, 'Posting rules'], [Lock, 'Controls']]],
-          ['Consumers', [[ChartPie, 'Power BI'], [ShieldCheck, 'ZATCA'], [TrendingUp, 'Board reporting']]],
-        ].map(([col, items], ci) => (
-          <React.Fragment key={col}>
-            {ci > 0 && (
-              <div className="fn-arch-wire" aria-hidden="true">
-                <motion.i
-                  initial={{ x: '-100%' }}
-                  animate={{ x: '100%' }}
-                  transition={{ duration: 2.4, delay: ci * 0.5, repeat: Infinity, repeatDelay: 1, ease: 'easeInOut' }}
-                />
-              </div>
-            )}
-            <Reveal className={`fn-arch-col ${ci === 1 ? 'core' : ''}`} delay={ci * 0.1}>
-              <span className="fn-arch-col-label">{col}</span>
-              {items.map(([Icon, label]) => (
-                <div className="fn-arch-item" key={label}>
-                  <Icon size={14} strokeWidth={1.7} /> {label}
-                </div>
-              ))}
-            </Reveal>
-          </React.Fragment>
-        ))}
+const CONSUMERS = [
+  [ChartPie, 'Power BI', 'connected', 'Refreshed 2m'],
+  [ShieldCheck, 'ZATCA', 'connected', '4,182 cleared'],
+  [TrendingUp, 'Board reporting', 'syncing', 'Generating'],
+  [Percent, 'Tax authority', 'connected', 'Q4 filed'],
+  [Users, 'Auditor portal', 'connected', 'Read-only'],
+];
+
+const Register = ({ label, items }) => (
+  <div className="fn-reg">
+    <span className="fn-reg-label">{label}</span>
+    {items.map(([Icon, name, state, meta], i) => (
+      <motion.div
+        className="fn-reg-row"
+        key={name}
+        initial={{ opacity: 0, x: label === 'Sources' ? -12 : 12 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: i * 0.07, ease: EASE }}
+      >
+        <span className="fn-reg-ic"><Icon size={13} strokeWidth={1.8} /></span>
+        <span className="fn-reg-txt"><b>{name}</b><i>{meta}</i></span>
+        {state === 'syncing' ? (
+          <span className="fn-reg-state sync"><RefreshCw size={9} /> Syncing</span>
+        ) : (
+          <span className="fn-reg-state ok"><Check size={9} strokeWidth={4} /> Connected</span>
+        )}
+      </motion.div>
+    ))}
+  </div>
+);
+
+const CoreApp = ({ live }) => (
+  <div className="fn-core">
+    <div className="fn-core-bar">
+      <span className="fn-core-mark">EM</span>
+      <b>Emvive Finance</b>
+      <kbd>⌘K</kbd>
+    </div>
+
+    <div className="fn-core-sec">
+      <span className="fn-core-label">General ledger</span>
+      {[
+        ['Revenue', '12,284,500', 100, 'up'],
+        ['Expenses', '7,429,000', 61, ''],
+        ['Payroll', '1,742,900', 24, ''],
+        ['Assets', '4,120,000', 44, 'up'],
+        ['Liabilities', '2,318,600', 31, ''],
+      ].map(([name, amt, pct, dir], i) => (
+        <div className="fn-core-row" key={name}>
+          <span>{name}</span>
+          <span className="fn-core-amt px-mono">{amt}</span>
+          {dir === 'up' && <i className="fn-core-up">▲</i>}
+          <Meter value={pct} delay={i * 0.06} />
+        </div>
+      ))}
+    </div>
+
+    <div className="fn-core-sec">
+      <div className="fn-core-label-row">
+        <span className="fn-core-label">Today&apos;s postings</span>
+        <span className="fn-core-live"><i /> live</span>
+      </div>
+      <div className="fn-core-posts">
+        <AnimatePresence initial={false}>
+          {live.posts.map((p) => (
+            <motion.div
+              className="fn-core-post"
+              key={p.id}
+              layout
+              initial={{ opacity: 0, y: -10, filter: 'blur(2px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.55, ease: EASE }}
+            >
+              <span className="fn-core-plus">+</span>
+              <span className="fn-reg-txt"><b>{p.text}</b><i>{p.meta}</i></span>
+              <span className="px-mono fn-core-amt">{p.amt}</span>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
-  </section>
+
+    <div className="fn-core-cash">
+      <div>
+        <span className="fn-core-label">Cash position</span>
+        <motion.b
+          key={live.cash.toFixed(1)}
+          className="px-mono"
+          initial={{ opacity: 0.4, y: -3 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
+          {CUR} {live.cash.toFixed(1)}M
+        </motion.b>
+        <span className="fn-core-delta">▲ +{live.pct.toFixed(1)}% <em>updated 2 sec ago</em></span>
+      </div>
+      <Spark values={[32, 38, 35, 44, 41, 52, 49, 58, 55, 64]} width={92} height={34} />
+    </div>
+  </div>
 );
+
+const Architecture = () => {
+  const [live, ref] = useFinanceLive();
+
+  return (
+    <section className="fn-arch" ref={ref}>
+      <div className="fn-arch-inner">
+        <ActRule label="Connected" />
+        <MaskText text="One ledger, wired to everything else." as="h2" className="stg-h2" />
+
+        <div className="fn-arch-diagram">
+          <Reveal className="fn-arch-side"><Register label="Sources" items={SOURCES} /></Reveal>
+
+          <div className="fn-arch-wire" aria-hidden="true">
+            <motion.i initial={{ x: '-100%' }} animate={{ x: '100%' }} transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 0.9, ease: 'easeInOut' }} />
+          </div>
+
+          <Reveal className="fn-arch-core" delay={0.1}><CoreApp live={live} /></Reveal>
+
+          <div className="fn-arch-wire" aria-hidden="true">
+            <motion.i initial={{ x: '-100%' }} animate={{ x: '100%' }} transition={{ duration: 2.4, delay: 0.7, repeat: Infinity, repeatDelay: 0.9, ease: 'easeInOut' }} />
+          </div>
+
+          <Reveal className="fn-arch-side" delay={0.16}><Register label="Consumers" items={CONSUMERS} /></Reveal>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 /* =====================================================================
    ACT VII — PROOF
@@ -670,10 +576,7 @@ const Proof = () => (
         <Reveal delay={0.2}>
           <div className="fn-proof-by">
             <span className="fn-proof-avatar">RH</span>
-            <span className="fn-txt">
-              <b>Rania Haddad</b>
-              <i>Group Financial Controller, Horizon Holding</i>
-            </span>
+            <span className="fn-reg-txt"><b>Rania Haddad</b><i>Group Financial Controller, Horizon Holding</i></span>
           </div>
         </Reveal>
         <Reveal delay={0.28}>
@@ -685,10 +588,11 @@ const Proof = () => (
 
       <Reveal className="fn-proof-visual" delay={0.12} y={26}>
         <div className="fn-proof-card">
-          <ModuleChrome title="Close velocity" tag="Horizon Holding" />
-          <div className="fn-proof-bars">
-            <LiveBars values={[19, 17, 14, 12, 9, 7, 5, 4, 3, 3, 3, 3]} height={140} />
+          <div className="fn-proof-bar">
+            <b>Close velocity</b>
+            <span className="ap-tag mute">Horizon Holding · 12 months</span>
           </div>
+          <div className="fn-proof-bars"><LiveBars values={[19, 17, 14, 12, 9, 7, 5, 4, 3, 3, 3, 3]} height={140} /></div>
           <div className="fn-proof-axis"><span>Month 1</span><span>Month 12</span></div>
           <div className="fn-proof-stats">
             <div><Ring value={86} size={40} stroke={3.5} label="86" /><span>Automated<br />postings</span></div>
@@ -718,7 +622,7 @@ const Finance = () => (
     <TheSystem />
     <Gallery />
     <Controls />
-    <div id="scale"><Scale /></div>
+    <Scale />
     <Architecture />
     <Proof />
 

@@ -1,0 +1,606 @@
+/* =====================================================================
+   THE APPLICATION — enterprise UI density. Prefix `ap-`.
+   Type runs 10–13px, rows are tight, everything is on a hairline.
+   Real software is dense; that density is what separates a product
+   surface from a marketing illustration.
+   ===================================================================== */
+
+.ap-txt { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.ap-txt b { font-size: 0.755rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ap-txt i { font-style: normal; font-size: 0.665rem; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ap-mute { color: var(--ink-4); flex-shrink: 0; }
+.ap-mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.ap-amt { font-size: 0.735rem; color: var(--ink); }
+.r { text-align: right; }
+
+/* status pills */
+.ap-tag {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.645rem; font-weight: 500; font-style: normal;
+  white-space: nowrap;
+  color: var(--ink-2); background: var(--bg-3);
+}
+.ap-tag.pos { color: #067a52; background: rgba(10, 143, 94, 0.12); }
+.ap-tag.warn { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
+.ap-tag.neg { color: #a12b32; background: rgba(220, 38, 38, 0.1); }
+.ap-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.11); }
+.ap-tag.accent { color: var(--accent-2); background: color-mix(in srgb, var(--accent) 13%, transparent); }
+.ap-tag.mute { color: var(--ink-3); background: transparent; padding-left: 0; }
+
+.ap-live {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: currentColor;
+  animation: ap-blink 2.2s ease-in-out infinite;
+}
+@keyframes ap-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .ap-live { animation: none; } }
+
+/* avatars */
+.ap-avatar {
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 0.58rem; font-weight: 500; font-style: normal;
+  color: #fff; background: var(--ink-3);
+  flex-shrink: 0;
+}
+.ap-avatar.xs { width: 19px; height: 19px; }
+.ap-avatar.sm { width: 24px; height: 24px; font-size: 0.63rem; }
+.ap-avatar.more { background: var(--bg-3); color: var(--ink-3); }
+
+/* small buttons + chips */
+.ap-chip {
+  display: inline-flex; align-items: center; gap: 0.28rem;
+  padding: 0.2rem 0.48rem;
+  border-radius: 5px;
+  font-size: 0.665rem;
+  color: var(--ink-2);
+  background: var(--bg-3);
+  white-space: nowrap;
+}
+.ap-chip.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink-3); }
+.ap-chip.sm { font-size: 0.63rem; padding: 0.16rem 0.4rem; }
+.ap-chip svg { opacity: 0.6; }
+
+.ap-btn-sm {
+  display: inline-flex; align-items: center;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.685rem; font-weight: 500;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+}
+.ap-btn-sm.solid { color: #fff; background: var(--ink); border-color: var(--ink); }
+
+.ap-icon-btn {
+  position: relative;
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  border-radius: 6px;
+  color: var(--ink-3);
+}
+.ap-icon-btn .ap-dot {
+  position: absolute; top: 3px; right: 3px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #dc2626;
+  box-shadow: 0 0 0 1.5px var(--bg);
+}
+
+kbd {
+  font-family: inherit;
+  font-size: 0.6rem;
+  padding: 0.08rem 0.28rem;
+  border-radius: 4px;
+  color: var(--ink-4);
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+}
+
+/* =====================================================================
+   SIDEBAR
+   ===================================================================== */
+.ap-side {
+  display: flex; flex-direction: column;
+  height: 100%;
+  padding: 0.7rem 0.6rem;
+  background: var(--bg-2);
+  min-width: 0;
+}
+
+.ap-ws {
+  display: flex; align-items: center; gap: 0.5rem;
+  width: 100%; padding: 0.45rem 0.45rem;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg);
+  font: inherit; text-align: left; cursor: pointer;
+}
+.ap-ws-mark {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 0.58rem; color: #fff; background: var(--accent);
+  flex-shrink: 0;
+}
+
+.ap-search {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin: 0.5rem 0 0.85rem;
+  padding: 0.38rem 0.5rem;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  color: var(--ink-4);
+  background: var(--bg-3);
+}
+.ap-search kbd { margin-left: auto; }
+
+.ap-nav { display: flex; flex-direction: column; gap: 1px; min-height: 0; overflow: hidden; }
+
+.ap-nav-label {
+  font-size: 0.6rem; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ink-4);
+  padding: 0.3rem 0.45rem 0.4rem;
+}
+.ap-nav-label.mt { margin-top: 0.7rem; }
+
+.ap-nav-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.36rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.735rem;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.ap-nav-item > span { overflow: hidden; text-overflow: ellipsis; }
+.ap-nav-item svg { color: var(--ink-4); flex-shrink: 0; }
+.ap-nav-item.on { color: var(--ink); background: rgba(9, 9, 11, 0.055); }
+.ap-nav-item.on svg { color: var(--accent); }
+
+.ap-badge {
+  margin-left: auto;
+  font-style: normal; font-size: 0.6rem;
+  padding: 0.04rem 0.28rem;
+  border-radius: 4px;
+  color: var(--ink-3); background: var(--bg-3);
+}
+.ap-pin-dot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+.ap-nav-item .lucide-star { margin-left: auto; }
+
+.ap-side-foot {
+  margin-top: auto;
+  display: flex; align-items: center; gap: 0.5rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--hair);
+}
+
+/* =====================================================================
+   TOOLBAR
+   ===================================================================== */
+.ap-bar {
+  display: flex; align-items: center; gap: 0.9rem;
+  height: 100%;
+  padding: 0 0.85rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hair);
+  min-width: 0;
+}
+
+.ap-crumbs { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--ink-4); flex-shrink: 0; }
+.ap-crumbs .on { color: var(--ink); font-weight: 500; }
+
+.ap-filters { display: flex; align-items: center; gap: 0.3rem; min-width: 0; overflow: hidden; }
+
+.ap-bar-right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+.ap-faces { display: flex; }
+.ap-faces .ap-avatar { margin-left: -6px; box-shadow: 0 0 0 2px var(--bg); position: relative; }
+.ap-faces .ap-avatar:first-child { margin-left: 0; }
+
+/* =====================================================================
+   PANELS
+   ===================================================================== */
+.ap-panel {
+  display: flex; flex-direction: column;
+  height: 100%;
+  min-width: 0; min-height: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.ap-panel-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--hair);
+  flex-shrink: 0;
+}
+.ap-panel-bar > b { font-size: 0.765rem; font-weight: 500; letter-spacing: -0.014em; color: var(--ink); white-space: nowrap; }
+.ap-panel-tools { margin-left: auto; display: flex; align-items: center; gap: 0.35rem; }
+
+.ap-panel-foot {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-top: 1px solid var(--hair);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.ap-panel-foot b { color: var(--ink); font-weight: 500; }
+
+.ap-sec-label {
+  display: block;
+  font-size: 0.6rem; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ink-4);
+  padding: 0.5rem 0 0.4rem;
+}
+
+/* =====================================================================
+   TABLE
+   ===================================================================== */
+.ap-table { flex: 1; min-height: 0; overflow: hidden; }
+
+.ap-tr {
+  display: grid;
+  grid-template-columns: 26px 78px minmax(0, 1fr) 82px 82px 74px 28px;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.75rem;
+  height: 32px;
+  font-size: 0.725rem;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--hair);
+}
+.ap-tr > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ap-thead {
+  height: 28px;
+  font-size: 0.615rem; letter-spacing: 0.055em; text-transform: uppercase;
+  color: var(--ink-4);
+  background: var(--bg-2);
+}
+
+.ap-row { transition: background 0.2s ease; }
+.ap-row:hover { background: var(--bg-2); }
+.ap-row.open { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+
+.ap-check { display: grid; place-items: center; }
+.ap-check i {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  display: block;
+}
+.ap-row.open .ap-check i { background: var(--accent); border-color: var(--accent); }
+
+.ap-acct { display: flex; align-items: center; gap: 0.35rem; color: var(--ink); }
+.ap-acct svg { color: var(--ink-4); flex-shrink: 0; }
+.ap-dotc { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.ap-acct em {
+  font-style: normal; font-size: 0.615rem;
+  color: var(--ink-4);
+  padding: 0.04rem 0.26rem;
+  border-radius: 3px;
+  background: var(--bg-3);
+  margin-left: 0.15rem;
+}
+
+.ap-subrow { height: 28px; background: var(--bg-2); }
+.ap-sub { font-size: 0.685rem; color: var(--ink-3); padding-left: 1.2rem; }
+
+/* =====================================================================
+   INSPECTOR
+   ===================================================================== */
+.ap-insp { border-left: 1px solid var(--hair); }
+
+.ap-tabs { display: flex; gap: 0.15rem; padding: 0.45rem 0.6rem 0; border-bottom: 1px solid var(--hair); }
+.ap-tabs span {
+  padding: 0.3rem 0.5rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  border-bottom: 1.5px solid transparent;
+  margin-bottom: -1px;
+}
+.ap-tabs .on { color: var(--ink); border-bottom-color: var(--accent); }
+
+.ap-fields { padding: 0.5rem 0.75rem; display: grid; gap: 0.05rem; }
+.ap-fields div {
+  display: grid; grid-template-columns: 5.4rem 1fr;
+  align-items: center; gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.7rem;
+}
+.ap-fields span { color: var(--ink-4); }
+.ap-fields b { font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ap-timeline { flex: 1; min-height: 0; overflow: hidden; padding: 0 0.75rem; border-top: 1px solid var(--hair); }
+.ap-tl-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.5rem; padding: 0.3rem 0; }
+.ap-when { font-size: 0.63rem; }
+
+.ap-comment {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--hair);
+  flex-shrink: 0;
+}
+.ap-comment-input {
+  flex: 1;
+  font-size: 0.7rem;
+  color: var(--ink-4);
+  padding: 0.28rem 0.45rem;
+  border-radius: 6px;
+  background: var(--bg-3);
+}
+
+/* =====================================================================
+   KPI WIDGETS
+   ===================================================================== */
+.ap-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; height: 100%; }
+
+.ap-kpi {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0.7rem 0.85rem;
+  border-radius: 11px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.ap-kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.ap-kpi-top span { font-size: 0.685rem; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ap-kpi b { display: block; margin: 0.3rem 0 0.25rem; font-size: 1.24rem; font-weight: 500; letter-spacing: -0.038em; color: var(--ink); }
+.ap-kpi-bot { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.ap-kpi-bot i { font-style: normal; font-size: 0.685rem; }
+.ap-kpi-bot i.up { color: #067a52; }
+.ap-kpi-bot i.down { color: #b91c1c; }
+
+/* =====================================================================
+   CHART
+   ===================================================================== */
+.ap-chart { flex: 1; display: flex; flex-direction: column; padding: 0.75rem 0.85rem; min-height: 0; }
+.ap-chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
+.ap-chart-head > div { display: flex; align-items: center; gap: 0.5rem; }
+.ap-chart-head b { font-size: 1.32rem; font-weight: 500; letter-spacing: -0.04em; color: var(--ink); }
+.ap-legend { display: flex; align-items: center; gap: 0.28rem; font-size: 0.655rem; color: var(--ink-3); }
+.ap-legend i { width: 9px; height: 2px; border-radius: 2px; background: var(--accent); }
+.ap-legend i.ghost { opacity: 0.4; margin-left: 0.3rem; }
+.ap-chart .vz-area { flex: 1; min-height: 0; }
+.ap-axis { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.635rem; color: var(--ink-4); }
+
+.ap-range {
+  padding: 0.13rem 0.36rem;
+  border-radius: 4px;
+  font-size: 0.63rem;
+  color: var(--ink-4);
+}
+.ap-range.on { color: var(--ink); background: var(--bg-3); }
+
+/* =====================================================================
+   APPROVAL CHAIN
+   ===================================================================== */
+.ap-chain { flex: 1; display: grid; align-content: center; gap: 0.95rem; padding: 0.9rem 1rem; }
+.ap-chain-row { position: relative; display: flex; align-items: center; gap: 0.65rem; padding-left: 1.35rem; }
+.ap-chain-node {
+  position: absolute; left: 0; top: 50%;
+  width: 15px; height: 15px; margin-top: -7.5px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--line);
+  background: var(--bg); color: #fff;
+}
+.ap-chain-row::before {
+  content: ''; position: absolute;
+  left: 7px; top: 50%;
+  width: 1px; height: calc(100% + 0.95rem);
+  background: var(--hair);
+}
+.ap-chain-row:last-child::before { display: none; }
+.ap-chain-row.done .ap-chain-node { background: var(--accent); border-color: var(--accent); }
+.ap-chain-row.done::before { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+.ap-chain-row.live .ap-chain-node { border-color: #d97706; border-right-color: transparent; animation: ap-turn 1.5s linear infinite; }
+.ap-chain-row.next { opacity: 0.45; }
+.ap-chain-row .ap-txt { flex: 1; }
+@keyframes ap-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ap-chain-row.live .ap-chain-node { animation: none; } }
+
+/* =====================================================================
+   RULES + LOG
+   ===================================================================== */
+.ap-rules { flex: 1; display: grid; align-content: start; gap: 0.35rem; padding: 0.6rem 0.7rem; overflow: hidden; }
+.ap-rule {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto auto;
+  align-items: center; gap: 0.5rem;
+  padding: 0.48rem 0.6rem;
+  border-radius: 8px;
+  background: var(--bg-2);
+  font-size: 0.71rem;
+}
+.ap-rule-when { display: flex; align-items: center; gap: 0.3rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ap-rule-when svg { color: var(--accent); flex-shrink: 0; }
+.ap-rule-then { color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ap-switch {
+  width: 20px; height: 12px; border-radius: 7px;
+  background: var(--accent); position: relative; flex-shrink: 0;
+}
+.ap-switch::after {
+  content: ''; position: absolute;
+  right: 1.5px; top: 1.5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #fff;
+}
+
+.ap-log { flex: 1; display: grid; align-content: start; gap: 0.4rem; padding: 0.6rem 0.7rem; overflow: hidden; }
+.ap-log-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.5rem; }
+.ap-log-ic {
+  width: 20px; height: 20px; border-radius: 6px;
+  display: grid; place-items: center;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 11%, transparent);
+  flex-shrink: 0;
+}
+
+/* =====================================================================
+   TREE + STATEMENT
+   ===================================================================== */
+.ap-tree { flex: 1; padding: 0.7rem 0.75rem; display: grid; align-content: start; gap: 0.35rem; overflow: hidden; }
+.ap-tree-parent {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  margin-bottom: 0.3rem;
+}
+.ap-tree-parent .ap-txt { flex: 1; }
+.ap-tree-ic { width: 25px; height: 25px; border-radius: 7px; display: grid; place-items: center; color: #fff; background: var(--accent); flex-shrink: 0; }
+.ap-tree-node { position: relative; margin-left: 1rem; }
+.ap-tree-line {
+  position: absolute; left: -0.62rem; top: -0.42rem; bottom: 50%;
+  width: 0.62rem;
+  border-left: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-bottom-left-radius: 6px;
+}
+.ap-tree-body {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; gap: 0.3rem 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  background: var(--bg-2);
+}
+.ap-tree-body .vz-meter { grid-column: 1 / -1; }
+
+.ap-stmt { flex: 1; padding: 0.7rem 0.8rem; display: grid; align-content: start; gap: 0.35rem; overflow: hidden; }
+.ap-stmt-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.7rem;
+  padding: 0.34rem 0;
+  font-size: 0.725rem;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--hair);
+}
+.ap-stmt-row .vz-meter { grid-column: 1 / -1; }
+.ap-stmt-row .ap-mono { color: var(--ink); }
+.ap-stmt-row.strong { color: var(--ink); font-weight: 500; }
+
+/* =====================================================================
+   FLOATING LAYERS
+   ===================================================================== */
+.ap-float {
+  position: absolute;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 6px rgba(9, 9, 11, 0.06),
+    0 24px 54px -22px rgba(9, 9, 11, 0.42);
+  z-index: 20;
+}
+
+/* --- AI insight --- */
+.ap-ai { width: 268px; padding: 0.75rem 0.85rem 0.85rem; }
+.ap-ai-head { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+.ap-ai-head b { font-size: 0.735rem; font-weight: 500; color: var(--ink); }
+.ap-ai-head .ap-mute { margin-left: auto; }
+.ap-ai-ic {
+  width: 20px; height: 20px; border-radius: 6px;
+  display: grid; place-items: center;
+  color: #fff; background: var(--accent);
+}
+.ap-ai p { margin: 0; font-size: 0.71rem; line-height: 1.5; color: var(--ink-2); }
+.ap-ai p b { color: var(--ink); font-weight: 500; }
+.ap-ai-actions { display: flex; gap: 0.35rem; margin-top: 0.7rem; }
+
+/* --- toast --- */
+.ap-toast { width: 244px; padding: 0.6rem 0.7rem 0.7rem; display: flex; align-items: center; gap: 0.55rem; }
+.ap-toast-ic {
+  width: 26px; height: 26px; border-radius: 8px;
+  display: grid; place-items: center;
+  color: #fff; background: var(--accent);
+  flex-shrink: 0;
+}
+.ap-toast .ap-txt { flex: 1; }
+.ap-toast-bar {
+  position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.35rem;
+  height: 2px; border-radius: 2px; background: var(--bg-3); overflow: hidden;
+}
+.ap-toast-bar i {
+  display: block; height: 100%; background: var(--accent);
+  animation: ap-drain 4.5s linear infinite;
+  transform-origin: left;
+}
+@keyframes ap-drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .ap-toast-bar i { animation: none; } }
+
+/* --- command palette --- */
+.ap-palette { width: 340px; overflow: hidden; }
+.ap-pal-input {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.775rem;
+  color: var(--ink);
+}
+.ap-pal-input span { flex: 1; display: flex; align-items: center; }
+.ap-caretblink {
+  display: inline-block; width: 1px; height: 13px;
+  margin-left: 1px;
+  background: var(--accent);
+  animation: ap-caret 1.1s step-end infinite;
+}
+@keyframes ap-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ap-caretblink { animation: none; } }
+
+.ap-pal-body { padding: 0.35rem 0.4rem 0.5rem; }
+.ap-pal-body .ap-sec-label { padding-left: 0.35rem; }
+.ap-pal-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.45rem;
+  border-radius: 7px;
+  font-size: 0.73rem;
+  color: var(--ink-2);
+}
+.ap-pal-row svg { color: var(--ink-4); flex-shrink: 0; }
+.ap-pal-row span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ap-pal-row.on { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--ink); }
+.ap-pal-row.on svg { color: var(--accent); }
+
+/* --- close widget --- */
+.ap-close { width: 214px; padding: 0.75rem 0.8rem 0.8rem; }
+.ap-close-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.65rem; }
+.ap-close-row {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.24rem 0;
+  font-size: 0.7rem;
+  color: var(--ink-2);
+}
+.ap-close-dot {
+  width: 13px; height: 13px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--line);
+  color: #fff; flex-shrink: 0;
+}
+.ap-close-row.done .ap-close-dot { background: var(--accent); border-color: var(--accent); }
+.ap-close-row.done { color: var(--ink-4); }
+.ap-close-row.live .ap-close-dot { border-color: #d97706; border-right-color: transparent; animation: ap-turn 1.5s linear infinite; }
+.ap-close-row.next { opacity: 0.5; }
+
+/* =====================================================================
+   DARK
+   ===================================================================== */
+body.dark-theme .ap-side { background: var(--bg-2); }
+body.dark-theme .ap-ws,
+body.dark-theme .ap-panel,
+body.dark-theme .ap-kpi,
+body.dark-theme .ap-bar { background: var(--bg); }
+body.dark-theme .ap-nav-item.on { background: rgba(255, 255, 255, 0.07); }
+body.dark-theme .ap-row:hover,
+body.dark-theme .ap-thead,
+body.dark-theme .ap-subrow,
+body.dark-theme .ap-rule,
+body.dark-theme .ap-tree-body,
+body.dark-theme .ap-comment-input,
+body.dark-theme .ap-search { background: rgba(255, 255, 255, 0.045); }
+body.dark-theme .ap-float { background: rgba(16, 18, 24, 0.86); }
+body.dark-theme .ap-btn-sm.solid { color: #08090a; background: #f4f4f6; border-color: #f4f4f6; }
