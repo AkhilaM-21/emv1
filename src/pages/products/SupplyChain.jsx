@@ -5,14 +5,13 @@ import {
 } from 'lucide-react';
 import { motion, Reveal, MaskText, useLive, EASE } from './motion';
 import { ProductPage, SubNav, ClosingCta, Footer } from './system';
-import {
-  NetworkScreen, SiteScreen, TaskScreen,
-  ProcurementScreen, FleetScreen, ForecastScreen, SupplierScreen,
-} from './SupplyApp';
+import { NetworkScreen, SiteScreen, TaskScreen } from './SupplyApp';
 import {
   NetworkMap, WarehouseFloor, ControlRoom, AiPanel, IntegrationWeb, BeforeAfter, ScalePanel,
 } from './SupplyOps';
+import { OperationsWorkspace } from './SupplyWorkspace';
 import './SupplyApp.css';
+import './SupplyOpsAdd.css';
 import './SupplyChain.css';
 
 /* =====================================================================
@@ -51,7 +50,25 @@ const EVENT_POOL = [
 const mk = (pool) => (i) => ({ ...pool[i % pool.length], id: i });
 const mkAlert = mk(ALERT_POOL);
 const mkFeed = mk(FEED_POOL);
+const PO_POOL = [
+  { code: "PO-8841", sup: "Al Faisal Trading", val: "184,200", pct: 82, tone: "ok", state: "Confirmed" },
+  { code: "PO-8842", sup: "Nexa Components", val: "311,450", pct: 64, tone: "ok", state: "Confirmed" },
+  { code: "PO-8843", sup: "Gulf Packaging", val: "62,900", pct: 18, tone: "warn", state: "Awaiting ack" },
+  { code: "PO-8844", sup: "Delta Chemicals", val: "128,700", pct: 41, tone: "info", state: "In approval" },
+  { code: "PO-8845", sup: "Meridian Labels", val: "94,300", pct: 96, tone: "ok", state: "Shipped" },
+  { code: "PO-8846", sup: "Orbit Textiles", val: "58,400", pct: 12, tone: "info", state: "Drafted" },
+];
+
+const NOTE_POOL = [
+  { t: "Replenishment rescheduled", m: "3 orders moved · no stockout risk", tone: "ok" },
+  { t: "Reefer excursion cleared", m: "REF-042 back in range at 3.2°C", tone: "ok" },
+  { t: "PO-8843 still unacknowledged", m: "24h elapsed · escalated to buyer", tone: "warn" },
+  { t: "Wave 42 released", m: "186 lines across 4 zones", tone: "ok" },
+];
+
 const mkEvent = mk(EVENT_POOL);
+const mkPo = mk(PO_POOL);
+const mkNote = mk(NOTE_POOL);
 
 
 const useOpsLive = () => useLive(
@@ -59,6 +76,10 @@ const useOpsLive = () => useLive(
     n: 0, temp: 3.1, pickers: 38, rate: 412, transit: 342, otif: 96.4,
     alerts: [0, 1, 2].map(mkAlert), feed: [0, 1, 2, 3].map(mkFeed),
     events: [0, 1, 2].map(mkEvent),
+    pos: [0, 1, 2, 3, 4].map(mkPo),
+    poStage: 1,
+    demand: [42, 48, 45, 56, 52, 64, 61, 72, 78, 74, 86, 92],
+    notes: [0, 1].map(mkNote),
   },
   (s) => {
     const n = s.n + 1;
@@ -73,6 +94,10 @@ const useOpsLive = () => useLive(
       alerts: [mkAlert(s.alerts[0].id + 1), ...s.alerts.slice(0, 2)],
       feed: [mkFeed(s.feed[0].id + 1), ...s.feed.slice(0, 3)],
       events: [mkEvent(s.events[0].id + 1), ...s.events.slice(0, 2)],
+      pos: [...s.pos.slice(1), mkPo(s.pos[s.pos.length - 1].id + 1)],
+      poStage: (s.poStage + 1) % 5,
+      demand: s.demand.map((d, i) => Math.max(30, Math.min(99, d + Math.sin(n * 0.7 + i) * 4))),
+      notes: [mkNote(s.notes[0].id + 1), ...s.notes.slice(0, 1)],
     };
   },
   3200
@@ -224,7 +249,7 @@ const Band = ({ id, kicker, title, lede, height, wide, children, foot }) => (
 /* ---------------------------------------------------------------
    BENTO — four more real screens, deliberately unequal
    --------------------------------------------------------------- */
-const Bento = () => (
+const Bento = ({ live }) => (
   <section className="sn-bento" id="modules">
     <div className="sn-bento-inner">
       <div className="sn-bento-head">
@@ -238,12 +263,7 @@ const Bento = () => (
         </Reveal>
       </div>
 
-      <div className="sn-bento-grid">
-        <Reveal className="sn-b sn-b-wide"><div className="sn-frame sm"><ProcurementScreen /></div></Reveal>
-        <Reveal className="sn-b" delay={0.08}><div className="sn-frame sm"><SupplierScreen /></div></Reveal>
-        <Reveal className="sn-b" delay={0.14}><div className="sn-frame sm"><FleetScreen /></div></Reveal>
-        <Reveal className="sn-b sn-b-wide" delay={0.2}><div className="sn-frame sm"><ForecastScreen /></div></Reveal>
-      </div>
+      <Reveal y={24}><OperationsWorkspace live={live} /></Reveal>
     </div>
   </section>
 );
@@ -339,7 +359,7 @@ const SupplyChain = () => {
         </Band>
       </div>
 
-      <Bento />
+      <Bento live={live} />
 
       {/* NEW — the wallboard everything reports into */}
       <Band
@@ -372,7 +392,7 @@ const SupplyChain = () => {
         lede="ERP, CRM, accounting, transport, IoT sensors and your suppliers — reading and writing one supply chain record."
         height="min(60vh, 520px)"
       >
-        <IntegrationWeb />
+        <IntegrationWeb live={live} />
       </Band>
 
       <Readout />

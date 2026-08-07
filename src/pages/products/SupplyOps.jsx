@@ -377,15 +377,101 @@ export const ControlRoom = ({ live }) => (
         </div>
       </motion.div>
 
-      {/* floating toast */}
+      {/* warehouse status */}
       <motion.div
-        className="so-toast"
-        initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
+        className="so-win so-w-wh"
+        initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.34, ease: EASE }}
       >
-        <span className="so-toast-ic"><Check size={12} /></span>
-        <span><b>Replenishment plan rescheduled</b><em>3 orders moved · no stockout risk</em></span>
+        <div className="so-win-bar"><Warehouse size={11} /><b>Warehouse status</b><span className="so-badge">9 DCs</span></div>
+        <div className="so-whs">
+          {[['Riyadh', 92, 'ok'], ['Jeddah', 64, 'ok'], ['Dammam', 81, 'ok'], ['Jubail', 96, 'warn']].map(([n, p, tone]) => (
+            <div className="so-whs-row" key={n}>
+              <span>{n}</span>
+              <span className="so-whs-bar">
+                <motion.i
+                  className={tone}
+                  initial={{ scaleX: 0 }} whileInView={{ scaleX: Number(p) / 100 }}
+                  viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE }}
+                />
+              </span>
+              <b>{p}%</b>
+            </div>
+          ))}
+        </div>
       </motion.div>
+
+      {/* transport timeline */}
+      <motion.div
+        className="so-win so-w-time"
+        initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.42, ease: EASE }}
+      >
+        <div className="so-win-bar"><Truck size={11} /><b>Transport</b><span className="so-badge">12 active</span></div>
+        <div className="so-tl">
+          {[[8, 30, 'ok'], [24, 38, 'ok'], [40, 26, 'warn'], [58, 30, 'ok']].map(([s, l, tone], i) => (
+            <span className="so-tl-lane" key={i}>
+              <motion.i
+                className={tone} style={{ left: `${s}%` }}
+                initial={{ width: 0 }} whileInView={{ width: `${l}%` }}
+                viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.08, ease: EASE }}
+              />
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* mini map */}
+      <motion.div
+        className="so-win so-w-mini"
+        initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
+      >
+        <div className="so-win-bar"><Globe size={11} /><b>Lanes</b><span className="so-badge">42</span></div>
+        <div className="so-mini">
+          <svg viewBox="0 0 160 90" aria-hidden="true">
+            <path d="M12,62 C40,40 62,58 88,34 C110,14 132,26 150,18" className="so-mini-lane" />
+            <path d="M10,34 C36,52 70,30 96,52 C120,72 138,58 152,64" className="so-mini-lane b" />
+            {[[12, 62], [88, 34], [150, 18], [96, 52]].map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r="2.6" className="so-mini-pt" />
+            ))}
+            <motion.circle
+              r="2.4" className="so-mini-run"
+              animate={{ cx: [12, 88, 150], cy: [62, 34, 18] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+            />
+          </svg>
+        </div>
+      </motion.div>
+
+      {/* AI suggestion */}
+      <motion.div
+        className="so-win so-w-ai"
+        initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.58, ease: EASE }}
+      >
+        <div className="so-win-bar"><Sparkles size={11} /><b>Suggestion</b><span className="so-pill accent">94%</span></div>
+        <p className="so-w-ai-p">Raise <b>PO-8846</b> three days early — Al Faisal lead time has drifted +2.4d.</p>
+        <div className="so-w-ai-act"><i className="ok">Apply</i><i>Later</i></div>
+      </motion.div>
+
+      {/* notification stack — slides in on a loop */}
+      <div className="so-notes">
+        <AnimatePresence initial={false}>
+          {live.notes.map((n) => (
+            <motion.div
+              className={`so-note ${n.tone}`} key={n.id} layout
+              initial={{ opacity: 0, x: 26, scale: 0.96 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 26, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.5, ease: EASE }}
+            >
+              <span className="so-note-ic">{n.tone === 'ok' ? <Check size={11} /> : <TriangleAlert size={11} />}</span>
+              <span><b>{n.t}</b><em>{n.m}</em></span>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
     </div>
   </div>
 );
@@ -466,61 +552,137 @@ const RING = [
   { k: 'IoT sensors', icon: Cpu, a: 180 }, { k: 'Suppliers', icon: Factory, a: -135 },
 ];
 
-export const IntegrationWeb = () => {
+export const IntegrationWeb = ({ live }) => {
   const [ref, { w, h }] = useSize();
   const [hot, setHot] = useState(null);
+  const hostRef = React.useRef(null);
   const cx = w / 2;
   const cy = h / 2;
   const R = Math.min(w, h) * 0.36;
 
+  /* the spotlight writes CSS variables straight to the node — pointer
+     movement never triggers a React render */
+  const track = (e) => {
+    const el = hostRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--sx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--sy", `${e.clientY - r.top}px`);
+    el.style.setProperty("--so", "1");
+  };
+  const dim = () => {
+    const el = hostRef.current;
+    if (el) el.style.setProperty("--so", "0");
+  };
+
   return (
-    <div className="so-int" ref={ref}>
-      {w > 0 && (
-        <>
-          <svg width={w} height={h} aria-hidden="true">
-            <circle cx={cx} cy={cy} r={R} className="so-int-ring" />
-            <circle cx={cx} cy={cy} r={R * 0.62} className="so-int-ring" />
-            {RING.map((n, i) => {
+    <div className="so-int" ref={hostRef} onPointerMove={track} onPointerLeave={dim}>
+      <span className="so-int-grid" aria-hidden="true" />
+      <span className="so-int-beam" aria-hidden="true" />
+
+      {/* LEFT — the feeds coming in */}
+      <aside className="so-int-side">
+        <span className="so-side-k"><ArrowUpRight size={10} /> Inbound feeds</span>
+        {[
+          [Zap, "REST API", "4.2M calls / day", "live"],
+          [Database, "EDI 850 / 856", "1,284 documents", "live"],
+          [Cpu, "IoT gateway", "1,284 sensors", "live"],
+          [Users, "Supplier portal", "128 vendors", "live"],
+          [Receipt, "SFTP batch", "nightly 02:00", "idle"],
+        ].map(([Icon, t, m, st]) => (
+          <div className={`so-side-row ${st}`} key={t}>
+            <span className="so-side-ic"><Icon size={12} /></span>
+            <span className="so-side-t"><b>{t}</b><em>{m}</em></span>
+            <i className="so-side-dot" />
+          </div>
+        ))}
+        <div className="so-side-foot">
+          <span>Throughput</span>
+          <b className="so-mono">{live ? live.sync : 1284}<em>/min</em></b>
+        </div>
+      </aside>
+
+      {/* CENTRE — the ring, unchanged */}
+      <div className="so-int-stage" ref={ref}>
+        {w > 0 && (
+          <>
+            <svg width={w} height={h} aria-hidden="true">
+              <circle cx={cx} cy={cy} r={R} className="so-int-ring" />
+              <circle cx={cx} cy={cy} r={R * 0.62} className="so-int-ring" />
+              {RING.map((n, i) => {
+                const rad = (n.a * Math.PI) / 180;
+                const x = cx + Math.cos(rad) * R;
+                const y = cy + Math.sin(rad) * R;
+                return (
+                  <g key={n.k}>
+                    <line x1={cx} y1={cy} x2={x} y2={y} className={`so-int-line ${hot === n.k ? "lit" : ""}`} />
+                    <motion.circle
+                      r="3" className="so-int-packet"
+                      animate={{ cx: [x, cx], cy: [y, cy], opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: 2.4, delay: i * 0.32, repeat: Infinity, repeatDelay: 0.8, ease: "linear" }}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+
+            <div className="so-int-core">
+              <span><Boxes size={16} /></span>
+              <b>Emvive</b>
+              <em>One supply chain record</em>
+            </div>
+
+            {RING.map((n) => {
               const rad = (n.a * Math.PI) / 180;
-              const x = cx + Math.cos(rad) * R;
-              const y = cy + Math.sin(rad) * R;
+              const Icon = n.icon;
               return (
-                <g key={n.k}>
-                  <line x1={cx} y1={cy} x2={x} y2={y} className={`so-int-line ${hot === n.k ? 'lit' : ''}`} />
-                  <motion.circle
-                    r="3" className="so-int-packet"
-                    animate={{ cx: [x, cx], cy: [y, cy], opacity: [0, 1, 1, 0] }}
-                    transition={{ duration: 2.4, delay: i * 0.32, repeat: Infinity, repeatDelay: 0.8, ease: 'linear' }}
-                  />
-                </g>
+                <div
+                  className={`so-int-node ${hot === n.k ? "on" : ""}`}
+                  key={n.k}
+                  style={{ left: cx + Math.cos(rad) * R, top: cy + Math.sin(rad) * R }}
+                  onMouseEnter={() => setHot(n.k)}
+                  onMouseLeave={() => setHot(null)}
+                >
+                  <Icon size={13} />
+                  <span>{n.k}</span>
+                  <i className="so-int-blip" />
+                </div>
               );
             })}
-          </svg>
+          </>
+        )}
+      </div>
 
-          <div className="so-int-core">
-            <span><Boxes size={16} /></span>
-            <b>Emvive</b>
-            <em>One supply chain record</em>
-          </div>
-
-          {RING.map((n) => {
-            const rad = (n.a * Math.PI) / 180;
-            const Icon = n.icon;
-            return (
-              <div
-                className={`so-int-node ${hot === n.k ? 'on' : ''}`}
-                key={n.k}
-                style={{ left: cx + Math.cos(rad) * R, top: cy + Math.sin(rad) * R }}
-                onMouseEnter={() => setHot(n.k)}
-                onMouseLeave={() => setHot(null)}
+      {/* RIGHT — what the sync is doing right now */}
+      <aside className="so-int-side right">
+        <span className="so-side-k"><Radio size={10} /> Sync activity</span>
+        <div className="so-side-feed">
+          <AnimatePresence initial={false}>
+            {(live ? live.events : []).map((e) => (
+              <motion.div
+                className="so-side-ev" key={e.id} layout
+                initial={{ opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.45, ease: EASE }}
               >
-                <Icon size={13} />
-                <span>{n.k}</span>
-              </div>
-            );
-          })}
-        </>
-      )}
+                <i className={`so-dot ${e.tone}`} />
+                <span><b>{e.code}</b>{e.text}</span>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+        <div className="so-side-stats">
+          {[["Latency", "84ms"], ["Success", "99.98%"], ["Queued", "0"]].map(([k, v]) => (
+            <div key={k}><span>{k}</span><b className="so-mono">{v}</b></div>
+          ))}
+        </div>
+        <div className="so-side-foot">
+          <span>Last full sync</span>
+          <b className="so-mono">2m ago</b>
+        </div>
+      </aside>
+
+      {/* the light that lifts whatever it falls on, panels included */}
+      <span className="so-int-lift" aria-hidden="true" />
     </div>
   );
 };
