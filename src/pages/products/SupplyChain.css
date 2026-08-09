@@ -1,9 +1,9 @@
 /* =====================================================================
    EMVIVE SUPPLY CHAIN — page composition. Prefix `sn-`.
    Structure is deliberately unlike Finance: headline over a full-width
-   screen (not a side slice), a drill-down stack (not a grid morph),
-   an unequal bento (not a horizontal rail), and an instrument readout
-   (not big-number rows).
+   screen (not a side slice), an unequal bento (not a horizontal rail),
+   and an instrument readout (not big-number rows). The immersive
+   sections each ship their own stylesheet.
    ===================================================================== */
 
 .sn { --accent: #3557d8; --accent-2: #2a46bb; --ink-panel: #0a0f22; }
@@ -101,110 +101,6 @@
 
 @media (max-width: 900px) {
   .sn-open-screen { height: 52vh; min-height: 380px; margin-top: 3rem; }
-}
-
-/* =====================================================================
-   THE DRILL-DOWN STACK
-   ===================================================================== */
-.sn-drill { position: relative; height: 340vh; }
-
-.sn-drill-port {
-  position: sticky;
-  top: 90px;
-  height: calc(100vh - 90px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 24%);
-  align-items: center;
-  gap: 3rem;
-  padding: 0 max(40px, calc((100vw - 1620px) / 2));
-}
-
-/* the pile — each layer fills the stage and is offset from the top so
-   the tabs of the layers underneath stay readable */
-.sn-drill-stack {
-  position: relative;
-  height: min(74vh, 740px);
-  overflow: hidden;
-  border-radius: 14px;
-}
-
-.sn-layer {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  transition:
-    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-/* waiting off-stage below the fold of the stack */
-.sn-layer.below { transform: translateY(104%); opacity: 0; }
-/* settled into the pile */
-.sn-layer.laid { transform: translateY(0); opacity: 1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .sn-layer { transition: none; }
-}
-
-/* the tab that stays visible once a layer is covered */
-.sn-layer-tab {
-  align-self: flex-start;
-  flex-shrink: 0;
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.42rem 0.85rem;
-  border-radius: 9px 9px 0 0;
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.635rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: #fff;
-  background: var(--accent);
-}
-
-.sn-layer .sn-frame { flex: 1; min-height: 0; }
-
-/* narration column — exactly one is visible at a time */
-.sn-drill-copy { position: relative; min-height: 15rem; }
-
-.sn-drill-note {
-  position: absolute; inset: 0;
-  opacity: 0;
-  transform: translateY(14px);
-  pointer-events: none;
-  transition:
-    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.sn-drill-note.on { opacity: 1; transform: none; pointer-events: auto; }
-
-.sn-note-tag {
-  display: block;
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.1rem;
-}
-.sn-drill-note h2 {
-  margin: 0;
-  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
-  font-weight: 500;
-  color: var(--ink);
-}
-.sn-drill-note p {
-  margin: 1.1rem 0 0;
-  font-size: 0.955rem;
-  line-height: 1.6;
-  color: var(--ink-2);
-}
-
-@media (max-width: 1100px) {
-  .sn-drill { height: 300vh; }
-  .sn-drill-port { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-content: center; }
-  .sn-drill-stack { height: 50vh; }
-  .sn-drill-copy { min-height: 12rem; }
 }
 
 /* =====================================================================
@@ -310,6 +206,100 @@
 }
 
 /* =====================================================================
+   CLOSING CALL TO ACTION
+   Two pills side by side made the secondary compete with the primary.
+   One magnetic capsule that leads with its arrow, and a quiet text link
+   beside it that draws its own rule on hover. Scoped to this page —
+   Finance and Platform keep the shared button.
+   ===================================================================== */
+.sn-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-top: 2.6rem;
+}
+
+.sn-go {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 60px;
+  padding: 0 0.5rem 0 1.9rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #08090a;
+  background: #ffffff;
+  overflow: hidden;
+  isolation: isolate;
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.6);
+}
+/* the accent wipes across from the left on hover, under the label */
+.sn-go::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(100deg, var(--accent), #5e82ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sn-go span { transition: color 0.35s ease; }
+.sn-go i {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: #08090a;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sn-go:hover { box-shadow: 0 20px 48px -16px color-mix(in srgb, var(--accent) 70%, transparent); }
+.sn-go:hover::before { transform: scaleX(1); }
+.sn-go:hover span { color: #fff; }
+.sn-go:hover i { background: #fff; color: var(--accent); transform: translateX(3px) rotate(-45deg); }
+.sn-go:active { transform: scale(0.985); }
+
+.ui-magnet { display: inline-block; will-change: transform; }
+
+.sn-quiet {
+  position: relative;
+  font-size: 1.02rem;
+  letter-spacing: -0.014em;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  padding-bottom: 0.35rem;
+  transition: color 0.35s ease;
+}
+.sn-quiet em {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sn-quiet:hover { color: #fff; }
+.sn-quiet:hover em { transform: scaleX(1); transform-origin: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sn-go::before, .sn-go i, .sn-quiet em { transition: none; }
+}
+
+/* =====================================================================
    DARK
    ===================================================================== */
 body.dark-theme .sn-frame { background: var(--bg-2); }
@@ -323,8 +313,17 @@ body.dark-theme .sw-hh-item div { background: rgba(255, 255, 255, 0.045); }
    IMMERSIVE BANDS — the new sections between the existing scroll beats.
    One family so they read as a set of wallboards, not assorted panels.
    ===================================================================== */
-.sn-band { padding: 7.5rem 0; }
-.sn-band:nth-of-type(even) { background: var(--bg-2); }
+/* Two bands survive the redesign — the warehouse floor and the
+   Connected ring. Their background is set explicitly rather than by
+   :nth-of-type, which broke the moment the section order changed. */
+.sn-band { padding: 7.5rem 0; background: var(--bg); }
+.sn-band.alt { background: var(--bg-2); }
+
+/* reserved space for a code-split section, so nothing jumps */
+.sn-hold { width: 100%; background: #05070d; }
+.sn-hold.light { background: var(--bg); }
+.sn-hold.paper { background: #f4f1ea; }
+body.dark-theme .sn-hold.paper { background: #100e0b; }
 .sn-band-inner { padding: 0 max(40px, calc((100vw - 1560px) / 2)); }
 .sn-band.wide .sn-band-inner { padding: 0 max(32px, calc((100vw - 1720px) / 2)); }
 

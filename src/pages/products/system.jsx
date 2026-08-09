@@ -290,18 +290,22 @@ export const Split = ({ eyebrow, title, body, points = [], link, flip, children 
 );
 
 /* --------------------------------------------------------------- */
-export const ClosingCta = ({ label, title, lede, primary, secondary }) => (
-  <section className="px-band" id="start">
+/* `actions` lets a page supply its own call to action without every
+   other page inheriting it — the default markup is unchanged. */
+export const ClosingCta = ({ label, title, lede, primary, secondary, actions, className = '' }) => (
+  <section className={`px-band ${className}`} id="start">
     <div className="px-shell">
       <Reveal y={28} duration={1.1}>
         <div className="px-cta">
           <span className="px-eyebrow">{label}</span>
           <MaskText text={title} as="h2" className="px-h2" />
           <p className="px-lede">{lede}</p>
-          <div className="px-cta-actions">
-            <a href="#start" className="px-btn px-btn-invert">{primary} <ArrowRight size={16} /></a>
-            <a href="#start" className="px-btn px-btn-ghost-invert">{secondary}</a>
-          </div>
+          {actions || (
+            <div className="px-cta-actions">
+              <a href="#start" className="px-btn px-btn-invert">{primary} <ArrowRight size={16} /></a>
+              <a href="#start" className="px-btn px-btn-ghost-invert">{secondary}</a>
+            </div>
+          )}
         </div>
       </Reveal>
     </div>

@@ -1,25 +1,34 @@
-import React, { useRef, useState } from 'react';
-import { useScroll, useMotionValueEvent } from 'framer-motion';
-import {
-  Truck, ArrowRight, ArrowUpRight, Warehouse, ScanLine, Globe,
-} from 'lucide-react';
+import React, { Suspense, lazy } from 'react';
+import { Truck, ArrowRight } from 'lucide-react';
+import { Magnetic } from './SupplyUI';
 import { motion, Reveal, MaskText, useLive, EASE } from './motion';
-import { ProductPage, SubNav, ClosingCta, Footer } from './system';
-import { NetworkScreen, SiteScreen, TaskScreen } from './SupplyApp';
-import {
-  NetworkMap, WarehouseFloor, ControlRoom, AiPanel, IntegrationWeb, BeforeAfter, ScalePanel,
-} from './SupplyOps';
+import { ProductPage, SubNav, ClosingCta } from './system';
+import { NetworkScreen } from './SupplyApp';
+import { IntegrationWeb } from './SupplyOps';
 import { OperationsWorkspace } from './SupplyWorkspace';
 import './SupplyApp.css';
 import './SupplyOpsAdd.css';
 import './SupplyChain.css';
 
+/* Every heavy section is code-split — the descent carries three full
+   product screens and the control room ships a draggable workspace, so
+   neither belongs in the bundle that renders the fold. */
+const Descent = lazy(() => import('./SupplyDescent'));
+const ControlWorkbench = lazy(() => import('./SupplyControl'));
+const PredictiveIntel = lazy(() => import('./SupplyIntel'));
+const CustomerSuccess = lazy(() => import('./SupplySuccess'));
+
+/* a plain reserved block, so a section loading in never shifts the page
+   under someone mid-scroll */
+const Hold = ({ tone = 'dark', h = '46rem' }) => (
+  <div className={`sn-hold ${tone}`} style={{ height: h }} aria-hidden="true" />
+);
+
 /* =====================================================================
    EMVIVE SUPPLY CHAIN
-   Signature mechanic: the drill-down stack. Three real screens pile up
-   as you scroll — network, site, task — each sliding over the last with
-   its edge still showing, the way you actually descend through an
-   operations system. Nothing on this page is a diagram.
+   Signature mechanic: the descent. One viewport, three depths, and you
+   fly into the next one by picking it. Nothing on this page is a diagram
+   and nothing on it is a card.
    ===================================================================== */
 
 const ALERT_POOL = [
@@ -73,13 +82,18 @@ const mkNote = mk(NOTE_POOL);
 
 const useOpsLive = () => useLive(
   {
-    n: 0, temp: 3.1, pickers: 38, rate: 412, transit: 342, otif: 96.4,
-    alerts: [0, 1, 2].map(mkAlert), feed: [0, 1, 2, 3].map(mkFeed),
-    events: [0, 1, 2].map(mkEvent),
+    n: 0, temp: 3.1, pickers: 38, rate: 412, transit: 342, otif: 96.4, sync: 1284,
+    /* newest first. Every stepper below reads index 0 as the newest item
+       and derives the next id from it, so seeding these ascending made
+       the new id collide with one still in the list — two React children
+       with the same key, and an AnimatePresence row that could vanish
+       mid-transition. */
+    alerts: [2, 1, 0].map(mkAlert), feed: [3, 2, 1, 0].map(mkFeed),
+    events: [2, 1, 0].map(mkEvent),
     pos: [0, 1, 2, 3, 4].map(mkPo),
     poStage: 1,
     demand: [42, 48, 45, 56, 52, 64, 61, 72, 78, 74, 86, 92],
-    notes: [0, 1].map(mkNote),
+    notes: [1, 0].map(mkNote),
   },
   (s) => {
     const n = s.n + 1;
@@ -91,6 +105,7 @@ const useOpsLive = () => useLive(
       rate: Math.round(412 + w * 26),
       transit: Math.round(342 + w * 12),
       otif: 96.4 + w * 0.4,
+      sync: Math.round(1284 + w * 84),
       alerts: [mkAlert(s.alerts[0].id + 1), ...s.alerts.slice(0, 2)],
       feed: [mkFeed(s.feed[0].id + 1), ...s.feed.slice(0, 3)],
       events: [mkEvent(s.events[0].id + 1), ...s.events.slice(0, 2)],
@@ -143,89 +158,11 @@ const Opening = ({ live }) => (
 );
 
 /* ---------------------------------------------------------------
-   THE DRILL-DOWN STACK — the signature interaction
-   --------------------------------------------------------------- */
-const LEVELS = [
-  {
-    id: 'network', icon: Globe, tag: 'Level 01 · Network',
-    title: 'Every shipment, every lane.',
-    line: 'Three hundred and forty-two shipments moving across forty-two lanes. Exceptions surface themselves; nobody runs a report to find them.',
-  },
-  {
-    id: 'site', icon: Warehouse, tag: 'Level 02 · Site',
-    title: 'Then inside one building.',
-    line: 'Dock schedule, open waves, bin utilisation and the labour on shift — the screen a distribution centre is actually run from.',
-  },
-  {
-    id: 'task', icon: ScanLine, tag: 'Level 03 · Task',
-    title: 'Then into a picker’s hand.',
-    line: 'The same system, on a handheld. Bin, SKU, quantity, FEFO batch. Every scan moves the ledger the moment it happens.',
-  },
-];
-
-/* The stack is driven by a discrete active index rather than scroll-linked
-   motion values. Motion values bound to style go through framer's native
-   scroll-animation path, and when that bails the elements fall back to
-   their static state — which stacked all three screens and all three
-   captions on top of each other. A class change plus a CSS transition
-   cannot fail that way, and the movement is identical. */
-const Drill = ({ live }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const [active, setActive] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const next = Math.min(LEVELS.length - 1, Math.max(0, Math.floor(v * LEVELS.length * 0.999)));
-    setActive((cur) => (cur === next ? cur : next));
-  });
-
-  const screens = [
-    <NetworkScreen key="network" live={live} />,
-    <SiteScreen key="site" live={live} />,
-    <TaskScreen key="task" />,
-  ];
-
-  return (
-    <section className="sn-drill" id="drill" ref={ref}>
-      <div className="sn-drill-port">
-        <div className="sn-drill-stack">
-          {LEVELS.map((lv, i) => {
-            const Icon = lv.icon;
-            /* below = still waiting off-stage, laid = settled in the pile */
-            const state = i > active ? 'below' : 'laid';
-            return (
-              <div
-                className={`sn-layer ${state}`}
-                key={lv.id}
-                style={{ zIndex: i + 1, paddingTop: `${i * 30}px` }}
-              >
-                <div className="sn-layer-tab"><Icon size={11} />{lv.tag}</div>
-                <div className="sn-frame flush">{screens[i]}</div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="sn-drill-copy">
-          {LEVELS.map((lv, i) => (
-            <div className={`sn-drill-note ${active === i ? 'on' : ''}`} key={lv.id}>
-              <span className="sn-note-tag">{lv.tag}</span>
-              <h2>{lv.title}</h2>
-              <p>{lv.line}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ---------------------------------------------------------------
    A dark instrumentation section. Used for every immersive band so
    they read as one wallboard family rather than assorted panels.
    --------------------------------------------------------------- */
-const Band = ({ id, kicker, title, lede, height, wide, children, foot }) => (
-  <section className={`sn-band ${wide ? 'wide' : ''}`} id={id}>
+const Band = ({ id, kicker, title, lede, height, wide, tone, children, foot }) => (
+  <section className={`sn-band ${wide ? 'wide' : ''} ${tone || ''}`} id={id}>
     <div className="sn-band-inner">
       <div className="sn-band-head">
         <div>
@@ -290,28 +227,6 @@ const Readout = () => (
   </section>
 );
 
-/* ---------------------------------------------------------------
-   PROOF
-   --------------------------------------------------------------- */
-const Proof = () => (
-  <section className="sn-proof">
-    <div className="sn-proof-inner">
-      <MaskText
-        text="We used to find out about a stockout when a store manager called."
-        as="blockquote"
-        className="sn-quote"
-      />
-      <Reveal delay={0.2}>
-        <div className="sn-by">
-          <span>OS</span>
-          <div><b>Omar Siddiqui</b><em>Head of Supply Chain, Nesto Group</em></div>
-          <a href="#start" className="px-link">Case study <ArrowUpRight size={15} /></a>
-        </div>
-      </Reveal>
-    </div>
-  </section>
-);
-
 /* ===================================================================== */
 const SupplyChain = () => {
   const [live, ref] = useOpsLive();
@@ -324,110 +239,79 @@ const SupplyChain = () => {
         links={[
           { href: '#drill', label: 'Drill down' },
           { href: '#modules', label: 'Modules' },
-          { href: '#outcomes', label: 'Outcomes' },
+          { href: '#control', label: 'Control room' },
+          { href: '#intelligence', label: 'Intelligence' },
+          { href: '#change', label: 'Customers' },
         ]}
       />
 
       <div ref={ref}>
+        {/* APPROVED — untouched */}
         <Opening live={live} />
 
-        {/* NEW — the network before you descend into it */}
-        <Band
-          id="network"
-          kicker="Global supply network"
-          title="Forty-two lanes, live."
-          lede="Suppliers, ports and distribution centres on one map, with every route carrying its own telemetry. Hover any location to read it."
-          height="min(70vh, 660px)"
-          wide
-        >
-          <NetworkMap live={live} />
-        </Band>
-
-        {/* KEPT — the drill-down stack, untouched */}
-        <Drill live={live} />
-
-        {/* NEW — inside the building */}
-        <Band
-          id="warehouse"
-          kicker="Warehouse intelligence"
-          title="Every bin, every cart, every dock."
-          lede="Receiving on the left, dispatch on the right, six aisles of live bin status in between — and the equipment moving through them."
-          height="min(64vh, 600px)"
-          wide
-        >
-          <WarehouseFloor live={live} />
-        </Band>
+        {/* REDESIGNED — the descent. Not a scroll-driven card stack any
+            more: a depth gauge and one viewport you fly through. */}
+        <Suspense fallback={<Hold h="56rem" />}>
+          <Descent live={live} />
+        </Suspense>
       </div>
 
       <Bento live={live} />
 
-      {/* NEW — the wallboard everything reports into */}
-      <Band
-        id="control"
-        kicker="Control room"
-        title="One desk, the whole operation."
-        lede="Orders, shipments, inventory cover and risk on layered windows that update while you watch."
-        height="min(74vh, 700px)"
-        wide
-      >
-        <ControlRoom live={live} />
-      </Band>
+      {/* REDESIGNED — a draggable operations desk */}
+      <Suspense fallback={<Hold h="60rem" />}>
+        <ControlWorkbench live={live} />
+      </Suspense>
 
-      {/* NEW — the system's own opinion */}
-      <Band
-        id="intelligence"
-        kicker="Predictive intelligence"
-        title="It tells you what to do next."
-        lede="Recommendations scored by confidence and cash impact, built from your own lead times, demand history and supplier behaviour."
-        height="min(70vh, 640px)"
-      >
-        <AiPanel />
-      </Band>
+      {/* REDESIGNED — the decision chain, ending in the reader's hands */}
+      <Suspense fallback={<Hold tone="light" h="44rem" />}>
+        <PredictiveIntel />
+      </Suspense>
 
-      {/* NEW — the ecosystem */}
+      {/* APPROVED — the cursor / spotlight section, untouched */}
       <Band
         id="integrations"
         kicker="Connected"
         title="Wired to everything you already run."
         lede="ERP, CRM, accounting, transport, IoT sensors and your suppliers — reading and writing one supply chain record."
         height="min(60vh, 520px)"
+        tone="alt"
       >
         <IntegrationWeb live={live} />
       </Band>
 
       <Readout />
 
-      {/* NEW — before and after, on one surface */}
-      <Band
-        id="change"
-        kicker="Customer success"
-        title="What actually changes."
-        lede="Measured across retail and distribution networks in their first year on the platform."
-      >
-        <BeforeAfter />
-      </Band>
+      {/* REDESIGNED — a transformation you can drag through */}
+      <Suspense fallback={<Hold tone="paper" h="60rem" />}>
+        <CustomerSuccess />
+      </Suspense>
 
-      {/* NEW — the enterprise questions */}
-      <Band
-        id="scale"
-        kicker="Enterprise scale"
-        title="Built for the whole group."
-        lede="Regional residency, enterprise security and the throughput a national network actually generates."
-      >
-        <ScalePanel />
-      </Band>
-
-      <Proof />
+      {/* the standalone pull-quote that used to sit here was Omar
+          Siddiqui's, and the customer-success section now closes on it
+          with the evidence in front of it — running it twice weakened
+          both. */}
 
       <ClosingCta
         label="Emvive Supply Chain"
         title="Put your network on one screen."
         lede="Share a month of stock movements. We will show you where the working capital is trapped and what the system would have ordered instead."
-        primary="Book a demo"
-        secondary="Talk to sales"
+        className="sn-close"
+        actions={(
+          <div className="sn-acts">
+            <Magnetic>
+              <a href="#start" className="sn-go">
+                <span>Book a demo</span>
+                <i><ArrowRight size={16} /></i>
+              </a>
+            </Magnetic>
+            <a href="#start" className="sn-quiet">
+              Talk to sales
+              <em aria-hidden="true" />
+            </a>
+          </div>
+        )}
       />
-
-      <Footer />
     </ProductPage>
   );
 };
