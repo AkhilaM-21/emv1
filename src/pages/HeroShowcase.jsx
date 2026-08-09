@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, Check } from 'lucide-react';
-import HeroCrisp from '../components/herostyles/HeroCrisp';
-import HeroWipro from '../components/herostyles/HeroWipro';
-import HeroDashboard from '../components/herostyles/HeroDashboard';
-import HeroCoframe from '../components/herostyles/HeroCoframe';
+import HeroCrisp from '../components/hero/variants/HeroCrisp';
+import HeroWipro from '../components/hero/variants/HeroWipro';
+import HeroDashboard from '../components/hero/variants/HeroDashboard';
+import HeroCoframe from '../components/hero/variants/HeroCoframe';
 import './HeroShowcase.css';
 
 /* /home — four hero treatments of the same copy. A corner dropdown switches

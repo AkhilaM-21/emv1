@@ -215,7 +215,7 @@
         "sales": "Sales"
       },
       "erp": {
-        "title": "Cloud ERP",
+        "title": "ERP",
         "resources": "Resources",
         "inventory": "Inventory",
         "globalRevenue": "Global Revenue",
@@ -285,7 +285,7 @@
     }
   },
   "productsData": {
-    "p1_title": "Cloud ERP",
+    "p1_title": "ERP",
     "p1_desc": "A comprehensive, scalable Enterprise Resource Planning solution that integrates all your core business processes in real-time. Unify your financials, supply chain, operations, and commerce.",
     "p2_title": "HR & Payroll",
     "p2_desc": "Streamline your human resources management and payroll processing. Automate employee onboarding, attendance tracking, and ensure accurate, timely compensation.",
@@ -447,7 +447,7 @@
   },
   "megaMenu": {
     "products": {
-      "cloudErp": "Cloud ERP",
+      "cloudErp": "ERP",
       "hrPayroll": "HR & Payroll",
       "crmSales": "CRM & Sales",
       "reporting": "Advanced Reporting",
@@ -728,7 +728,7 @@
     },
     "pills": {
       "0": {
-        "title": "Financials & ERP",
+        "title": "Finance & ERP",
         "sub": "Finance to operations"
       },
       "1": {

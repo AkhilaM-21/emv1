@@ -10,19 +10,16 @@ import {
    Structure (solution -> group -> modules) is unchanged so the mega-menu
    UI and its hover interactivity stay exactly the same. */
 export const getMegaMenuData = (t) => ({
-  [t('megaMenu.products.cloudErp', 'Cloud ERP')]: {
+  [t('megaMenu.products.cloudErp', 'ERP')]: {
     [t('megaMenu.erp.label', 'Core ERP')]: {
       title: t('megaMenu.erp.title', 'Core ERP'),
-      subtitle: t('megaMenu.erp.subtitle', 'One system for finance, supply chain, sales and operations.'),
+      subtitle: t('megaMenu.erp.subtitle', 'Five operations on one ledger — finance, supply chain, plant, counter and project.'),
       modules: [
-        { icon: Calculator, title: t('megaMenu.erp.financials', 'Financial Management'), desc: t('megaMenu.erp.financialsDesc', 'GL, AP/AR, cash, fixed assets and consolidation.') },
-        { icon: Truck, title: t('megaMenu.erp.supplyChain', 'Supply Chain'), desc: t('megaMenu.erp.supplyChainDesc', 'Procurement, inventory and warehouse management.') },
-        { icon: TrendingUp, title: t('megaMenu.erp.sales', 'Sales & CRM'), desc: t('megaMenu.erp.salesDesc', 'Leads, quotations, orders and customer management.') },
-        { icon: ShoppingCart, title: t('megaMenu.erp.pos', 'Retail & POS'), desc: t('megaMenu.erp.posDesc', 'Fast billing, offline mode and multi-branch retail.') },
-        { icon: Settings, title: t('megaMenu.erp.manufacturing', 'Manufacturing'), desc: t('megaMenu.erp.manufacturingDesc', 'BOM, production orders and shop-floor control.') },
-        { icon: Briefcase, title: t('megaMenu.erp.projects', 'Projects'), desc: t('megaMenu.erp.projectsDesc', 'WBS, time & expense and milestone billing.') },
-        { icon: FileText, title: t('megaMenu.erp.eInvoicing', 'E-Invoicing'), desc: t('megaMenu.erp.eInvoicingDesc', 'ZATCA Phase 1 & 2 with QR and digital signature.') },
-        { icon: BarChart2, title: t('megaMenu.erp.analytics', 'Analytics & Reporting'), desc: t('megaMenu.erp.analyticsDesc', 'Dashboards, insights and custom reports.') }
+        { icon: Calculator, title: t('megaMenu.erp.financials', 'Financial Management'), desc: t('megaMenu.erp.financialsDesc', 'GL, AP/AR, cash, fixed assets, consolidation and ZATCA e-invoicing.') },
+        { icon: Truck, title: t('megaMenu.erp.supplyChain', 'Supply Chain Operations'), desc: t('megaMenu.erp.supplyChainDesc', 'Procurement, inventory, warehouse and logistics.') },
+        { icon: Settings, title: t('megaMenu.erp.manufacturing', 'Manufacturing Operations'), desc: t('megaMenu.erp.manufacturingDesc', 'BOM, work orders and shop-floor control.') },
+        { icon: ShoppingCart, title: t('megaMenu.erp.commerce', 'Commerce & POS'), desc: t('megaMenu.erp.commerceDesc', 'Fast billing, offline mode and multi-branch retail.') },
+        { icon: Briefcase, title: t('megaMenu.erp.projects', 'Project & Service Operations'), desc: t('megaMenu.erp.projectsDesc', 'WBS, time & expense, milestone billing and field service.') }
       ]
     }
   },

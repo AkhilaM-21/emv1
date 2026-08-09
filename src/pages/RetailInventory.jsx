@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShoppingCart, BarChart2, Truck, RefreshCcw, ShieldCheck, Box, Package, Check, ArrowRight, Diamond, Gem, Hexagon } from 'lucide-react';
-import Clients from '../components/Clients';
+import Clients from '../components/sections/Clients';
 import './RetailInventory.css';
 
 // A custom hook for triggering animations when elements scroll into view

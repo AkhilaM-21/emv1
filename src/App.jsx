@@ -5,14 +5,14 @@ import React from 'react';
    no host config. Swap back to BrowserRouter once the Render rewrite rule
    (/*  ->  /index.html, action Rewrite) is in place. */
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import HeroShowcase from './pages/HeroShowcase';
 import RetailInventory from './pages/RetailInventory';
-import Finance from './pages/products/Finance';
-import SupplyChain from './pages/products/SupplyChain';
-import Platform from './pages/products/Platform';
+import Finance from './pages/products/finance/Finance';
+import SupplyChain from './pages/products/supply-chain/SupplyChain';
+import Platform from './pages/products/platform/Platform';
 import './index.css';
 
 function App() {
