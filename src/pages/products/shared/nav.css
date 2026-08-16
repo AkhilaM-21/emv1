@@ -18,6 +18,44 @@
   transition: background 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
 }
 
+/* ---------------------------------------------------------------
+   RIDING A SECTION (opt-in, via the `stickAfter` prop)
+
+   The bar sits inside its own 58px slot instead of sticking. While the
+   section it rides is on screen the bar is absolute inside that slot,
+   so it scrolls away with the section and the section's background
+   shows straight through it. Once the section's bottom clears the site
+   header the bar goes fixed and drops back in.
+
+   The slot never leaves the flow, so the switch to fixed cannot make
+   the rest of the page jump up by the bar's height.
+   --------------------------------------------------------------- */
+.pnv-slot {
+  position: relative;
+  z-index: 700;
+  height: 58px;
+}
+
+.pnv-slot .pnv {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+}
+
+.pnv-slot.stuck .pnv {
+  position: fixed;
+  top: 90px;
+  animation: pnv-drop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pnv-drop {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pnv-slot.stuck .pnv { animation: none; }
+}
+
 .pnv.stuck {
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(18px) saturate(180%);

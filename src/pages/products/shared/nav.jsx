@@ -22,8 +22,8 @@ import './nav.css';
      mark    { label, suffix, icon }        icon optional, falls back to the Emvive mark
      menus   [{ id, label, icon, tone, blurb, items[], feature }]
      links   [{ href, label }]
-     watch   { href, label }                the quiet secondary action
-     cta     { href, label }
+     watch   { href, label }                optional, the quiet secondary action
+     cta     { href, label }                optional
      spy     [sectionId]                    ids to track, in page order
      owner   { sectionId: menuIdOrLinkId }  which nav item lights up for each section
    ===================================================================== */
@@ -34,7 +34,18 @@ const EmviveMark = () => (
   </svg>
 );
 
-const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner = {} }) => {
+/* clears the fixed site header */
+const HEADER = 90;
+
+const ProductNav = ({
+  mark, menus = [], links = [], watch, cta, spy = [], owner = {},
+  /* Optional. Give it a section id and the bar rides that section
+     instead of sticking straight away: it scrolls away with the
+     section, then drops back in fixed once the section's bottom has
+     passed the header. Left unset, the bar behaves as it always has —
+     which is what Supply Chain and Platform still do. */
+  stickAfter = null,
+}) => {
   const [stuck, setStuck] = useState(false);
   const [here, setHere] = useState(spy[0] || 'top');
   const [open, setOpen] = useState(null);
@@ -45,7 +56,12 @@ const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner 
 
   useEffect(() => {
     const onScroll = () => {
-      setStuck(window.scrollY > 260);
+      if (stickAfter) {
+        const el = document.getElementById(stickAfter);
+        setStuck(el ? el.getBoundingClientRect().bottom <= HEADER : window.scrollY > 260);
+      } else {
+        setStuck(window.scrollY > 260);
+      }
 
       /* last section whose top has passed the bar wins — cheaper than an
          observer per section and it never reports two at once */
@@ -59,8 +75,12 @@ const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner 
 
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [spy]);
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [spy, stickAfter]);
 
   /* a short grace period, so crossing the gap between the trigger and
      the panel does not snap the menu shut */
@@ -78,7 +98,7 @@ const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner 
   const active = owner[here] || '';
   const Mark = mark.icon || EmviveMark;
 
-  return (
+  const bar_ = (
     <div className={`pnv ${stuck ? 'stuck' : ''}`} onMouseLeave={release}>
       <div className="pnv-in">
         <a className="pnv-mark" href="#top">
@@ -125,9 +145,11 @@ const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner 
               {watch.label}
             </a>
           )}
-          <a href={cta.href} className="pnv-cta" onMouseEnter={release}>
-            {cta.label} <ArrowRight size={14} />
-          </a>
+          {cta && (
+            <a href={cta.href} className="pnv-cta" onMouseEnter={release}>
+              {cta.label} <ArrowRight size={14} />
+            </a>
+          )}
         </div>
       </div>
 
@@ -174,6 +196,13 @@ const ProductNav = ({ mark, menus = [], links = [], watch, cta, spy = [], owner 
       <motion.span className="pnv-progress" style={{ scaleX: bar }} aria-hidden="true" />
     </div>
   );
+
+  /* Riding a section means leaving the flow: the slot keeps the bar's
+     58px reserved for the whole page life, so the moment it goes fixed
+     nothing below it jumps up to fill the gap. */
+  if (!stickAfter) return bar_;
+
+  return <div className={`pnv-slot ${stuck ? 'stuck' : ''}`}>{bar_}</div>;
 };
 
 export default ProductNav;
