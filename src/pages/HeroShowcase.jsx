@@ -5,6 +5,7 @@ import HeroCrisp from '../components/hero/variants/HeroCrisp';
 import HeroWipro from '../components/hero/variants/HeroWipro';
 import HeroDashboard from '../components/hero/variants/HeroDashboard';
 import HeroCoframe from '../components/hero/variants/HeroCoframe';
+import HeroInfosys from '../components/hero/variants/HeroInfosys';
 import './HeroShowcase.css';
 
 /* /home — four hero treatments of the same copy. A corner dropdown switches
@@ -15,6 +16,7 @@ const STYLES = [
   { id: 2, name: 'Home 2', sub: 'Dashboards', Component: HeroDashboard },
   { id: 3, name: 'Home 3', sub: 'Full-bleed', Component: HeroWipro },
   { id: 4, name: 'Home 4', sub: 'Framed screen', Component: HeroCoframe },
+  { id: 5, name: 'Home 5', sub: 'Film + copy', Component: HeroInfosys },
 ];
 
 const HeroShowcase = () => {

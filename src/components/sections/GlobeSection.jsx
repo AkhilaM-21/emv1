@@ -6,9 +6,9 @@ import './GlobeSection.css';
 
 // Office regions: [lon, lat, label]
 const OFFICES = [
-  { coords: [77.21, 28.61], label: 'India', regionKey: 'india', address: 'Cyber City, DLF Phase 2, Gurugram, Haryana 122002, India' },
+  { coords: [77.21, 28.61], label: 'India', regionKey: 'india', tagDx: 30, address: 'Cyber City, DLF Phase 2, Gurugram, Haryana 122002, India' },
   { coords: [46.72, 24.63], label: 'Saudi Arabia', regionKey: 'saudi', labelBelow: true, address: 'King Fahd Road, Olaya District, Riyadh 12214, Saudi Arabia' },
-  { coords: [55.27, 25.20], label: 'Dubai', regionKey: 'dubai', address: 'Sheikh Zayed Road, Trade Centre, Dubai, UAE' },
+  { coords: [55.27, 25.20], label: 'Dubai', regionKey: 'dubai', tagDx: -30, address: 'Sheikh Zayed Road, Trade Centre, Dubai, UAE' },
 ];
 
 // Nodes that shoot arcs to the offices to simulate global traffic
@@ -591,7 +591,7 @@ const WorldMap = ({ selected = 0, onSelect = () => {} }) => {
           >
             <circle r="22" className="wm-halo" />
             <circle r="6.5" className="wm-dot" />
-            <g className="wm-tag" transform="translate(0, -20)">
+            <g className="wm-tag" transform={`translate(${p.tagDx || 0}, ${p.labelBelow ? 34 : -20})`}>
               <rect x="-52" y="-16" width="104" height="26" rx="13" />
               <text x="0" y="2">{t(`header.regions.${p.regionKey}`, p.label)}</text>
             </g>

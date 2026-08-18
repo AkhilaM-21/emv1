@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu,
+import {
+  ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu,
   Cloud, TrendingUp, BarChart3, Workflow, Blocks, CircleDollarSign, Store, Factory, Receipt, Handshake, ClipboardCheck, LayoutGrid, Plug, ShieldCheck, UserCheck, Layers, ArrowUpRight,
   Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase,
-  HardHat, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
+  HardHat, Wrench, HeartPulse, Building2, Utensils
+} from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
@@ -50,7 +52,6 @@ const MEGA_META = {
   'Projects': { icon: Briefcase, sub: '', color: '#4f46e5' },
   'E-Invoicing': { icon: Receipt, sub: '', color: '#0891b2' },
   'Analytics & Reporting': { icon: BarChart3, sub: '', color: '#db2777' },
-  'HR & Payroll': { icon: Users, sub: '', color: '#0d9488' },
   /* industries (§ hero list) */
   'Construction & Engineering': { icon: HardHat, sub: '', color: '#d97706' },
   'Retail & Commerce': { icon: ShoppingCart, sub: '', color: '#be123c' },
@@ -194,7 +195,7 @@ const Header = () => {
   // Mega Menu State
   const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [activeIndustryIndex, setActiveIndustryIndex] = useState(0);
-  
+
   // Compute active data based on indices (safe for i18n key swaps)
   const productKeys = Object.keys(MEGA_MENU_DATA);
   const activeProductTab = productKeys[activeProductIndex] || productKeys[0];
@@ -202,7 +203,7 @@ const Header = () => {
   const industryKeys = Object.keys(activeProductData);
   const activeIndustryTab = industryKeys[activeIndustryIndex] || industryKeys[0];
   const activeIndustryData = activeProductData[activeIndustryTab] || {};
-  
+
   const actionsRef = useRef(null);
 
   useEffect(() => {
@@ -258,8 +259,8 @@ const Header = () => {
             }}
           >
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M16 2L2 10V22L16 30L30 22V10L16 2Z" stroke="#FF6B6B" strokeWidth="2" strokeLinejoin="round"/>
-               <path d="M16 8L8 13V19L16 24L24 19V13L16 8Z" stroke="#4ECDC4" strokeWidth="2" strokeLinejoin="round"/>
+              <path d="M16 2L2 10V22L16 30L30 22V10L16 2Z" stroke="#FF6B6B" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M16 8L8 13V19L16 24L24 19V13L16 8Z" stroke="#4ECDC4" strokeWidth="2" strokeLinejoin="round" />
             </svg>
             <span className="logo-text">Emvive</span>
           </Link>
@@ -270,7 +271,7 @@ const Header = () => {
               const label = itemObj.label;
               const isOpen = openNav === item;
               const hasMegaMenu = item === 'Products' || item === 'Enterprise';
-              
+
               return (
                 <div
                   key={item}
@@ -321,8 +322,8 @@ const Header = () => {
                     <button
                       key={r.key}
                       className={`dropdown-row ${region === r.key ? 'active' : ''}`}
-                      onClick={() => { 
-                        setRegion(r.key); 
+                      onClick={() => {
+                        setRegion(r.key);
                         setOpenMenu(null);
                         // Force arabic if dubai or saudi is selected
                         if (r.key === 'dubai' || r.key === 'saudi') {
@@ -360,10 +361,10 @@ const Header = () => {
                     <button
                       key={l.key}
                       className={`dropdown-row ${lang === l.key ? 'active' : ''}`}
-                      onClick={() => { 
+                      onClick={() => {
                         setLang(l.key);
                         i18n.changeLanguage(l.key);
-                        setOpenMenu(null); 
+                        setOpenMenu(null);
                       }}
                     >
                       {l.label}
@@ -583,16 +584,16 @@ const Header = () => {
               <h3 className="infor-col-header">Business Suites</h3>
               <div className="mega-items">
                 {productKeys.map((title, idx) => (
-                  <MegaItem 
-                    key={title} 
-                    title={title} 
-                    noSub 
+                  <MegaItem
+                    key={title}
+                    title={title}
+                    noSub
                     active={activeProductIndex === idx}
                     onEnter={() => {
                       setActiveProductIndex(idx);
                       setActiveIndustryIndex(0);
                     }}
-                    onClick={() => setOpenNav(null)} 
+                    onClick={() => setOpenNav(null)}
                   />
                 ))}
               </div>
@@ -656,7 +657,7 @@ const Header = () => {
           onMouseLeave={scheduleMegaClose}
         >
           <div className="infor-mega-layout">
-            
+
             <div className="infor-column">
               <h3 className="infor-col-header">Industries</h3>
               <div className="mega-items">

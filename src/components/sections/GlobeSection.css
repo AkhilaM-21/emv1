@@ -1075,9 +1075,9 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
   100% { transform: scale(1.25); opacity: 0; }
 }
 
-/* ---- Labels: only the active pin keeps its tag ---- */
+/* ---- Labels: every office keeps its tag so all three regions read at once ---- */
 .wm-tag {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.25s ease;
   pointer-events: none;
 }
@@ -1107,8 +1107,8 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
 .worldmap-wrap { max-width: 820px; }
 
 .wm-pin .wm-dot {
-  fill: #ffffff;
-  stroke: #e2601f;
+  fill: #e2601f;
+  stroke: #ffffff;
   stroke-width: 3.5;
   filter: drop-shadow(0 2px 6px rgba(226, 96, 31, 0.6));
 }

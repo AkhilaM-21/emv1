@@ -1,5 +1,8 @@
 import React from 'react';
-import AgenticHero from '../components/hero/AgenticHero';
+/* Hero is the infosys-style film with the copy over it. The previous
+   hero is untouched in components/hero/AgenticHero.jsx — import it and
+   swap the tag below to put it back. */
+import HeroInfosys from '../components/hero/variants/HeroInfosys';
 import Products from '../components/sections/Products';
 import WhyEmvive from '../components/sections/WhyEmvive';
 import Features from '../components/sections/Features';
@@ -13,7 +16,7 @@ import Resources from '../components/sections/Resources';
 const Home = () => {
   return (
     <>
-      <AgenticHero />
+      <HeroInfosys video="/images/network.mp4" />
       <Products />
       <Features variant="color" />
       <Clients />

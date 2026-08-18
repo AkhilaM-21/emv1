@@ -1,0 +1,212 @@
+/* ================= STYLE 5 — film banner, three-act intro =================
+   The dark base under the video matters: it is what shows while the clip is
+   still downloading, so the banner never flashes white before the first
+   frame paints.
+   ======================================================================= */
+
+.hi-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #060a14; /* holds the frame before the video paints */
+}
+
+.hi-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  animation: hi-drift 26s ease-in-out infinite alternate both;
+}
+
+@keyframes hi-drift {
+  from { transform: scale(1.1); }
+  to   { transform: scale(1.02); }
+}
+
+/* Centre-weighted, because the copy is centred: a radial keeps the darkening
+   behind the words while leaving the edges of the film brighter. Video
+   brightness shifts as the clip plays, so light text over raw footage fails
+   contrast on some frames no matter which clip is used. */
+.hi-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(115% 80% at 50% 50%,
+      rgba(6, 10, 20, 0.32) 0%,
+      rgba(6, 10, 20, 0.58) 66%,
+      rgba(6, 10, 20, 0.74) 100%),
+    linear-gradient(180deg,
+      rgba(6, 10, 20, 0.50) 0%,
+      rgba(6, 10, 20, 0.22) 32%,
+      rgba(6, 10, 20, 0.26) 64%,
+      rgba(6, 10, 20, 0.62) 100%);
+}
+
+/* ---- shared headline type, used by the intro copy and the real one ---- */
+.hi-title,
+.hi-intro-line {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* ---- Acts 1 and 2: one line at a time, alone on the banner ---- */
+.hi-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 7rem 2.5rem;
+  pointer-events: none;
+}
+
+.hi-intro-line {
+  /* both lines occupy the same cell, so each takes the centre in its turn */
+  grid-area: 1 / 1;
+  max-width: 30ch;
+  text-align: center;
+  color: #fff;
+  animation: hi-leave 0.45s ease-in both;
+}
+
+.hi-word {
+  /* inline-block so each word can carry its own filter and transform */
+  display: inline-block;
+  animation: hi-focus 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* the gradient sits on the words, not the line: once a child carries its own
+   filter or transform it becomes its own stacking context, and a gradient on
+   the parent can no longer paint through it */
+.hi-accent .hi-word,
+.hi-accent.hi-line {
+  background: linear-gradient(100deg, #f7a76c 0%, #f0883e 45%, #e2601f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Act 3: the finished banner ---- */
+.hi-inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 7rem 2.5rem;
+  color: #fff;
+  text-align: center;
+  animation: hi-focus 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hi-title {
+  max-width: 30ch;
+  margin: 0 auto 2.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hi-line {
+  display: block;
+  text-wrap: balance;
+}
+
+.hi-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.hi-btn-ic {
+  display: grid;
+  place-items: center;
+  transition: transform 0.25s ease;
+}
+
+.hi-btn:hover { transform: translateY(-2px); }
+.hi-btn:hover .hi-btn-ic { transform: translateX(3px); }
+
+.hi-btn-solid {
+  background: linear-gradient(180deg, #f0883e 0%, #e2601f 55%, #d6461a 100%);
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(226, 96, 31, 0.36);
+}
+
+.hi-btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.hi-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---- the two motions ---- */
+
+/* resolve out of a blur, at a slightly larger size — nothing slides */
+@keyframes hi-focus {
+  from { opacity: 0; filter: blur(16px); transform: scale(1.06); }
+  to   { opacity: 1; filter: blur(0);    transform: scale(1); }
+}
+
+/* and leave the same way it arrived */
+@keyframes hi-leave {
+  from { opacity: 1; filter: blur(0);    transform: scale(1); }
+  to   { opacity: 0; filter: blur(14px); transform: scale(0.97); }
+}
+
+@media (max-width: 1024px) {
+  .hi-hero { min-height: 82vh; }
+  .hi-inner,
+  .hi-intro { padding: 6rem 1.75rem; }
+  .hi-title,
+  .hi-intro-line { max-width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .hi-ctas { flex-direction: column; align-items: stretch; }
+  .hi-btn { justify-content: center; }
+}
+
+/* No theatre for anyone who asked for less motion: the intro is skipped
+   entirely and the finished banner is simply there. */
+@media (prefers-reduced-motion: reduce) {
+  .hi-video,
+  .hi-word { animation: none; }
+  .hi-intro { display: none; }
+  .hi-inner { animation: none; }
+  .hi-btn,
+  .hi-btn-ic { transition: none; }
+  .hi-btn:hover { transform: none; }
+  .hi-btn:hover .hi-btn-ic { transform: none; }
+}
