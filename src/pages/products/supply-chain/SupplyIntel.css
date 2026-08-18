@@ -18,9 +18,7 @@
   inset: 0 0 auto;
   height: 34rem;
   pointer-events: none;
-  background-image:
-    linear-gradient(var(--hair) 1px, transparent 1px),
-    linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+  background-image: var(--hair);
   background-size: 68px 68px;
   -webkit-mask-image: radial-gradient(ellipse 62% 70% at 50% 0%, #000 4%, transparent 74%);
   mask-image: radial-gradient(ellipse 62% 70% at 50% 0%, #000 4%, transparent 74%);
@@ -117,10 +115,9 @@
   border-radius: 16px;
   overflow: hidden;
   background: var(--bg);
-  box-shadow: var(--shadow-panel);
   transition: box-shadow 0.6s ease;
 }
-.in-body.ok { box-shadow: var(--shadow-panel), 0 0 0 1px rgba(22, 163, 74, 0.28); }
+.in-body.ok { }
 
 .in-plot { padding: 1.4rem 1.6rem 0; }
 .in-canvas { position: relative; cursor: crosshair; }
@@ -170,7 +167,6 @@
   color: var(--ink-2);
   background: var(--bg);
   border: 1px solid var(--line);
-  box-shadow: 0 10px 26px -12px rgba(9, 9, 11, 0.32);
 }
 .in-tip b { font-family: var(--ui-mono); font-size: 0.62rem; color: var(--ink); }
 .in-tip u { text-decoration: none; font-family: var(--ui-mono); color: var(--ink); margin-left: 0.24rem; }
@@ -342,7 +338,6 @@
   background: #16a34a;
   border-color: transparent;
   font-weight: 500;
-  box-shadow: 0 10px 24px -12px rgba(22, 163, 74, 0.8);
 }
 .in-btn.go:hover { background: #15903f; color: #fff; }
 

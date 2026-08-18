@@ -369,7 +369,10 @@
   margin: 0 0 3.5rem;
 }
 
-.features-header-text { max-width: 900px; }
+/* the cap moves off the block and onto the heading, so the heading keeps
+   the two-line shape it breaks at while the intro underneath runs the
+   full width of the column instead of stopping at 620px */
+.features-header-text { max-width: none; }
 
 .features-heading {
   font-size: 3.4rem;
@@ -378,6 +381,7 @@
   letter-spacing: -1.5px;
   color: #0b1730;
   margin: 0 0 1rem;
+  max-width: 900px;
 }
 
 .features-sub {
@@ -385,7 +389,7 @@
   line-height: 1.65;
   color: #64748b;
   margin: 0;
-  max-width: 620px;
+  max-width: none;
 }
 
 @media (min-width: 901px) {
@@ -438,9 +442,11 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 340px;
+  /* trimmed from 340px / 2.25rem — enough off to lose the empty band
+     under the link, without the card turning into a tile */
+  min-height: 292px;
   text-align: left;
-  padding: 2.25rem 1.75rem 1.9rem;
+  padding: 1.85rem 1.5rem 1.55rem;
   border-radius: 16px;
   background: #ffffff;
   /* shadows as committed on main, with the orange border */
@@ -471,7 +477,7 @@
   display: inline-flex;
   line-height: 0;
   color: #0b1730;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.6rem;
   transition: color 0.3s ease;
 }
 
@@ -507,7 +513,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.75rem;
+  margin-top: 1.25rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: #e2601f;
@@ -702,7 +708,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.75rem;
+  margin-top: 1.25rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: #e2601f;

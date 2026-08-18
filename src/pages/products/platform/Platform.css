@@ -1,23 +1,67 @@
 /* =====================================================================
-   EMVIVE PLATFORM & BUILDER
-   Page root. Tokens live in PlatformKit.css under `.pb`; this file owns
-   the page rhythm — the alternation between paper and night that stops
-   fourteen sections reading as one long scroll.
+   EMVIVE FINANCE — page scaffolding.
+
+   The sections have their own stylesheets: PlatformHero.css (01),
+   PlatformStory.css (02–07) and the shared blocks.css (08). What is
+   left here is what belongs to the page as a whole — the accent, the
+   gutter every band lines up against, and the product bar.
    ===================================================================== */
 
+/* `.pb`, not `.fn`. This block arrived as a copy of Finance.css and kept
+   Finance's selector, so every token in it — the gutter included — was
+   defined for a class that does not exist on this page. That is why the
+   bands sat at the 40px fallback instead of the 96px edge Finance uses. */
 .pb {
-  background: var(--paper);
-  color: var(--ink-2);
+  --ink-panel: #0d0a1c;
+
+  /* ONE GUTTER for the whole page, and it is the home page's, measured
+     off .ah-dark / .ah-grid in AgenticHero.css rather than invented:
+
+         .ah-dark  { padding: 5rem 6rem 4rem; }   96px sides
+         .ah-grid  { max-width: 1500px; margin: 0 auto; }
+
+     which is 96px until the viewport is wide enough for 1500px of
+     content to centre inside it, and half the overflow after that.
+     Its own breakpoints follow below.
+
+     Every band on this page lines up against this and nothing else. It
+     was four different measures before — 1320, 1480, 1560 and 1660 —
+     which is why the bar sat a hundred pixels inside the hero. */
+  /* one definition, in shared/system.css */
+  --pn-gutter: var(--page-gutter);
 }
 
-/* the shared `.px` product-page root sets a white background and a
-   90px header offset; the platform page keeps the offset but takes over
-   everything below it */
-.pb section { position: relative; }
+/* the breakpoints live with --page-gutter in shared/system.css now */
 
-/* a reserved block for a code-split section that has not landed yet, so
-   a lazy import never shifts the page under someone mid-scroll */
-.pb-hold { width: 100%; }
-.pb-hold.paper { background: var(--paper); }
-.pb-hold.paper-2 { background: var(--paper-2); }
-.pb-hold.night { background: var(--night); }
+/* The shared shells are centred inside their own max-width, which is a
+   different edge again. Scoped to `.pb` so Finance and Supply Chain
+   keep theirs. */
+.pb .pnv-in,
+.pb .px-shell,
+.pb .bk-shell {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: var(--pn-gutter);
+  padding-right: var(--pn-gutter);
+}
+
+/* =====================================================================
+   PRODUCT BAR — Platform only
+
+   Scoped to `.pb` rather than changed in nav.css, because the bar is
+   shared with Supply Chain and Platform and neither of those asked for
+   this. The two right-hand actions are gone from the Platform config
+   entirely; what is left goes black instead of the muted grey.
+   ===================================================================== */
+.pb .pnv-trigger,
+.pb .pnv-link,
+.pb .pnv-trigger svg { color: var(--ink); }
+
+.pb .pnv-trigger:hover,
+.pb .pnv-link:hover { color: var(--ink); background: rgba(9, 9, 11, 0.05); }
+
+/* =====================================================================
+   DARK
+   ===================================================================== */
+body.dark-theme .pb { --ink-panel: #06110c; }

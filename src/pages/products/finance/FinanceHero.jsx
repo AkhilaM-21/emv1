@@ -151,117 +151,42 @@ const CAPS = [
 ];
 
 const CapabilityRail = () => {
-  const trackRef = useRef(null);
   const reduced = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const touched = useRef(0);
-  const paused = useRef(false);
-
-  /* one card plus the gap after it */
-  const stepPx = useCallback(() => {
-    const el = trackRef.current;
-    const card = el && el.firstElementChild;
-    if (!card) return 0;
-    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
-    return card.offsetWidth + gap;
-  }, []);
-
-  /* Move on by one card, the same cadence as the industry tiles on the
-     home hero — but seamlessly. The set is rendered twice, so once the
-     rail has travelled the width of one full set it is snapped back by
-     exactly that distance with no animation. The content at the two
-     positions is identical, so nothing is visible: the cards simply
-     keep sliding for as long as the page is open, instead of running
-     to the end and jumping back to the start. */
-  const advance = useCallback((dir = 1) => {
-    const el = trackRef.current;
-    const step = stepPx();
-    if (!el || step <= 0) return;
-
-    const setW = step * CAPS.length;
-    if (dir > 0 && el.scrollLeft >= setW - 1) el.scrollLeft -= setW;
-    if (dir < 0 && el.scrollLeft < 1) el.scrollLeft += setW;
-
-    el.scrollBy({ left: dir * step, behavior: 'smooth' });
-    setActive((cur) => (cur + dir + CAPS.length) % CAPS.length);
-  }, [stepPx]);
-
-  /* It holds while the pointer is over it, and for a few seconds after
-     the visitor has moved it themselves. */
-  useEffect(() => {
-    if (reduced) return undefined;
-    const id = setInterval(() => {
-      if (paused.current || Date.now() - touched.current < 4000) return;
-      advance(1);
-    }, 2800);
-    return () => clearInterval(id);
-  }, [reduced, advance]);
-
-  const nudge = (dir) => {
-    touched.current = Date.now();
-    advance(dir);
-  };
 
   return (
-    <div
-      className="fh-rail"
-      onMouseEnter={() => { paused.current = true; }}
-      onMouseLeave={() => { paused.current = false; }}
-    >
-      <div
-        className="fh-rail-track"
-        ref={trackRef}
-        onPointerDown={() => { touched.current = Date.now(); }}
-        onWheel={() => { touched.current = Date.now(); }}
-      >
-        {/* rendered twice — the second pass is what the rail slides into
-            when it wraps, and is hidden from assistive tech */}
-        {[...CAPS, ...CAPS].map((c, n) => {
-          const Icon = c.icon;
-          return (
-            <article
-              className="fh-cap"
-              key={`${c.k}-${n}`}
-              style={{ '--cc': c.color, '--cc-rgb': c.rgb }}
-              aria-hidden={n >= CAPS.length ? 'true' : undefined}
-              tabIndex={n >= CAPS.length ? -1 : 0}
-            >
-              <span className="fh-cap-ic"><Icon size={30} strokeWidth={1.5} /></span>
-              <h3 className="fh-cap-band"><span>{c.k}</span></h3>
-              <p>{c.d}</p>
-            </article>
-          );
-        })}
-      </div>
-
-      <div className="fh-rail-foot">
-        <span className="fh-rail-dots" aria-hidden="true">
-          {CAPS.map((c, i) => (
-            <i
-              key={c.k}
-              className={i === active ? 'on' : ''}
-              style={i === active ? { background: c.color } : undefined}
-            />
-          ))}
-        </span>
-
-        <div className="fh-rail-btns">
-          <button
-            type="button"
-            className="fh-rail-btn prev"
-            onClick={() => nudge(-1)}
-            aria-label="Previous capability"
-          >
-            <ChevronLeft size={17} />
-          </button>
-          <button
-            type="button"
-            className="fh-rail-btn next"
-            onClick={() => nudge(1)}
-            aria-label="Next capability"
-          >
-            <ChevronRight size={17} />
-          </button>
+    <div className="fh-rail">
+      <div className="fh-rail-marquee">
+        <div className={`fh-rail-marquee-content ${reduced ? 'paused' : ''}`}>
+          {CAPS.map((c, n) => {
+            const Icon = c.icon;
+            return (
+              <div
+                className="fh-cap-marquee-item"
+                key={`${c.k}-${n}`}
+                style={{ '--cc': c.color, '--cc-rgb': c.rgb }}
+              >
+                <span className="fh-cap-ic"><Icon size={18} strokeWidth={2} /></span>
+                <span className="fh-cap-name">{c.k}</span>
+                <span className="fh-cap-sep" aria-hidden="true">•</span>
+              </div>
+            );
+          })}
+        </div>
+        <div className={`fh-rail-marquee-content ${reduced ? 'paused' : ''}`} aria-hidden="true">
+          {CAPS.map((c, n) => {
+            const Icon = c.icon;
+            return (
+              <div
+                className="fh-cap-marquee-item"
+                key={`${c.k}-${n}-dup`}
+                style={{ '--cc': c.color, '--cc-rgb': c.rgb }}
+              >
+                <span className="fh-cap-ic"><Icon size={18} strokeWidth={2} /></span>
+                <span className="fh-cap-name">{c.k}</span>
+                <span className="fh-cap-sep" aria-hidden="true">•</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

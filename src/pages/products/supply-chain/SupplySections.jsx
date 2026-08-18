@@ -7,6 +7,10 @@ import {
   FileWarning, MapPin, Building2, Activity, Database, HelpCircle,
 } from 'lucide-react';
 import { motion, Reveal, MaskText, useInView, useReducedMotion, scrollToY, EASE } from '../shared/motion';
+import {
+  SectionHead, FeatureGrid, CardGrid, NumberedList, AccordionShowcase, SplitFeature,
+  FolderGrid, OfferingsCard, ImpactPanel,
+} from '../shared/sections';
 import './SupplySections.css';
 
 /* =====================================================================
@@ -154,43 +158,18 @@ export const SupplyOverview = () => (
     <div className="sx-inner">
       <div className="sx-over-grid">
         <div>
-          <Reveal><span className="sn-kick"><i /> Supply chain overview</span></Reveal>
-          <MaskText
-            text="One system from the purchase order"
+          <SectionHead
+            label="Supply chain overview"
+            title="One system from the purchase order"
             accent="to the carton in someone's hand."
-            as="h2"
-            className="sn-h2"
+            lede="Emvive Supply Chain runs the physical side of the business on a single stock and document ledger. Procurement, manufacturing, the warehouse, the fleet and the outlets all read and write the same records — so a quantity never has to be reconciled between two systems that both claim to be right."
           />
-          <Reveal delay={0.16} y={16}>
-            <p className="sx-lede">
-              Emvive Supply Chain runs the physical side of the business on a single
-              stock and document ledger. Procurement, manufacturing, the warehouse,
-              the fleet and the outlets all read and write the same records — so a
-              quantity never has to be reconciled between two systems that both
-              claim to be right.
-            </p>
-          </Reveal>
           <Reveal delay={0.24} y={14}>
             <a href="#endtoend" className="sx-link">Follow one order through it <ArrowRight size={15} /></a>
           </Reveal>
         </div>
 
-        <Reveal className="sx-manages" delay={0.1} y={22}>
-          <span className="sx-manages-k">What it manages</span>
-          {MANAGES.map(([t, d], i) => (
-            <motion.div
-              className="sx-manages-row"
-              key={t}
-              initial={{ opacity: 0, x: -8 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
-            >
-              <span className="sx-manages-n">{String(i + 1).padStart(2, '0')}</span>
-              <div><b>{t}</b><em>{d}</em></div>
-            </motion.div>
-          ))}
-        </Reveal>
+        <NumberedList label="What it manages" items={MANAGES} />
       </div>
     </div>
   </section>
@@ -227,35 +206,26 @@ const CHALLENGES = [
   },
 ];
 
+/* Converted to the shared section furniture — same head and the same
+   feature cards Finance uses, so this section is now the Finance
+   pattern with supply-chain content in it. The cost line rides along
+   as `note`, which is what the pill under each card is for. */
 export const SupplyChallenge = () => (
   <section className="sx-chall" id="challenge">
     <div className="sx-inner">
-      <div className="sx-chall-head">
-        <Reveal><span className="sn-kick"><i /> The supply chain challenge</span></Reveal>
-        <MaskText text="Five gaps that cost real money." as="h2" className="sn-h2" />
-        <Reveal delay={0.16} y={14}>
-          <p className="sx-lede">
-            None of these are software problems on their own. They are the same
-            problem — the physical flow and the record of it have come apart.
-          </p>
-        </Reveal>
-      </div>
+      <SectionHead
+        label="The supply chain challenge"
+        title="Five gaps that"
+        accent="cost real money."
+        lede="None of these are software problems on their own. They are the same problem — the physical flow and the record of it have come apart."
+      />
 
-      <div className="sx-chall-rows">
-        {CHALLENGES.map((c, i) => (
-          <Reveal className="sx-chall-row" key={c.k} delay={i * 0.06}>
-            <span className="sx-chall-ic"><c.icon size={16} strokeWidth={1.8} /></span>
-            <div className="sx-chall-t">
-              <b>{c.k}</b>
-              <p>{c.p}</p>
-            </div>
-            <span className="sx-chall-cost">
-              <AlertTriangle size={12} strokeWidth={2} />
-              {c.cost}
-            </span>
-          </Reveal>
-        ))}
-      </div>
+      <FeatureGrid
+        cols={3}
+        items={CHALLENGES.map((c) => ({
+          icon: c.icon, t: c.k, d: c.p, note: c.cost,
+        }))}
+      />
     </div>
   </section>
 );
@@ -303,16 +273,13 @@ export const EndToEnd = () => {
         <div className="sx-e2e-bg" aria-hidden="true" />
 
         <div className="sx-inner">
-          <div className="sx-e2e-head">
-            <Reveal><span className="sn-kick"><i /> End-to-end supply chain</span></Reveal>
-            <MaskText text="One order, seven stages," accent="a single record." as="h2" className="sn-h2" />
-            <Reveal delay={0.16} y={14}>
-              <p className="sx-lede">
-                This is the same purchase order the whole way through. Nothing is re-keyed,
-                nothing is exported, and every stage can see what the one before it did.
-              </p>
-            </Reveal>
-          </div>
+          <SectionHead
+            className="sx-e2e-head"
+            label="End-to-end supply chain"
+            title="One order, seven stages,"
+            accent="a single record."
+            lede="This is the same purchase order the whole way through. Nothing is re-keyed, nothing is exported, and every stage can see what the one before it did."
+          />
 
           <ChainStrip active={i} onPick={pick} />
 
@@ -430,9 +397,12 @@ export const StageSection = ({ stage, flip }) => (
     <div className="sx-inner">
       <div className="sx-stage-grid">
         <div className="sx-stage-copy">
-          <Reveal><span className="sn-kick"><i /> {stage.kicker}</span></Reveal>
-          <MaskText text={stage.title} accent={stage.accent} as="h2" className="sn-h2" />
-          <Reveal delay={0.16} y={14}><p className="sx-body">{stage.body}</p></Reveal>
+          <SectionHead
+            label={stage.kicker}
+            title={stage.title}
+            accent={stage.accent}
+            lede={stage.body}
+          />
 
           <Reveal delay={0.22} y={14}>
             <ul className="sx-points">
@@ -470,33 +440,203 @@ const GOV = [
 export const SupplyGovernance = () => (
   <section className="sx-gov" id="governance">
     <div className="sx-inner">
-      <div className="sx-gov-head">
-        <Reveal><span className="sn-kick"><i /> Security, controls &amp; governance</span></Reveal>
-        <MaskText text="Control that survives contact with a warehouse." as="h2" className="sn-h2" />
-        <Reveal delay={0.16} y={14}>
-          <p className="sx-lede">
-            Physical operations are where controls usually break — a shift needs to move
-            stock now and the system is the obstacle. These are designed to hold without
-            stopping the work.
-          </p>
-        </Reveal>
-      </div>
+      <SectionHead
+        label="Security, controls & governance"
+        title="Control that survives"
+        accent="contact with a warehouse."
+        lede="Physical operations are where controls usually break — a shift needs to move stock now and the system is the obstacle. These are designed to hold without stopping the work."
+      />
 
-      <div className="sx-gov-grid">
-        {GOV.map((g, i) => (
-          <Reveal className="sx-gov-cell" key={g.t} delay={i * 0.05}>
-            <span className="sx-gov-ic"><g.icon size={16} strokeWidth={1.8} /></span>
-            <h3>{g.t}</h3>
-            <p>{g.d}</p>
-          </Reveal>
-        ))}
-      </div>
+      {/* the same CardGrid Finance heads its security section with, on the
+          same 6-column track — three cards of two, then two of three */}
+      <CardGrid
+        items={GOV.map((g, i) => ({ ...g, span: i < 3 ? 2 : 3 }))}
+      />
 
       <Reveal className="sx-certs" delay={0.1}>
         {['ISO/IEC 27001', 'SOC 2 Type II', 'GDPR', 'PDPL', 'GS1 barcode standards'].map((c) => (
           <span key={c}><Check size={11} strokeWidth={3} />{c}</span>
         ))}
       </Reveal>
+    </div>
+  </section>
+);
+
+/* =====================================================================
+   THE FINANCE SECTIONS, WITH SUPPLY CHAIN CONTENT
+
+   These two replace the page's own signature blocks — the scroll-pinned
+   chain, the depth descent, the three stage deep-dives, the dark
+   instrumentation bands and the success story. Every one of them is now
+   the same component Finance runs, fed this page's content.
+
+   The old components are still in the repo; the page simply stops
+   importing them. Reversing this is a matter of putting them back in
+   the render, not rebuilding anything.
+   ===================================================================== */
+
+/* Finance cycles five screenshots across eight modules; there are five
+   stage images in the repo and seven stages here, so the last two reuse
+   the first two rather than shipping a blank panel. */
+/* what each module covers, in the order the chain runs — the folder
+   grid lists these beside the stage's icon */
+const MODULE_POINTS = [
+  ['Supplier onboarding and scorecards', 'Price lists and contract terms', 'Compliance documents with expiry alerting', 'RFQ and quotation comparison', 'Performance by delivery and quality'],
+  ['Requisition, RFQ, PO and acknowledgement', 'Commitment accounting against live budgets', 'Approval routing by value and category', 'ASN and goods receipt matching', 'Variance holds instead of nodded-through receipts'],
+  ['Bill of materials and routing', 'Shop-floor issue and back-flush', 'Work order scheduling against capacity', 'Batch and serial traceability', 'Yield and scrap reporting'],
+  ['Bin, batch and serial level stock', 'Putaway, picking, packing and counting', 'FEFO selection with wave planning', 'Offline-first scanning, synced in range', 'Cycle counts with variance approval'],
+  ['Load building by weight and drop', 'Live ETA against plan', 'Temperature and humidity logging', 'Proof of delivery with signature and photo', 'Driver, trip and fleet records'],
+  ['Replenishment and allocation', 'Inter-site transfers and returns', 'Cross-docking at the hub', 'Outlet-level stock visibility', 'Demand-led distribution, not monthly plans'],
+  ['Demand forecasting by outlet', 'Inventory targets and reorder points', 'Risk and stock-out prediction', 'Scenario planning on assumptions', 'Fill rate and OTIF measurement'],
+];
+
+const STAGE_IMG = [
+  '/images/capture_step.jpg',
+  '/images/post_step.jpg',
+  '/images/control_step.jpg',
+  '/images/automate_step.jpg',
+  '/images/close_step.jpg',
+  '/images/capture_step.jpg',
+  '/images/post_step.jpg',
+];
+
+export const SupplyStages = () => (
+  <section className="sx-over" id="stages">
+    <div className="sx-inner">
+      <SectionHead
+        label="What it covers"
+        title="Seven stages,"
+        accent="one record."
+        lede="Supplier to outlet on a single stock and document ledger. Each stage below is the one screen where that part of the chain actually happens — nothing is re-keyed between them."
+      />
+
+      <AccordionShowcase
+        items={CHAIN.map((c, i) => ({
+          k: c.label,
+          icon: c.icon,
+          body: STORY[i] ? STORY[i].d : c.meta,
+          img: STAGE_IMG[i],
+        }))}
+      />
+    </div>
+  </section>
+);
+
+export const SupplyJourney = () => (
+  <section className="sx-stage" id="journey">
+    <div className="sx-inner">
+      <SectionHead
+        label="How it works"
+        title="From the purchase order"
+        accent="to the carton on the shelf."
+        lede="The same order travels the whole way. Procurement, the warehouse and the fleet read and write the same records, so a quantity never has to be reconciled between two systems that both claim to be right."
+      />
+
+      <SplitFeature
+        image="/images/automate_step.jpg"
+        alt="Supply chain operations"
+        title="One order, seven stages"
+        body="Follow a single purchase order from acknowledgement to the shelf, without it being exported once."
+        cols={3}
+        items={STAGES.map((s) => ({
+          k: s.kicker.split(' ')[0],
+          t: `${s.title} ${s.accent}`,
+          d: s.body,
+        }))}
+      />
+    </div>
+  </section>
+);
+
+/* 02b — the folder grid, Finance's second capabilities section */
+export const SupplyModules = () => (
+  <section className="sx-over" id="modules">
+    <div className="sx-inner">
+      <SectionHead
+        label="Product & capabilities"
+        title="Seven modules."
+        accent="One stock ledger underneath."
+        lede="Nothing here is a separate product with its own database. Every module writes to the same stock and document records, so what one of them knows, all of them know."
+      />
+
+      <FolderGrid
+        items={CHAIN.map((c, i) => ({
+          k: c.label,
+          icon: c.icon,
+          points: MODULE_POINTS[i],
+        }))}
+      />
+    </div>
+  </section>
+);
+
+/* 04 — the offerings card, Finance's automation section */
+export const SupplyAutomation = () => (
+  <section className="sx-chall" id="automation">
+    <div className="sx-inner">
+      <SectionHead
+        label="Automation"
+        title="The routine work stops"
+        accent="reaching a person."
+        lede="Rules run against live stock on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
+      />
+
+      <OfferingsCard
+        title="Our Offerings"
+        note="We help operations teams pursue a path of smart transformation"
+        image="/images/automation_abstract.png"
+        tabs={[
+          {
+            label: 'Stock & replenishment',
+            items: ['Reorder point breach', 'FEFO batch selection', 'Cycle count scheduling', 'Transfer suggestions'],
+          },
+          {
+            label: 'Procurement & transport',
+            items: ['PO acknowledgement chasing', 'Three-way receipt match', 'Load building by drop', 'ETA slip alerting'],
+          },
+        ]}
+      />
+    </div>
+  </section>
+);
+
+/* 07 — the impact panel, Finance's "what changes in the first year" */
+export const SupplyImpact = () => (
+  <section className="sx-gov" id="impact">
+    <div className="sx-inner">
+      <SectionHead
+        label="Why Emvive · business impact"
+        title="What changes in"
+        accent="the first year."
+        lede="One real group — eighteen hubs, two hundred and twelve outlets — twelve months after go-live. Measured on the line, not on the invoice."
+      />
+
+      <ImpactPanel
+        bars={{
+          k: 'ORDER TO SHELF',
+          sub: 'Working days from PO to outlet',
+          scale: 20,
+          unit: ' days',
+          rows: [
+            { k: 'Before Emvive', note: 'Eleven days, most of it waiting on a status', v: 11, tone: 'was' },
+            { k: 'With Emvive', note: 'Acknowledged, picked, loaded and delivered', v: 4, tone: 'now' },
+          ],
+          claim: { v: '−7 days', label: 'off the cycle, on every order' },
+        }}
+        figures={[
+          { icon: Timer, value: '4', suffix: ' days', label: 'Order to shelf' },
+          { icon: Boxes, value: '99.1', suffix: '%', label: 'Fill rate' },
+          { icon: Building2, value: '18', suffix: '', label: 'Hubs consolidated' },
+          { icon: ShieldCheck, value: '96.4', suffix: '%', label: 'OTIF' },
+        ]}
+        photo="https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=900"
+        alt="Warehouse operations"
+        quotes={[
+          'Stock is held at bin and batch level, so what the system says is on the shelf is what the picker finds on the shelf.',
+          'Loads are built by weight and drop sequence, and an ETA that slips lists the outlets affected before the customer calls.',
+          'A buyer cannot receive their own order. Approval limits and duty segregation are enforced by the ledger, not by memo.',
+        ]}
+      />
     </div>
   </section>
 );
@@ -551,27 +691,23 @@ export const SUPPLY_CONTACT = {
   lede:
     'Share a month of stock movements and we will show you where working capital is trapped, which lanes are hurting OTIF, and what the system would have ordered instead.',
   cta: 'Talk to Supply Chain Team',
+  panel: {
+    title: 'What to expect',
+    note: 'A month of your real stock movements read back to you, not a requirements workshop.',
+  },
   aside: [
     { icon: Boxes, t: 'We look at your movements', d: 'One month of real stock data tells us more than a two-hour requirements workshop.' },
     { icon: MapPin, t: 'Site walk, not a webinar', d: 'For warehouse work we would rather stand in the aisle than screen-share at it.' },
     { icon: ShieldCheck, t: 'Under NDA from the first call', d: 'Sample data is destroyed after the session unless you ask us to keep it.' },
   ],
+  /* Four fields, matching Finance and Platform. Industry, supply-chain
+     area and company size were three sorting questions asked before
+     anyone had spoken — the message box already asks for the sites, the
+     SKUs and the system, which is what those three were circling. */
   fields: [
     { name: 'name', label: 'Name', required: true, placeholder: 'Omar Siddiqui', autoComplete: 'name' },
     { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'you@company.com', autoComplete: 'email' },
-    { name: 'company', label: 'Company', required: true, placeholder: 'Gulf Cement', autoComplete: 'organization' },
-    {
-      name: 'industry', label: 'Industry', type: 'select', required: true,
-      options: ['Manufacturing', 'Retail & FMCG', 'Distribution & wholesale', 'Construction', 'Pharma & healthcare', 'Food & cold chain', 'Other'],
-    },
-    {
-      name: 'area', label: 'Supply-chain area', type: 'choice', span: 2,
-      options: ['Procurement', 'Warehouse', 'Inventory', 'Transport & fleet', 'Distribution', 'Planning & forecasting'],
-    },
-    {
-      name: 'size', label: 'Company size', type: 'select', required: true,
-      options: ['1–50', '51–200', '201–1,000', '1,001–5,000', '5,000+'],
-    },
+    { name: 'company', label: 'Company', required: true, span: 2, placeholder: 'Gulf Cement', autoComplete: 'organization' },
     {
       name: 'message', label: 'Message', type: 'textarea', span: 2,
       placeholder: 'How many sites and SKUs, what you run today, and where it hurts most.',

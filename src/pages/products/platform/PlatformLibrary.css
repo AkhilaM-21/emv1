@@ -254,7 +254,6 @@
   border-radius: 9px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04);
 }
 .gv-card b { display: block; font-size: 0.79rem; font-weight: 500; letter-spacing: -0.016em; color: var(--ink); }
 .gv-card span { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.28rem; font-size: 0.7rem; color: var(--ink-3); }
@@ -278,7 +277,7 @@
   padding: 0.6rem 0.9rem;
   border-top: 1px solid var(--hair);
 }
-.gv-list aside > span.on { background: var(--paper); box-shadow: inset 3px 0 0 var(--gv); }
+.gv-list aside > span.on { background: var(--paper); }
 .gv-list aside b { display: block; font-size: 0.8rem; font-weight: 500; letter-spacing: -0.016em; color: var(--ink); }
 .gv-list aside em { font-style: normal; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); }
 
@@ -303,7 +302,7 @@
   color: var(--ink-2);
 }
 .gv-time i { width: 7px; height: 7px; border-radius: 50%; background: rgba(9, 9, 11, 0.18); flex: none; }
-.gv-time span.on i { background: var(--gv); box-shadow: 0 0 0 3px var(--gv-soft); }
+.gv-time span.on i { background: var(--gv); }
 .gv-time em { margin-left: auto; font-style: normal; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); }
 
 /* ---- form ---- */
@@ -358,9 +357,7 @@
   position: relative;
   padding: clamp(6rem, 10vw, 9.5rem) 0;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 55% 45% at 82% 8%, rgba(108, 76, 241, 0.16), transparent 68%),
-    var(--night);
+  background: rgba(108, 76, 241, 0.16);
   color: var(--dim);
 }
 
@@ -393,9 +390,8 @@
   margin-top: 3.5rem;
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)), #0c0c14;
+  background: #0c0c14;
   border: 1px solid var(--nline);
-  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.95);
 }
 
 .pt-bar {
@@ -590,7 +586,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  box-shadow: 0 14px 30px -16px rgba(0, 0, 0, 0.8);
   --pt-a: #6c4cf1;
 }
 .pt-thumb.t-cy { --pt-a: #0ea5e9; }
@@ -653,7 +648,6 @@
   font-weight: 500;
   color: #fff;
   background: var(--v);
-  box-shadow: 0 8px 22px -10px rgba(108, 76, 241, 0.95);
 }
 .pt-preview {
   display: inline-flex;

@@ -63,7 +63,7 @@
   display: block;
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--v), var(--v2));
+  background: var(--v);
   transform-origin: left;
 }
 
@@ -104,7 +104,6 @@
   background: var(--ink);
   border-color: var(--ink);
   transform: scale(1.1);
-  box-shadow: 0 0 0 5px rgba(108, 76, 241, 0.14), 0 10px 22px -12px rgba(9, 9, 11, 0.6);
 }
 
 .pi-stop b {
@@ -128,7 +127,6 @@
   border-radius: 16px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 30px 70px -40px rgba(9, 9, 11, 0.35);
   overflow: hidden;
 }
 
@@ -138,7 +136,7 @@
   gap: 1.2rem;
   padding: 0.75rem 1.1rem;
   border-bottom: 1px solid var(--hair);
-  background: linear-gradient(180deg, #fcfcfd, var(--paper));
+  background: #fcfcfd;
 }
 
 .pi-stage-n {
@@ -181,9 +179,7 @@
   position: relative;
   min-height: 30rem;
   padding: 1.8rem;
-  background:
-    radial-gradient(ellipse 60% 70% at 82% 10%, rgba(108, 76, 241, 0.06), transparent 70%),
-    var(--paper);
+  background: var(--paper);
 }
 
 .pi-stage-slot { height: 100%; }
@@ -201,7 +197,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(140deg, #f472b6, #a855f7);
+  background: #f472b6;
 }
 .pi-req-head b { display: block; font-size: 0.9rem; font-weight: 500; color: var(--ink); }
 .pi-req-head em { display: block; font-style: normal; font-size: 0.75rem; color: var(--ink-3); }
@@ -216,7 +212,7 @@
   font-weight: 400;
 }
 .pi-req-body mark {
-  background: linear-gradient(180deg, transparent 62%, rgba(108, 76, 241, 0.22) 62%);
+  background: rgba(108, 76, 241, 0.22);
   color: inherit;
   padding: 0 0.1em;
 }
@@ -270,7 +266,6 @@
   overflow: hidden;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 14px 34px -20px rgba(9, 9, 11, 0.4);
 }
 
 .pi-ent-h {
@@ -319,7 +314,6 @@
   border-radius: 12px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 20px 44px -26px rgba(9, 9, 11, 0.4);
   overflow: hidden;
 }
 
@@ -437,7 +431,6 @@
   overflow: hidden;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 20px 44px -26px rgba(9, 9, 11, 0.4);
 }
 .pi-wire-top {
   display: flex;
@@ -522,7 +515,6 @@
   text-align: center;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 16px 34px -22px rgba(9, 9, 11, 0.4);
 }
 .pi-flow-ic {
   display: inline-flex;
@@ -624,7 +616,7 @@
   padding: 0.7rem 1rem;
   border-bottom: 1px solid var(--hair);
 }
-.pi-live-mark { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(140deg, var(--v), var(--v2)); }
+.pi-live-mark { width: 20px; height: 20px; border-radius: 6px; background: var(--v); }
 .pi-live-nav b { font-size: 0.85rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin-right: 0.6rem; }
 .pi-live-nav span { font-size: 0.79rem; color: var(--ink-3); }
 .pi-live-nav span.on { color: var(--ink); position: relative; }
@@ -645,7 +637,7 @@
   font-size: 0.65rem !important;
   font-weight: 600;
   color: #fff !important;
-  background: linear-gradient(140deg, #f472b6, #a855f7);
+  background: #f472b6;
 }
 
 .pi-live-body { padding: 1.2rem; display: flex; flex-direction: column; gap: 1.1rem; }

@@ -45,7 +45,6 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 55% 45% at 50% 0%, rgba(108, 76, 241, 0.07), transparent 68%);
 }
 
 .pl-over-head { position: relative; max-width: 50rem; }
@@ -70,7 +69,7 @@
 .pl-spine-track i {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--v), var(--v2));
+  background: var(--v);
   transform-origin: left;
 }
 
@@ -109,7 +108,6 @@
   background: var(--ink);
   border-color: var(--ink);
   transform: scale(1.1);
-  box-shadow: 0 0 0 6px rgba(108, 76, 241, 0.12), 0 14px 28px -14px rgba(9, 9, 11, 0.6);
 }
 
 .pl-stage b {
@@ -135,7 +133,6 @@
   border-radius: 18px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 30px 70px -44px rgba(9, 9, 11, 0.38);
   min-height: 13rem;
   align-items: center;
 }
@@ -213,12 +210,10 @@
   border-radius: 16px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.03);
-  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .pl-why-cell:hover {
   transform: translateY(-2px);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 22px 50px -30px rgba(9, 9, 11, 0.35);
 }
 
 .pl-why-top { display: flex; align-items: center; gap: 0.7rem; }
@@ -311,7 +306,6 @@
   border-radius: 14px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 18px 40px -30px rgba(9, 9, 11, 0.35);
 }
 .pl-env-ic {
   display: inline-flex;

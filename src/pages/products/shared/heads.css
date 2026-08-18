@@ -1,0 +1,202 @@
+/* =====================================================================
+   SECTION HEADS — ONE RECIPE, THREE PRODUCT PAGES
+
+   Finance heads every section the same way: a tinted pill with a
+   gradient dot, a headline whose answer half is a gradient, and a lede
+   under it. Supply Chain and Platform headed theirs with a small
+   monospace label, a 6px square dot and a flat headline — so the three
+   products read as three different design systems.
+
+   This is CSS only, because the markup was already the same shape on
+   all three: an eyebrow carrying a dot, a MaskText headline with an
+   accent half, a lede. Every value is written against var(--accent),
+   which ProductPage sets per page, so Supply Chain comes out blue and
+   Platform violet from these same rules — no page hardcodes a colour.
+
+   The long selector lists are the cost of those two pages naming their
+   heads per section (pl-h2, pw-h2, pv-h2 …) instead of sharing one
+   class the way Finance does with fs-h2. When a new section lands, add
+   its class here — or better, give it an existing one.
+
+   Finance is not in these lists: it already looks like this, and its
+   own rules in FinanceStory.css are the reference this file matches.
+   ===================================================================== */
+
+/* --- the eyebrow, as a pill --------------------------------------- */
+.sn .sn-kick,
+.sn .su-kick,
+.sn .in-kick,
+.sn .dc-kick,
+.pb .pk-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 84%, #000);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* the square marker becomes Finance's round gradient dot. Built out of
+   the accent rather than a fixed green, so it tints per page. */
+.sn .sn-kick i,
+.sn .su-kick i,
+.sn .in-kick i,
+.sn .dc-kick i,
+.pb .pk-kicker-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 52%, #fff);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, #fff);
+}
+
+/* on the night sections the ink inverts, and the tint has to carry the
+   pill on its own — Platform marks these with Kicker tone="dark" */
+.pb .pk-kicker.dark,
+.sn .dark > .sn-kick,
+.sn .night > .sn-kick {
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 46%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* --- the headline -------------------------------------------------- */
+.sn .sn-h2,
+.pb .pa-h2,
+.pb .pbr-h2,
+.pb .pc-h2,
+.pb .pd-h2,
+.pb .pe-h2,
+.pb .pf-h2,
+.pb .pg-h2,
+.pb .pi-h2,
+.pb .pl-h2,
+.pb .pn-h2,
+.pb .pr-h2,
+.pb .ps-h2,
+.pb .pt-h2,
+.pb .pv-h2,
+.pb .pw-h2,
+.pb .px2-h2 {
+  font-size: clamp(2.2rem, 4.4vw, 3.7rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+}
+
+/* The answer half of the headline is a gradient, as on Finance. It runs
+   accent → lighter rather than Finance's accent → darker, because these
+   two pages put headlines on night grounds as well as paper and one
+   gradient has to stay legible on both. */
+.sn .sn-h2 .mk-em,
+.pb .pa-h2 .mk-em,
+.pb .pbr-h2 .mk-em,
+.pb .pc-h2 .mk-em,
+.pb .pd-h2 .mk-em,
+.pb .pe-h2 .mk-em,
+.pb .pf-h2 .mk-em,
+.pb .pg-h2 .mk-em,
+.pb .pi-h2 .mk-em,
+.pb .pl-h2 .mk-em,
+.pb .pn-h2 .mk-em,
+.pb .pr-h2 .mk-em,
+.pb .ps-h2 .mk-em,
+.pb .pt-h2 .mk-em,
+.pb .pv-h2 .mk-em,
+.pb .pw-h2 .mk-em,
+/* some Platform headlines mark their accent half with a plain <em>
+   rather than MaskText, so the gradient has to match both — without
+   this, those two headlines silently kept a flat colour */
+.pb .pd-h2 em,
+.pb .ps-h2 em,
+.pb .pl-h2 em,
+.pb .pe-h2 em,
+.pb .pr-h2 em,
+.pb .px2-h2 .mk-em {
+  color: var(--accent);
+}
+
+/* --- the lede ------------------------------------------------------ */
+.sn .sn-lede,
+.sn .sx-lede,
+.pb .ph-lede,
+.pb .pi-lede,
+.pb .pl-lede {
+  font-size: 1.02rem;
+  line-height: 1.66;
+  letter-spacing: -0.012em;
+}
+
+/* =====================================================================
+   THE SHARED FAQ AND CONTACT HEADS
+
+   The bk- blocks head themselves with the same monospace label the two
+   product pages used, so a page would revert to the old voice for its
+   last two sections. This gives them the head above, for all three
+   pages — it lived under `.fn` when only Finance had it.
+
+   Scoped to `.px`, which is the ProductPage wrapper and therefore also
+   where --accent is set, so each page tints its own.
+   ===================================================================== */
+.px .bk-eyebrow {
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: color-mix(in srgb, var(--accent) 84%, #000);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* the 6px square marker becomes the same round gradient dot */
+.px .bk-eyebrow::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 52%, #fff);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, #fff);
+}
+
+/* on a dark FAQ the pill carries itself on the tint alone */
+.px .dark .bk-eyebrow {
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 46%, transparent);
+}
+
+.px .bk-h2 {
+  margin: 1.35rem 0 0;
+  font-size: clamp(2.2rem, 4.4vw, 3.7rem);
+  line-height: 1.04;
+  font-weight: 600;
+}
+
+/* No page renders a dark FAQ, so this one can darken toward the end the
+   way Finance section headlines do, rather than taking the night-safe
+   lightening gradient the two product pages need above. */
+.px .bk-h2 .mk-em {
+  color: var(--accent);
+}
+
+/* the lede keeps its 46ch measure — unlike the section heads, these two
+   sit in a narrow sticky column beside the questions and the form */
+.px .bk-lede {
+  margin: 1.5rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.66;
+}

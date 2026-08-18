@@ -130,7 +130,6 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(currentColor 1px, transparent 1px);
   background-size: var(--pk-dot, 22px) var(--pk-dot, 22px);
 }
 .pk-dots.light { color: rgba(9, 9, 11, 0.11); }
@@ -154,21 +153,16 @@
   overflow: hidden;
 }
 
-.pk-panel.lift-0 { box-shadow: none; }
-.pk-panel.lift-1 { box-shadow: 0 1px 2px rgba(9, 9, 11, 0.05), 0 10px 26px -18px rgba(9, 9, 11, 0.3); }
-.pk-panel.lift-2 { box-shadow: 0 1px 2px rgba(9, 9, 11, 0.06), 0 18px 42px -22px rgba(9, 9, 11, 0.4); }
+.pk-panel.lift-0 { }
+.pk-panel.lift-1 { }
+.pk-panel.lift-2 { }
 .pk-panel.lift-3 {
-  box-shadow:
-    0 1px 2px rgba(9, 9, 11, 0.07),
-    0 26px 60px -26px rgba(9, 9, 11, 0.42),
-    0 60px 120px -70px rgba(9, 9, 11, 0.5);
 }
 
 /* dark panels sit on the night surface. The top highlight is what sells
    the glass — a plain border makes it a box. */
 .pk-panel.dark {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-    var(--night-2);
+  background: var(--night-2);
   border-color: var(--nline);
   color: var(--dim);
 }
@@ -177,10 +171,10 @@
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  background: rgba(255, 255, 255, 0.22);
 }
-.pk-panel.dark.lift-2 { box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9); }
-.pk-panel.dark.lift-3 { box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.95); }
+.pk-panel.dark.lift-2 { }
+.pk-panel.dark.lift-3 { }
 
 .pk-panel.glass { backdrop-filter: blur(14px); }
 
@@ -247,19 +241,14 @@
   overflow: hidden;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow:
-    0 1px 2px rgba(9, 9, 11, 0.05),
-    0 22px 54px -26px rgba(9, 9, 11, 0.4),
-    0 60px 130px -80px rgba(9, 9, 11, 0.45);
 }
 
 .pk-browser.dark {
   background: var(--night-2);
   border-color: var(--nline);
-  box-shadow: 0 30px 80px -34px rgba(0, 0, 0, 0.92);
 }
 
-.pk-browser.flat { box-shadow: none; }
+.pk-browser.flat { }
 
 .pk-browser-top {
   display: flex;
@@ -301,15 +290,15 @@
   transition: background 0.25s, color 0.25s;
 }
 .pk-tab[tabindex='0'] { cursor: pointer; }
-.pk-tab.on { color: var(--ink); background: var(--paper); box-shadow: 0 1px 2px rgba(9, 9, 11, 0.08); }
+.pk-tab.on { color: var(--ink); background: var(--paper); }
 .pk-browser.dark .pk-tab { color: var(--dim-2); }
-.pk-browser.dark .pk-tab.on { color: #fff; background: rgba(255, 255, 255, 0.075); box-shadow: none; }
+.pk-browser.dark .pk-tab.on { color: #fff; background: rgba(255, 255, 255, 0.075); }
 
 .pk-favi {
   width: 9px;
   height: 9px;
   border-radius: 2.5px;
-  background: linear-gradient(140deg, var(--v), var(--v2));
+  background: var(--v);
   flex: none;
 }
 
@@ -359,9 +348,6 @@
   padding: 8px;
   border-radius: 26px;
   background: #0d0d13;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 20px 44px -20px rgba(9, 9, 11, 0.6);
 }
 
 .pk-device-notch {
@@ -476,7 +462,6 @@
   stroke: var(--v);
   stroke-linecap: round;
   stroke-dasharray: 5 320;
-  filter: drop-shadow(0 0 5px currentColor);
   animation: pk-run 2.6s linear infinite;
 }
 .pk-wire.cy .pk-wire-packet { stroke: var(--cy); }
@@ -505,7 +490,7 @@
 .pk-port.r { right: -4px; top: 50%; margin-top: -4px; }
 .pk-port.t { top: -4px; left: 50%; margin-left: -4px; }
 .pk-port.b { bottom: -4px; left: 50%; margin-left: -4px; }
-.pk-port.on { border-color: var(--run); box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2); }
+.pk-port.on { border-color: var(--run); }
 
 /* ---------------------------------------------------------------
    CURSORS
@@ -517,7 +502,6 @@
   gap: 0.2rem;
   pointer-events: none;
   z-index: 20;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
 }
 
 .pk-cursor svg { fill: currentColor; flex: none; }
@@ -554,18 +538,10 @@
   pointer-events: none;
   opacity: var(--on);
   transition: opacity 0.5s ease;
-  background: radial-gradient(
-    var(--pk-r, 420px) circle at var(--mx, 50%) var(--my, 50%),
-    rgba(108, 76, 241, 0.14),
-    transparent 70%
-  );
+  background: var(--pk-r, 420px);
 }
 .pk-spot.night::before {
-  background: radial-gradient(
-    var(--pk-r, 420px) circle at var(--mx, 50%) var(--my, 50%),
-    rgba(139, 108, 255, 0.2),
-    transparent 68%
-  );
+  background: var(--pk-r, 420px);
 }
 
 .pk-magnet { display: inline-flex; will-change: transform; }
@@ -675,7 +651,7 @@
   background: rgba(255, 255, 255, 0.24);
   transform: translateY(-1px);
 }
-.pk-log-line.ok .pk-log-dot { background: var(--run); box-shadow: 0 0 6px rgba(52, 211, 153, 0.7); }
+.pk-log-line.ok .pk-log-dot { background: var(--run); }
 .pk-log-line.warn .pk-log-dot { background: var(--amb); }
 .pk-log-line.v .pk-log-dot { background: var(--v2); }
 .pk-log-line.cy .pk-log-dot { background: var(--cy); }
@@ -698,7 +674,7 @@
 .pk-log.light .pk-log-m,
 .pk-log.light .pk-log-ms { color: var(--ink-3); }
 .pk-log.light .pk-log-dot { background: rgba(9, 9, 11, 0.2); }
-.pk-log.light .pk-log-line.ok .pk-log-dot { background: #10b981; box-shadow: none; }
+.pk-log.light .pk-log-line.ok .pk-log-dot { background: #10b981; }
 
 /* ---------------------------------------------------------------
    RING

@@ -41,7 +41,7 @@ export const Sidebar = () => (
     </div>
 
     <nav className="ap-nav">
-      <span className="ap-nav-label">Supply</span>
+      <span className="ap-nav-label">Platform</span>
       {[
         [ChartPie, 'Overview', null, true],
         [BookOpen, 'General ledger', '1,284', false],
@@ -83,7 +83,7 @@ export const Sidebar = () => (
 export const Toolbar = ({ crumb = 'General ledger', filters = ['Period: Oct 2025', 'Entity: All', 'Status: Posted'] }) => (
   <div className="ap-bar">
     <div className="ap-crumbs">
-      <span>Supply</span>
+      <span>Platform</span>
       <ChevronRight size={11} />
       <span className="on">{crumb}</span>
     </div>
@@ -324,7 +324,7 @@ export const ApprovalPanel = () => (
         ['Invoice captured', 'OCR matched to PO-8841', 'done', 'RH'],
         ['Three-way match', 'PO · GRN · Invoice agree', 'done', null],
         ['Cost centre owner', 'Approved in 4 minutes', 'done', 'AS'],
-        ['Supply controller', 'Awaiting · 2h 14m left', 'live', 'MK'],
+        ['Platform controller', 'Awaiting · 2h 14m left', 'live', 'MK'],
         ['Payment run', 'Scheduled Thursday', 'next', null],
       ].map(([t, m, state, who]) => (
         <div className={`ap-chain-row ${state}`} key={t}>

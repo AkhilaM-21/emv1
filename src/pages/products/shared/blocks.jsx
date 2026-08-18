@@ -55,7 +55,7 @@ export const TrustBand = ({ label, logos = [], proofs = [], tone = '', note }) =
    One open at a time. The grid-rows 0fr→1fr trick animates to the
    content's real height without measuring it in JavaScript.
    --------------------------------------------------------------- */
-export const Faq = ({ id = 'faq', eyebrow, title, lede, items = [], tone = '', aside }) => {
+export const Faq = ({ id = 'faq', eyebrow, title, accent, lede, items = [], tone = '', aside }) => {
   const [open, setOpen] = useState(0);
 
   return (
@@ -63,7 +63,7 @@ export const Faq = ({ id = 'faq', eyebrow, title, lede, items = [], tone = '', a
       <div className="bk-shell bk-faq-in">
         <div className="bk-faq-head">
           <Reveal duration={0.7}><span className="bk-eyebrow">{eyebrow}</span></Reveal>
-          <MaskText text={title} as="h2" className="bk-h2" />
+          <MaskText text={title} accent={accent} as="h2" className="bk-h2" />
           {lede && <Reveal delay={0.16} y={14}><p className="bk-lede">{lede}</p></Reveal>}
           {aside && <Reveal delay={0.22} y={14}><div className="bk-faq-aside">{aside}</div></Reveal>}
         </div>
@@ -187,7 +187,7 @@ const Field = ({ f, value, onChange }) => {
 export const ContactSection = ({
   id = 'start', eyebrow, title, accent, lede, fields = [], cta,
   aside, reply = 'One of our team replies within one business day.',
-  tone = '', className = '',
+  tone = '', className = '', variant = '', panel = {},
 }) => {
   const [values, setValues] = useState({});
   const [sent, setSent] = useState(false);
@@ -200,63 +200,97 @@ export const ContactSection = ({
     setSent(true);
   };
 
+  /* The three pieces are built once here and then placed by whichever
+     layout is in use below, so the two arrangements cannot drift apart
+     — the form in particular is the only copy of itself. */
+  const head = (
+    <>
+      <Reveal duration={0.7}><span className="bk-eyebrow">{eyebrow}</span></Reveal>
+      <MaskText text={title} accent={accent} as="h2" className="bk-h2" />
+      {lede && <Reveal delay={0.16} y={14}><p className="bk-lede">{lede}</p></Reveal>}
+    </>
+  );
+
+  const rows = aside && aside.map(({ icon: Icon, t, d }) => (
+    <div className="bk-aside-row" key={t}>
+      <span className="bk-aside-ic"><Icon size={15} strokeWidth={1.8} /></span>
+      <div><b>{t}</b><em>{d}</em></div>
+    </div>
+  ));
+
+  const body = sent ? (
+    <motion.div
+      className="bk-sent"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: EASE }}
+    >
+      <span className="bk-sent-ic"><Check size={22} strokeWidth={2.6} /></span>
+      <h3>Thank you — that&apos;s with us.</h3>
+      <p>
+        {reply} If it is urgent, reply to the confirmation email and it
+        will reach the same people directly.
+      </p>
+      <button type="button" className="bk-sent-again" onClick={() => { setSent(false); setValues({}); }}>
+        Send another enquiry
+      </button>
+    </motion.div>
+  ) : (
+    <form className="bk-form" onSubmit={submit} noValidate={false}>
+      <div className="bk-fields">
+        {fields.map((f) => (
+          <Field key={f.name} f={f} value={values[f.name]} onChange={set} />
+        ))}
+      </div>
+
+      <div className="bk-form-foot">
+        <button type="submit" className="bk-submit">
+          {cta} <ArrowRight size={16} />
+        </button>
+        <span className="bk-form-note">{reply}</span>
+      </div>
+    </form>
+  );
+
+  /* ---------------------------------------------------------------
+     CARD — the head above a single panel, and inside it the aside on a
+     solid accent ground beside the form. Opt in with variant="card";
+     the column layout below stays the default, because the other two
+     product pages use it and neither asked for this.
+     --------------------------------------------------------------- */
+  if (variant === 'card') {
+    return (
+      <section className={`bk-contact bk-contact-card ${tone} ${className}`} id={id}>
+        <div className="bk-shell">
+          <Reveal className="bk-card" y={22}>
+            <aside className="bk-card-side">
+              <span className="bk-card-orb" aria-hidden="true" />
+              <h3>{panel.title}</h3>
+              {panel.note && <p>{panel.note}</p>}
+              {rows && <div className="bk-card-rows">{rows}</div>}
+            </aside>
+
+            <div className="bk-card-main">{body}</div>
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={`bk-contact ${tone} ${className}`} id={id}>
       <div className="bk-shell bk-contact-in">
         <div className="bk-contact-copy">
-          <Reveal duration={0.7}><span className="bk-eyebrow">{eyebrow}</span></Reveal>
-          <MaskText text={title} accent={accent} as="h2" className="bk-h2" />
-          <Reveal delay={0.16} y={14}><p className="bk-lede">{lede}</p></Reveal>
+          {head}
 
-          {aside && (
+          {rows && (
             <Reveal delay={0.24} y={14}>
-              <div className="bk-contact-aside">
-                {aside.map(({ icon: Icon, t, d }) => (
-                  <div className="bk-aside-row" key={t}>
-                    <span className="bk-aside-ic"><Icon size={15} strokeWidth={1.8} /></span>
-                    <div><b>{t}</b><em>{d}</em></div>
-                  </div>
-                ))}
-              </div>
+              <div className="bk-contact-aside">{rows}</div>
             </Reveal>
           )}
         </div>
 
-        <Reveal className="bk-form-wrap" delay={0.1} y={22}>
-          {sent ? (
-            <motion.div
-              className="bk-sent"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: EASE }}
-            >
-              <span className="bk-sent-ic"><Check size={22} strokeWidth={2.6} /></span>
-              <h3>Thank you — that&apos;s with us.</h3>
-              <p>
-                {reply} If it is urgent, reply to the confirmation email and it
-                will reach the same people directly.
-              </p>
-              <button type="button" className="bk-sent-again" onClick={() => { setSent(false); setValues({}); }}>
-                Send another enquiry
-              </button>
-            </motion.div>
-          ) : (
-            <form className="bk-form" onSubmit={submit} noValidate={false}>
-              <div className="bk-fields">
-                {fields.map((f) => (
-                  <Field key={f.name} f={f} value={values[f.name]} onChange={set} />
-                ))}
-              </div>
-
-              <div className="bk-form-foot">
-                <button type="submit" className="bk-submit">
-                  {cta} <ArrowRight size={16} />
-                </button>
-                <span className="bk-form-note">{reply}</span>
-              </div>
-            </form>
-          )}
-        </Reveal>
+        <Reveal className="bk-form-wrap" delay={0.1} y={22}>{body}</Reveal>
       </div>
     </section>
   );

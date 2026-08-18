@@ -498,8 +498,8 @@ const Products = () => {
                   style={{ '--ac': app.color }}
                   onClick={() => setActiveApp(i)}
                 >
-                  <TabIcon size={15} strokeWidth={2} />
-                  {app.tab}
+                  <TabIcon size={16} strokeWidth={2} />
+                  <span>{app.tab}</span>
                 </button>
               );
             })}

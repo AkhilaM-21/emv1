@@ -48,23 +48,24 @@ export const FINANCE_CONTACT = {
   lede:
     'Tell us where the month-end actually goes. Bring a recent trial balance to the call and we will show you how it posts, consolidates and reports on Emvive — with your own numbers, not a demo dataset.',
   cta: 'Talk to Finance Team',
+  panel: {
+    title: 'What to expect',
+    note: 'A working session run by someone who has closed books, not a sales call.',
+  },
   aside: [
     { icon: Clock, t: 'A working session, not a pitch', d: 'Ninety minutes with a finance architect who has closed books, not a slide deck.' },
     { icon: ShieldCheck, t: 'Your data stays yours', d: 'Sample data is used under NDA and destroyed after the session unless you ask otherwise.' },
     { icon: Activity, t: 'You leave with a close plan', d: 'A written view of which days come out of your close and what it would take.' },
   ],
+  /* Four fields, two rows. Company size and the six challenge chips came
+     out: a size band and a topic are things the call settles in its first
+     sentence, and asking for them before anyone has spoken turned the
+     form into a qualification exercise. Whatever they would have told us
+     fits in the message box anyway. */
   fields: [
     { name: 'name', label: 'Name', required: true, placeholder: 'Rania Haddad', autoComplete: 'name' },
     { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'you@company.com', autoComplete: 'email' },
-    { name: 'company', label: 'Company', required: true, placeholder: 'Horizon Holding', autoComplete: 'organization' },
-    {
-      name: 'size', label: 'Company size', type: 'select', required: true,
-      options: ['1–50', '51–200', '201–1,000', '1,001–5,000', '5,000+'],
-    },
-    {
-      name: 'challenge', label: 'Finance challenges', type: 'choice', span: 2,
-      options: ['Slow month-end close', 'Multi-entity consolidation', 'Manual journals', 'Cash visibility', 'Audit & controls', 'E-invoicing compliance'],
-    },
+    { name: 'company', label: 'Company', required: true, span: 2, placeholder: 'Horizon Holding', autoComplete: 'organization' },
     {
       name: 'message', label: 'Message', type: 'textarea', span: 2,
       placeholder: 'How many entities, which ERP you run today, and what the close looks like now.',

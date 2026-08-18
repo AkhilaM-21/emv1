@@ -21,9 +21,7 @@
   /* fixed site header (90px) + the product bar (58px) + air. Anything
      pinned has to start below this or it slides under the chrome. */
   padding: 10rem max(var(--gutter, 40px), calc((100vw - 1440px) / 2)) 3rem;
-  background:
-    radial-gradient(ellipse 60% 50% at 78% 8%, rgba(108, 76, 241, 0.16), transparent 70%),
-    var(--night);
+  background: rgba(108, 76, 241, 0.16);
 }
 
 .ps-dots { opacity: 0.55; }
@@ -35,7 +33,6 @@
   width: 60rem;
   height: 40rem;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 68%);
   filter: blur(70px);
   pointer-events: none;
 }
@@ -85,7 +82,7 @@
   transition: background 0.5s, height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ps-narr-rail i.past { background: rgba(139, 108, 255, 0.45); }
-.ps-narr-rail i.on { height: 34px; background: var(--v2); box-shadow: 0 0 12px rgba(139, 108, 255, 0.8); }
+.ps-narr-rail i.on { height: 34px; background: var(--v2); }
 
 .ps-narr-body { position: relative; min-height: 13rem; }
 
@@ -163,7 +160,6 @@
 .ps-bindwire svg { width: 100%; height: 100%; overflow: visible; }
 
 .ps-wire-packet {
-  filter: drop-shadow(0 0 5px rgba(165, 228, 255, 0.9));
   animation: ps-run 2.4s linear infinite;
 }
 @keyframes ps-run {
@@ -175,9 +171,8 @@
 .ps-panel {
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), #0f0f19;
+  background: #0f0f19;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 26px 60px -28px rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(12px);
 }
 
@@ -225,7 +220,6 @@
 .ps-lib-item.hot {
   color: #fff;
   background: rgba(108, 76, 241, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(139, 108, 255, 0.45);
 }
 .ps-lib-item.hot svg { color: var(--v2); }
 
@@ -307,7 +301,6 @@
   width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--cy);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
 }
 .ps-data-src em {
   margin-left: auto;
@@ -346,7 +339,7 @@
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
-.ps-tok-row i.on { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); }
+.ps-tok-row i.on { }
 .ps-tok-note {
   padding: 0.45rem 0.7rem;
   font-family: var(--mono);
@@ -365,7 +358,6 @@
   background: rgba(14, 14, 23, 0.9);
   border: 1px solid var(--nline);
   backdrop-filter: blur(12px);
-  box-shadow: 0 20px 44px -22px rgba(0, 0, 0, 0.95);
 }
 .ps-resp-b {
   display: inline-flex;
@@ -401,7 +393,6 @@
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 34px 80px -30px rgba(0, 0, 0, 0.95);
 }
 
 .ps-art-top {
@@ -411,7 +402,7 @@
   padding: 0.6rem 0.8rem;
   border-bottom: 1px solid rgba(9, 9, 11, 0.07);
 }
-.ps-art-mark { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(140deg, var(--v), var(--v2)); }
+.ps-art-mark { width: 18px; height: 18px; border-radius: 5px; background: var(--v); }
 .ps-art-top b { font-size: 0.76rem; font-weight: 600; letter-spacing: -0.02em; color: #14141b; }
 .ps-art-tabs { display: flex; gap: 4px; margin-left: 0.4rem; }
 .ps-art-tabs i { width: 22px; height: 4px; border-radius: 3px; background: rgba(9, 9, 11, 0.09); }
@@ -437,7 +428,7 @@
 .ps-in b { font-size: 0.68rem; font-weight: 500; color: #26262f; }
 
 .ps-art-table { border: 1px solid rgba(9, 9, 11, 0.07); border-radius: 8px; overflow: hidden; transition: border-color 0.5s, box-shadow 0.5s; }
-.ps-art-table.bound { border-color: rgba(56, 189, 248, 0.55); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12); }
+.ps-art-table.bound { border-color: rgba(56, 189, 248, 0.55); }
 
 .ps-tr {
   display: grid;
@@ -514,9 +505,7 @@
   justify-content: center;
   gap: 2.5rem;
   padding: 9rem 0 4rem;
-  background:
-    radial-gradient(ellipse 50% 40% at 12% 12%, rgba(108, 76, 241, 0.07), transparent 70%),
-    var(--paper);
+  background: var(--paper);
 }
 
 .pw-head {
@@ -670,7 +659,7 @@
   background: var(--paper-2);
   border-right: 1px solid var(--hair);
 }
-.sc-mark { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(140deg, var(--v), var(--v2)); margin-bottom: 0.8rem; }
+.sc-mark { width: 22px; height: 22px; border-radius: 6px; background: var(--v); margin-bottom: 0.8rem; }
 .sc-employee aside span {
   padding: 0.42rem 0.55rem;
   border-radius: 7px;
@@ -812,7 +801,7 @@
   padding: 0.6rem 0.9rem;
   border-bottom: 1px solid var(--hair);
 }
-.sc-tickets > span.on { background: var(--paper); box-shadow: inset 3px 0 0 var(--cy); }
+.sc-tickets > span.on { background: var(--paper); }
 .sc-tickets b { grid-column: 1 / -1; font-size: 0.8rem; font-weight: 500; color: var(--ink); letter-spacing: -0.014em; }
 .sc-tickets em { font-style: normal; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); }
 .sc-tickets u {
@@ -944,7 +933,6 @@
   border-radius: 9px;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04);
 }
 .sc-card b { display: block; font-size: 0.79rem; font-weight: 500; color: var(--ink); letter-spacing: -0.016em; }
 .sc-card span { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.3rem; font-size: 0.7rem; color: var(--ink-3); }

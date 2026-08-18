@@ -6,20 +6,20 @@ import {
 import {
   motion, EASE, MaskText, Reveal, useReducedMotion,
 } from '../shared/motion';
-import PlatformFilm from './PlatformFilm';
-import PlatformField from './PlatformField';
-import './PlatformHero.css';
+import SupplyFilm from './SupplyFilm';
+import SupplyField from './SupplyField';
+import './SupplyHero.css';
 
 /* =====================================================================
    EMVIVE FINANCE — HERO
 
    Three levels of attention and nothing else:
 
-     1  the statement            what Emvive Platform is
+     1  the statement            what Emvive Supply is
      2  the product film         what it actually looks like, working
      3  the capability rail      what it covers, moving as you scroll
 
-   The film is rendered rather than recorded (see PlatformFilm.jsx). If a
+   The film is rendered rather than recorded (see SupplyFilm.jsx). If a
    real screen capture is produced, put it in DEMO_SOURCE below and the
    frame swaps to a lazy, muted, looping <video> with a poster — the
    surrounding frame, hover behaviour and controls are unchanged.
@@ -60,18 +60,18 @@ const FilmFrame = () => {
 
   return (
     <motion.div
-      className="ph-stage"
+      className="sh-stage"
       initial={reduced ? false : { opacity: 0, y: 34, scale: 0.985 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1.2, delay: 0.35, ease: EASE }}
     >
-      <div className="ph-frame" ref={frameRef} onMouseMove={onMove}>
-        <div className="ph-frame-glass" aria-hidden="true" />
+      <div className="sh-frame" ref={frameRef} onMouseMove={onMove}>
+        <div className="sh-frame-glass" aria-hidden="true" />
 
         {DEMO_SOURCE.src ? (
           <video
             ref={videoRef}
-            className="ph-video"
+            className="sh-video"
             src={DEMO_SOURCE.src}
             poster={DEMO_SOURCE.poster || undefined}
             autoPlay={!reduced}
@@ -79,15 +79,15 @@ const FilmFrame = () => {
             loop
             playsInline
             preload="none"
-            aria-label="Emvive Platform product demonstration"
+            aria-label="Emvive Supply product demonstration"
           />
         ) : (
-          <PlatformFilm playing={playing} />
+          <SupplyFilm playing={playing} />
         )}
 
         <button
           type="button"
-          className="ph-frame-ctl"
+          className="sh-frame-ctl"
           onClick={toggle}
           aria-label={playing ? 'Pause the product demonstration' : 'Play the product demonstration'}
         >
@@ -95,14 +95,14 @@ const FilmFrame = () => {
         </button>
       </div>
 
-      <p className="ph-frame-cap">
-        <span className="ph-frame-dot" aria-hidden="true" />
-        Emvive Platform — an invoice from arrival to a posted journal
+      <p className="sh-frame-cap">
+        <span className="sh-frame-dot" aria-hidden="true" />
+        Emvive Supply — an invoice from arrival to a posted journal
       </p>
 
       {/* what the film shows, for anyone who cannot see it */}
-      <p className="ph-sr">
-        A demonstration of Emvive Platform: invoice INV-2048 arrives from ABC Technologies for
+      <p className="sh-sr">
+        A demonstration of Emvive Supply: invoice INV-2048 arrives from ABC Technologies for
         SAR 84,500, passes a three-way match, is approved by the controller, posts to the general
         ledger as journal JV-10431, refreshes the cash-flow report and confirms the period is
         ready to close.
@@ -124,48 +124,48 @@ const FilmFrame = () => {
    build translucent tints from it. The page green stays with the
    general ledger, where the ledger itself lives. */
 const CAPS = [
-  { k: 'Idea & Requirements', icon: BookOpen, color: '#6c4cf1', rgb: '108, 76, 241', d: 'Somebody in the business needs software.' },
-  { k: 'Build with Studio', icon: Receipt, color: '#6c50b2', rgb: '108, 80, 178', d: 'Studio turns it into real screens.' },
-  { k: 'Connect Data', icon: CreditCard, color: '#2563eb', rgb: '37, 99, 235', d: 'It binds to the records you already keep.' },
-  { k: 'Automate with Flow', icon: Wallet, color: '#e2601f', rgb: '226, 96, 31', d: 'Flow puts the process behind the screen.' },
-  { k: 'Test Sandbox', icon: TrendingUp, color: '#0d9488', rgb: '13, 148, 136', d: 'It runs in a sandbox with real shapes of data.' },
-  { k: 'Deploy', icon: ChartPie, color: '#9333ea', rgb: '147, 51, 234', d: 'It ships, with a rollback that works.' },
+  { k: 'Supplier Management', icon: BookOpen, color: '#0a8f5e', rgb: '10, 143, 94', d: 'Onboarding, scorecards and contracts.' },
+  { k: 'Procurement', icon: Receipt, color: '#6c50b2', rgb: '108, 80, 178', d: 'Every order acknowledged, every supplier scored.' },
+  { k: 'Manufacturing', icon: CreditCard, color: '#2563eb', rgb: '37, 99, 235', d: 'Bill of materials and shop-floor issue.' },
+  { k: 'Warehouse', icon: Wallet, color: '#e2601f', rgb: '226, 96, 31', d: 'Down to the bin, down to the batch.' },
+  { k: 'Transportation', icon: TrendingUp, color: '#0d9488', rgb: '13, 148, 136', d: 'You hear about the delay before the customer does.' },
+  { k: 'Distribution', icon: ChartPie, color: '#9333ea', rgb: '147, 51, 234', d: 'Cross-docked and allocated across hubs.' },
 ];
 
 const CapabilityRail = () => {
   const reduced = useReducedMotion();
 
   return (
-    <div className="ph-rail">
-      <div className="ph-rail-marquee">
-        <div className={`ph-rail-marquee-content ${reduced ? 'paused' : ''}`}>
+    <div className="sh-rail">
+      <div className="sh-rail-marquee">
+        <div className={`sh-rail-marquee-content ${reduced ? 'paused' : ''}`}>
           {CAPS.map((c, n) => {
             const Icon = c.icon;
             return (
               <div
-                className="ph-cap-marquee-item"
+                className="sh-cap-marquee-item"
                 key={`${c.k}-${n}`}
                 style={{ '--cc': c.color, '--cc-rgb': c.rgb }}
               >
-                <span className="ph-cap-ic"><Icon size={18} strokeWidth={2} /></span>
-                <span className="ph-cap-name">{c.k}</span>
-                <span className="ph-cap-sep" aria-hidden="true">•</span>
+                <span className="sh-cap-ic"><Icon size={18} strokeWidth={2} /></span>
+                <span className="sh-cap-name">{c.k}</span>
+                <span className="sh-cap-sep" aria-hidden="true">•</span>
               </div>
             );
           })}
         </div>
-        <div className={`ph-rail-marquee-content ${reduced ? 'paused' : ''}`} aria-hidden="true">
+        <div className={`sh-rail-marquee-content ${reduced ? 'paused' : ''}`} aria-hidden="true">
           {CAPS.map((c, n) => {
             const Icon = c.icon;
             return (
               <div
-                className="ph-cap-marquee-item"
+                className="sh-cap-marquee-item"
                 key={`${c.k}-${n}-dup`}
                 style={{ '--cc': c.color, '--cc-rgb': c.rgb }}
               >
-                <span className="ph-cap-ic"><Icon size={18} strokeWidth={2} /></span>
-                <span className="ph-cap-name">{c.k}</span>
-                <span className="ph-cap-sep" aria-hidden="true">•</span>
+                <span className="sh-cap-ic"><Icon size={18} strokeWidth={2} /></span>
+                <span className="sh-cap-name">{c.k}</span>
+                <span className="sh-cap-sep" aria-hidden="true">•</span>
               </div>
             );
           })}
@@ -178,27 +178,27 @@ const CapabilityRail = () => {
 /* =====================================================================
    HERO
    ===================================================================== */
-const PlatformHero = () => (
+const SupplyHero = () => (
   <section className="fh" id="top">
-    <div className="ph-bg" aria-hidden="true">
-      <PlatformField />
-      <span className="ph-bg-noise" />
+    <div className="sh-bg" aria-hidden="true">
+      <SupplyField />
+      <span className="sh-bg-noise" />
     </div>
 
-    <div className="ph-top">
-      <div className="ph-head">
+    <div className="sh-top">
+      <div className="sh-head">
         <Reveal duration={0.7}>
-          <span className="ph-pill">Emvive Platform</span>
+          <span className="sh-pill">Emvive Supply</span>
         </Reveal>
 
-        <h1 className="ph-h1">
-          <MaskText text="Business applications," as="span" className="ph-h1-line" delay={0.06} />
-          <MaskText text="connected." as="span" className="ph-h1-line ph-accent" delay={0.18} />
+        <h1 className="sh-h1">
+          <MaskText text="Supply chain," as="span" className="sh-h1-line" delay={0.06} />
+          <MaskText text="connected." as="span" className="sh-h1-line sh-accent" delay={0.18} />
         </h1>
 
         <Reveal delay={0.36} y={16}>
-          <p className="ph-lede">
-            Build, automate and connect your internal operations in one platform
+          <p className="sh-lede">
+            Connect procurement, manufacturing, logistics and distribution in one platform
             built to give your business greater visibility and control.
           </p>
         </Reveal>
@@ -206,21 +206,21 @@ const PlatformHero = () => (
 
       <FilmFrame />
 
-      <div className="ph-cta">
+      <div className="sh-cta">
         <Reveal delay={0.46} y={16}>
-          <div className="ph-actions">
-            <a href="#start" className="ph-btn ph-btn-solid">
+          <div className="sh-actions">
+            <a href="#start" className="sh-btn sh-btn-solid">
               Request a Demo
-              <span className="ph-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
+              <span className="sh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
             </a>
-            <a href="#overview" className="ph-btn ph-btn-shell">
-              Explore Platform
-              <span className="ph-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
+            <a href="#overview" className="sh-btn sh-btn-shell">
+              Explore Supply
+              <span className="sh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
             </a>
           </div>
         </Reveal>
         <Reveal delay={0.56} y={12}>
-          <p className="ph-note">Built for modern platform teams.</p>
+          <p className="sh-note">Built for modern supply-chain teams.</p>
         </Reveal>
       </div>
     </div>
@@ -229,4 +229,4 @@ const PlatformHero = () => (
   </section>
 );
 
-export default PlatformHero;
+export default SupplyHero;

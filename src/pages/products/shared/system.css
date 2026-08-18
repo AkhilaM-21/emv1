@@ -36,6 +36,14 @@
   --gutter: 40px;
   --measure: 1320px;
 
+  /* The page gutter every product band lines up against. Defined once,
+     here on the ProductPage wrapper, because each page used to carry its
+     own copy — and when Finance.css was copied to Supply Chain and
+     Platform the copies kept Finance's `.fn` selector, so on those two
+     pages the token was never defined at all and every band fell back to
+     40px. One definition cannot be copied wrong. */
+  --page-gutter: max(96px, calc((100vw - 1500px) / 2));
+
   --shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.04);
   --shadow-panel:
     0 1px 2px rgba(9, 9, 11, 0.04),
@@ -732,7 +740,7 @@
   font-family: inherit;
   font-size: 0.875rem;
   color: var(--ink);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease;
 }
 .px-news input::placeholder { color: var(--ink-4); }
 .px-news input:focus {
@@ -1115,3 +1123,7 @@ body.dark-theme .px-btn-solid { color: var(--ink); background: #f4f4f6; }
 body.dark-theme .px-btn-solid:hover { background: #ffffff; }
 body.dark-theme .px-btn-invert { color: #08090a; background: #f4f4f6; }
 body.dark-theme .px-news input { background: var(--bg-2); }
+
+/* the page gutter's own steps, to the pixel — see --page-gutter above */
+@media (max-width: 1080px) { .px { --page-gutter: 48px; } }
+@media (max-width: 620px) { .px { --page-gutter: 20px; } }

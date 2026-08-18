@@ -1,5 +1,5 @@
 /* =====================================================================
-   EMVIVE FINANCE — sections 02 to 07. Namespace `fs-`.
+   EMVIVE FINANCE — sections 02 to 07. Namespace `ps-`.
 
    MODERN SAAS PRODUCT UI.
 
@@ -24,12 +24,12 @@
 /* ---------------------------------------------------------------
    TOKENS
    --------------------------------------------------------------- */
-.fs-caps,
-.fs-how,
-.fs-auto,
-.fs-int,
-.fs-sec,
-.fs-why {
+.ps-caps,
+.ps-how,
+.ps-auto,
+.ps-int,
+.ps-sec,
+.ps-why {
   --r-lg: 24px;
   --r-md: 16px;
   --r-sm: 12px;
@@ -44,28 +44,28 @@
   scroll-margin-top: 160px;
 }
 
-.fs-in {
+.ps-in {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 0 var(--fn-gutter, var(--page-gutter));
+  padding: 0 var(--pn-gutter, var(--page-gutter));
 }
 
 /* every light section gets the same tinted ground and dot grid */
-.fs-caps,
-.fs-how,
-.fs-auto,
-.fs-why {
+.ps-caps,
+.ps-how,
+.ps-auto,
+.ps-why {
   position: relative;
   isolation: isolate;
   padding: clamp(5rem, 8vw, 8.5rem) 0;
   overflow: hidden;
 }
 
-.fs-caps::before,
-.fs-how::before,
-.fs-auto::before,
-.fs-why::before {
+.ps-caps::before,
+.ps-how::before,
+.ps-auto::before,
+.ps-why::before {
   content: '';
   position: absolute; inset: 0;
   z-index: -2;
@@ -76,30 +76,26 @@
 }
 
 /* a coloured bloom per section, so no two bands feel like the same page */
-.fs-caps::after,
-.fs-how::after,
-.fs-auto::after,
-.fs-why::after {
+.ps-caps::after,
+.ps-how::after,
+.ps-auto::after,
+.ps-why::after {
   content: '';
   position: absolute; inset: 0;
   z-index: -3;
   pointer-events: none;
 }
-.fs-caps::after {
-  background:
-    #ffffff;
+.ps-caps::after {
+  background: #ffffff;
 }
-.fs-how::after {
-  background:
-    #f7f9fc;
+.ps-how::after {
+  background: #f7f9fc;
 }
-.fs-auto::after {
-  background:
-    #ffffff;
+.ps-auto::after {
+  background: #ffffff;
 }
-.fs-why::after {
-  background:
-    #f7f9fc;
+.ps-why::after {
+  background: #f7f9fc;
 }
 
 /* ---------------------------------------------------------------
@@ -107,9 +103,9 @@
    A badge, a headline with the answer in gradient, and the reader's
    own question on a chip underneath it.
    --------------------------------------------------------------- */
-.fs-head { margin-bottom: clamp(2.75rem, 4.5vw, 4rem); max-width: none; }
+.ps-head { margin-bottom: clamp(2.75rem, 4.5vw, 4rem); max-width: none; }
 
-.fs-eyebrow {
+.ps-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -119,26 +115,24 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #0a7a51;
-  background: rgba(10, 143, 94, 0.08);
-  border: 1px solid rgba(10, 143, 94, 0.25);
-  box-shadow: 0 0 24px rgba(10, 143, 94, 0.1);
+  color: color-mix(in srgb, var(--accent) 84%, #000);
+  background: rgba(108, 76, 241, 0.08);
+  border: 1px solid rgba(108, 76, 241, 0.25);
 }
-.fs-eyebrow b {
+.ps-eyebrow b {
   font-weight: 700;
-  color: #0a7a51;
+  color: color-mix(in srgb, var(--accent) 84%, #000);
   font-variant-numeric: tabular-nums;
 }
-.fs-eyebrow i {
+.ps-eyebrow i {
   display: block;
   width: 8px; height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 8px #35c98f;
+  background: color-mix(in srgb, var(--accent) 52%, #fff);
 }
 
-.fs-h2 {
+.ps-h2 {
   margin: 1.35rem 0 0;
   font-size: clamp(2.2rem, 4.4vw, 3.7rem);
   line-height: 1.04;
@@ -149,11 +143,11 @@
 }
 /* the answer half of every headline is a gradient, which is the one
    piece of pure decoration on the page and the one people read first */
-.fs-h2 .mk-em {
+.ps-h2 .mk-em {
   color: var(--accent);
 }
 
-.fs-ask {
+.ps-ask {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -166,9 +160,9 @@
   font-weight: 500;
   color: color-mix(in srgb, var(--accent) 72%, var(--ink));
 }
-.fs-ask::before { content: '→'; opacity: 0.8; }
+.ps-ask::before { content: '→'; opacity: 0.8; }
 
-.fs-lede {
+.ps-lede {
   margin: 1.5rem 0 0;
   font-size: 1.02rem;
   line-height: 1.66;
@@ -177,7 +171,7 @@
   max-width: none;
 }
 
-.fs-link {
+.ps-link {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -186,23 +180,22 @@
   border-radius: 999px;
   border: 1px solid var(--edge);
   background: var(--surface);
-  box-shadow: var(--rim), var(--lift-1);
   font-size: 0.92rem;
   font-weight: 500;
   color: var(--ink);
   text-decoration: none;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fs-link svg { color: var(--accent); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
-.fs-link:hover { transform: translateY(-2px); box-shadow: var(--rim), var(--lift-2); }
-.fs-link:hover svg { transform: translateX(3px); }
+.ps-link svg { color: var(--accent); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.ps-link:hover { transform: translateY(-2px); }
+.ps-link:hover svg { transform: translateX(3px); }
 
 /* =====================================================================
    02 — PRODUCT & CAPABILITIES
    A rail of module cards on the left, a large product card on the
    right. The live module colours both.
    ===================================================================== */
-.fs-folder-grid {
+.ps-folder-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem 1.5rem;
@@ -211,18 +204,18 @@
 }
 
 @media (min-width: 768px) {
-  .fs-folder-grid {
+  .ps-folder-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .fs-folder-grid {
+  .ps-folder-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.fs-folder-card {
+.ps-folder-card {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -231,7 +224,7 @@
 }
 
 /* The top folder tab */
-.fs-folder-tab {
+.ps-folder-tab {
   background: var(--c, var(--accent));
   color: #fff;
   font-size: 0.8rem;
@@ -242,12 +235,11 @@
   border-radius: 12px 12px 0 0;
   position: relative;
   z-index: 2;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
   margin-bottom: -1px;
 }
 
 /* The downward triangle inside the tab pointing into the card */
-.fs-folder-tab::after {
+.ps-folder-tab::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -260,31 +252,27 @@
 }
 
 /* The white card body */
-.fs-folder-body {
+.ps-folder-body {
   width: 100%;
   flex-grow: 1; /* Stretch to fill remaining height */
   background: var(--surface);
   border-radius: 32px; /* more rounded card */
   padding: 2.5rem 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 
-    var(--rim), 
-    0 8px 24px rgba(9, 9, 11, 0.06), 
-    inset 0 2px 4px rgba(255, 255, 255, 0.8); /* 3D inner glow */
+  border: 1px solid rgba(0, 0, 0, 0.04); /* 3D inner glow */
   display: flex;
   align-items: center;
   gap: 1.5rem;
   position: relative;
   z-index: 1;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.fs-folder-card:hover .fs-folder-body {
+.ps-folder-card:hover .ps-folder-body {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--c, var(--accent)) 30%, transparent);
 }
 
-.fs-folder-icon {
+.ps-folder-icon {
   flex-shrink: 0;
   color: var(--c, var(--accent));
   display: flex;
@@ -292,7 +280,7 @@
   justify-content: center;
 }
 
-.fs-folder-divider {
+.ps-folder-divider {
   width: 1px;
   align-self: stretch;
   background: var(--edge);
@@ -300,15 +288,15 @@
   transition: background 0.3s ease;
 }
 
-.fs-folder-card:hover .fs-folder-divider {
+.ps-folder-card:hover .ps-folder-divider {
   background: color-mix(in srgb, var(--c, var(--accent)) 30%, transparent);
 }
 
-.fs-folder-text {
+.ps-folder-text {
   flex-grow: 1;
 }
 
-.fs-folder-points {
+.ps-folder-points {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -317,7 +305,7 @@
   gap: 12px;
 }
 
-.fs-folder-points li {
+.ps-folder-points li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -328,7 +316,7 @@
   transition-delay: calc(var(--i) * 160ms);
 }
 
-.fs-folder-bullet {
+.ps-folder-bullet {
   flex-shrink: 0;
   margin-top: 6px;
   width: 6px;
@@ -339,17 +327,17 @@
 }
 
 /* Hover stagger animation matching Why Emvive */
-.fs-folder-card:hover .fs-folder-points li {
+.ps-folder-card:hover .ps-folder-points li {
   color: var(--ink);
-  animation: fs-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ps-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--i) * 160ms);
 }
 
-.fs-folder-card:hover .fs-folder-bullet {
+.ps-folder-card:hover .ps-folder-bullet {
   background-color: var(--c, var(--accent));
 }
 
-@keyframes fs-point-dart {
+@keyframes ps-point-dart {
   from {
     transform: translateX(0);
   }
@@ -363,7 +351,7 @@
    A segmented control across the top, a copy card and a device frame
    underneath it. The live segment fills with its own colour.
    ===================================================================== */
-.fs-steps {
+.ps-steps {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -373,10 +361,9 @@
   border: 1px solid var(--edge);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
-  box-shadow: var(--rim), 0 1px 2px rgba(9, 9, 11, 0.04);
 }
 
-.fs-step {
+.ps-step {
   position: relative;
   flex: 1 1 0;
   min-width: 0;
@@ -392,15 +379,15 @@
   overflow: hidden;
   transition: background 0.35s ease, color 0.35s ease;
 }
-.fs-step:hover { background: rgba(9, 9, 11, 0.04); }
+.ps-step:hover { background: rgba(9, 9, 11, 0.04); }
 
-.fs-step-n {
+.ps-step-n {
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 0.66rem;
   color: var(--ink-4);
   transition: color 0.3s ease;
 }
-.fs-step-k {
+.ps-step-k {
   font-size: 0.92rem;
   font-weight: 600; letter-spacing: -0.02em;
   color: var(--ink-3);
@@ -408,38 +395,35 @@
   transition: color 0.3s ease;
 }
 
-.fs-step.on {
+.ps-step.on {
   background: var(--c, var(--accent));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 10px 22px -12px rgba(var(--c-rgb, 10, 143, 94), 0.95);
 }
-.fs-step.on .fs-step-k { color: #fff; }
-.fs-step.on .fs-step-n { color: rgba(255, 255, 255, 0.7); }
+.ps-step.on .ps-step-k { color: #fff; }
+.ps-step.on .ps-step-n { color: rgba(255, 255, 255, 0.7); }
 
 /* the countdown to the next step, drawn along the foot of the pill */
-.fs-step-bar {
+.ps-step-bar {
   position: absolute; left: 10%; right: 10%; bottom: 5px;
   display: block;
   height: 2px;
   border-radius: 2px;
   overflow: hidden;
 }
-.fs-step-bar i {
+.ps-step-bar i {
   display: block; height: 100%; width: 100%;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.75);
   transform: scaleX(0);
   transform-origin: left;
 }
-.fs-step.on .fs-step-bar i { transform: scaleX(1); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-.fs-step-bar i.run { animation: fs-step-run 4.6s linear infinite; }
-@keyframes fs-step-run {
+.ps-step.on .ps-step-bar i { transform: scaleX(1); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.ps-step-bar i.run { animation: ps-step-run 4.6s linear infinite; }
+@keyframes ps-step-run {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
 
-.fs-how-ctl {
+.ps-how-ctl {
   flex: 0 0 auto;
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.7rem 1rem;
@@ -452,9 +436,9 @@
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease;
 }
-.fs-how-ctl:hover { background: rgba(9, 9, 11, 0.09); color: var(--ink); }
+.ps-how-ctl:hover { background: rgba(9, 9, 11, 0.09); color: var(--ink); }
 
-.fs-how-grid {
+.ps-how-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: clamp(1.25rem, 2.5vw, 2rem);
@@ -462,46 +446,45 @@
 }
 
 /* --- the copy card --- */
-.fs-how-copy {
+.ps-how-copy {
   display: flex;
   flex-direction: column;
   padding: clamp(1.5rem, 2.4vw, 2.1rem);
   border-radius: 64px 8px 64px 8px; /* Top-left and bottom-right rounded borders */
   border: 1px solid var(--edge);
   background: var(--surface); /* Removed gradient */
-  box-shadow: var(--rim), var(--lift-1);
   min-height: 24rem;
 }
-.fs-how-k {
+.ps-how-k {
   display: inline-flex;
   align-self: flex-start;
   padding: 0.32rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid rgba(var(--c-rgb, 10, 143, 94), 0.28);
-  background: rgba(var(--c-rgb, 10, 143, 94), 0.1);
+  border: 1px solid rgba(var(--c-rgb, 108, 76, 241), 0.28);
+  background: rgba(var(--c-rgb, 108, 76, 241), 0.1);
   font-size: 0.7rem; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--c, var(--accent));
 }
-.fs-how-copy h3 {
+.ps-how-copy h3 {
   margin: 1.15rem 0 0;
   font-size: clamp(1.35rem, 2vw, 1.8rem);
   font-weight: 600; letter-spacing: -0.034em; line-height: 1.16;
   color: var(--ink);
 }
-.fs-how-copy p {
+.ps-how-copy p {
   margin: 1rem 0 0;
   font-size: 0.95rem; line-height: 1.66;
   color: var(--ink-2);
 }
-.fs-how-meta {
+.ps-how-meta {
   list-style: none;
   margin: 1.6rem 0 0;
   padding: 0;
   display: grid;
   gap: 0.5rem;
 }
-.fs-how-meta li {
+.ps-how-meta li {
   display: flex; align-items: center; gap: 0.55rem;
   padding: 0.6rem 0.8rem;
   border-radius: var(--r-sm);
@@ -510,25 +493,25 @@
   font-size: 0.83rem;
   color: var(--ink-2);
 }
-.fs-how-meta svg { color: var(--c, var(--accent)); flex-shrink: 0; }
+.ps-how-meta svg { color: var(--c, var(--accent)); flex-shrink: 0; }
 
 /* --- the device --- */
-.fs-how-stage { 
+.ps-how-stage { 
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 /* the step's colour blooming out from behind the frame */
-.fs-how-stage::before {
+.ps-how-stage::before {
   content: '';
   position: absolute; inset: 8% 4% -6%;
   z-index: 0;
   border-radius: 40px;
-  background: rgba(var(--c-rgb, 10, 143, 94), 0.4);
+  background: rgba(var(--c-rgb, 108, 76, 241));
   filter: blur(48px);
 }
-.fs-how-media { 
+.ps-how-media { 
   position: relative; 
   z-index: 1; 
   height: 100%;
@@ -536,54 +519,46 @@
   display: flex;
 }
 
-.fs-app {
+.ps-app {
   border-radius: 20px;
   border: 1px solid var(--edge);
   background: var(--surface);
   overflow: hidden;
-  box-shadow:
-    var(--rim),
-    0 24px 48px -12px rgba(15, 23, 42, 0.1);
 }
-.fs-app-bar {
+.ps-app-bar {
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--edge);
   background: rgba(9, 9, 11, 0.02);
 }
-.fs-app-body {
+.ps-app-body {
   padding: 1rem;
 }
 
-.fs-how-img {
+.ps-how-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 64px 8px 64px 8px; /* Match the left card shape */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.fs-film {
+.ps-film {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--edge);
-  background: rgba(var(--c-rgb, 10, 143, 94), 0.08);
-  box-shadow:
-    var(--rim),
-    0 2px 6px rgba(9, 9, 11, 0.05),
-    0 40px 80px -40px rgba(9, 9, 11, 0.45);
+  background: rgba(var(--c-rgb, 108, 76, 241), 0.08);
 }
-.fs-film video {
+.ps-film video {
   display: block;
   width: 100%;
   height: calc(27rem + 44px);
   object-fit: cover;
 }
-.fs-film-wash {
+.ps-film-wash {
   position: absolute; inset: 0;
   pointer-events: none;
-  background: rgba(var(--c-rgb, 10, 143, 94), 0.4);
+  background: rgba(var(--c-rgb, 108, 76, 241));
   mix-blend-mode: multiply;
 }
 
@@ -592,18 +567,17 @@
    A rules table on one card, the headline number on a colour-filled
    one beside it.
    ===================================================================== */
-.fs-auto-card {
+.ps-auto-card {
   display: flex;
   flex-direction: row;
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
   background: var(--surface);
-  box-shadow: var(--rim), var(--lift-1);
   overflow: hidden;
   min-height: 500px;
 }
 
-.fs-auto-left {
+.ps-auto-left {
   flex: 0 0 35%;
   padding: 3rem;
   background: rgba(9, 9, 11, 0.015);
@@ -612,7 +586,7 @@
   flex-direction: column;
 }
 
-.fs-auto-left h2 {
+.ps-auto-left h2 {
   font-size: 1.8rem;
   font-weight: 600;
   line-height: 1.1;
@@ -621,20 +595,20 @@
   margin-bottom: 1rem;
 }
 
-.fs-auto-left p {
+.ps-auto-left p {
   font-size: 0.95rem;
   line-height: 1.6;
   color: var(--ink-3);
   margin-bottom: 2.5rem;
 }
 
-.fs-auto-tabs {
+.ps-auto-tabs {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.fs-auto-tab {
+.ps-auto-tab {
   text-align: left;
   padding: 1rem 1.25rem;
   border: none;
@@ -648,17 +622,16 @@
   position: relative;
 }
 
-.fs-auto-tab:hover {
+.ps-auto-tab:hover {
   background: rgba(9, 9, 11, 0.04);
 }
 
-.fs-auto-tab.on {
+.ps-auto-tab.on {
   background: #fff;
   color: var(--ink);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.fs-auto-tab.on::before {
+.ps-auto-tab.on::before {
   content: '';
   position: absolute;
   left: 0;
@@ -669,14 +642,14 @@
   background: var(--accent);
 }
 
-.fs-auto-right {
+.ps-auto-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   background: #fff;
 }
 
-.fs-auto-hero {
+.ps-auto-hero {
   flex: 1;
   display: flex;
   align-items: center;
@@ -685,14 +658,14 @@
   background: rgba(230, 230, 255, 0.3);
 }
 
-.fs-auto-hero img {
+.ps-auto-hero img {
   max-width: 100%;
   max-height: 400px;
   object-fit: contain;
   transform: scaleY(-1) scale(1.15);
 }
 
-.fs-auto-grid {
+.ps-auto-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
@@ -701,27 +674,27 @@
   border-top: 1px solid var(--edge);
 }
 
-.fs-auto-item {
+.ps-auto-item {
   padding: 0.5rem 0;
 }
 
-.fs-auto-item-n {
+.ps-auto-item-n {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--ink-2);
 }
 
 @media (max-width: 1024px) {
-  .fs-auto-card { flex-direction: column; }
-  .fs-auto-left { border-right: none; border-bottom: 1px solid var(--edge); }
-  .fs-auto-grid { grid-template-columns: 1fr; }
+  .ps-auto-card { flex-direction: column; }
+  .ps-auto-left { border-right: none; border-bottom: 1px solid var(--edge); }
+  .ps-auto-grid { grid-template-columns: 1fr; }
 }
 
 /* =====================================================================
    05 — INTEGRATIONS
    The dark band: film underneath, glass panels on top.
    ===================================================================== */
-.fs-int {
+.ps-int {
   position: relative;
   isolation: isolate;
   padding: clamp(5rem, 8vw, 8.5rem) 0;
@@ -730,23 +703,24 @@
   min-height: 800px;
 }
 
-.fs-int .fs-eyebrow {
+.ps-int .ps-eyebrow {
   border-color: rgba(9, 9, 11, 0.16);
   background: rgba(9, 9, 11, 0.04);
   backdrop-filter: blur(10px);
   color: var(--ink-2);
 }
-.fs-int .fs-eyebrow b { color: var(--accent); }
-.fs-int .fs-eyebrow i { background: var(--accent); box-shadow: 0 0 0 3px rgba(10, 143, 94, 0.2); }
-.fs-int .fs-h2 { color: var(--ink); }
-.fs-int .fs-h2 .mk-em { color: #0a8f5e; }
-.fs-int .fs-lede { color: var(--ink-3); }
+.ps-int .ps-eyebrow b { color: var(--accent); }
+.ps-int .ps-eyebrow i { background: var(--accent); }
+.ps-int .ps-h2 { color: var(--ink); }
+.ps-int .ps-h2 .mk-em {
+  color: #6c4cf1; }
+.ps-int .ps-lede { color: var(--ink-3); }
 
 /* =========================================
    GOOGLE GEOMETRIC DIAGRAM CLONE 
    ========================================= */
 
-.fs-google-wrapper {
+.ps-google-wrapper {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
@@ -754,14 +728,14 @@
   font-family: 'Google Sans', 'Inter', system-ui, sans-serif;
 }
 
-.fs-google-grid {
+.ps-google-grid {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 300px; 
 }
 
-.fs-google-col {
+.ps-google-col {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -769,32 +743,32 @@
 }
 
 /* --- Left Side --- */
-.fs-google-col.left {
+.ps-google-col.left {
   align-items: flex-end;
   gap: 50px; /* 50px node + 50px gap = 100px pitch */
 }
 
-.fs-google-left-node {
+.ps-google-left-node {
   position: relative;
   display: flex;
   align-items: center;
   height: 50px; 
 }
 
-.fs-google-left-content {
+.ps-google-left-content {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
 }
 
-.fs-google-label {
+.ps-google-label {
   font-size: 13px;
   font-weight: 500;
   color: #5f6368;
 }
 
-.fs-google-icon-box {
+.ps-google-icon-box {
   width: 40px;
   height: 40px;
   background: #f1f3f4;
@@ -806,48 +780,46 @@
 }
 
 /* --- Center Block --- */
-.fs-google-col.center {
+.ps-google-col.center {
   position: relative;
 }
 
-.fs-google-center-card {
+.ps-google-center-card {
   width: 140px;
   height: 140px;
   background: #4285F4;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(66, 133, 244, 0.25);
   z-index: 5;
   position: relative;
   border-radius: 2px;
 }
 
 /* --- Right Side --- */
-.fs-google-col.right {
+.ps-google-col.right {
   align-items: flex-start;
   gap: 40px; /* 60px node + 40px gap = 100px pitch */
 }
 
-.fs-google-right-node {
+.ps-google-right-node {
   position: relative;
   display: flex;
   align-items: center;
   height: 60px;
 }
 
-.fs-google-dash-card {
+.ps-google-dash-card {
   background: #ffffff;
   border: 1px solid #e8eaed;
   border-radius: 6px;
   width: 180px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.fs-google-dash-header {
+.ps-google-dash-header {
   height: 16px;
   background: #f8f9fa;
   border-bottom: 1px solid #e8eaed;
@@ -864,21 +836,21 @@
   border-radius: 2px;
 }
 
-.fs-google-dash-body {
+.ps-google-dash-body {
   padding: 14px 12px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.fs-google-dash-body b {
+.ps-google-dash-body b {
   font-size: 13px;
   color: #3c4043;
   font-weight: 500;
 }
 
 /* --- SVGs --- */
-.fs-google-svg {
+.ps-google-svg {
   position: absolute;
   top: 50%;
   overflow: visible;
@@ -887,11 +859,11 @@
   transform: translateY(-50%);
 }
 
-.fs-google-svg.left-svg {
+.ps-google-svg.left-svg {
   left: 100%;
 }
 
-.fs-google-svg.right-svg {
+.ps-google-svg.right-svg {
   right: 100%;
 }
 
@@ -901,17 +873,16 @@
    06 — SECURITY & CONTROLS
    Ink band, grid overlay, glass cards, cursor light.
    ===================================================================== */
-.fs-sec { padding: 0; }
+.ps-sec { padding: 0; }
 
-.fs-sec-band {
+.ps-sec-band {
   position: relative;
   isolation: isolate;
   padding: clamp(5rem, 8vw, 8.5rem) 0;
-  background:
-    rgba(10, 143, 94, 0.22);
+  background: rgba(108, 76, 241, 0.22);
 }
 /* a technical grid, faint, so the band reads as a surface not a void */
-.fs-sec-band::after {
+.ps-sec-band::after {
   content: '';
   position: absolute; inset: 0;
   z-index: -1;
@@ -920,100 +891,95 @@
   mask-image: radial-gradient(80% 60% at 50% 0%, #000, transparent 76%);
 }
 
-.fs-sec .fs-eyebrow {
+.ps-sec .ps-eyebrow {
   border-color: rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
   color: rgba(255, 255, 255, 0.78);
 }
-.fs-sec .fs-eyebrow b { color: #4fd1a1; }
-.fs-sec .fs-eyebrow i { background: #4fd1a1; box-shadow: 0 0 0 3px rgba(79, 209, 161, 0.22); }
-.fs-head.dark .fs-h2 { color: #fff; }
-.fs-head.dark .fs-h2 .mk-em { color: #4fd1a1;
+.ps-sec .ps-eyebrow b { color: #4fd1a1; }
+.ps-sec .ps-eyebrow i { background: #4fd1a1; }
+.ps-head.dark .ps-h2 { color: #fff; }
+.ps-head.dark .ps-h2 .mk-em {
+  color: #4fd1a1;
 }
-.fs-head.dark .fs-ask {
+.ps-head.dark .ps-ask {
   border-color: rgba(79, 209, 161, 0.35);
   background: rgba(79, 209, 161, 0.12);
   color: #8fe8c4;
 }
-.fs-head.dark .fs-lede { color: rgba(255, 255, 255, 0.62); }
+.ps-head.dark .ps-lede { color: rgba(255, 255, 255, 0.62); }
 
 /* --- the chain --- */
-.fs-chain { display: flex; align-items: stretch; margin-bottom: 1.25rem; }
+.ps-chain { display: flex; align-items: stretch; margin-bottom: 1.25rem; }
 
-.fs-chain-node {
+.ps-chain-node {
   flex: 1; min-width: 0;
   padding: 1.35rem 1.2rem 1.4rem;
   border-radius: var(--r-md, 16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.045);
   backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: border-color 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fs-chain-node:hover {
+.ps-chain-node:hover {
   transform: translateY(-3px);
   border-color: rgba(var(--c-rgb), 0.55);
 }
-.fs-chain-ic {
+.ps-chain-ic {
   display: grid; place-items: center;
   width: 36px; height: 36px;
   border-radius: 11px;
   margin-bottom: 1rem;
   color: #fff;
   background: var(--c, var(--accent));
-  box-shadow: 0 10px 22px -12px rgba(var(--c-rgb, 10, 143, 94), 1);
 }
-.fs-chain-node b { display: block; font-size: 0.96rem; font-weight: 600; color: #fff; letter-spacing: -0.022em; }
-.fs-chain-node i { display: block; font-style: normal; font-size: 0.78rem; color: rgba(255, 255, 255, 0.45); margin-top: 0.3rem; }
+.ps-chain-node b { display: block; font-size: 0.96rem; font-weight: 600; color: #fff; letter-spacing: -0.022em; }
+.ps-chain-node i { display: block; font-style: normal; font-size: 0.78rem; color: rgba(255, 255, 255, 0.45); margin-top: 0.3rem; }
 
-.fs-chain-link {
+.ps-chain-link {
   position: relative; align-self: center; flex-shrink: 0;
   width: clamp(16px, 2.6vw, 40px); height: 2px;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.14);
   overflow: hidden;
 }
-.fs-chain-link i {
+.ps-chain-link i {
   position: absolute; top: 0; left: 0;
   display: block; width: 45%; height: 100%;
   border-radius: 2px;
   background: #4fd1a1;
-  box-shadow: 0 0 10px #4fd1a1;
 }
 
 /* --- the trail --- */
-.fs-audit {
+.ps-audit {
   margin-bottom: clamp(2rem, 3.5vw, 3rem);
   border-radius: var(--r-lg, 24px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
-.fs-audit-head {
+.ps-audit-head {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.9rem 1.25rem;
   background: rgba(255, 255, 255, 0.035);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-.fs-audit-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45); }
-.fs-audit-live {
+.ps-audit-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45); }
+.ps-audit-live {
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.22rem 0.6rem;
   border-radius: 999px;
   background: rgba(79, 209, 161, 0.14);
   font-size: 0.72rem; color: #8fe8c4;
 }
-.fs-audit-live i {
+.ps-audit-live i {
   width: 5px; height: 5px; border-radius: 50%; background: #4fd1a1;
-  box-shadow: 0 0 8px #4fd1a1;
-  animation: fs-blink 2.2s ease-in-out infinite;
+  animation: ps-blink 2.2s ease-in-out infinite;
 }
 
-.fs-audit-rows { padding: 0.5rem; }
-.fs-audit-row {
+.ps-audit-rows { padding: 0.5rem; }
+.ps-audit-row {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center; gap: 1rem;
@@ -1021,19 +987,19 @@
   border-radius: 12px;
   transition: background 0.3s ease;
 }
-.fs-audit-row:hover { background: rgba(255, 255, 255, 0.05); }
-.fs-audit-avatar {
+.ps-audit-row:hover { background: rgba(255, 255, 255, 0.05); }
+.ps-audit-avatar {
   width: 30px; height: 30px; border-radius: 50%;
   display: grid; place-items: center;
   font-size: 0.64rem; font-weight: 600; color: #fff;
   background: rgba(255, 255, 255, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
-.fs-audit-text { display: flex; flex-direction: column; min-width: 0; }
-.fs-audit-text b { font-size: 0.86rem; font-weight: 500; color: #fff; }
-.fs-audit-text i { font-style: normal; font-size: 0.74rem; color: rgba(255, 255, 255, 0.42); margin-top: 0.12rem; }
-.fs-audit-time { font-size: 0.74rem; color: rgba(255, 255, 255, 0.35); white-space: nowrap; }
-.fs-audit-hash {
+.ps-audit-text { display: flex; flex-direction: column; min-width: 0; }
+.ps-audit-text b { font-size: 0.86rem; font-weight: 500; color: #fff; }
+.ps-audit-text i { font-style: normal; font-size: 0.74rem; color: rgba(255, 255, 255, 0.42); margin-top: 0.12rem; }
+.ps-audit-time { font-size: 0.74rem; color: rgba(255, 255, 255, 0.35); white-space: nowrap; }
+.ps-audit-hash {
   padding: 0.16rem 0.45rem;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.06);
@@ -1042,18 +1008,17 @@
 }
 
 /* --- the four assurances --- */
-.fs-ctrl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-.fs-ctrl {
+.ps-ctrl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.ps-ctrl {
   padding: 1.6rem 1.35rem 1.5rem;
   border-radius: var(--r-lg, 24px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
 }
-.fs-ctrl:hover { transform: translateY(-3px); border-color: rgba(var(--c-rgb), 0.5); }
-.fs-ctrl svg {
+.ps-ctrl:hover { transform: translateY(-3px); border-color: rgba(var(--c-rgb), 0.5); }
+.ps-ctrl svg {
   display: block;
   width: 36px; height: 36px;
   padding: 9px;
@@ -1061,13 +1026,12 @@
   border-radius: 11px;
   color: #fff;
   background: var(--c, var(--accent));
-  box-shadow: 0 10px 22px -12px rgba(var(--c-rgb, 10, 143, 94), 1);
 }
-.fs-ctrl h3 { margin: 0 0 0.55rem; font-size: 0.98rem; font-weight: 600; letter-spacing: -0.022em; color: #fff; }
-.fs-ctrl p { margin: 0; font-size: 0.85rem; line-height: 1.6; color: rgba(255, 255, 255, 0.5); }
+.ps-ctrl h3 { margin: 0 0 0.55rem; font-size: 0.98rem; font-weight: 600; letter-spacing: -0.022em; color: #fff; }
+.ps-ctrl p { margin: 0; font-size: 0.85rem; line-height: 1.6; color: rgba(255, 255, 255, 0.5); }
 
-.fs-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: clamp(2rem, 3.5vw, 3rem); }
-.fs-badge {
+.ps-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: clamp(2rem, 3.5vw, 3rem); }
+.ps-badge {
   display: inline-flex; align-items: center; gap: 0.45rem;
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
@@ -1076,29 +1040,27 @@
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.72);
 }
-.fs-badge svg { color: #4fd1a1; }
+.ps-badge svg { color: #4fd1a1; }
 
 /* =====================================================================
    07 — WHY EMVIVE / BUSINESS IMPACT
    A comparison card, three figure cards, four reason cards, and the
    customer on a card of their own.
    ===================================================================== */
-.fs-close {
+.ps-close {
   padding: clamp(1.6rem, 2.6vw, 2.4rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
-  background:
-    var(--surface);
-  box-shadow: var(--rim), var(--lift-2);
+  background: var(--surface);
 }
 
-.fs-close-top {
+.ps-close-top {
   display: flex; align-items: center; gap: 1rem;
   padding-bottom: 1.1rem;
   margin-bottom: 1.75rem;
   border-bottom: 1px solid var(--edge);
 }
-.fs-close-k {
+.ps-close-k {
   padding: 0.32rem 0.7rem;
   border-radius: 999px;
   background: rgba(9, 9, 11, 0.05);
@@ -1106,23 +1068,23 @@
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--ink-3);
 }
-.fs-close-sub { margin-left: auto; font-size: 0.815rem; color: var(--ink-4); }
+.ps-close-sub { margin-left: auto; font-size: 0.815rem; color: var(--ink-4); }
 
-.fs-close-ruler,
-.fs-close-row,
-.fs-close-delta {
+.ps-close-ruler,
+.ps-close-row,
+.ps-close-delta {
   display: grid;
   grid-template-columns: 16rem minmax(0, 1fr) 6rem;
   gap: 1.5rem;
   align-items: center;
 }
 
-.fs-close-ruler { margin-bottom: 0.75rem; }
-.fs-close-ruler-track { grid-column: 2; position: relative; height: 1.15rem; display: block; }
+.ps-close-ruler { margin-bottom: 0.75rem; }
+.ps-close-ruler-track { grid-column: 2; position: relative; height: 1.15rem; display: block; }
 /* `left` is set per tick in the JSX, on the same day-over-31 scale the
    bars are drawn on — without it every number stacks at the track's
    start, which is exactly what it used to do */
-.fs-close-ruler-track i {
+.ps-close-ruler-track i {
   position: absolute; top: 0;
   font-style: normal; font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
@@ -1131,358 +1093,342 @@
   transform: translateX(-50%);
 }
 /* the mark the number labels */
-.fs-close-ruler-track i::after {
+.ps-close-ruler-track i::after {
   content: '';
   position: absolute; left: 50%; bottom: -0.28rem;
   width: 1px; height: 4px;
   background: var(--edge);
 }
 
-.fs-close-row { padding: 0.9rem 0; }
-.fs-close-label b { display: block; font-size: 1rem; font-weight: 600; letter-spacing: -0.024em; color: var(--ink); }
-.fs-close-label em {
+.ps-close-row { padding: 0.9rem 0; }
+.ps-close-label b { display: block; font-size: 1rem; font-weight: 600; letter-spacing: -0.024em; color: var(--ink); }
+.ps-close-label em {
   display: block; margin-top: 0.22rem;
   font-style: normal; font-size: 0.81rem; line-height: 1.45;
   color: var(--ink-4);
 }
 
-.fs-close-track {
+.ps-close-track {
   position: relative; display: block;
   height: 34px;
   border-radius: 10px;
   background: rgba(9, 9, 11, 0.045);
-  box-shadow: inset 0 1px 2px rgba(9, 9, 11, 0.06);
   overflow: hidden;
 }
-.fs-close-track i { display: block; height: 100%; border-radius: 10px; transform-origin: left; }
-.fs-close-row.was .fs-close-track i {
+.ps-close-track i { display: block; height: 100%; border-radius: 10px; transform-origin: left; }
+.ps-close-row.was .ps-close-track i {
   background: rgba(9, 9, 11, 0.16);
 }
-.fs-close-row.now .fs-close-track i {
-  background: #16b877;
-  box-shadow: 0 8px 20px -8px rgba(10, 143, 94, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+.ps-close-row.now .ps-close-track i {
+  background: color-mix(in srgb, var(--accent) 70%, #fff);
 }
 
-.fs-close-days { font-size: 0.88rem; color: var(--ink-4); white-space: nowrap; text-align: right; }
-.fs-close-days b { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.045em; color: var(--ink); margin-right: 0.3rem; }
-.fs-close-row.now .fs-close-days b { color: var(--accent); }
+.ps-close-days { font-size: 0.88rem; color: var(--ink-4); white-space: nowrap; text-align: right; }
+.ps-close-days b { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.045em; color: var(--ink); margin-right: 0.3rem; }
+.ps-close-row.now .ps-close-days b { color: var(--accent); }
 
-.fs-close-delta { margin-top: 0.9rem; }
-.fs-close-gap { grid-column: 2; position: relative; display: block; height: 20px; }
-.fs-close-gap i { position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--ink-4); }
-.fs-close-gap i::before,
-.fs-close-gap i::after {
+.ps-close-delta { margin-top: 0.9rem; }
+.ps-close-gap { grid-column: 2; position: relative; display: block; height: 20px; }
+.ps-close-gap i { position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--ink-4); }
+.ps-close-gap i::before,
+.ps-close-gap i::after {
   content: '';
   position: absolute; top: -4px;
   width: 1px; height: 9px;
   background: var(--ink-4);
 }
-.fs-close-gap i::before { left: 0; }
-.fs-close-gap i::after { right: 0; }
+.ps-close-gap i::before { left: 0; }
+.ps-close-gap i::after { right: 0; }
 
-.fs-close-claim {
+.ps-close-claim {
   grid-column: 1 / -1;
   display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem;
   margin-top: 1rem;
   padding: 1rem 1.25rem;
   border-radius: var(--r-md);
   border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
   font-size: 0.95rem; color: var(--ink-2);
 }
-.fs-close-claim b {
+.ps-close-claim b {
   font-size: clamp(1.7rem, 2.6vw, 2.2rem);
   font-weight: 600; letter-spacing: -0.05em; line-height: 1;
   color: var(--accent);
 }
 
 /* --- the three figures --- */
-.fs-impact {
+.ps-impact {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: clamp(1.25rem, 2.5vw, 2rem);
 }
-.fs-impact-cell {
+.ps-impact-cell {
   position: relative;
   padding: clamp(1.5rem, 2.2vw, 2rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
-  background:
-    rgba(var(--c-rgb, 10, 143, 94), 0.13);
-  box-shadow: var(--rim), var(--lift-1);
+  background: rgba(var(--c-rgb, 108, 76, 241));
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fs-impact-cell::before {
+.ps-impact-cell::before {
   content: '';
   position: absolute; left: 0; right: 0; top: 0;
   height: 3px;
   background: var(--c, var(--accent));
 }
-.fs-impact-cell:hover { transform: translateY(-3px); box-shadow: var(--rim), var(--lift-2); }
-.fs-impact-cell b {
+.ps-impact-cell:hover { transform: translateY(-3px); }
+.ps-impact-cell b {
   display: block;
   font-size: clamp(2.4rem, 4vw, 3.4rem);
-  font-weight: 600; letter-spacing: -0.055em; line-height: 0.95; color: var(--c, var(--accent));
+  font-weight: 600; letter-spacing: -0.055em; line-height: 0.95;
+  color: var(--c, var(--accent));
 }
-.fs-impact-cell h3 { margin: 1.1rem 0 0.5rem; font-size: 1.02rem; font-weight: 600; letter-spacing: -0.026em; color: var(--ink); }
-.fs-impact-cell p { margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); }
+.ps-impact-cell h3 { margin: 1.1rem 0 0.5rem; font-size: 1.02rem; font-weight: 600; letter-spacing: -0.026em; color: var(--ink); }
+.ps-impact-cell p { margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--ink-3); }
 
 /* --- the four reasons --- */
-.fs-reasons {
+.ps-reasons {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
-.fs-reason {
+.ps-reason {
   padding: clamp(1.5rem, 2.2vw, 1.9rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
   background: var(--surface);
-  box-shadow: var(--rim), 0 1px 2px rgba(9, 9, 11, 0.035);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
 }
-.fs-reason:hover {
+.ps-reason:hover {
   transform: translateY(-3px);
-  border-color: rgba(var(--c-rgb, 10, 143, 94), 0.4);
-  box-shadow: var(--rim), 0 20px 40px -24px rgba(var(--c-rgb, 10, 143, 94), 0.6);
+  border-color: rgba(var(--c-rgb, 108, 76, 241), 0.4);
 }
-.fs-reason-ic {
+.ps-reason-ic {
   display: grid; place-items: center;
   width: 42px; height: 42px;
   border-radius: 13px;
   margin-bottom: 1.2rem;
   color: #fff;
   background: var(--c, var(--accent));
-  box-shadow: 0 12px 24px -14px rgba(var(--c-rgb, 10, 143, 94), 1);
 }
-.fs-reason h3 { margin: 0 0 0.55rem; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.028em; color: var(--ink); }
-.fs-reason p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--ink-2); }
+.ps-reason h3 { margin: 0 0 0.55rem; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.028em; color: var(--ink); }
+.ps-reason p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--ink-2); }
 
 /* --- the customer --- */
-.fs-proof {
+.ps-proof {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 1rem;
   margin-top: 1rem;
 }
-.fs-proof-quote {
+.ps-proof-quote {
   padding: clamp(1.75rem, 2.8vw, 2.5rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
-  background:
-    var(--surface);
-  box-shadow: var(--rim), var(--lift-1);
+  background: var(--surface);
 }
-.fs-quote {
+.ps-quote {
   margin: 0;
   font-size: clamp(1.35rem, 2.2vw, 2rem);
   line-height: 1.22; letter-spacing: -0.038em; font-weight: 600;
   color: var(--ink);
 }
-.fs-proof-by { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.75rem; }
-.fs-proof-avatar {
+.ps-proof-by { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.75rem; }
+.ps-proof-avatar {
   width: 46px; height: 46px; border-radius: 50%;
   display: grid; place-items: center;
   font-size: 0.87rem; font-weight: 600; color: #fff;
-  background: #16b877;
-  box-shadow: 0 10px 22px -12px rgba(10, 143, 94, 0.95);
+  background: color-mix(in srgb, var(--accent) 78%, #fff);
 }
-.fs-proof-by .fs-reg-txt b { font-size: 0.96rem; color: var(--ink); }
-.fs-proof-by .fs-reg-txt i { font-size: 0.85rem; color: var(--ink-3); }
+.ps-proof-by .ps-reg-txt b { font-size: 0.96rem; color: var(--ink); }
+.ps-proof-by .ps-reg-txt i { font-size: 0.85rem; color: var(--ink-3); }
 
-.fs-proof-film { display: block; margin-top: 1.75rem; }
-.fs-proof-film .fs-film video { height: 12rem; }
+.ps-proof-film { display: block; margin-top: 1.75rem; }
+.ps-proof-film .ps-film video { height: 12rem; }
 
-.fs-proof-visual {
+.ps-proof-visual {
   padding: clamp(1.5rem, 2.2vw, 2rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--edge);
   background: var(--surface);
-  box-shadow: var(--rim), var(--lift-1);
 }
-.fs-proof-bar {
+.ps-proof-bar {
   display: flex; align-items: center; gap: 0.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--edge);
 }
-.fs-proof-bar b { font-size: 0.92rem; font-weight: 600; color: var(--ink); }
-.fs-proof-tag {
+.ps-proof-bar b { font-size: 0.92rem; font-weight: 600; color: var(--ink); }
+.ps-proof-tag {
   margin-left: auto;
   padding: 0.24rem 0.6rem;
   border-radius: 999px;
   background: rgba(9, 9, 11, 0.05);
   font-size: 0.72rem; color: var(--ink-3);
 }
-.fs-proof-bars { padding: 1.5rem 0 0; }
-.fs-proof-axis { display: flex; justify-content: space-between; padding: 0.75rem 0 0; font-size: 0.72rem; color: var(--ink-4); }
-.fs-proof-stats {
+.ps-proof-bars { padding: 1.5rem 0 0; }
+.ps-proof-axis { display: flex; justify-content: space-between; padding: 0.75rem 0 0; font-size: 0.72rem; color: var(--ink-4); }
+.ps-proof-stats {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
-.fs-proof-stats div {
+.ps-proof-stats div {
   display: flex; align-items: center; gap: 0.65rem;
   padding: 0.9rem 0.85rem;
   border-radius: var(--r-sm);
   border: 1px solid var(--edge);
   background: rgba(255, 255, 255, 0.7);
 }
-.fs-proof-stats b { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.045em; color: var(--ink); }
-.fs-proof-stats span { font-size: 0.73rem; line-height: 1.3; color: var(--ink-3); }
+.ps-proof-stats b { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.045em; color: var(--ink); }
+.ps-proof-stats span { font-size: 0.73rem; line-height: 1.3; color: var(--ink-3); }
 
 /* =====================================================================
    RESPONSIVE
    ===================================================================== */
 @media (max-width: 1180px) {
-  .fs-caps-body,
-  .fs-how-grid,
-  .fs-auto-body { grid-template-columns: minmax(0, 1fr); }
-  .fs-caps-mock-ui,
-  .fs-auto-stat { position: static; }
-  .fs-how-copy { min-height: 0; }
-  .fs-ways { grid-template-columns: 1fr 1fr; }
-  .fs-int-diagram { grid-template-columns: 1fr; gap: 1rem; }
-  .fs-wire { width: 2px; height: 40px; justify-self: center; margin: 0; }
-  .fs-wire i { width: 100%; height: 45%; background: #4fd1a1; }
-  .fs-chain { flex-wrap: wrap; gap: 0.75rem; }
-  .fs-chain-node { flex: 1 1 45%; }
-  .fs-chain-link { display: none; }
-  .fs-ctrl-grid { grid-template-columns: 1fr 1fr; }
-  .fs-audit-hash { display: none; }
-  .fs-proof { grid-template-columns: 1fr; }
+  .ps-caps-body,
+  .ps-how-grid,
+  .ps-auto-body { grid-template-columns: minmax(0, 1fr); }
+  .ps-caps-mock-ui,
+  .ps-auto-stat { position: static; }
+  .ps-how-copy { min-height: 0; }
+  .ps-ways { grid-template-columns: 1fr 1fr; }
+  .ps-int-diagram { grid-template-columns: 1fr; gap: 1rem; }
+  .ps-wire { width: 2px; height: 40px; justify-self: center; margin: 0; }
+  .ps-wire i { width: 100%; height: 45%; background: #4fd1a1; }
+  .ps-chain { flex-wrap: wrap; gap: 0.75rem; }
+  .ps-chain-node { flex: 1 1 45%; }
+  .ps-chain-link { display: none; }
+  .ps-ctrl-grid { grid-template-columns: 1fr 1fr; }
+  .ps-audit-hash { display: none; }
+  .ps-proof { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 860px) {
-  .fs-h2 { max-width: none; }
-  .fs-steps { flex-wrap: wrap; border-radius: 20px; }
-  .fs-step { flex: 1 1 40%; }
-  .fs-how-ctl { flex: 1 1 100%; justify-content: center; }
-  .fs-app-body { height: 22rem; }
-  .fs-film video { height: calc(22rem + 44px); }
-  .fs-rules-head { grid-template-columns: 1fr; }
-  .fs-rules-head .r { display: none; }
-  .fs-rule { grid-template-columns: 1fr; row-gap: 0.85rem; }
-  .fs-rule-r { grid-template-columns: minmax(0, 1fr) 5rem 3rem; }
-  .fs-panel-points { grid-template-columns: 1fr; }
-  .fs-ways,
-  .fs-reasons,
-  .fs-ctrl-grid,
-  .fs-impact { grid-template-columns: 1fr; }
-  .fs-close-ruler, .fs-close-row, .fs-close-delta { grid-template-columns: 1fr; gap: 0.7rem; }
-  .fs-close-ruler { display: none; }
-  .fs-close-track, .fs-close-gap, .fs-close-days { grid-column: 1; }
-  .fs-close-days { text-align: left; }
-  .fs-proof-stats { grid-template-columns: 1fr; }
+  .ps-h2 { max-width: none; }
+  .ps-steps { flex-wrap: wrap; border-radius: 20px; }
+  .ps-step { flex: 1 1 40%; }
+  .ps-how-ctl { flex: 1 1 100%; justify-content: center; }
+  .ps-app-body { height: 22rem; }
+  .ps-film video { height: calc(22rem + 44px); }
+  .ps-rules-head { grid-template-columns: 1fr; }
+  .ps-rules-head .r { display: none; }
+  .ps-rule { grid-template-columns: 1fr; row-gap: 0.85rem; }
+  .ps-rule-r { grid-template-columns: minmax(0, 1fr) 5rem 3rem; }
+  .ps-panel-points { grid-template-columns: 1fr; }
+  .ps-ways,
+  .ps-reasons,
+  .ps-ctrl-grid,
+  .ps-impact { grid-template-columns: 1fr; }
+  .ps-close-ruler, .ps-close-row, .ps-close-delta { grid-template-columns: 1fr; gap: 0.7rem; }
+  .ps-close-ruler { display: none; }
+  .ps-close-track, .ps-close-gap, .ps-close-days { grid-column: 1; }
+  .ps-close-days { text-align: left; }
+  .ps-proof-stats { grid-template-columns: 1fr; }
 }
 
 /* =====================================================================
    REDUCED MOTION
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .fs-chain-link i,
-  .fs-wire i { display: none; }
-  .fs-step-bar i.run,
-  .fs-auto-k i,
-  .fs-core-k i,
-  .fs-audit-live i,
-  .fs-reg-state.sync svg { animation: none; }
-  .fs-cap, .fs-reason, .fs-impact-cell, .fs-ctrl, .fs-way, .fs-chain-node, .fs-link { transition: none; }
-  .fs-cap:hover, .fs-reason:hover, .fs-impact-cell:hover, .fs-ctrl:hover,
-  .fs-way:hover, .fs-chain-node:hover, .fs-link:hover { transform: none; }
+  .ps-chain-link i,
+  .ps-wire i { display: none; }
+  .ps-step-bar i.run,
+  .ps-auto-k i,
+  .ps-core-k i,
+  .ps-audit-live i,
+  .ps-reg-state.sync svg { animation: none; }
+  .ps-cap, .ps-reason, .ps-impact-cell, .ps-ctrl, .ps-way, .ps-chain-node, .ps-link { transition: none; }
+  .ps-cap:hover, .ps-reason:hover, .ps-impact-cell:hover, .ps-ctrl:hover,
+  .ps-way:hover, .ps-chain-node:hover, .ps-link:hover { transform: none; }
 }
 
 /* =====================================================================
    DARK
    The light bands invert their surface; the dark bands already are.
    ===================================================================== */
-body.dark-theme .fs-caps,
-body.dark-theme .fs-how,
-body.dark-theme .fs-auto,
-body.dark-theme .fs-why {
+body.dark-theme .ps-caps,
+body.dark-theme .ps-how,
+body.dark-theme .ps-auto,
+body.dark-theme .ps-why {
   --surface: #16181c;
   --edge: rgba(255, 255, 255, 0.09);
   --rim: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
-body.dark-theme .fs-caps::before,
-body.dark-theme .fs-how::before,
-body.dark-theme .fs-auto::before,
-body.dark-theme .fs-why::before { }
-body.dark-theme .fs-caps::after { background: rgba(10, 143, 94, 0.16); }
-body.dark-theme .fs-how::after { background: rgba(37, 99, 235, 0.18); }
-body.dark-theme .fs-auto::after { background: rgba(226, 96, 31, 0.16); }
-body.dark-theme .fs-why::after { background: rgba(147, 51, 234, 0.16); }
+body.dark-theme .ps-caps::before,
+body.dark-theme .ps-how::before,
+body.dark-theme .ps-auto::before,
+body.dark-theme .ps-why::before { }
+body.dark-theme .ps-caps::after { background: rgba(108, 76, 241, 0.16); }
+body.dark-theme .ps-how::after { background: rgba(37, 99, 235, 0.18); }
+body.dark-theme .ps-auto::after { background: rgba(226, 96, 31, 0.16); }
+body.dark-theme .ps-why::after { background: rgba(147, 51, 234, 0.16); }
 
-body.dark-theme .fs-folder-body {
-  box-shadow: 
-    var(--rim), 
-    0 4px 6px -1px rgba(0, 0, 0, 0.2), 
-    0 24px 48px -12px rgba(0, 0, 0, 0.5);
+body.dark-theme .ps-folder-body {
 }
 
-body.dark-theme .fs-ask { background: color-mix(in srgb, var(--accent) 16%, transparent); }
-body.dark-theme .fs-how-meta li,
-body.dark-theme .fs-proof-stats div { background: rgba(255, 255, 255, 0.04); }
-body.dark-theme .fs-steps { background: rgba(255, 255, 255, 0.05); }
-body.dark-theme .fs-step:hover { background: rgba(255, 255, 255, 0.07); }
-body.dark-theme .fs-how-ctl { background: rgba(255, 255, 255, 0.07); }
-body.dark-theme .fs-cap-n,
-body.dark-theme .fs-close-k,
-body.dark-theme .fs-proof-tag { background: rgba(255, 255, 255, 0.07); }
-body.dark-theme .fs-rules-head { background: rgba(255, 255, 255, 0.03); }
-body.dark-theme .fs-rule-bar,
-body.dark-theme .fs-close-track { background: rgba(255, 255, 255, 0.08); }
-body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255, 255, 0.24); }
+body.dark-theme .ps-ask { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+body.dark-theme .ps-how-meta li,
+body.dark-theme .ps-proof-stats div { background: rgba(255, 255, 255, 0.04); }
+body.dark-theme .ps-steps { background: rgba(255, 255, 255, 0.05); }
+body.dark-theme .ps-step:hover { background: rgba(255, 255, 255, 0.07); }
+body.dark-theme .ps-how-ctl { background: rgba(255, 255, 255, 0.07); }
+body.dark-theme .ps-cap-n,
+body.dark-theme .ps-close-k,
+body.dark-theme .ps-proof-tag { background: rgba(255, 255, 255, 0.07); }
+body.dark-theme .ps-rules-head { background: rgba(255, 255, 255, 0.03); }
+body.dark-theme .ps-rule-bar,
+body.dark-theme .ps-close-track { background: rgba(255, 255, 255, 0.08); }
+body.dark-theme .ps-close-row.was .ps-close-track i { background: rgba(255, 255, 255, 0.24); }
 
-.fs-how-img {
+.ps-how-img {
   width: 100%;
   height: 100%;
   max-height: 360px;
   object-fit: cover;
   object-position: center;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* =====================================================================
    MS ACCORDION LAYOUT (Capabilities)
    ===================================================================== */
-.fs-ms-layout {
+.ps-ms-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
 }
 
 @media (min-width: 992px) {
-  .fs-ms-layout {
+  .ps-ms-layout {
     grid-template-columns: 460px 1fr; /* Increased left width */
     gap: 4rem;
     align-items: stretch; /* Stretch both columns to same height */
   }
 }
 
-.fs-ms-accordion {
+.ps-ms-accordion {
   display: flex;
   flex-direction: column;
 }
 
-.fs-ms-accordion-item {
+.ps-ms-accordion-item {
   border-bottom: 1px solid rgba(0,0,0,0.08);
   border-left: 3px solid transparent;
   padding-left: 1.25rem;
   transition: border-color 0.3s ease;
 }
 
-.fs-ms-accordion-item.active {
+.ps-ms-accordion-item.active {
   border-left-color: var(--c);
 }
 
-.fs-ms-accordion-item:last-child {
+.ps-ms-accordion-item:last-child {
   border-bottom: none;
 }
 
-.fs-ms-accordion-header {
+.ps-ms-accordion-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -1495,33 +1441,33 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   color: var(--ink);
 }
 
-.fs-ms-accordion-title-wrap {
+.ps-ms-accordion-title-wrap {
   display: flex;
   align-items: center;
   gap: 0.85rem;
 }
 
-.fs-ms-accordion-icon {
+.ps-ms-accordion-icon {
   color: var(--ink-3);
   transition: color 0.3s ease;
 }
 
-.fs-ms-accordion-item.active .fs-ms-accordion-icon {
+.ps-ms-accordion-item.active .ps-ms-accordion-icon {
   color: var(--c);
 }
 
-.fs-ms-accordion-title {
+.ps-ms-accordion-title {
   font-size: 1.1rem;
   font-weight: 500;
   transition: color 0.2s ease, font-weight 0.2s ease;
 }
 
-.fs-ms-accordion-item.active .fs-ms-accordion-title {
+.ps-ms-accordion-item.active .ps-ms-accordion-title {
   font-weight: 600;
   color: var(--c);
 }
 
-.fs-ms-chevron {
+.ps-ms-chevron {
   color: var(--ink-3);
   display: flex;
   align-items: center;
@@ -1529,19 +1475,19 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transition: color 0.2s ease;
 }
 
-.fs-ms-accordion-item.active .fs-ms-chevron {
+.ps-ms-accordion-item.active .ps-ms-chevron {
   color: var(--c);
 }
 
-.fs-ms-accordion-content {
+.ps-ms-accordion-content {
   overflow: hidden;
 }
 
-.fs-ms-accordion-inner {
+.ps-ms-accordion-inner {
   padding-bottom: 1.5rem;
 }
 
-.fs-ms-accordion-inner p {
+.ps-ms-accordion-inner p {
   font-size: 0.95rem;
   color: var(--ink-2);
   line-height: 1.5;
@@ -1549,33 +1495,32 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   margin-top: 0;
 }
 
-.fs-ms-link {
+.ps-ms-link {
   font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none;
 }
 
-.fs-ms-link:hover {
+.ps-ms-link:hover {
   text-decoration: underline;
 }
 
-.fs-ms-display {
+.ps-ms-display {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   background: #000;
   height: 100%; /* Fill the stretched grid container */
   position: relative;
 }
 
-.fs-ms-display-inner {
+.ps-ms-display-inner {
   width: 100%;
   height: 100%;
   position: absolute;
   inset: 0;
 }
 
-.fs-ms-display img {
+.ps-ms-display img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Cover the entire display box */
@@ -1585,57 +1530,56 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 /* =====================================================================
    MS FEATURES GRID
    ===================================================================== */
-.fs-ms-features-grid {
+.ps-ms-features-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 3rem 1.5rem;
 }
-@media (min-width: 768px) { .fs-ms-features-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) { .ps-ms-features-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { 
-  .fs-ms-features-grid { grid-template-columns: repeat(3, 1fr); gap: 3.5rem 2rem; }
-  .fs-ms-features-grid.fs-grid-2-col { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.5rem; }
+  .ps-ms-features-grid { grid-template-columns: repeat(3, 1fr); gap: 3.5rem 2rem; }
+  .ps-ms-features-grid.ps-grid-2-col { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.5rem; }
 }
 @media (min-width: 1200px) {
-  .fs-ms-features-grid.fs-grid-2-col { gap: 3rem 2rem; }
+  .ps-ms-features-grid.ps-grid-2-col { gap: 3rem 2rem; }
 }
 
 /* =====================================================================
    SPLIT LAYOUT (Tall Image + Grid)
    ===================================================================== */
-.fs-how-split {
+.ps-how-split {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
   align-items: stretch;
 }
 @media (min-width: 992px) {
-  .fs-how-split {
+  .ps-how-split {
     grid-template-columns: minmax(280px, 1fr) 2.5fr;
     gap: 3rem;
   }
 }
 @media (min-width: 1200px) {
-  .fs-how-split {
+  .ps-how-split {
     grid-template-columns: 1fr 3fr;
     gap: 4rem;
   }
 }
 
-.fs-how-tall-card {
+.ps-how-tall-card {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-height: 400px;
 }
 @media (min-width: 992px) {
-  .fs-how-tall-card { min-height: 100%; }
+  .ps-how-tall-card { min-height: 100%; }
 }
 
-.fs-how-tall-img {
+.ps-how-tall-img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1644,48 +1588,48 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   z-index: 0;
 }
 
-.fs-how-tall-overlay {
+.ps-how-tall-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.8);
   z-index: 1;
 }
 
-.fs-how-tall-content {
+.ps-how-tall-content {
   position: relative;
   z-index: 2;
   padding: 2.5rem 2rem;
   color: #fff;
 }
 
-.fs-how-tall-content h3 {
+.ps-how-tall-content h3 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
 }
 
-.fs-how-tall-content p {
+.ps-how-tall-content p {
   font-size: 0.95rem;
   line-height: 1.5;
   opacity: 0.9;
   margin: 0;
 }
 
-.fs-ms-feature-card {
+.ps-ms-feature-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.fs-ms-feature-top {
+.ps-ms-feature-top {
   display: flex;
   align-items: center;
   gap: 0.85rem;
   margin-bottom: 1.25rem;
 }
 
-.fs-ms-feature-icon {
+.ps-ms-feature-icon {
   width: 40px;
   height: 40px;
   border-radius: 8px; /* Slight rounding to match MS */
@@ -1696,28 +1640,28 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   justify-content: center;
 }
 
-.fs-ms-feature-name {
+.ps-ms-feature-name {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--ink);
   letter-spacing: -0.01em;
 }
 
-.fs-ms-feature-header {
+.ps-ms-feature-header {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
-.fs-ms-feature-bar {
+.ps-ms-feature-bar {
   width: 3px;
   height: 20px;
   background-color: var(--c);
   margin-top: 3px;
 }
 
-.fs-ms-feature-title {
+.ps-ms-feature-title {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--ink);
@@ -1726,7 +1670,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   margin: 0;
 }
 
-.fs-ms-feature-desc {
+.ps-ms-feature-desc {
   font-size: 0.95rem;
   color: var(--ink-2);
   line-height: 1.55;
@@ -1734,13 +1678,13 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   margin-top: 0.75rem;
 }
 
-.fs-ms-feature-points {
+.ps-ms-feature-points {
   margin-top: 0.5rem;
   list-style: none;
   padding: 0;
 }
 
-.fs-ms-feature-points li {
+.ps-ms-feature-points li {
   font-size: 0.85rem;
   color: var(--ink); /* Changed from var(--ink-3) to var(--ink) for better contrast */
   margin-bottom: 0.5rem;
@@ -1751,23 +1695,23 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transition-delay: calc(var(--i) * 160ms);
 }
 
-.fs-ms-feature-points li::before {
+.ps-ms-feature-points li::before {
   content: '→';
   position: absolute;
   left: 0;
   color: var(--c);
 }
 
-.fs-ms-feature-card:hover .fs-ms-feature-points li {
+.ps-ms-feature-card:hover .ps-ms-feature-points li {
   color: var(--ink);
-  animation: fs-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ps-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--i) * 160ms);
 }
 
 /* =====================================================================
    FOLDER GRID
    ===================================================================== */
-.fs-folder-grid {
+.ps-folder-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem 1.5rem;
@@ -1776,18 +1720,18 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 @media (min-width: 768px) {
-  .fs-folder-grid {
+  .ps-folder-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .fs-folder-grid {
+  .ps-folder-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.fs-folder-card {
+.ps-folder-card {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1795,7 +1739,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   height: 100%;
 }
 
-.fs-folder-tab {
+.ps-folder-tab {
   background: var(--c, var(--accent));
   color: #fff;
   font-size: 0.8rem;
@@ -1806,11 +1750,10 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   border-radius: 12px 12px 0 0;
   position: relative;
   z-index: 2;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
   margin-bottom: -1px;
 }
 
-.fs-folder-tab::after {
+.ps-folder-tab::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -1822,31 +1765,27 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   z-index: 3;
 }
 
-.fs-folder-body {
+.ps-folder-body {
   width: 100%;
   flex-grow: 1;
   background: var(--surface);
   border-radius: 32px;
   padding: 2.5rem 1.5rem;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 
-    var(--rim), 
-    0 8px 24px rgba(9, 9, 11, 0.06), 
-    inset 0 2px 4px rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   gap: 1.5rem;
   position: relative;
   z-index: 1;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.fs-folder-card:hover .fs-folder-body {
+.ps-folder-card:hover .ps-folder-body {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--c, var(--accent)) 30%, transparent);
 }
 
-.fs-folder-icon {
+.ps-folder-icon {
   flex-shrink: 0;
   color: var(--c, var(--accent));
   display: flex;
@@ -1854,7 +1793,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   justify-content: center;
 }
 
-.fs-folder-divider {
+.ps-folder-divider {
   width: 1px;
   align-self: stretch;
   background: var(--edge);
@@ -1862,15 +1801,15 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transition: background 0.3s ease;
 }
 
-.fs-folder-card:hover .fs-folder-divider {
+.ps-folder-card:hover .ps-folder-divider {
   background: color-mix(in srgb, var(--c, var(--accent)) 30%, transparent);
 }
 
-.fs-folder-text {
+.ps-folder-text {
   flex-grow: 1;
 }
 
-.fs-folder-points {
+.ps-folder-points {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1879,7 +1818,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   gap: 12px;
 }
 
-.fs-folder-points li {
+.ps-folder-points li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -1890,7 +1829,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transition-delay: calc(var(--i) * 160ms);
 }
 
-.fs-folder-bullet {
+.ps-folder-bullet {
   flex-shrink: 0;
   margin-top: 6px;
   width: 6px;
@@ -1900,17 +1839,17 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transition: background-color 0.4s ease;
 }
 
-.fs-folder-card:hover .fs-folder-points li {
+.ps-folder-card:hover .ps-folder-points li {
   color: var(--ink);
-  animation: fs-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ps-point-dart 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--i) * 160ms);
 }
 
-.fs-folder-card:hover .fs-folder-bullet {
+.ps-folder-card:hover .ps-folder-bullet {
   background-color: var(--c, var(--accent));
 }
 
-@keyframes fs-point-dart {
+@keyframes ps-point-dart {
   from { transform: translateX(0); }
   to { transform: translateX(10px); }
 }
@@ -1918,12 +1857,12 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 /* =====================================================================
    SECURITY 5-CARD GRID
    ===================================================================== */
-.fs-sec-new {
+.ps-sec-new {
   padding: 6rem 0;
   background: var(--bg);
 }
 
-.fs-sec-grid {
+.ps-sec-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -1931,41 +1870,40 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 @media (min-width: 768px) {
-  .fs-sec-grid {
+  .ps-sec-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.fs-sec-card {
+.ps-sec-card {
   background: var(--surface);
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.fs-sec-card:hover {
+.ps-sec-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.08);
 }
 
 /* Bottom row: 2 cards spanning wider */
 @media (min-width: 768px) {
-  .fs-sec-card:nth-child(4) {
+  .ps-sec-card:nth-child(4) {
     grid-column: 1 / 2;
   }
-  .fs-sec-card:nth-child(5) {
+  .ps-sec-card:nth-child(5) {
     grid-column: 2 / 4;
   }
 }
 
-.fs-sec-card-text {
+.ps-sec-card-text {
   padding: 2rem 1.75rem 1.25rem;
 }
 
-.fs-sec-card-text h3 {
+.ps-sec-card-text h3 {
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--ink);
@@ -1973,14 +1911,14 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   letter-spacing: -0.01em;
 }
 
-.fs-sec-card-text p {
+.ps-sec-card-text p {
   font-size: 0.9rem;
   color: var(--ink-2);
   line-height: 1.5;
   margin: 0;
 }
 
-.fs-sec-visual {
+.ps-sec-visual {
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -1990,12 +1928,12 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   min-height: 180px;
 }
 
-.fs-sec-svg {
+.ps-sec-svg {
   width: 100%;
   height: auto;
 }
 
-.fs-sec-visual-icon {
+.ps-sec-visual-icon {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2004,7 +1942,6 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   height: 64px;
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2013,7 +1950,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 /* =====================================================================
    STATS + QUOTES LAYOUT (WhyEmvive)
    ===================================================================== */
-.fs-stats-quotes {
+.ps-stats-quotes {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
@@ -2021,7 +1958,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 @media (min-width: 992px) {
-  .fs-stats-quotes {
+  .ps-stats-quotes {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: flex-start;
@@ -2040,7 +1977,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    its track left figure 1 and figure 3 on different left edges because
    "To close" and "Entities consolidated" are different widths. Content
    columns are shared down the grid, so those edges now line up. */
-.fs-stats-grid {
+.ps-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, auto);
   justify-content: space-around;
@@ -2048,13 +1985,13 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   padding-inline: var(--close-pad);
 }
 
-.fs-stat-item {
+.ps-stat-item {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.fs-stat-icon {
+.ps-stat-icon {
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -2066,7 +2003,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   flex-shrink: 0;
 }
 
-.fs-stat-value b {
+.ps-stat-value b {
   font-size: 2rem;
   font-weight: 700;
   color: var(--ink);
@@ -2075,12 +2012,12 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   letter-spacing: -0.02em;
 }
 
-.fs-stat-value b span {
+.ps-stat-value b span {
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-.fs-stat-value p {
+.ps-stat-value p {
   font-size: 0.9rem;
   color: var(--ink-2);
   margin: 0.25rem 0 0;
@@ -2093,14 +2030,14 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    edge to edge, and the three quotes centred on the photograph.
 
    ONE definition of each rule below. There used to be three
-   `.fs-quotes-overlay` blocks at equal specificity, and because the
+   `.ps-quotes-overlay` blocks at equal specificity, and because the
    cascade merges declarations rather than replacing whole rules, the
    overlay ended up holding `top: 50%` from the first and `bottom: 30px`
    from the last — a definite height of half the panel, which is what
    pushed the third card out below the photograph. Edit this block
    rather than adding another one after it.
    --------------------------------------------------------------- */
-.fs-why-panel {
+.ps-why-panel {
   /* There is no shared --stats-h any more. Holding the quote stack to the
      stats band's height meant three cards inside ~145px, i.e. 43px each,
      which is why the type had to drop to 0.7rem and the cards read as an
@@ -2122,11 +2059,10 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   border-radius: 22px;
   border: 1px solid var(--edge);
   background: #eef0f2;
-  box-shadow: var(--rim), var(--lift-1);
   overflow: hidden;
 }
 
-.fs-why-panel-left {
+.ps-why-panel-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2137,9 +2073,9 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 /* the photograph is taken out of flow, so it contributes no height of
    its own and the panel is exactly as tall as the column on the left —
    the two halves always end level, whatever the copy does */
-.fs-why-panel-photo { position: relative; }
+.ps-why-panel-photo { position: relative; }
 
-.fs-quotes-bg-img {
+.ps-quotes-bg-img {
   position: absolute;
   inset: 0;
   display: block;
@@ -2154,7 +2090,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    close card — no collision to design around, which is what lets them be
    a comfortable size. `grid-auto-rows: 1fr` keeps all three one height,
    and the height is now whatever the text needs. */
-.fs-quotes-overlay {
+.ps-quotes-overlay {
   position: absolute;
   top: 50%;
   bottom: auto;
@@ -2175,7 +2111,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    so the cards now look like they come from this product. Being
    translucent, they also let the photograph through instead of blanking
    out the middle of it. The mark sits beside the text, not above it. */
-.fs-quote-card {
+.ps-quote-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
@@ -2186,13 +2122,10 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   background: rgba(10, 22, 18, 0.78);
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 18px 34px -20px rgba(5, 13, 9, 0.85);
 }
 
 /* the glyph on a tinted tile, so it reads as part of the card */
-.fs-quote-mark {
+.ps-quote-mark {
   display: grid;
   place-items: center;
   width: 28px;
@@ -2208,7 +2141,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 
 /* not justified — three short lines in a narrow card turn justification
    into rivers of white space */
-.fs-quote-card p {
+.ps-quote-card p {
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
@@ -2221,7 +2154,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    is a single column running the full width: the close card across the
    top, the four figures in one line of four beneath it.
    --------------------------------------------------------------- */
-.fs-why-panel-wide {
+.ps-why-panel-wide {
   grid-template-columns: minmax(0, 1fr);
   /* no gap: the figures carry their own space above and below, so the
      two can be balanced against each other in one place */
@@ -2232,7 +2165,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 /* The space below is the row's own padding plus the panel's, so it is
    written as (--stats-air − --panel-pad) to come out equal to the space
    above rather than looking equal by coincidence. */
-.fs-stats-row {
+.ps-stats-row {
   --stats-air: clamp(1.5rem, 2.4vw, 2.25rem);
 
   align-content: center;
@@ -2250,7 +2183,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    remainder evenly — and if the row ever runs out of room the tracks
    shrink instead of overflowing. */
 @media (min-width: 768px) {
-  .fs-stats-row {
+  .ps-stats-row {
     grid-template-columns: repeat(4, auto);
     justify-content: space-around;
   }
@@ -2258,37 +2191,37 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 
 /* the icon centres against the figure beside it rather than hanging from
    its cap height, which is what made the row look untidy */
-.fs-stats-row .fs-stat-item { align-items: center; }
+.ps-stats-row .ps-stat-item { align-items: center; }
 
-/* The two variants sit back to back, and each `.fs-why` paints its own
+/* The two variants sit back to back, and each `.ps-why` paints its own
    dot grid and gradient ground — stacked, the second one's ground starts
    again at #f7f9fc where the first ended at #ffffff and draws a visible
    step across the page. The replica goes without, so the pair reads as
    one continuous band, and its top padding comes off since the section
    above it already ends in padding. */
-.fs-why-wide { padding-top: 0; }
-.fs-why-wide::before,
-.fs-why-wide::after { display: none; }
+.ps-why-wide { padding-top: 0; }
+.ps-why-wide::before,
+.ps-why-wide::after { display: none; }
 
 /* stacked: grey block, photograph, then the quotes underneath both.
    The stats band and the stack are no longer side by side, so neither
    needs the shared height. */
 @media (max-width: 991px) {
-  .fs-why-panel { grid-template-columns: minmax(0, 1fr); }
-  .fs-why-panel-photo { min-height: 300px; }
-  .fs-quotes-overlay {
+  .ps-why-panel { grid-template-columns: minmax(0, 1fr); }
+  .ps-why-panel-photo { min-height: 300px; }
+  .ps-quotes-overlay {
     position: static;
     min-height: 0;
     gap: 0.6rem;
     padding: clamp(1.25rem, 4vw, 1.75rem);
   }
-  .fs-quote-card { padding: 0.8rem 1.05rem; }
-  .fs-quote-card p { font-size: 0.8rem; }
-  .fs-stats-grid { height: auto; }
+  .ps-quote-card { padding: 0.8rem 1.05rem; }
+  .ps-quote-card p { font-size: 0.8rem; }
+  .ps-stats-grid { height: auto; }
 }
 
 /* Custom UI Illustrations for Security Cards */
-.fs-sec-card-img {
+.ps-sec-card-img {
   padding: 0 !important;
   background: #f8fafc;
   display: flex;
@@ -2299,29 +2232,28 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 /* 1. Box */
-.fs-ill-box {
+.ps-ill-box {
   width: 140px;
   height: 140px;
   position: relative;
   transform: perspective(600px) rotateX(60deg) rotateZ(-45deg);
   transform-style: preserve-3d;
 }
-.fs-ill-box-inner {
+.ps-ill-box-inner {
   width: 100%;
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
 }
-.fs-ill-box-top {
+.ps-ill-box-top {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #4f46e5;
+  background: color-mix(in srgb, var(--accent) 88%, #fff);
   transform: translateZ(80px);
   border-radius: 12px;
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.4);
 }
-.fs-ill-box-front {
+.ps-ill-box-front {
   position: absolute;
   width: 100%;
   height: 80px;
@@ -2334,7 +2266,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   justify-content: center;
   padding-bottom: 10px;
 }
-.fs-ill-box-front span {
+.ps-ill-box-front span {
   font-family: monospace;
   font-size: 14px;
   font-weight: bold;
@@ -2345,17 +2277,16 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 /* 2. Icons */
-.fs-ill-icons {
+.ps-ill-icons {
   position: relative;
   width: 200px;
   height: 160px;
 }
-.fs-ill-icon {
+.ps-ill-icon {
   width: 48px;
   height: 48px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2363,9 +2294,9 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   color: #10b981;
 }
 .i-whatsapp { top: 20px; left: 10px; color: #22c55e; }
-.i-linkedin { top: 40px; left: 80px; color: #0ea5e9; }
+.i-linkedin { top: 40px; left: 80px; color: color-mix(in srgb, var(--accent) 78%, #fff); }
 .i-fb { top: 10px; right: 20px; color: #3b5998; width: 40px; height: 40px; }
-.fs-ill-box-base {
+.ps-ill-box-base {
   position: absolute;
   bottom: -20px;
   left: 30px;
@@ -2373,60 +2304,57 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   height: 80px;
   background: #f1f5f9;
   border-radius: 16px;
-  box-shadow: inset 0 -10px 20px rgba(0,0,0,0.05);
 }
 .i-x { bottom: 10px; left: 20px; color: #000; width: 40px; height: 40px; }
 .i-mail { bottom: 30px; left: 70px; color: #ef4444; }
-.i-telegram { bottom: 10px; right: 20px; color: #0284c7; width: 40px; height: 40px; }
+.i-telegram { bottom: 10px; right: 20px; color: color-mix(in srgb, var(--accent) 88%, #fff); width: 40px; height: 40px; }
 
 /* 3. Dashboard */
-.fs-ill-dash {
+.ps-ill-dash {
   width: 240px;
   height: 140px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08), inset 0 0 0 2px #e2e8f0;
   padding: 20px;
   transform: perspective(800px) rotateY(-15deg) rotateX(10deg);
 }
-.fs-ill-dash-ui {
+.ps-ill-dash-ui {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.fs-ill-dash-row {
+.ps-ill-dash-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.fs-ill-dash-row span:first-child { width: 60px; height: 8px; background: #cbd5e1; border-radius: 4px; }
-.fs-ill-dash-row span:last-child { width: 100px; height: 8px; background: #f1f5f9; border-radius: 4px; }
+.ps-ill-dash-row span:first-child { width: 60px; height: 8px; background: #cbd5e1; border-radius: 4px; }
+.ps-ill-dash-row span:last-child { width: 100px; height: 8px; background: #f1f5f9; border-radius: 4px; }
 
 /* 4. CRM */
-.fs-ill-crm {
+.ps-ill-crm {
   width: 260px;
   height: 150px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.fs-ill-crm-top { display: flex; gap: 10px; }
-.fs-ill-crm-search { width: 100px; height: 24px; border: 1px solid #e2e8f0; border-radius: 6px; }
-.fs-ill-crm-filter { width: 60px; height: 24px; border: 1px solid #e2e8f0; border-radius: 6px; }
-.fs-ill-crm-cards { display: flex; gap: 10px; }
-.fs-ill-crm-card { flex: 1; height: 60px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; }
+.ps-ill-crm-top { display: flex; gap: 10px; }
+.ps-ill-crm-search { width: 100px; height: 24px; border: 1px solid #e2e8f0; border-radius: 6px; }
+.ps-ill-crm-filter { width: 60px; height: 24px; border: 1px solid #e2e8f0; border-radius: 6px; }
+.ps-ill-crm-cards { display: flex; gap: 10px; }
+.ps-ill-crm-card { flex: 1; height: 60px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; }
 
 /* 5. Folders */
-.fs-ill-folders {
+.ps-ill-folders {
   position: relative;
   width: 180px;
   height: 140px;
 }
-.fs-ill-folder {
+.ps-ill-folder {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2434,26 +2362,25 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   height: 100px;
   border-radius: 12px 12px 0 0;
   background: #fff;
-  box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
 }
 .f-back { transform: scale(0.9) translateY(-20px); background: #f1f5f9; }
 .f-mid { transform: scale(0.95) translateY(-10px); background: #e2e8f0; }
 .f-front { 
-  background: #4f46e5;
+  background: color-mix(in srgb, var(--accent) 88%, #fff);
   padding: 20px;
 }
-.fs-ill-folder-line { height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; margin-bottom: 10px; }
+.ps-ill-folder-line { height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; margin-bottom: 10px; }
 .l-1 { width: 60%; }
 .l-2 { width: 80%; }
 
 /* Clean layout for Security Cards */
 @media (min-width: 768px) {
-  .fs-sec-card.span-2 {
+  .ps-sec-card.span-2 {
     grid-column: span 2;
   }
 }
 
-.fs-sec-card-graphic {
+.ps-sec-card-graphic {
   flex-grow: 1;
   display: flex;
   align-items: flex-end;
@@ -2466,24 +2393,23 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   overflow: hidden;
 }
 
-.fs-sec-card-graphic img {
+.ps-sec-card-graphic img {
   width: 90%;
   height: auto;
   object-fit: cover;
   border-radius: 12px 12px 0 0;
   display: block;
   transform: translateY(15px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-.fs-sec-card.span-2 .fs-sec-card-graphic img {
+.ps-sec-card.span-2 .ps-sec-card-graphic img {
   width: 70%;
 }
 
 /* =====================================================================
    CLEAN SECURITY GRID (MATCHING REFERENCE EXACTLY)
    ===================================================================== */
-.fs-sec-grid-6 {
+.ps-sec-grid-6 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -2491,26 +2417,25 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 @media (min-width: 992px) {
-  .fs-sec-grid-6 {
+  .ps-sec-grid-6 {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
-.fs-sec-card-clean {
+.ps-sec-card-clean {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.fs-sec-card-text-clean {
+.ps-sec-card-text-clean {
   padding: 24px 24px 0 24px;
 }
 
-.fs-sec-card-text-clean h3 {
+.ps-sec-card-text-clean h3 {
   font-size: 1.125rem;
   font-weight: 600;
   color: #111827;
@@ -2518,14 +2443,14 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   letter-spacing: -0.01em;
 }
 
-.fs-sec-card-text-clean p {
+.ps-sec-card-text-clean p {
   font-size: 0.875rem;
   color: #6b7280;
   line-height: 1.5;
   margin: 0;
 }
 
-.fs-sec-card-graphic-clean {
+.ps-sec-card-graphic-clean {
   flex-grow: 1;
   display: flex;
   align-items: flex-end;
@@ -2544,33 +2469,33 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    between the close card and the stats, and 0.9rem of air on every
    close row. All pulled in; nothing removed.
    --------------------------------------------------------------- */
-.fs-why { padding: clamp(3rem, 4.5vw, 4.75rem) 0; }
-.fs-why .fs-head { margin-bottom: clamp(1.5rem, 2.4vw, 2.25rem); }
-.fs-stat-icon { width: 40px; height: 40px; }
-.fs-stat-value b { font-size: 1.6rem; }
-.fs-stat-value b span { font-size: 1.05rem; }
-.fs-stat-value p { font-size: 0.84rem; }
+.ps-why { padding: clamp(3rem, 4.5vw, 4.75rem) 0; }
+.ps-why .ps-head { margin-bottom: clamp(1.5rem, 2.4vw, 2.25rem); }
+.ps-stat-icon { width: 40px; height: 40px; }
+.ps-stat-value b { font-size: 1.6rem; }
+.ps-stat-value b span { font-size: 1.05rem; }
+.ps-stat-value p { font-size: 0.84rem; }
 
 /* --- the progress card --- */
 /* one source for the card's padding, since the figures below are inset
    by the same value to line up with its text — see --close-pad */
-.fs-close { padding: var(--close-pad); }
-.fs-close-top { padding-bottom: 0.55rem; margin-bottom: 0.65rem; }
-.fs-close-ruler { margin-bottom: 0.25rem; }
-.fs-close-row { padding: 0.28rem 0; }
-.fs-close-track { height: 20px; }
-.fs-close-label b { font-size: 0.92rem; }
+.ps-close { padding: var(--close-pad); }
+.ps-close-top { padding-bottom: 0.55rem; margin-bottom: 0.65rem; }
+.ps-close-ruler { margin-bottom: 0.25rem; }
+.ps-close-row { padding: 0.28rem 0; }
+.ps-close-track { height: 20px; }
+.ps-close-label b { font-size: 0.92rem; }
 /* one line each, not two — see the wider label column below */
-.fs-close-label em { font-size: 0.76rem; line-height: 1.35; }
-.fs-close-days b { font-size: 1.2rem; }
-.fs-close-delta { margin-top: 0.3rem; }
-.fs-close-gap { height: 12px; }
-.fs-close-claim {
+.ps-close-label em { font-size: 0.76rem; line-height: 1.35; }
+.ps-close-days b { font-size: 1.2rem; }
+.ps-close-delta { margin-top: 0.3rem; }
+.ps-close-gap { height: 12px; }
+.ps-close-claim {
   margin-top: 0.5rem;
   padding: 0.55rem 0.9rem;
   font-size: 0.86rem;
 }
-.fs-close-claim b { font-size: clamp(1.2rem, 1.6vw, 1.4rem); }
+.ps-close-claim b { font-size: clamp(1.2rem, 1.6vw, 1.4rem); }
 
 /* The label column is WIDER than it looks like it should be, on purpose:
    at 13rem both notes wrapped to a second line, and two extra text lines
@@ -2579,9 +2504,9 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    the 860px breakpoint so the single-column stack below it survives —
    this rule sits after that media query and would otherwise win. */
 @media (min-width: 861px) {
-  .fs-close-ruler,
-  .fs-close-row,
-  .fs-close-delta {
+  .ps-close-ruler,
+  .ps-close-row,
+  .ps-close-delta {
     grid-template-columns: 15.5rem minmax(0, 1fr) 4.5rem;
     gap: 1rem;
   }
@@ -2594,7 +2519,7 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    rather than a stretched one. They bleed a little past the card's
    bottom edge, which is the look the mockups they replace had.
    --------------------------------------------------------------- */
-.fs-sec-dia {
+.ps-sec-dia {
   display: block;
   width: 100%;
   max-width: 272px;
@@ -2602,10 +2527,10 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
   transform: translateY(6px);
 }
 
-.fs-sec-dia[data-span="3"] { max-width: 336px; }
+.ps-sec-dia[data-span="3"] { max-width: 336px; }
 
 @media (max-width: 991px) {
-  .fs-sec-dia { max-width: 300px; }
+  .ps-sec-dia { max-width: 300px; }
 }
 
 /* =====================================================================
@@ -2621,22 +2546,22 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
    hero sits on the page's own ground and nothing else. The hero keeps
    what it has — it is the one place a background is doing work.
    ===================================================================== */
-.fs-caps::before,
-.fs-how::before,
-.fs-auto::before,
-.fs-why::before,
-.fs-caps::after,
-.fs-how::after,
-.fs-auto::after,
-.fs-why::after {
+.ps-caps::before,
+.ps-how::before,
+.ps-auto::before,
+.ps-why::before,
+.ps-caps::after,
+.ps-how::after,
+.ps-auto::after,
+.ps-why::after {
   content: none;
 }
 
-.fs-caps,
-.fs-how,
-.fs-auto,
-.fs-why,
-.fs-sec-new,
-.fs-int {
+.ps-caps,
+.ps-how,
+.ps-auto,
+.ps-why,
+.ps-sec-new,
+.ps-int {
   background: none;
 }

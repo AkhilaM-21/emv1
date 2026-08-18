@@ -3,10 +3,14 @@ import {
   Lightbulb, Blocks, Plug, Workflow, FlaskConical, Rocket, Check, ArrowRight,
   Puzzle, Clock, Unplug, Wrench, Layers, Database, PanelsTopLeft, ShieldCheck,
   GitBranch, RotateCcw, Globe, Gauge, Server, Users, Boxes, Timer, Activity,
-  Code2, Building2, LayoutGrid, Sparkles, Zap, History, Webhook, HelpCircle,
+  Code2, Building2, LayoutGrid, Sparkles, Zap, History, Webhook, HelpCircle, ChartPie,
 } from 'lucide-react';
 import { motion, Reveal, MaskText, EASE } from '../shared/motion';
 import { Kicker, useAutoStep, AnimatePresence } from './PlatformKit';
+import {
+  SectionHead, FeatureGrid, AccordionShowcase, SplitFeature,
+  FolderGrid, OfferingsCard, ImpactPanel,
+} from '../shared/sections';
 import './PlatformSections.css';
 
 /* =====================================================================
@@ -70,23 +74,12 @@ export const PlatformOverview = () => {
   return (
     <section className="pl-over" id="overview" ref={ref} {...bind}>
       <div className="pl-inner">
-        <div className="pl-over-head">
-          <Reveal><Kicker>Platform overview</Kicker></Reveal>
-          <MaskText
-            text="One platform for building"
-            accent="business applications."
-            as="h2"
-            className="pl-h2"
-          />
-          <Reveal delay={0.16} y={14}>
-            <p className="pl-lede">
-              Studio builds the application. Flow builds the process behind it. Both sit
-              on the data your company already runs on, and both ship through the same
-              governed pipeline — so what a department builds on a Friday afternoon is
-              still something IT is happy to own on Monday.
-            </p>
-          </Reveal>
-        </div>
+        <SectionHead
+          label="Platform overview"
+          title="One platform for building"
+          accent="business applications."
+          lede="Studio builds the application. Flow builds the process behind it. Both sit on the data your company already runs on, and both ship through the same governed pipeline — so what a department builds on a Friday afternoon is still something IT is happy to own on Monday."
+        />
 
         {/* the spine */}
         <div className="pl-spine">
@@ -182,36 +175,21 @@ const WHY = [
 export const WhyBuild = () => (
   <section className="pl-why" id="why">
     <div className="pl-inner">
-      <div className="pl-why-head">
-        <Reveal><Kicker>Why businesses build with Emvive</Kicker></Reveal>
-        <MaskText text="Four reasons internal software" accent="never ships." as="h2" className="pl-h2" />
-        <Reveal delay={0.16} y={14}>
-          <p className="pl-lede">
-            Every company has a list of applications it needs and cannot justify building.
-            These are the four things that keep them on the list.
-          </p>
-        </Reveal>
-      </div>
+      <SectionHead
+        label="Why businesses build with Emvive"
+        title="Four reasons internal software"
+        accent="never ships."
+        lede="Every company has a list of applications it needs and cannot justify building. These are the four things that keep them on the list."
+      />
 
-      <div className="pl-why-grid">
-        {WHY.map((w, i) => (
-          <Reveal className="pl-why-cell" key={w.k} delay={i * 0.06}>
-            <div className="pl-why-top">
-              <span className="pl-why-ic"><w.icon size={16} strokeWidth={1.8} /></span>
-              <b>{w.k}</b>
-            </div>
-
-            <p className="pl-why-old"><span>Today</span>{w.old}</p>
-
-            <div className="pl-why-now">
-              <ArrowRight size={14} strokeWidth={2} />
-              <p>{w.now}</p>
-            </div>
-
-            <span className="pl-why-stat">{w.stat}</span>
-          </Reveal>
-        ))}
-      </div>
+      {/* the today/instead pair reads as one line of prose in the shared
+          card, with the number it moves as the note under it */}
+      <FeatureGrid
+        cols={4}
+        items={WHY.map((w) => ({
+          icon: w.icon, k: w.k, t: w.old, d: w.now, note: w.stat,
+        }))}
+      />
     </div>
   </section>
 );
@@ -229,17 +207,12 @@ const PIPELINE = [
 export const Deployment = () => (
   <section className="pl-deploy" id="deployment">
     <div className="pl-inner">
-      <div className="pl-deploy-head">
-        <Reveal><Kicker>Deployment &amp; scalability</Kicker></Reveal>
-        <MaskText text="Shipped on Friday." accent="Still supportable on Monday." as="h2" className="pl-h2" />
-        <Reveal delay={0.16} y={14}>
-          <p className="pl-lede">
-            Nothing built here reaches production by being copied into it. Every
-            application moves through the same four environments as the rest of your
-            estate, with the same approvals and the same way back.
-          </p>
-        </Reveal>
-      </div>
+      <SectionHead
+        label="Deployment & scalability"
+        title="Shipped on Friday."
+        accent="Still supportable on Monday."
+        lede="Nothing built here reaches production by being copied into it. Every application moves through the same four environments as the rest of your estate, with the same approvals and the same way back."
+      />
 
       <div className="pl-pipe">
         {PIPELINE.map((p, i) => (
@@ -259,22 +232,17 @@ export const Deployment = () => (
         ))}
       </div>
 
-      <div className="pl-deploy-grid">
-        {[
-          [GitBranch, 'Versioned workspaces', 'Every change is a version with an author, a diff and a reason. Compare any two releases.'],
-          [RotateCcw, 'Rollback in one click', 'Promote forward or fall back to the previous release without touching the data underneath.'],
-          [Globe, 'Regional residency', 'Pin a workspace to Saudi Arabia, the UAE or India — including its backups.'],
-          [Gauge, 'Autoscaling', 'A portal that goes from forty users to four thousand does not need a project to survive it.'],
-          [Server, 'Private cloud', 'Deployed into your own tenancy where shared infrastructure is ruled out.'],
-          [Timer, 'Zero-downtime releases', 'Users on the application when you publish stay on it.'],
-        ].map(([Ic, t, d], i) => (
-          <Reveal className="pl-dep-cell" key={t} delay={i * 0.05}>
-            <Ic size={16} strokeWidth={1.8} />
-            <h3>{t}</h3>
-            <p>{d}</p>
-          </Reveal>
-        ))}
-      </div>
+      <FeatureGrid
+        cols={3}
+        items={[
+          { icon: GitBranch, t: 'Versioned workspaces', d: 'Every change is a version with an author, a diff and a reason. Compare any two releases.' },
+          { icon: RotateCcw, t: 'Rollback in one click', d: 'Promote forward or fall back to the previous release without touching the data underneath.' },
+          { icon: Globe, t: 'Regional residency', d: 'Pin a workspace to Saudi Arabia, the UAE or India — including its backups.' },
+          { icon: Gauge, t: 'Autoscaling', d: 'A portal that goes from forty users to four thousand does not need a project to survive it.' },
+          { icon: Server, t: 'Private cloud', d: 'Deployed into your own tenancy where shared infrastructure is ruled out.' },
+          { icon: Timer, t: 'Zero-downtime releases', d: 'Users on the application when you publish stay on it.' },
+        ]}
+      />
 
       <Reveal className="pl-scale" delay={0.1}>
         {[
@@ -286,6 +254,195 @@ export const Deployment = () => (
           <div key={l}><b>{v}</b><span>{l}</span></div>
         ))}
       </Reveal>
+    </div>
+  </section>
+);
+
+/* =====================================================================
+   THE FINANCE SECTIONS, WITH PLATFORM CONTENT
+
+   These replace the page's own signature blocks — Studio, Flow, the
+   integrations ring, the galleries, the developer and AI sections.
+   Every one is now the same component Finance runs, fed this page's
+   content. The old components remain in the repo; the page simply
+   stops importing them, so restoring any is one line in Platform.jsx.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------
+   THE PRODUCT — the three capability groups and what is inside each.
+
+   This is the product's own structure, not a narrative: App Builder,
+   Workflow & Automation, Reporting & Analysis. The accordion and the
+   folder grid below are both driven from it, so the two sections can
+   never list different things.
+   --------------------------------------------------------------- */
+const CAPS = [
+  {
+    k: 'App Builder', icon: Blocks, c: '#6c4cf1',
+    img: '/images/capture_step.jpg',
+    body: 'The screens, the data behind them and the documents they produce, assembled visually. What you place is what ships — there is no rebuild between the prototype and the application.',
+    points: [
+      'Form builder — drag and drop',
+      'Object builder — tables and relationships',
+      'Document sequence designer',
+      'Navigation designer',
+      'Functions designer — code where you want it',
+    ],
+  },
+  {
+    k: 'Workflow & Automation', icon: Workflow, c: '#2563eb',
+    img: '/images/automate_step.jpg',
+    body: 'The process that sits behind the screen: what happens on submit, who has to approve it, what runs overnight and what calls out to the systems you already have.',
+    points: [
+      'Workflow',
+      'Flow designer',
+      'Approvals with delegation',
+      'Scheduled workflows',
+      'APIs and webhooks',
+    ],
+  },
+  {
+    k: 'Reporting & Analysis', icon: ChartPie, c: '#0d9488',
+    img: '/images/post_step.jpg',
+    body: 'Reports and dashboards built on the same objects the applications write to, so a figure on a board pack and a figure on a screen are the same record.',
+    points: [
+      'Report builder on live objects',
+      'Dashboards with drill-down',
+      'Scheduled distribution',
+      'Export to spreadsheet and PDF',
+      'Row-level access inherited',
+    ],
+  },
+];
+
+export const PlatformStages = () => (
+  <section className="pl-why" id="stages">
+    <div className="pl-inner">
+      <SectionHead
+        label="What it covers"
+        title="Three things to build with."
+        accent="One object model underneath."
+        lede="The application, the process behind it and the reporting on top of it — all writing to the same objects, so what one of them knows, all of them know."
+      />
+
+      <AccordionShowcase items={CAPS} />
+    </div>
+  </section>
+);
+
+export const PlatformJourney = () => (
+  <section className="pl-deploy" id="journey">
+    <div className="pl-inner">
+      <SectionHead
+        label="How it works"
+        title="Built by the team that owns it,"
+        accent="governed like everything else."
+        lede="The people who own the process build the application, and it still reaches production through the same environments, approvals and rollback as the rest of your estate."
+      />
+
+      <SplitFeature
+        image="/images/control_step.jpg"
+        alt="Applications built on Emvive Platform"
+        title="Nine days, brief to live"
+        body="One workspace where the screen, the process and the data are the same object."
+        cols={2}
+        items={[
+          { icon: PanelsTopLeft, k: 'Studio', t: 'Screens, data and permissions, assembled visually', d: 'What you place is what ships. There is no rebuild between the prototype and the application.' },
+          { icon: Workflow, k: 'Flow', t: 'Triggers, approvals and actions on one canvas', d: 'The process lives beside the screen it belongs to rather than in a separate automation tool.' },
+          { icon: Database, k: 'One object model', t: 'Bound to the records you already keep', d: 'Applications read the ERP objects finance and operations are already posting to, with access inherited rather than re-granted.' },
+          { icon: ShieldCheck, k: 'One governance model', t: 'Identity, audit and residency, once', d: 'The same controls cover everything built here, so IT reviews the platform rather than every application on it.' },
+        ]}
+      />
+    </div>
+  </section>
+);
+
+/* 02b — the folder grid, Finance's second capabilities section */
+/* the same three groups as the accordion above, laid out as folders so
+   everything inside each one is readable at once rather than one at a
+   time — both read from CAPS */
+export const PlatformModules = () => (
+  <section className="pl-why" id="modules">
+    <div className="pl-inner">
+      <SectionHead
+        label="Product & capabilities"
+        title="Everything in the builder,"
+        accent="on one page."
+        lede="Nothing here is a separate tool with its own database. The builder, the workflow engine and the reporting all read and write the same objects."
+      />
+
+      <FolderGrid items={CAPS} />
+    </div>
+  </section>
+);
+
+/* 04 — the offerings card, Finance's automation section */
+export const PlatformAutomation = () => (
+  <section className="pl-why" id="automation">
+    <div className="pl-inner">
+      <SectionHead
+        label="Automation"
+        title="The routine work stops"
+        accent="reaching a person."
+        lede="Flow runs against live records on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
+      />
+
+      <OfferingsCard
+        title="Our Offerings"
+        note="We help enterprises pursue a path of smart transformation"
+        image="/images/automation_abstract.png"
+        tabs={[
+          {
+            label: 'Process automation',
+            items: ['Approval routing by value', 'Scheduled record jobs', 'Webhook triggers', 'Escalation on no response'],
+          },
+          {
+            label: 'Integration & data',
+            items: ['ERP object sync', 'API calls out and back', 'Bulk import validation', 'Event push on change'],
+          },
+        ]}
+      />
+    </div>
+  </section>
+);
+
+/* 07 — the impact panel, Finance's "what changes in the first year" */
+export const PlatformImpact = () => (
+  <section className="pl-deploy" id="impact">
+    <div className="pl-inner">
+      <SectionHead
+        label="Why Emvive · business impact"
+        title="What changes in"
+        accent="the first year."
+        lede="One real group — thirty-eight thousand users, twelve hundred applications — twelve months after go-live. Measured from brief to first live user."
+      />
+
+      <ImpactPanel
+        bars={{
+          k: 'BRIEF TO FIRST LIVE USER',
+          sub: 'Working days from requirement to production',
+          scale: 120,
+          unit: ' days',
+          rows: [
+            { k: 'Custom development', note: 'A quote in months and a backlog in quarters', v: 96, tone: 'was' },
+            { k: 'With Emvive', note: 'Built by the team that owns the process', v: 9, tone: 'now' },
+          ],
+          claim: { v: '−87 days', label: 'off every application, not just the first' },
+        }}
+        figures={[
+          { icon: Timer, value: '9', suffix: ' days', label: 'Brief to live' },
+          { icon: Boxes, value: '1,240', suffix: '+', label: 'Applications shipped' },
+          { icon: Users, value: '38,000', suffix: '', label: 'People using them' },
+          { icon: Activity, value: '99.98', suffix: '%', label: 'Platform availability' },
+        ]}
+        photo="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=900"
+        alt="A team building on Emvive Platform"
+        quotes={[
+          'The team that owns the process builds it, and changes it the afternoon the rule changes.',
+          'Applications bind directly to the ERP objects finance and operations are already posting to — no nightly reconciliation.',
+          'Versioned workspaces, environment promotion and an audit trail of every change, so IT reviews the platform rather than every app on it.',
+        ]}
+      />
     </div>
   </section>
 );
@@ -340,26 +497,25 @@ export const PLATFORM_CONTACT = {
   lede:
     'Pick the process your teams complain about most. In a two-hour session we will model it, build the screens, wire the workflow and hand you the URL — and you keep whatever we build, whether you go ahead or not.',
   cta: 'Talk to Platform Team',
+  panel: {
+    title: 'What to expect',
+    note: 'A two-hour build session, not a slide about low-code.',
+  },
   aside: [
     { icon: Blocks, t: 'You watch it get built', d: 'Not a slide about low-code. A screen share of your process becoming an application.' },
     { icon: ShieldCheck, t: 'Bring your security review', d: 'We will answer it line by line on the call rather than promising a document.' },
     { icon: Rocket, t: 'You keep the workspace', d: 'The sandbox stays yours with everything built in it, whatever you decide.' },
   ],
+  /* Four fields, matching Finance and Supply Chain. The Studio/Flow chips
+     and the second textarea came out — one open question is enough, and
+     which product it turns out to be is the call's job to work out. */
   fields: [
     { name: 'name', label: 'Name', required: true, placeholder: 'Faisal Al-Mutairi', autoComplete: 'name' },
     { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'you@company.com', autoComplete: 'email' },
     { name: 'company', label: 'Company', required: true, span: 2, placeholder: 'Gulf Cement', autoComplete: 'organization' },
     {
-      name: 'build', label: 'What do you want to build?', type: 'textarea', span: 2, rows: 3,
+      name: 'build', label: 'What do you want to build?', type: 'textarea', span: 2,
       placeholder: 'e.g. a site inspection app for 40 engineers, replacing a spreadsheet and a WhatsApp group.',
-    },
-    {
-      name: 'interest', label: 'Interested in', type: 'choice', span: 2,
-      options: ['Studio', 'Flow', 'Both'],
-    },
-    {
-      name: 'message', label: 'Message', type: 'textarea', span: 2,
-      placeholder: 'Anything else — systems you run today, team size, timeline.',
     },
   ],
 };

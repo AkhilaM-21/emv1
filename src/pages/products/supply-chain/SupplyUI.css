@@ -44,7 +44,6 @@
   background: rgba(14, 17, 27, 0.7);
   backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
-  box-shadow: 0 22px 54px -24px rgba(0, 0, 0, 0.95);
 }
 
 .ui-dock-icon {
@@ -133,7 +132,6 @@
   width: 2px;
   margin-left: -1px;
   background: #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.16), 0 0 22px rgba(140, 170, 255, 0.55);
   pointer-events: none;
 }
 .ui-compare-bar i {
@@ -148,7 +146,6 @@
   place-items: center;
   color: #14120f;
   background: #fff;
-  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.55);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ui-compare:hover .ui-compare-bar i { transform: scale(1.1); }
@@ -165,13 +162,11 @@
   background: rgba(19, 22, 33, 0.76);
   backdrop-filter: blur(24px) saturate(150%);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
-  box-shadow: 0 30px 68px -34px rgba(0, 0, 0, 0.95);
   transform-style: preserve-3d;
   will-change: transform;
 }
 .ui-drag.front {
   border-color: rgba(140, 170, 255, 0.38);
-  box-shadow: 0 46px 104px -34px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(140, 170, 255, 0.14);
 }
 
 .ui-drag-bar {
@@ -192,7 +187,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(115deg, rgba(255, 255, 255, 0.9), transparent 58%);
+  background: rgba(255, 255, 255, 0.9);
   mix-blend-mode: overlay;
 }
 
@@ -211,7 +206,7 @@
   inset: 0 0 auto 0;
   display: block;
   border-radius: 2px;
-  background: linear-gradient(to bottom, transparent, var(--accent) 22%, var(--accent));
+  background: var(--accent);
 }
 .ui-rail i b {
   position: absolute;
@@ -222,7 +217,6 @@
   margin-left: -4px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

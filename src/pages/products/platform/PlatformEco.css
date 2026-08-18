@@ -82,7 +82,6 @@
   width: 6px; height: 6px;
   border-radius: 50%;
   background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 .pe-feed-l {
   display: flex;
@@ -165,11 +164,7 @@
   height: 7.5rem;
   border-radius: 24px;
   color: #fff;
-  background: linear-gradient(150deg, #1a1330, #08090a 60%);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 22px 50px -18px rgba(9, 9, 11, 0.6),
-    0 0 60px -10px rgba(108, 76, 241, 0.5);
+  background: #1a1330;
 }
 .pe-core-in svg { color: var(--v2); margin-bottom: 0.35rem; }
 .pe-core-in b { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.024em; }
@@ -215,7 +210,6 @@
   color: var(--ink-2);
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 10px 24px -14px rgba(9, 9, 11, 0.4);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .pe-node.t-v .pe-node-ic { color: #6c4cf1; }
@@ -226,7 +220,6 @@
 .pe-node.on .pe-node-ic {
   transform: scale(1.12);
   border-color: currentColor;
-  box-shadow: 0 0 0 4px rgba(108, 76, 241, 0.1), 0 16px 30px -14px rgba(9, 9, 11, 0.5);
 }
 
 .pe-node-l {
@@ -252,7 +245,6 @@
   text-align: left;
   color: var(--dim);
   background: #101019;
-  box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.7);
   opacity: 0;
   pointer-events: none;
   z-index: 6;
@@ -292,9 +284,7 @@
 .pd {
   position: relative;
   padding: clamp(6rem, 10vw, 9.5rem) 0 0;
-  background:
-    radial-gradient(ellipse 55% 45% at 78% 10%, rgba(56, 189, 248, 0.12), transparent 68%),
-    #07070e;
+  background: #07070e;
   color: var(--dim);
 }
 
@@ -357,7 +347,6 @@
   overflow: hidden;
   background: #0b0b14;
   border: 1px solid var(--nline);
-  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.95);
 }
 
 .pd-tabs {
@@ -407,7 +396,7 @@
   color: #9df5d3;
   border-bottom: 1px solid var(--nhair);
 }
-.pd-ok { width: 6px; height: 6px; border-radius: 50%; background: var(--run); box-shadow: 0 0 7px rgba(52, 211, 153, 0.9); }
+.pd-ok { width: 6px; height: 6px; border-radius: 50%; background: var(--run); }
 .pd-res-h em { margin-left: auto; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim-2); }
 .pd-res-code { font-size: 0.72rem !important; padding: 0.7rem 0.9rem !important; }
 
@@ -471,7 +460,6 @@
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--cy);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
 }
 
 .pd-ladder-note {

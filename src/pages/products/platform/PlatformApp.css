@@ -22,7 +22,7 @@
   white-space: nowrap;
   color: var(--ink-2); background: var(--bg-3);
 }
-.ap-tag.pos { color: #067a52; background: rgba(8, 145, 178, 0.12); }
+.ap-tag.pos { color: #067a52; background: rgba(108, 76, 241, 0.12); }
 .ap-tag.warn { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
 .ap-tag.neg { color: #a12b32; background: rgba(220, 38, 38, 0.1); }
 .ap-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.11); }

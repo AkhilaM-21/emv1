@@ -11,8 +11,8 @@
    ===================================================================== */
 
 .fh {
-  --fh-accent: #0a8f5e;
-  --fh-accent-deep: #06603f;
+  --fh-accent: var(--accent, #0a8f5e);
+  --fh-accent-deep: color-mix(in srgb, var(--accent, #0a8f5e) 72%, #000);
   --fh-ground: #eceff4;
   --fh-ground-2: #e3e7ef;
 
@@ -169,9 +169,9 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #0a7a51;
-  background: rgba(10, 143, 94, 0.08);
-  border: 1px solid rgba(10, 143, 94, 0.25);
-  box-shadow: 0 0 24px rgba(10, 143, 94, 0.1);
+  background: color-mix(in srgb, var(--fh-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fh-accent) 25%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--fh-accent) 10%, transparent);
   margin-bottom: 1.5rem;
 }
 .fh-pill::before {
@@ -180,7 +180,7 @@
   width: 8px; height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: linear-gradient(135deg, #34d399 0%, #0a8f5e 50%, #06603f 100%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--fh-accent) 55%, #fff) 0%, var(--fh-accent) 50%, var(--fh-accent-deep) 100%);
   box-shadow: 0 0 8px #35c98f;
 }
 
@@ -197,7 +197,7 @@
 /* the accent word, gradient-clipped exactly like .text-accent */
 .fh-accent,
 .fh-accent .mk > span {
-  background: linear-gradient(100deg, #14b981 0%, #0a8f5e 50%, #06603f 100%);
+  background: linear-gradient(100deg, color-mix(in srgb, var(--fh-accent) 78%, #fff) 0%, var(--fh-accent) 50%, var(--fh-accent-deep) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -246,13 +246,13 @@
 /* dominant: green shell, white disc */
 .fh-btn-solid {
   color: #fff;
-  background: linear-gradient(180deg, #16a86f 0%, #0a8f5e 55%, #067a4f 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fh-accent) 85%, #fff) 0%, var(--fh-accent) 55%, color-mix(in srgb, var(--fh-accent) 88%, #000) 100%);
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
     inset 0 -2px 3px rgba(0, 0, 0, 0.06),
     0 2px 4px rgba(6, 96, 63, 0.22),
-    0 10px 22px -8px rgba(10, 143, 94, 0.7);
+    0 10px 22px -8px color-mix(in srgb, var(--fh-accent) 70%, transparent);
 }
 .fh-btn-solid .fh-btn-disc {
   background: #fff;
@@ -264,7 +264,7 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.4),
     0 4px 8px rgba(6, 96, 63, 0.24),
-    0 16px 30px -10px rgba(10, 143, 94, 0.72);
+    0 16px 30px -10px color-mix(in srgb, var(--fh-accent) 72%, transparent);
 }
 
 /* quiet: white shell, green disc — the header's Get Started, in green */
@@ -280,10 +280,10 @@
 }
 .fh-btn-shell .fh-btn-disc {
   color: #fff;
-  background: linear-gradient(180deg, #16a86f 0%, #0a8f5e 50%, #067a4f 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fh-accent) 85%, #fff) 0%, var(--fh-accent) 50%, color-mix(in srgb, var(--fh-accent) 88%, #000) 100%);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.35),
-    0 3px 6px rgba(10, 143, 94, 0.45);
+    0 3px 6px color-mix(in srgb, var(--fh-accent) 45%, transparent);
 }
 .fh-btn-shell:hover {
   transform: translateY(-2px);
@@ -341,7 +341,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.45s ease;
-  background: radial-gradient(220px circle at var(--mx) var(--my), rgba(10, 143, 94, 0.1), transparent 68%);
+  background: radial-gradient(220px circle at var(--mx) var(--my), color-mix(in srgb, var(--fh-accent) 10%, transparent), transparent 68%);
 }
 .fh-frame:hover .fh-frame-glass { opacity: 1; }
 
@@ -375,7 +375,7 @@
 .fh-frame-dot {
   width: 5px; height: 5px; border-radius: 50%;
   background: var(--fh-accent);
-  box-shadow: 0 0 0 3px rgba(10, 143, 94, 0.14);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fh-accent) 14%, transparent);
 }
 
 .fh-sr {
@@ -472,7 +472,7 @@
   color: var(--ink-4);
   transition: color 0.35s ease, background 0.35s ease;
 }
-.fh-f-rail-i.on { color: var(--fh-accent); background: rgba(10, 143, 94, 0.1); }
+.fh-f-rail-i.on { color: var(--fh-accent); background: color-mix(in srgb, var(--fh-accent) 10%, transparent); }
 
 .fh-f-main {
   flex: 1; min-width: 0;
@@ -566,7 +566,7 @@
   padding: 5.5px 8px;
   border-bottom: 1px solid rgba(12, 16, 19, 0.045);
 }
-.fh-f-row.sel { background: rgba(10, 143, 94, 0.045); box-shadow: inset 2px 0 0 var(--fh-accent); }
+.fh-f-row.sel { background: color-mix(in srgb, var(--fh-accent) 4.5%, transparent); box-shadow: inset 2px 0 0 var(--fh-accent); }
 .fh-f-ref {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 8.5px; color: var(--ink-3); letter-spacing: -0.02em;
@@ -588,7 +588,7 @@
   font-size: 8px; font-style: normal; letter-spacing: 0.01em;
   white-space: nowrap;
 }
-.fh-f-tag.ok { color: var(--fh-accent-deep); background: rgba(10, 143, 94, 0.12); }
+.fh-f-tag.ok { color: var(--fh-accent-deep); background: color-mix(in srgb, var(--fh-accent) 12%, transparent); }
 .fh-f-tag.wait { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
 .fh-f-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.1); }
 .fh-f-tag.mute { color: var(--ink-4); background: rgba(12, 16, 19, 0.05); }
@@ -749,7 +749,7 @@
   position: absolute; left: -13px; top: -13px;
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: rgba(10, 143, 94, 0.4);
+  background: color-mix(in srgb, var(--fh-accent) 40%, transparent);
 }
 
 /* --- loop position --- */
@@ -779,166 +779,60 @@
   background: transparent;
 }
 
-.fh-rail-track {
-  position: relative;
+.fh-rail-marquee {
   display: flex;
-  gap: 16px;
-  padding: 0.5rem var(--fn-gutter, max(96px, calc((100vw - 1500px) / 2))) 1rem;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  /* No scroll snapping. The rail advances by exactly one card and wraps
-     by exactly one set width; a snap would round both and the seam
-     would stop lining up. */
-  scrollbar-width: none;
-  /* The rail is always mid-travel, so a card is nearly always crossing
-     an edge. Fading them out reads as a rail running past the screen;
-     slicing them off at the viewport edge reads as broken layout. */
+  overflow: hidden;
+  user-select: none;
+  gap: 3rem;
+  padding: 1rem var(--fn-gutter, max(96px, calc((100vw - 1500px) / 2)));
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 76px, #000 calc(100% - 76px), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 76px, #000 calc(100% - 76px), transparent 100%);
 }
-.fh-rail-track::-webkit-scrollbar { display: none; }
 
-/* Infographic cards: a line icon, the name on a coloured banner, one
-   sentence under it. Everything centred, and nothing held back for
-   hover — the rail is legible at a glance whether or not there is a
-   pointer near it. */
-.fh-cap {
-  position: relative;
-  flex: 0 0 246px;
+.fh-rail-marquee-content {
   display: flex;
-  flex-direction: column;
+  flex-shrink: 0;
   align-items: center;
-  text-align: center;
-  padding: 1.7rem 1.15rem 1.7rem;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: #fff;
-  cursor: default;
-  box-shadow:
-    0 1px 2px rgba(12, 16, 19, 0.04),
-    0 14px 32px -26px rgba(12, 16, 19, 0.35);
-  transition:
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.45s ease,
-    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.fh-cap:focus-visible { outline: 2px solid var(--cc); outline-offset: 3px; }
-
-/* hover only zooms */
-.fh-cap:hover,
-.fh-cap:focus-within {
-  z-index: 2;
-  transform: scale(1.04) translateY(-4px);
-  border-color: rgba(var(--cc-rgb), 0.36);
-  /* no coloured halo behind the card — the lift and the border are the
-     whole hover. A tinted glow read as a smudge on the field. */
-  box-shadow:
-    0 1px 2px rgba(12, 16, 19, 0.05),
-    0 20px 40px -30px rgba(12, 16, 19, 0.3);
+  justify-content: space-around;
+  gap: 3rem;
+  min-width: 100%;
+  animation: fh-marquee 30s linear infinite;
 }
 
-/* a plain line mark — the banner underneath carries the colour, so a
-   tinted tile here made two coloured blocks stacked on each other */
+.fh-rail-marquee-content.paused {
+  animation-play-state: paused;
+}
+
+@keyframes fh-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - 3rem)); }
+}
+
+.fh-cap-marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .fh-cap-ic {
-  display: grid; place-items: center;
-  margin-bottom: 0.95rem;
+  display: flex;
   color: var(--cc);
 }
 
-/* THE BANNER
-   The capability's name, white on its own colour, a plain rectangle
-   running the width of the card. */
-.fh-cap-band {
-  position: relative;
-  width: calc(100% + 0.5rem);
-  margin: 0 0 0.85rem;
-  padding: 0.5rem 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  background: var(--cc);
-  color: #fff;
-  font-size: 0.775rem;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.055em;
-  text-transform: uppercase;
-  box-shadow: 0 8px 18px -12px rgba(var(--cc-rgb), 0.9);
-}
-.fh-cap-band span { display: block; }
-
-.fh-cap p {
-  margin: 0;
-  font-size: 0.815rem;
-  line-height: 1.55;
-  color: var(--ink-3);
+.fh-cap-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-/* --- controls ---
-   Below the cards, at the right-hand gutter, on the same line as the
-   position dots. They used to be pinned to the sides of the track,
-   where they sat on top of the first and last cards and covered their
-   copy. Both carry the Finance green. */
-.fh-rail-foot {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  margin-top: 1.5rem;
-  padding: 0 var(--fn-gutter, max(96px, calc((100vw - 1500px) / 2)));
+.fh-cap-sep {
+  color: var(--ink-4);
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  opacity: 0.5;
 }
-
-.fh-rail-btns {
-  position: absolute;
-  right: var(--fn-gutter, max(96px, calc((100vw - 1500px) / 2)));
-  display: flex;
-  gap: 0.6rem;
-}
-
-.fh-rail-btn {
-  width: 42px; height: 42px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-/* both filled, the same button twice — an outlined partner read as a
-   disabled state next to a solid one */
-.fh-rail-btn.prev,
-.fh-rail-btn.next {
-  color: #fff;
-  background: linear-gradient(180deg, #16a86f 0%, #0a8f5e 55%, #067a4f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.35),
-    0 2px 5px rgba(6, 96, 63, 0.22),
-    0 12px 26px -14px rgba(10, 143, 94, 0.7);
-}
-.fh-rail-btn.prev:hover,
-.fh-rail-btn.next:hover {
-  background: linear-gradient(180deg, #0f9863 0%, #067a4f 55%, #05663f 100%);
-}
-
-.fh-rail-btn:hover { transform: translateY(-1px) scale(1.05); }
-.fh-rail-btn:active { transform: translateY(0) scale(1); }
-
-/* --- position --- */
-.fh-rail-dots {
-  display: flex; justify-content: center; align-items: center; gap: 6px;
-}
-.fh-rail-dots i {
-  width: 22px; height: 3px; border-radius: 2px;
-  background: rgba(12, 16, 19, 0.13);
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), background 0.45s ease;
-}
-.fh-rail-dots i.on { width: 34px; }
 
 
 /* =====================================================================
@@ -975,15 +869,13 @@
   .fh-f-strip { display: none; }
   .fh-f-insp { max-width: 50%; }
 
-  .fh-rail-foot { padding-left: var(--fn-gutter); padding-right: var(--fn-gutter); margin-top: 1.15rem; }
-  .fh-rail-btns { right: var(--fn-gutter); }
-  .fh-rail-btn { width: 38px; height: 38px; }
-  .fh-rail-track {
-    padding-left: var(--fn-gutter); padding-right: var(--fn-gutter); gap: 12px;
+  .fh-rail-marquee {
+    padding-left: var(--fn-gutter); padding-right: var(--fn-gutter);
+    gap: 1.5rem;
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
     mask-image: linear-gradient(90deg, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
   }
-  .fh-cap { flex: 0 0 min(70vw, 246px); }
+  .fh-rail-marquee-content { gap: 1.5rem; }
 }
 
 /* =====================================================================

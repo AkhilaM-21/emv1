@@ -1,319 +1,66 @@
 /* =====================================================================
-   EMVIVE SUPPLY CHAIN — page composition. Prefix `sn-`.
-   Structure is deliberately unlike Finance: headline over a full-width
-   screen (not a side slice), an unequal bento (not a horizontal rail),
-   and an instrument readout (not big-number rows). The immersive
-   sections each ship their own stylesheet.
+   EMVIVE FINANCE — page scaffolding.
+
+   The sections have their own stylesheets: SupplyHero.css (01),
+   SupplyStory.css (02–07) and the shared blocks.css (08). What is
+   left here is what belongs to the page as a whole — the accent, the
+   gutter every band lines up against, and the product bar.
    ===================================================================== */
 
-.sn { --accent: #3557d8; --accent-2: #2a46bb; --ink-panel: #0a0f22; }
+/* `.sn`, not `.fn`. This block arrived here as a copy of Finance.css and
+   kept Finance's selector, so every token in it — the gutter included —
+   was being defined for a class that does not exist on this page. That
+   is why the bands sat at the 40px fallback instead of the 96px edge
+   Finance uses. */
+.sn {
+  --ink-panel: #0a1020;
 
-.sn-kick {
-  display: inline-flex; align-items: center; gap: 0.55rem;
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-3);
-}
-.sn-kick i {
-  width: 6px; height: 6px; border-radius: 2px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
-}
+  /* ONE GUTTER for the whole page, and it is the home page's, measured
+     off .ah-dark / .ah-grid in AgenticHero.css rather than invented:
 
-/* the frame every screen sits in */
-.sn-frame {
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  overflow: hidden;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 2px 6px rgba(9, 9, 11, 0.04),
-    0 34px 78px -40px rgba(9, 9, 11, 0.42);
-  height: 100%;
-  min-height: 0;
-}
-.sn-frame.flush { border-radius: 0 0 12px 12px; box-shadow: none; border-top: 0; }
-.sn-frame.sm { box-shadow: 0 1px 2px rgba(9, 9, 11, 0.03), 0 18px 40px -30px rgba(9, 9, 11, 0.35); }
+         .ah-dark  { padding: 5rem 6rem 4rem; }   96px sides
+         .ah-grid  { max-width: 1500px; margin: 0 auto; }
 
-/* =====================================================================
-   OPENING
-   ===================================================================== */
-.sn-open {
-  position: relative;
-  padding: 4.5rem 0 0;
-  overflow: hidden;
-  isolation: isolate;
+     which is 96px until the viewport is wide enough for 1500px of
+     content to centre inside it, and half the overflow after that.
+     Its own breakpoints follow below.
+
+     Every band on this page lines up against this and nothing else. It
+     was four different measures before — 1320, 1480, 1560 and 1660 —
+     which is why the bar sat a hundred pixels inside the hero. */
+  /* one definition, in shared/system.css */
+  --sn-gutter: var(--page-gutter);
 }
 
-.sn-open-bg { position: absolute; inset: 0 0 auto; height: 44rem; z-index: -1; pointer-events: none; }
-.sn-open-bg::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--hair) 1px, transparent 1px),
-    linear-gradient(90deg, var(--hair) 1px, transparent 1px);
-  background-size: 74px 74px;
-  -webkit-mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 18%, transparent 72%);
-  mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 18%, transparent 72%);
-}
-.sn-open-bg i {
-  position: absolute; top: -22rem; left: 50%;
-  width: 62rem; height: 40rem; margin-left: -31rem;
-  border-radius: 50%; filter: blur(80px);
-  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 66%);
-}
-
-.sn-open-copy {
-  text-align: center;
-  padding: 0 max(40px, calc((100vw - 1180px) / 2));
-}
-.sn-open-copy .sn-kick { margin-bottom: 2rem; }
-
-.sn-display {
-  margin: 0;
-  font-size: clamp(2.7rem, 5.8vw, 5.2rem);
-  line-height: 0.98;
-  letter-spacing: -0.048em;
-  font-weight: 500;
-  color: var(--ink);
-}
-.sn-display + .sn-display { margin-top: -0.03em; }
-.sn-display .mk-em { color: var(--accent); }
-
-.sn-lede {
-  margin: 1.9rem auto 0;
-  max-width: 50ch;
-  font-size: clamp(1.02rem, 1.28vw, 1.22rem);
-  line-height: 1.58;
-  letter-spacing: -0.014em;
-  color: var(--ink-2);
-}
-.sn-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-top: 2.4rem; }
-
-/* the network screen, full width, cropped by the fold */
-.sn-open-screen {
-  margin: 4.5rem auto 0;
-  padding: 0 max(40px, calc((100vw - 1560px) / 2));
-  height: 66vh;
-  min-height: 520px;
-}
-
-@media (max-width: 900px) {
-  .sn-open-screen { height: 52vh; min-height: 380px; margin-top: 3rem; }
+/* The shared shells are centred inside their own max-width, which is a
+   different edge again. Scoped to `.sn` so Finance and Platform
+   keep theirs. */
+.sn .pnv-in,
+.sn .px-shell,
+.sn .bk-shell {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: var(--sn-gutter);
+  padding-right: var(--sn-gutter);
 }
 
 /* =====================================================================
-   BENTO — deliberately unequal
+   PRODUCT BAR — Supply only
+
+   Scoped to `.sn` rather than changed in nav.css, because the bar is
+   shared with Supply Chain and Platform and neither of those asked for
+   this. The two right-hand actions are gone from the Supply config
+   entirely; what is left goes black instead of the muted grey.
    ===================================================================== */
-.sn-bento { padding: 9rem 0; background: var(--bg-2); }
-.sn-bento-inner { padding: 0 max(40px, calc((100vw - 1560px) / 2)); }
+.sn .pnv-trigger,
+.sn .pnv-link,
+.sn .pnv-trigger svg { color: var(--ink); }
 
-.sn-bento-head { max-width: 46rem; margin-bottom: 4rem; }
-.sn-bento-head .sn-kick { margin-bottom: 1.5rem; }
-.sn-h2 {
-  margin: 0;
-  font-size: clamp(2rem, 3.6vw, 3.2rem);
-  line-height: 1.04; letter-spacing: -0.044em; font-weight: 500;
-  color: var(--ink);
-}
-.sn-bento-head p { margin: 1.35rem 0 0; font-size: 1.02rem; line-height: 1.6; color: var(--ink-2); max-width: 52ch; }
-
-.sn-bento-grid {
-  display: grid;
-  grid-template-columns: 1.45fr 1fr;
-  gap: 1.1rem;
-}
-.sn-b { min-width: 0; height: 21rem; }
-.sn-b-wide { grid-column: span 1; }
-/* second row flips the weighting so the grid never reads as a 2×2 */
-.sn-bento-grid > .sn-b:nth-child(3) { height: 19rem; }
-.sn-bento-grid > .sn-b:nth-child(4) { height: 19rem; }
-
-@media (max-width: 1000px) {
-  .sn-bento { padding: 5rem 0; }
-  .sn-bento-grid { grid-template-columns: 1fr; }
-  .sn-b, .sn-bento-grid > .sn-b:nth-child(3), .sn-bento-grid > .sn-b:nth-child(4) { height: 20rem; }
-}
-
-/* =====================================================================
-   PROOF
-   ===================================================================== */
-.sn-proof { padding: 0 0 9rem; }
-.sn-proof-inner { padding: 0 max(40px, calc((100vw - 1560px) / 2)); }
-
-.sn-quote {
-  margin: 0;
-  font-size: clamp(1.6rem, 3.4vw, 3rem);
-  line-height: 1.14;
-  letter-spacing: -0.042em;
-  font-weight: 500;
-  color: var(--ink);
-  max-width: 24ch;
-}
-.sn-by { display: flex; align-items: center; gap: 0.9rem; margin-top: 2.5rem; }
-.sn-by > span {
-  width: 42px; height: 42px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-size: 0.85rem; font-weight: 500;
-  color: #fff; background: var(--accent);
-  flex-shrink: 0;
-}
-.sn-by b { display: block; font-size: 0.95rem; font-weight: 500; color: var(--ink); }
-.sn-by em { display: block; font-style: normal; font-size: 0.85rem; color: var(--ink-3); }
-.sn-by .px-link { margin-left: auto; }
-
-@media (max-width: 800px) {
-  .sn-proof { padding-bottom: 5rem; }
-  .sn-by { flex-wrap: wrap; }
-  .sn-by .px-link { margin-left: 0; }
-}
-
-/* =====================================================================
-   CLOSING CALL TO ACTION
-   Two pills side by side made the secondary compete with the primary.
-   One magnetic capsule that leads with its arrow, and a quiet text link
-   beside it that draws its own rule on hover. Scoped to this page —
-   Finance and Platform keep the shared button.
-   ===================================================================== */
-.sn-acts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
-  margin-top: 2.6rem;
-}
-
-.sn-go {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.9rem;
-  height: 60px;
-  padding: 0 0.5rem 0 1.9rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 1.02rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: #08090a;
-  background: #ffffff;
-  overflow: hidden;
-  isolation: isolate;
-  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.6);
-}
-/* the accent wipes across from the left on hover, under the label */
-.sn-go::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: linear-gradient(100deg, var(--accent), #5e82ff);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.sn-go span { transition: color 0.35s ease; }
-.sn-go i {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  color: #fff;
-  background: #08090a;
-  transition: background 0.4s ease, color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.sn-go:hover { box-shadow: 0 20px 48px -16px color-mix(in srgb, var(--accent) 70%, transparent); }
-.sn-go:hover::before { transform: scaleX(1); }
-.sn-go:hover span { color: #fff; }
-.sn-go:hover i { background: #fff; color: var(--accent); transform: translateX(3px) rotate(-45deg); }
-.sn-go:active { transform: scale(0.985); }
-
-.ui-magnet { display: inline-block; will-change: transform; }
-
-.sn-quiet {
-  position: relative;
-  font-size: 1.02rem;
-  letter-spacing: -0.014em;
-  color: rgba(255, 255, 255, 0.62);
-  text-decoration: none;
-  padding-bottom: 0.35rem;
-  transition: color 0.35s ease;
-}
-.sn-quiet em {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.sn-quiet:hover { color: #fff; }
-.sn-quiet:hover em { transform: scaleX(1); transform-origin: left; }
-
-@media (prefers-reduced-motion: reduce) {
-  .sn-go::before, .sn-go i, .sn-quiet em { transition: none; }
-}
+.sn .pnv-trigger:hover,
+.sn .pnv-link:hover { color: var(--ink); background: rgba(9, 9, 11, 0.05); }
 
 /* =====================================================================
    DARK
    ===================================================================== */
-body.dark-theme .sn-frame { background: var(--bg-2); }
-body.dark-theme .sw-nav.on { background: rgba(255, 255, 255, 0.07); }
-body.dark-theme .sw-row:hover,
-body.dark-theme .sw-th,
-body.dark-theme .sw-hh-item div { background: rgba(255, 255, 255, 0.045); }
-
-/* =====================================================================
-   IMMERSIVE BANDS — the new sections between the existing scroll beats.
-   One family so they read as a set of wallboards, not assorted panels.
-   ===================================================================== */
-/* Two bands survive the redesign — the warehouse floor and the
-   Connected ring. Their background is set explicitly rather than by
-   :nth-of-type, which broke the moment the section order changed. */
-.sn-band { padding: 7.5rem 0; background: var(--bg); }
-.sn-band.alt { background: var(--bg-2); }
-
-/* reserved space for a code-split section, so nothing jumps */
-.sn-hold { width: 100%; background: #05070d; }
-.sn-hold.light { background: var(--bg); }
-.sn-hold.paper { background: #f4f1ea; }
-body.dark-theme .sn-hold.paper { background: #100e0b; }
-.sn-band-inner { padding: 0 max(40px, calc((100vw - 1560px) / 2)); }
-.sn-band.wide .sn-band-inner { padding: 0 max(32px, calc((100vw - 1720px) / 2)); }
-
-.sn-band-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 3.5rem;
-  align-items: end;
-  margin-bottom: 2.75rem;
-}
-.sn-band-head .sn-kick { margin-bottom: 1.35rem; }
-.sn-band-head p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--ink-2);
-  max-width: 46ch;
-}
-
-.sn-band-foot {
-  display: flex; flex-wrap: wrap; gap: 1.75rem;
-  margin-top: 1.5rem;
-  font-size: 0.83rem; color: var(--ink-3);
-}
-
-@media (max-width: 1000px) {
-  .sn-band { padding: 4.5rem 0; }
-  .sn-band-head { grid-template-columns: 1fr; gap: 1.25rem; }
-  .so-panel { height: auto !important; min-height: 26rem; }
-}
+body.dark-theme .sn { --ink-panel: #06110c; }

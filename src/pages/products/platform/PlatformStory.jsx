@@ -4,7 +4,11 @@ import {
   BookOpen, Receipt, CreditCard, Wallet, PieChart, TrendingUp, FileText, Scale,
   Check, ArrowRight, Clock, ShieldCheck, Landmark, Building2, Users,
   Layers, Lock, Database, RefreshCw, FileCheck2, GitBranch, Banknote,
-  ChartPie, Percent, Globe, Play, Pause, Inbox, Send, User, X
+  ChartPie, Percent, Globe, Play, Pause, Inbox, Send, User, X,
+  /* the builder's own icons — the list above arrived with the file when
+     it was copied from Finance, and a receipt is the wrong mark for a
+     form builder */
+  LayoutGrid, FileStack, Menu, Code2, Workflow, BadgeCheck, CalendarClock, Webhook,
 } from 'lucide-react';
 import {
   motion, Reveal, MaskText, useLive, EASE, useInView, useReducedMotion,
@@ -13,51 +17,51 @@ import { Spotlight, ScrollNumber } from '../shared/stage';
 import { Spark, LiveBars, Ring } from '../shared/viz';
 import {
   Toolbar, LedgerTable, ApprovalPanel, StatementPanel,
-} from './FinanceApp';
-import './FinanceStory.css';
+} from './PlatformApp';
+import './PlatformStory.css';
 
 /* =====================================================================
-   EMVIVE FINANCE — THE PAGE AFTER THE HERO
+   EMVIVE PLATFORM & BUILDER — THE PAGE AFTER THE HERO
 
    Seven sections, each answering one question a buyer actually asks, in
    the order they ask it:
 
-     02  Product & capabilities   what can it do?
+     02  Product & capabilities   what can it do?  (the eleven)
      03  How it works             how does it work?
      04  Automation               what can it automate?
-     05  Integrations             does it connect with our ecosystem?
+     05  Integrations             not rendered on this page
      06  Security & controls      can we trust it?
      07  Why Emvive               why should we choose it?
      08  FAQ + contact            I understand it — let's talk.
 
-   08 is the shared Faq/ContactSection pair and lives in Finance.jsx.
+   08 is the shared Faq/ContactSection pair and lives in Platform.jsx.
 
    Every section opens with the same head: its number, its name, and the
    question in the reader's own words. That question is the section's
    brief — if a block on the page is not answering it, the block does
    not belong there.
 
-   Namespace `fs-`.
+   Namespace `ps-`.
    ===================================================================== */
 
 /* ---------------------------------------------------------------
    THE PALETTE
-   The same eight colours the capability rail in the hero runs on, so
-   the page below the fold is coloured by the same hand that coloured
-   the fold. `rgb` is the raw triple, which is what lets the CSS build
-   translucent tints from the same value.
 
-   A colour is always attached to a THING — a module, a step, a
-   connection, a number — never to a section. Two sections never share
-   a colour scheme, and no block is coloured just to be colourful.
+   Eight colours, the same way Finance runs eight: a colour belongs to a
+   THING — a capability, a step — never to a section, so two neighbouring
+   cards are always told apart by hue. The first slot is the page accent,
+   which is why the first and most important capability wears it.
+
+   `rgb` is the raw triple, which is what lets the CSS build translucent
+   tints from the same value.
    --------------------------------------------------------------- */
 const C = {
-  green: ['#0a8f5e', '10, 143, 94'],
-  violet: ['#6c50b2', '108, 80, 178'],
+  green: ['#6c4cf1', '108, 76, 241'],
+  violet: ['#9333ea', '147, 51, 234'],
   blue: ['#2563eb', '37, 99, 235'],
   orange: ['#e2601f', '226, 96, 31'],
   teal: ['#0d9488', '13, 148, 136'],
-  purple: ['#9333ea', '147, 51, 234'],
+  purple: ['#c026d3', '192, 38, 211'],
   cyan: ['#0891b2', '8, 145, 178'],
   rose: ['#e11d48', '225, 29, 72'],
 };
@@ -87,9 +91,9 @@ const StoryVideo = ({ src, label, tone }) => {
   }, [inView, reduced]);
 
   return (
-    <div className="fs-film" style={tone}>
+    <div className="ps-film" style={tone}>
       <video ref={ref} src={src} muted loop playsInline preload="metadata" aria-label={label} />
-      <span className="fs-film-wash" aria-hidden="true" />
+      <span className="ps-film-wash" aria-hidden="true" />
     </div>
   );
 };
@@ -98,23 +102,23 @@ const StoryVideo = ({ src, label, tone }) => {
    The section head, used by all six sections below.
    --------------------------------------------------------------- */
 const Head = ({ n, label, ask, title, accent, lede, tone = '' }) => (
-  <div className={`fs-head ${tone}`}>
+  <div className={`ps-head ${tone}`}>
     <Reveal duration={0.7}>
-      <span className="fs-eyebrow">
+      <span className="ps-eyebrow">
         <i aria-hidden="true" />
         {label}
       </span>
     </Reveal>
 
-    <MaskText text={title} accent={accent} as="h2" className="fs-h2" />
+    <MaskText text={title} accent={accent} as="h2" className="ps-h2" />
 
     {ask && (
       <Reveal delay={0.14} y={12}>
-        <p className="fs-ask">{ask}</p>
+        <p className="ps-ask">{ask}</p>
       </Reveal>
     )}
 
-    {lede && <Reveal delay={0.2} y={14}><p className="fs-lede">{lede}</p></Reveal>}
+    {lede && <Reveal delay={0.2} y={14}><p className="ps-lede">{lede}</p></Reveal>}
   </div>
 );
 
@@ -122,104 +126,128 @@ const Head = ({ n, label, ask, title, accent, lede, tone = '' }) => (
    02 — PRODUCT & CAPABILITIES
    "What can it do?"
 
-   Eight modules, one detail panel. A list the reader drives, rather
-   than eight identical cards they have to compare themselves.
+   The eleven capabilities the product is made of, in the three groups
+   it ships in — a) App Builder, b) Workflow & Automation, c) Reporting
+   & Analysis. Each carries its group in `stat`, so the grid and the
+   accordion below both read the same list. A list the reader drives,
+   rather than eleven cards to compare by eye.
    ===================================================================== */
 const CAPS = [
   {
-    k: 'General Ledger', c: 'green', icon: BookOpen,
-    line: 'The single book every other module posts into.',
-    body: 'A multi-entity, multi-currency chart of accounts with dimensions instead of endless account codes. Journals arrive from the sub-ledgers already coded, already approved and already matched.',
-    points: ['Multi-entity, multi-book, multi-currency', 'Dimensions: cost centre, project, segment, site', 'Automatic FX revaluation and translation', 'Period locks with maker–checker enforcement', 'Automated accruals and prepayments'],
-    stat: ['1.2M', 'journal lines a month'],
+    k: 'Form Builder', c: 'violet', icon: LayoutGrid,
+    line: 'Drag and drop the form the process actually needs.',
+    body: 'Fields, sections, tabs and conditional rules placed by hand. Validation and required fields are set where you place them, not in a config file somewhere else.',
+    points: ['Drag-and-drop field placement', 'Sections, tabs and conditional visibility', 'Validation and required rules at the field', 'Responsive by default, mobile build included', 'What you place is what ships'],
+    stat: ['a.1', 'App Builder'],
   },
   {
-    k: 'Accounts Payable', c: 'violet', icon: Receipt,
-    line: 'Match before you pay, not after.',
-    body: 'Supplier invoices arrive by email, portal or EDI and are read, coded and matched three ways against the purchase order and the goods receipt. Variances are held rather than nodded through.',
-    points: ['Three-way matching with tolerance rules', 'Duplicate and fraud detection on capture', 'Payment runs with bank file generation', 'Supplier self-service for invoice status', 'Vendor portal for invoice submission'],
-    stat: ['128', 'invoices a day, 84% touchless'],
+    k: 'Object Builder', c: 'blue', icon: Database,
+    line: 'Tables, fields and the relationships between them.',
+    body: 'Define the object the form writes to — its columns, its types and its links to other objects. Row-level access is inherited from the record rather than re-granted per screen.',
+    points: ['Tables, columns and data types', 'Relationships between objects', 'Computed fields and defaults', 'Row-level access inherited', 'Import from spreadsheet or existing table'],
+    stat: ['a.2', 'App Builder'],
   },
   {
-    k: 'Accounts Receivable', c: 'blue', icon: CreditCard,
-    line: 'Shorten the cash cycle without a collections team.',
-    body: 'Credit limits are checked before dispatch, not after the debt exists. Reminder sequences fire on their own schedule and escalate by ageing bucket.',
-    points: ['Credit limits enforced at order entry', 'Automated dunning by ageing and segment', 'Cash application with bank-feed matching', 'Customer statements and payment portal', 'Integrated online payment gateways'],
-    stat: ['31 days', 'DSO, down from 40'],
+    k: 'Document Sequence Designer', c: 'green', icon: FileStack,
+    line: 'Numbering, and the documents a process issues.',
+    body: 'Prefixes, running numbers, per-entity and per-year sequences, and the document each step of the process produces — designed once and applied everywhere it is used.',
+    points: ['Prefixes and running numbers', 'Per-entity and per-year sequences', 'Document templates per step', 'Reset rules and gap control', 'Applied everywhere the object is used'],
+    stat: ['a.3', 'App Builder'],
   },
   {
-    k: 'Expenses', c: 'orange', icon: Wallet,
-    line: 'Claims that check themselves against policy.',
-    body: 'Receipts are captured on a phone, read on the spot and tested against the grade, category and city rules before anyone is asked to approve them.',
-    points: ['Mobile capture with receipt extraction', 'Policy rules by grade, category and location', 'Per-diem and mileage calculators', 'Reimbursement posted through payroll', 'Corporate card automated reconciliation'],
-    stat: ['412', 'claimants, 2-day turnaround'],
+    k: 'Navigation Designer', c: 'teal', icon: Menu,
+    line: 'Menus, roles and what each person sees.',
+    body: 'Build the navigation the application ships with, and decide by role which parts of it exist for whom. One definition covers both the web app and the mobile build.',
+    points: ['Menus, groups and ordering', 'Visibility by role', 'Landing screen per role', 'One definition for web and mobile', 'Deep links into any record'],
+    stat: ['a.4', 'App Builder'],
   },
   {
-    k: 'Budgeting', c: 'teal', icon: PieChart,
-    line: 'A budget the ledger actually enforces.',
-    body: 'Budgets are held per dimension and checked at commitment, not at month end. A purchase requisition that would breach its cost centre is stopped where it is raised.',
-    points: ['Bottom-up and top-down budget builds', 'Commitment accounting on requisitions', 'Budget-versus-actual on live balances', 'Reforecast cycles with version history', 'Approval workflows for budget transfers'],
-    stat: ['9', 'cost centres, monthly reforecast'],
+    k: 'Functions Designer', c: 'cyan', icon: Code2,
+    line: 'Code where you want it, not everywhere.',
+    body: 'Low-code is the default, not the ceiling. Write a function against the same objects when a rule is genuinely too specific to place, and call it from a form or from a flow.',
+    points: ['Functions against the same objects', 'Called from a form or a flow', 'Versioned with the workspace', 'Runs server-side with the caller access', 'Nothing you write by hand is second class'],
+    stat: ['a.5', 'App Builder'],
   },
   {
-    k: 'Forecasting', c: 'cyan', icon: TrendingUp,
-    line: 'Thirteen weeks of cash you can plan against.',
-    body: 'Committed flows from open orders, payables and payroll are combined with expected flows to produce a rolling cash forecast that updates as the underlying documents change.',
-    points: ['13-week rolling cash forecast', 'Scenario modelling on collection assumptions', 'Bank position across four institutions', 'Variance tracking against last forecast', 'Cash flow sensitivity analysis'],
-    stat: ['13 weeks', 'rolling, updated daily'],
+    k: 'Workflow', c: 'orange', icon: GitBranch,
+    line: 'The states a record moves through.',
+    body: 'Draft, submitted, approved, closed — the states a record can be in, who can move it between them, and what has to be true before it moves.',
+    points: ['States and transitions per object', 'Who can move a record, and when', 'Entry and exit conditions', 'Status history on every record', 'Reopen rules that leave a trail'],
+    stat: ['b.1', 'Workflow'],
   },
   {
-    k: 'Reporting', c: 'purple', icon: FileText,
-    line: 'The statutory pack as a view, not a project.',
-    body: 'Elimination, translation and consolidation have already run. P&L, balance sheet, cash flow and the notes are produced from the same postings the operational dashboards read.',
-    points: ['IFRS and local GAAP presentations', 'Consolidated and entity-level statements', 'Drill from any figure to its journal', 'Scheduled distribution to the board pack', 'Interactive custom dashboard builder'],
-    stat: ['3', 'currencies consolidated'],
+    k: 'Flow Designer', c: 'purple', icon: Workflow,
+    line: 'Triggers, conditions and actions on one canvas.',
+    body: 'Fire on a record change, on a schedule, or on an inbound call. Branch on conditions, loop over lines, call out and carry on — with every run traced step by step.',
+    points: ['Triggers on record, schedule or webhook', 'Conditions, branches and loops', 'Actions on any object', 'Calls out to your own services', 'Every run traced step by step'],
+    stat: ['b.2', 'Workflow'],
   },
   {
-    k: 'Reconciliation', c: 'rose', icon: Scale,
-    line: 'Reconciled overnight, reviewed in the morning.',
-    body: 'Bank feeds, intercompany balances and control accounts are matched by rule every night. What reaches a person is the exception list, not the whole population.',
-    points: ['Daily bank-feed reconciliation', 'Intercompany auto-matching and elimination', 'Control account and sub-ledger tie-outs', 'Exception queue with ageing and owner', 'AI-assisted matching recommendations'],
-    stat: ['96%', 'matched without a human'],
+    k: 'Approval', c: 'rose', icon: BadgeCheck,
+    line: 'Limits, delegation and a way back.',
+    body: 'Route by value, category, site or grade, with out-of-office delegation that does not quietly skip a step, and a rejection that returns the record with its reason attached.',
+    points: ['Limits by value, category, site and grade', 'Multi-step and parallel approval', 'Delegation and out-of-office routing', 'Rejection returns the reason', 'Full approval history on the record'],
+    stat: ['b.3', 'Workflow'],
+  },
+  {
+    k: 'Schedule Workflow', c: 'blue', icon: CalendarClock,
+    line: 'The work that should happen while nobody is watching.',
+    body: 'Nightly, hourly, or on a schedule of your own. Reminders, escalations, batch updates and recurring documents run against live records without anybody starting them.',
+    points: ['Nightly, hourly or custom schedules', 'Reminders and escalations', 'Batch updates over a filter', 'Recurring document creation', 'Run history with failures surfaced'],
+    stat: ['b.4', 'Workflow'],
+  },
+  {
+    k: 'API & Webhooks', c: 'green', icon: Webhook,
+    line: 'Every object is an API the moment it exists.',
+    body: 'REST endpoints on everything you build, webhooks pushed out on change, and inbound calls that can start a flow. There is no integration project to make an application reachable.',
+    points: ['REST endpoints on every object', 'Webhooks pushed on change', 'Inbound calls that start a flow', 'Keys, secrets and scopes held centrally', 'Rate limits and call logs'],
+    stat: ['b.5', 'Workflow'],
+  },
+  {
+    k: 'Reports & Dashboards', c: 'violet', icon: ChartPie,
+    line: 'The numbers come back out of the same records.',
+    body: 'Reports and dashboards built on the objects the applications write to, so a figure in a board pack and a figure on a screen are the same record read twice — not two systems disagreeing.',
+    points: ['Report builder on live objects', 'Dashboards with drill-down to the record', 'Saved views shared with a team', 'Scheduled distribution to the people who need it', 'Export to spreadsheet or PDF, access rules intact'],
+    stat: ['c', 'Reporting'],
   },
 ];
 
 export const CapabilitiesGrid = () => {
   return (
-    <section className="fs-caps" id="capabilities-grid">
-      <div className="fs-in">
+    <section className="ps-caps" id="capabilities-grid">
+      <div className="ps-in">
         <Head
           n="02b"
           label="Product & capabilities (Grid)"
-          title="Eight modules."
-          accent="One ledger underneath."
-          lede="Nothing here is a separate product with its own database. Every module writes to the same journals and inherits the same controls, so what one module knows, all of them know."
+          title="Eleven capabilities."
+          accent="One object model underneath."
+          lede="Nothing here is a separate tool with its own database. The builder, the workflow engine and the reporting all read and write the same objects, so what one of them knows, all of them know."
         />
 
-        <div className="fs-caps-body fs-folder-grid">
+        <div className="ps-caps-body ps-folder-grid">
           {CAPS.map((cap, idx) => (
             <motion.div 
               key={cap.k} 
-              className="fs-folder-card" 
+              className="ps-folder-card" 
               style={tint(cap.c)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
             >
-              <div className="fs-folder-tab">
+              <div className="ps-folder-tab">
                 {cap.k}
               </div>
-              <div className="fs-folder-body">
-                <div className="fs-folder-icon">
+              <div className="ps-folder-body">
+                <div className="ps-folder-icon">
                   <cap.icon size={48} strokeWidth={1.2} />
                 </div>
-                <div className="fs-folder-divider" />
-                <div className="fs-folder-text">
-                  <ul className="fs-folder-points">
+                <div className="ps-folder-divider" />
+                <div className="ps-folder-text">
+                  <ul className="ps-folder-points">
                     {cap.points.slice(0, 5).map((pt, i) => (
                       <li key={i} style={{ '--i': i }}>
-                        <span className="fs-folder-bullet"></span>
+                        <span className="ps-folder-bullet"></span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -238,38 +266,38 @@ export const Capabilities = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="fs-caps" id="capabilities">
-      <div className="fs-in">
+    <section className="ps-caps" id="capabilities">
+      <div className="ps-in">
         <Head
           n="02"
           label="Product & capabilities"
-          title="Eight modules."
-          accent="One ledger underneath."
-          lede="Nothing here is a separate product with its own database. Every module writes to the same journals and inherits the same controls, so what one module knows, all of them know."
+          title="Eleven capabilities."
+          accent="One object model underneath."
+          lede="Nothing here is a separate tool with its own database. The builder, the workflow engine and the reporting all read and write the same objects, so what one of them knows, all of them know."
         />
 
-        <div className="fs-ms-layout" style={{ marginTop: '3rem' }}>
-          <div className="fs-ms-accordion">
+        <div className="ps-ms-layout" style={{ marginTop: '3rem' }}>
+          <div className="ps-ms-accordion">
             {CAPS.map((cap, idx) => {
               const isActive = idx === activeTab;
               return (
                 <div 
                   key={cap.k} 
-                  className={`fs-ms-accordion-item ${isActive ? 'active' : ''}`}
+                  className={`ps-ms-accordion-item ${isActive ? 'active' : ''}`}
                   style={tint(cap.c)}
                 >
                   <button 
-                    className="fs-ms-accordion-header"
+                    className="ps-ms-accordion-header"
                     onClick={() => setActiveTab(idx)}
                     aria-expanded={isActive}
                   >
-                    <div className="fs-ms-accordion-title-wrap">
-                      <cap.icon size={20} strokeWidth={2.2} className="fs-ms-accordion-icon" />
-                      <span className="fs-ms-accordion-title">
+                    <div className="ps-ms-accordion-title-wrap">
+                      <cap.icon size={20} strokeWidth={2.2} className="ps-ms-accordion-icon" />
+                      <span className="ps-ms-accordion-title">
                         {cap.k}
                       </span>
                     </div>
-                    <span className="fs-ms-chevron">
+                    <span className="ps-ms-chevron">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         {isActive ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
                       </svg>
@@ -278,15 +306,15 @@ export const Capabilities = () => {
                   <AnimatePresence>
                     {isActive && (
                       <motion.div 
-                        className="fs-ms-accordion-content"
+                        className="ps-ms-accordion-content"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: EASE }}
                       >
-                        <div className="fs-ms-accordion-inner">
+                        <div className="ps-ms-accordion-inner">
                           <p>{cap.body}</p>
-                          <a href="#how" className="fs-ms-link" style={{ color: 'var(--c)' }}>Explore module</a>
+                          <a href="#how" className="ps-ms-link" style={{ color: 'var(--c)' }}>Explore module</a>
                         </div>
                       </motion.div>
                     )}
@@ -296,11 +324,11 @@ export const Capabilities = () => {
             })}
           </div>
 
-          <div className="fs-ms-display" style={tint(CAPS[activeTab].c)}>
+          <div className="ps-ms-display" style={tint(CAPS[activeTab].c)}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                className="fs-ms-display-inner only-visual full-image"
+                className="ps-ms-display-inner only-visual full-image"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
@@ -309,7 +337,7 @@ export const Capabilities = () => {
                 <img 
                   src={`/images/${['capture_step', 'post_step', 'control_step', 'automate_step', 'close_step', 'capture_step', 'post_step', 'control_step'][activeTab]}.jpg`} 
                   alt={CAPS[activeTab].k} 
-                  className="fs-ms-full-img" 
+                  className="ps-ms-full-img" 
                 />
               </motion.div>
             </AnimatePresence>
@@ -329,96 +357,98 @@ export const Capabilities = () => {
    own so the section demonstrates rather than describes; touching it
    takes control, and the control can be paused.
    ===================================================================== */
+/* the order somebody actually builds in — the five moves that turn a
+   requirement into something people are using */
 const STEPS = [
   {
-    k: 'Capture', c: 'green', icon: Inbox,
-    t: 'The document arrives and codes itself',
-    d: 'Invoices and receipts are automatically read and coded to account and dimension before a person sees them.',
-    crumb: 'General ledger',
+    k: 'Model', c: 'blue', icon: Database,
+    t: 'Define the object the work lives on',
+    d: 'Tables, fields and the relationships between them. The data model comes first because everything below reads and writes it.',
+    crumb: 'Object builder',
     img: '/images/capture_step.jpg',
   },
   {
-    k: 'Post', c: 'blue', icon: Send,
-    t: 'It posts to the ledger in real time',
-    d: 'Journals are written directly to the general ledger as work happens, producing a continuous trial balance.',
-    crumb: 'Journal entries',
+    k: 'Design', c: 'violet', icon: LayoutGrid,
+    t: 'Place the form, the documents and the menu',
+    d: 'Drag the fields into the shape the process needs, set the document numbering, and decide what each role finds in the navigation.',
+    crumb: 'Form builder',
     img: '/images/post_step.jpg',
   },
   {
-    k: 'Control', c: 'violet', icon: ShieldCheck,
-    t: 'The controls decide who signs, and when',
-    d: 'Matching tolerances and delegation rules instantly route entries to the right person for approval.',
-    crumb: 'Approvals',
-    img: '/images/control_step.jpg',
-  },
-  {
-    k: 'Automate', c: 'orange', icon: RefreshCw,
-    t: 'Rules run while the office is closed',
-    d: 'Reconciliation and revaluation run against live balances on schedule without manual intervention.',
-    crumb: 'Automations',
+    k: 'Automate', c: 'orange', icon: Workflow,
+    t: 'Put the process behind the screen',
+    d: 'States the record moves through, a flow that fires on change or on a schedule, and the approvals that have to clear before it moves.',
+    crumb: 'Flow designer',
     img: '/images/automate_step.jpg',
   },
   {
-    k: 'Close', c: 'rose', icon: FileCheck2,
-    t: 'The period closes on day three',
-    d: 'With live ledgers and nightly reconciliations, the month-end close becomes a simple administrative lock.',
-    crumb: 'Period close',
+    k: 'Connect', c: 'green', icon: Webhook,
+    t: 'Wire it to everything else you run',
+    d: 'Every object is a REST endpoint the moment it exists, webhooks push on change, and an inbound call can start a flow.',
+    crumb: 'API & webhooks',
+    img: '/images/control_step.jpg',
+  },
+  {
+    k: 'Report', c: 'purple', icon: ChartPie,
+    t: 'Read the numbers back off the same records',
+    d: 'Reports and dashboards on the objects the application writes to, drilling from any figure down to the records that produced it.',
+    crumb: 'Reporting',
     img: '/images/close_step.jpg',
   },
 ];
 
 export const HowItWorks = () => {
   return (
-    <section className="fs-how" id="how">
-      <div className="fs-in">
+    <section className="ps-how" id="how">
+      <div className="ps-in">
         <Head
           n="03"
           label="How it works"
-          title="From document to signed close,"
-          accent="in five moves."
-          lede="The same record travels the whole way. Nothing is re-keyed, re-exported or reconciled against a second system — each step below is the one screen where that move actually happens."
+          title="From a requirement to something"
+          accent="people are using."
+          lede="The same object travels the whole way. Nothing is re-keyed, re-exported or reconciled against a second system — each step below is the one screen where that move actually happens."
         />
 
-        <div className="fs-how-split" style={{ marginTop: '4rem' }}>
+        <div className="ps-how-split" style={{ marginTop: '4rem' }}>
           
           <motion.div 
-            className="fs-how-tall-card"
+            className="ps-how-tall-card"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <img src="/images/automate_step.jpg" alt="How it works" className="fs-how-tall-img" />
-            <div className="fs-how-tall-overlay" />
-            <div className="fs-how-tall-content">
+            <img src="/images/automate_step.jpg" alt="How it works" className="ps-how-tall-img" />
+            <div className="ps-how-tall-overlay" />
+            <div className="ps-how-tall-content">
               <h3>Five seamless moves</h3>
-              <p>Watch how a single document flows through the entire system without ever leaving the ledger.</p>
+              <p>Watch a requirement become an object, a form, a process and a report without leaving the workspace.</p>
             </div>
           </motion.div>
 
-          <div className="fs-how-features-wrapper">
-            <div className="fs-ms-features-grid fs-grid-2-col">
+          <div className="ps-how-features-wrapper">
+            <div className="ps-ms-features-grid ps-grid-2-col">
               {STEPS.map((st, idx) => (
                 <motion.div
                   key={st.k}
-                  className="fs-ms-feature-card"
+                  className="ps-ms-feature-card"
                   style={tint(st.c)}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '0px 0px -10% 0px' }}
                   transition={{ duration: 0.5, delay: idx * 0.05 }}
                 >
-                  <div className="fs-ms-feature-top">
-                    <div className="fs-ms-feature-icon">
+                  <div className="ps-ms-feature-top">
+                    <div className="ps-ms-feature-icon">
                       <st.icon size={20} strokeWidth={2.2} />
                     </div>
-                    <span className="fs-ms-feature-name">{st.k}</span>
+                    <span className="ps-ms-feature-name">{st.k}</span>
                   </div>
-                  <div className="fs-ms-feature-header">
-                    <div className="fs-ms-feature-bar" />
-                    <h3 className="fs-ms-feature-title">{st.t}</h3>
+                  <div className="ps-ms-feature-header">
+                    <div className="ps-ms-feature-bar" />
+                    <h3 className="ps-ms-feature-title">{st.t}</h3>
                   </div>
-                  <p className="fs-ms-feature-desc">{st.d}</p>
+                  <p className="ps-ms-feature-desc">{st.d}</p>
                 </motion.div>
               ))}
             </div>
@@ -433,25 +463,39 @@ export const HowItWorks = () => {
    04 — AUTOMATION
    "What can it automate?"
    ===================================================================== */
+/* the three groups the product is made of, as tabs */
 const AUTOMATION_TABS = [
   {
-    id: 'financial-close',
-    label: 'Financial Close',
+    id: 'app-builder',
+    label: 'App Builder',
     items: [
-      { name: 'Bank feed reconciliation' },
-      { name: 'FX revaluation' },
-      { name: 'Depreciation run' },
-      { name: 'Intercompany elimination' },
+      { name: 'Form builder — drag and drop' },
+      { name: 'Object builder — tables' },
+      { name: 'Document sequence designer' },
+      { name: 'Navigation designer' },
+      { name: 'Functions designer — code' },
     ]
   },
   {
-    id: 'payables-receivables',
-    label: 'Payables & Receivables',
+    id: 'workflow-automation',
+    label: 'Workflow & Automation',
     items: [
-      { name: 'Three-way invoice match' },
-      { name: 'Dunning escalation' },
-      { name: 'Payment allocations' },
-      { name: 'Credit limit enforcement' },
+      { name: 'Workflow' },
+      { name: 'Flow designer' },
+      { name: 'Approval' },
+      { name: 'Schedule workflow' },
+      { name: 'API / webhooks' },
+    ]
+  },
+  {
+    id: 'reporting',
+    label: 'Reporting & Analysis',
+    items: [
+      { name: 'Report builder' },
+      { name: 'Dashboards with drill-down' },
+      { name: 'Saved views' },
+      { name: 'Scheduled distribution' },
+      { name: 'Export & API access' },
     ]
   }
 ];
@@ -460,26 +504,26 @@ export const Automation = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="fs-auto" id="automation">
-      <div className="fs-in">
+    <section className="ps-auto" id="automation">
+      <div className="ps-in">
         <Head
           n="04"
           label="Automation"
           title="The routine work stops"
           accent="reaching a person."
-          lede="Rules run against live balances on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
+          lede="Flows run against live records on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
         />
 
-        <div className="fs-auto-card">
-          <div className="fs-auto-left">
+        <div className="ps-auto-card">
+          <div className="ps-auto-left">
             <h2>Our Offerings</h2>
             <p>We help enterprises pursue a path of smart transformation</p>
             
-            <div className="fs-auto-tabs">
+            <div className="ps-auto-tabs">
               {AUTOMATION_TABS.map((tab, i) => (
                 <button 
                   key={tab.id}
-                  className={`fs-auto-tab ${activeTab === i ? 'on' : ''}`}
+                  className={`ps-auto-tab ${activeTab === i ? 'on' : ''}`}
                   onClick={() => setActiveTab(i)}
                 >
                   {tab.label}
@@ -488,15 +532,15 @@ export const Automation = () => {
             </div>
           </div>
           
-          <div className="fs-auto-right">
-            <div className="fs-auto-hero">
+          <div className="ps-auto-right">
+            <div className="ps-auto-hero">
               <img src="/abstract.png" alt="Automation Abstract" />
             </div>
             
-            <div className="fs-auto-grid">
+            <div className="ps-auto-grid">
               {AUTOMATION_TABS[activeTab].items.map((item, i) => (
-                <div className="fs-auto-item" key={i}>
-                  <span className="fs-auto-item-n">0{i + 1}. {item.name}</span>
+                <div className="ps-auto-item" key={i}>
+                  <span className="ps-auto-item-n">0{i + 1}. {item.name}</span>
                 </div>
               ))}
             </div>
@@ -552,37 +596,37 @@ export const Integrations = () => {
   );
 
   return (
-    <section className="fs-int" id="integrations" ref={ref}>
-      <div className="fs-in">
+    <section className="ps-int" id="integrations" ref={ref}>
+      <div className="ps-in">
         <Head
           n="05"
           label="Integrations"
           title="One ledger, wired to"
           accent="everything else."
-          lede="Emvive Finance is the accounting core, not an island. What posts into it and what reads out of it are both live connections — no exports, no overnight file drops nobody owns."
+          lede="Emvive Platform is the accounting core, not an island. What posts into it and what reads out of it are both live connections — no exports, no overnight file drops nobody owns."
         />
 
-        <div className="fs-google-wrapper">
-          <div className="fs-google-grid">
+        <div className="ps-google-wrapper">
+          <div className="ps-google-grid">
             
             {/* LEFT COLUMN: Bank Feeds (Geometric Nodes) */}
-            <div className="fs-google-col left">
+            <div className="ps-google-col left">
               {SOURCES.map(([Icon, name, state, col, meta], i) => {
                 const targetY = (2 - i) * 100; 
                 const gColors = ['#FBBC04', '#34A853', '#EA4335', '#4285F4', '#FBBC04'];
                 const color = gColors[i % gColors.length];
                 
                 return (
-                  <Reveal className="fs-google-left-node" key={name} delay={i * 0.1}>
-                    <div className="fs-google-left-content">
-                      <div className="fs-google-icon-box" style={{ borderBottomColor: color }}>
+                  <Reveal className="ps-google-left-node" key={name} delay={i * 0.1}>
+                    <div className="ps-google-left-content">
+                      <div className="ps-google-icon-box" style={{ borderBottomColor: color }}>
                         <Icon size={18} strokeWidth={2.5} color="#5f6368" />
                       </div>
-                      <span className="fs-google-label">{name}</span>
+                      <span className="ps-google-label">{name}</span>
                     </div>
                     
                     {/* SVG Line: Thin -> Circle -> Thick -> Dotted Curve */}
-                    <svg width="300" height="2" className="fs-google-svg left-svg">
+                    <svg width="300" height="2" className="ps-google-svg left-svg">
                       <line x1="0" y1="0" x2="60" y2="0" stroke="#dadce0" strokeWidth="2" />
                       <circle cx="60" cy="0" r="3" fill="#fff" stroke={color} strokeWidth="2" />
                       <line x1="63" y1="0" x2="160" y2="0" stroke={color} strokeWidth="4" />
@@ -594,23 +638,23 @@ export const Integrations = () => {
             </div>
 
             {/* CENTER COLUMN: Solid Blue Block */}
-            <div className="fs-google-col center">
-              <Reveal className="fs-google-center-card" delay={0.2}>
-                <div className="fs-google-center-logo">
+            <div className="ps-google-col center">
+              <Reveal className="ps-google-center-card" delay={0.2}>
+                <div className="ps-google-center-logo">
                   <span style={{ fontSize: 64, fontWeight: 'bold', color: '#fff', fontFamily: 'Inter, sans-serif' }}>E</span>
                 </div>
               </Reveal>
             </div>
 
             {/* RIGHT COLUMN: Dashboard UI Cards */}
-            <div className="fs-google-col right">
+            <div className="ps-google-col right">
               {CONSUMERS.map(([Icon, name, state, col, meta], i) => {
                 const targetY = (2 - i) * 100; 
                 
                 return (
-                  <Reveal className="fs-google-right-node" key={name} delay={0.3 + i * 0.1}>
+                  <Reveal className="ps-google-right-node" key={name} delay={0.3 + i * 0.1}>
                     {/* SVG Line: Geometric elbows & zigzags */}
-                    <svg width="300" height="2" className="fs-google-svg right-svg">
+                    <svg width="300" height="2" className="ps-google-svg right-svg">
                       {i === 2 ? (
                         // Special zigzag for the middle one to match ref
                         <polyline points={`300,0 260,-15 220,15 180,-15 140,15 100,-15 60,15 0,${targetY}`} fill="none" stroke="#34A853" strokeWidth="3" />
@@ -620,12 +664,12 @@ export const Integrations = () => {
                       )}
                     </svg>
 
-                    <div className="fs-google-dash-card">
-                      <div className="fs-google-dash-header">
+                    <div className="ps-google-dash-card">
+                      <div className="ps-google-dash-header">
                         <div className="dash-dot"></div>
                         <div className="dash-dot"></div>
                       </div>
-                      <div className="fs-google-dash-body">
+                      <div className="ps-google-dash-body">
                         <Icon size={14} color="#80868b" />
                         <b>{name}</b>
                       </div>
@@ -668,23 +712,23 @@ const ACT_POOL = [
 const makeAct = (i) => ({ ...ACT_POOL[i % ACT_POOL.length], id: i });
 
 const SEC_CARDS = [
-  { 
-    id: 'duties', 
-    title: 'Segregation of Duties', 
-    desc: 'Maker-checker enforced per entity. No administrator can bypass it.',
-    span: 2 
+  {
+    id: 'duties',
+    title: 'Role-Based Access',
+    desc: 'Access is inherited from the record, not re-granted per screen. A builder cannot widen what they can already see.',
+    span: 2
   },
-  { 
-    id: 'audit', 
-    title: 'Immutable Audit Trail', 
-    desc: 'User, timestamp, device, before-and-after values on every single change.',
-    span: 2 
+  {
+    id: 'audit',
+    title: 'Versioned Workspaces',
+    desc: 'Every change has an author, a diff and a reason. Compare any two releases.',
+    span: 2
   },
-  { 
-    id: 'locks', 
-    title: 'Period Locks', 
-    desc: 'Closed periods reject postings outright, not just warn.',
-    span: 2 
+  {
+    id: 'locks',
+    title: 'Environment Promotion',
+    desc: 'Four environments with approval at each gate, and a rollback that works.',
+    span: 2
   },
   { 
     id: 'residency', 
@@ -717,14 +761,14 @@ const D = {
   mid: '#475569',
   soft: '#94a3b8',
   hair: '#e2e8f0',
-  green: '#0a8f5e',
-  wash: 'rgba(10, 143, 94, 0.09)',
+  green: '#6c4cf1',
+  wash: 'rgba(108, 76, 241, 0.09)',
   stop: '#e11d48',
 };
 
 const Dia = ({ span, h, children }) => (
   <svg
-    className="fs-sec-dia"
+    className="ps-sec-dia"
     data-span={span}
     viewBox={`0 0 240 ${h}`}
     fill="none"
@@ -744,13 +788,13 @@ const Padlock = ({ x, y, c }) => (
 );
 
 const SecGraphic = ({ id, span }) => {
-  /* maker and checker are two people, and the third row is the rule
-     that keeps them from collapsing into one */
+  /* access comes from the record, so building a screen onto an object
+     cannot widen what the builder was already allowed to see */
   if (id === 'duties') {
     const rows = [
-      { i: 'MK', n: 'M. Khalid', d: 'raised the invoice', state: 'was' },
-      { i: 'RH', n: 'R. Haddad', d: 'approved it', state: 'ok' },
-      { i: 'MK', n: 'M. Khalid', d: 'cannot approve his own', state: 'no' },
+      { i: 'FM', n: 'F. Al-Mutairi', d: 'built the screen', state: 'was' },
+      { i: 'FM', n: 'Sees site 4 records', d: 'the access he already had', state: 'ok' },
+      { i: 'FM', n: 'Cannot see site 9', d: 'building it grants nothing new', state: 'no' },
     ];
     return (
       <Dia span={span} h={124}>
@@ -794,12 +838,12 @@ const SecGraphic = ({ id, span }) => {
     );
   }
 
-  /* every change keeps its before as well as its after, in order */
+  /* every workspace change keeps its before as well as its after */
   if (id === 'audit') {
     const rows = [
-      ['09:14', 'amount', '18,240', '18,240.00'],
-      ['09:15', 'approver', '—', 'R. Haddad'],
-      ['09:16', 'status', 'draft', 'posted'],
+      ['v1.4', 'field', 'optional', 'required'],
+      ['v1.5', 'approver', '—', 'Site lead'],
+      ['v1.6', 'status', 'draft', 'published'],
     ];
     return (
       <Dia span={span} h={124}>
@@ -839,7 +883,7 @@ const SecGraphic = ({ id, span }) => {
 
   /* a closed period does not warn, it refuses */
   if (id === 'locks') {
-    const months = [['Sep', true], ['Oct', true], ['Nov', false]];
+    const months = [['Dev', false], ['Test', false], ['Prod', true]];
     return (
       <Dia span={span} h={124}>
         {months.map(([m, shut], k) => {
@@ -869,7 +913,7 @@ const SecGraphic = ({ id, span }) => {
 
         <rect x="50" y="96" width="140" height="24" rx="8" fill="#fff" stroke={D.hair} />
         <path d="M65 103 l9 9 M74 103 l-9 9" stroke={D.stop} strokeWidth="2" strokeLinecap="round" />
-        <text x="84" y="112" fontSize="9.5" fontWeight="600" fill={D.ink}>posting rejected</text>
+        <text x="84" y="112" fontSize="9.5" fontWeight="600" fill={D.ink}>promotion needs sign-off</text>
       </Dia>
     );
   }
@@ -940,25 +984,25 @@ const SecGraphic = ({ id, span }) => {
 
 export const Security = () => {
   return (
-    <section className="fs-sec-new" id="security">
-      <div className="fs-in">
+    <section className="ps-sec-new" id="security">
+      <div className="ps-in">
         <Head
           n="06"
           label="Security & controls"
           ask="Can we trust it?"
-          title="Every field that changes"
-          accent="leaves a record."
-          lede="Controls here are system behaviour, not a policy document. Emvive Finance is built on immutable ledgers with strict role-based access."
+          title="Built by anyone,"
+          accent="governed like everything else."
+          lede="Controls here are system behaviour, not a policy document. What a department builds on a Friday afternoon is still something IT is happy to own on Monday."
         />
 
-        <div className="fs-sec-grid-6">
+        <div className="ps-sec-grid-6">
           {SEC_CARDS.map((card, i) => (
-            <Reveal className="fs-sec-card-clean" style={{ gridColumn: `span ${card.span}` }} key={card.title} delay={i * 0.06}>
-              <div className="fs-sec-card-text-clean">
+            <Reveal className="ps-sec-card-clean" style={{ gridColumn: `span ${card.span}` }} key={card.title} delay={i * 0.06}>
+              <div className="ps-sec-card-text-clean">
                 <h3>{card.title}</h3>
                 <p>{card.desc}</p>
               </div>
-              <div className="fs-sec-card-graphic-clean">
+              <div className="ps-sec-card-graphic-clean">
                  <SecGraphic id={card.id} span={card.span} />
               </div>
             </Reveal>
@@ -973,48 +1017,36 @@ export const Security = () => {
    07 — WHY EMVIVE / BUSINESS IMPACT
    "Why should we choose it?"
 
-   The close is the number finance is judged on, so it is drawn against
+   The close is the number platform is judged on, so it is drawn against
    the month it has to fit inside rather than shown as an oversized
    numeral. Everything else sits underneath at a size that lets the
    close keep the stage.
    ===================================================================== */
+/* the number this product is judged on: how long a requirement waits
+   before somebody is using it */
 const CLOSE = [
-  { k: 'Before Emvive', days: 19, tone: 'was', note: 'Nineteen working days, most of it chasing' },
-  { k: 'With Emvive', days: 3, tone: 'now', note: 'Reviewed, signed and filed by day three' },
+  { k: 'Custom development', days: 96, tone: 'was', note: 'A quote in months and a place in the backlog' },
+  { k: 'With Emvive', days: 9, tone: 'now', note: 'Built by the team that owns the process' },
 ];
 
-const IMPACT = [
-  { v: 42, c: 'orange', suffix: '%', label: 'Fewer manual journal entries', sub: 'Posting rules absorb the routine work within the first quarter' },
-  { v: 4.2, c: 'blue', decimals: 1, prefix: 'SAR ', suffix: 'M', label: 'Working capital released', sub: 'Recovered from a shorter cash cycle and tighter credit control' },
-  { v: 99.8, c: 'green', decimals: 1, suffix: '%', label: 'Cleared on first submission', sub: 'Signed, stamped and accepted by the authority in under a second' },
-];
-
-const REASONS = [
-  [Clock, 'The close stops being a project', 'Sub-ledgers post in real time and reconciliations run nightly, so period end reviews work already done.', 'teal'],
-  [Layers, 'One ledger, many books', 'Statutory, management and IFRS views come off the same postings. Intercompany matches itself.', 'violet'],
-  [ShieldCheck, 'Controls that actually stop things', 'A closed period rejects a posting. Approval limits and duty segregation are enforced by the ledger, not by memo.', 'orange'],
-  [Building2, 'Built for this region', 'ZATCA Phase 2, Arabic presentation, multi-currency groups and data held in Saudi Arabia, the UAE or India.', 'green'],
-];
-
-const DAYS = 31;
+const DAYS = 120;
 const pct = (d) => `${(d / DAYS) * 100}%`;
 
 /* the ruler the two bars are measured against — each tick sits at the
-   same scale the bars are drawn on, so day 19 on the ruler is the end
-   of the 19-day bar underneath it */
-const RULER = [1, 5, 10, 15, 20, 25, 31];
+   same scale the bars are drawn on */
+const RULER = [0, 20, 40, 60, 80, 100, 120];
 
 const STATS = [
-  { icon: Clock, value: '3', suffix: ' days', label: 'To close' },
-  { icon: Layers, value: '42', suffix: '%', label: 'Less manual work' },
-  { icon: Users, value: '7', suffix: '', label: 'Entities consolidated' },
-  { icon: ShieldCheck, value: '99.8', suffix: '%', label: 'First-pass clearance' },
+  { icon: Clock, value: '9', suffix: ' days', label: 'Brief to first live user' },
+  { icon: Layers, value: '1,240', suffix: '+', label: 'Applications in production' },
+  { icon: Users, value: '38,000', suffix: '', label: 'People using them' },
+  { icon: ShieldCheck, value: '99.98', suffix: '%', label: 'Platform availability' },
 ];
 
 const QUOTES = [
-  'Sub-ledgers post in real time and reconciliations run nightly, so period end reviews work that is already done.',
-  'ZATCA Phase 2, Arabic presentation, multi-currency groups and data held in Saudi Arabia, UAE or India.',
-  'A closed period rejects a posting. Approval limits and duty segregation are enforced by the ledger, not by memo.',
+  'The team that owns the process builds it, and changes it the afternoon the rule changes.',
+  'Every object is an API the moment it exists, so there is no integration project to make an application reachable.',
+  'Versioned workspaces, environment promotion and an audit trail of every change — IT reviews the platform, not every app on it.',
 ];
 
 /* ---------------------------------------------------------------
@@ -1024,14 +1056,14 @@ const QUOTES = [
    card had to be made twice, and the two would drift.
    --------------------------------------------------------------- */
 const CloseCard = () => (
-  <Reveal className="fs-close" y={22}>
-    <div className="fs-close-top">
-      <span className="fs-close-k">THE MONTH-END CLOSE</span>
-      <span className="fs-close-sub">Working days after period end</span>
+  <Reveal className="ps-close" y={22}>
+    <div className="ps-close-top">
+      <span className="ps-close-k">THE MONTH-END CLOSE</span>
+      <span className="ps-close-sub">Working days after period end</span>
     </div>
 
-    <div className="fs-close-ruler">
-      <span className="fs-close-ruler-track">
+    <div className="ps-close-ruler">
+      <span className="ps-close-ruler-track">
         {RULER.map((d) => (
           <i key={d} style={{ left: pct(d) }}>{d}</i>
         ))}
@@ -1039,13 +1071,13 @@ const CloseCard = () => (
     </div>
 
     {CLOSE.map((c, i) => (
-      <div className={`fs-close-row ${c.tone}`} key={c.k}>
-        <span className="fs-close-label">
+      <div className={`ps-close-row ${c.tone}`} key={c.k}>
+        <span className="ps-close-label">
           <b>{c.k}</b>
           <em>{c.note}</em>
         </span>
 
-        <span className="fs-close-track">
+        <span className="ps-close-track">
           <motion.i
             style={{ width: pct(c.days) }}
             initial={{ scaleX: 0 }}
@@ -1055,13 +1087,13 @@ const CloseCard = () => (
           />
         </span>
 
-        <span className="fs-close-days"><b>{c.days}</b> days</span>
+        <span className="ps-close-days"><b>{c.days}</b> days</span>
       </div>
     ))}
 
-    <div className="fs-close-delta">
-      <span className="fs-close-gap" style={{ marginLeft: pct(3), width: pct(16) }}><i /></span>
-      <span className="fs-close-claim">
+    <div className="ps-close-delta">
+      <span className="ps-close-gap" style={{ marginLeft: pct(3), width: pct(16) }}><i /></span>
+      <span className="ps-close-claim">
         <b><ScrollNumber to={16} prefix="−" /> days</b>
         returned to the team, every month
       </span>
@@ -1070,13 +1102,13 @@ const CloseCard = () => (
 );
 
 const StatsBand = ({ className = '' }) => (
-  <div className={`fs-stats-grid ${className}`}>
+  <div className={`ps-stats-grid ${className}`}>
     {STATS.map((s, i) => (
-      <Reveal className="fs-stat-item" key={s.label} delay={i * 0.08}>
-        <div className="fs-stat-icon">
+      <Reveal className="ps-stat-item" key={s.label} delay={i * 0.08}>
+        <div className="ps-stat-icon">
           <s.icon size={24} strokeWidth={2} />
         </div>
-        <div className="fs-stat-value">
+        <div className="ps-stat-value">
           <b>{s.value}<span>{s.suffix}</span></b>
           <p>{s.label}</p>
         </div>
@@ -1086,8 +1118,8 @@ const StatsBand = ({ className = '' }) => (
 );
 
 export const WhyEmvive = () => (
-  <section className="fs-why" id="impact">
-    <div className="fs-in">
+  <section className="ps-why" id="impact">
+    <div className="ps-in">
       <Head
         n="07"
         label="Why Emvive · business impact"
@@ -1098,24 +1130,24 @@ export const WhyEmvive = () => (
       {/* one rounded panel, split: the close card and the figures on a
           grey ground, the photograph filling the other half, and the
           three quotes lying across the seam between them */}
-      <div className="fs-why-panel">
-        <div className="fs-why-panel-left">
+      <div className="ps-why-panel">
+        <div className="ps-why-panel-left">
           <CloseCard />
           <StatsBand />
         </div>
 
-        <div className="fs-why-panel-photo">
+        <div className="ps-why-panel-photo">
           <img
             src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=900"
-            alt="Finance professional"
-            className="fs-quotes-bg-img"
+            alt="Platform professional"
+            className="ps-quotes-bg-img"
           />
         </div>
 
-        <div className="fs-quotes-overlay">
+        <div className="ps-quotes-overlay">
           {QUOTES.map((q, i) => (
-            <Reveal className="fs-quote-card" key={i} delay={0.1 + i * 0.1}>
-              <span className="fs-quote-mark">❝</span>
+            <Reveal className="ps-quote-card" key={i} delay={0.1 + i * 0.1}>
+              <span className="ps-quote-mark">❝</span>
               <p>{q}</p>
             </Reveal>
           ))}
@@ -1132,8 +1164,8 @@ export const WhyEmvive = () => (
    underneath. Same components, same surface, different arrangement.
    ===================================================================== */
 export const WhyEmviveWide = () => (
-  <section className="fs-why fs-why-wide" id="impact-wide">
-    <div className="fs-in">
+  <section className="ps-why ps-why-wide" id="impact-wide">
+    <div className="ps-in">
       <Head
         n="07b"
         label="Why Emvive · business impact"
@@ -1142,9 +1174,9 @@ export const WhyEmviveWide = () => (
         lede="One real group — seven legal entities, three currencies — twelve months after go-live. Measured in working days after period end."
       />
 
-      <div className="fs-why-panel fs-why-panel-wide">
+      <div className="ps-why-panel ps-why-panel-wide">
         <CloseCard />
-        <StatsBand className="fs-stats-row" />
+        <StatsBand className="ps-stats-row" />
       </div>
     </div>
   </section>

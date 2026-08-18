@@ -329,6 +329,8 @@ const AgenticHero = () => {
       </div>
     </section>
 
+    {/* Hidden per user request for now */}
+    {false && (
     <section className="ah-tiles-section ah-dark" id="industries">
       <div className="ah-industries-wrap">
         <div className="ah-tiles-head">
@@ -373,6 +375,7 @@ const AgenticHero = () => {
         </div>
       </div>
     </section>
+    )}
     </div>
 
     {videoOpen && (

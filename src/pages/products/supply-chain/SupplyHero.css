@@ -2,19 +2,19 @@
    EMVIVE FINANCE — HERO
 
    Scoped entirely to `.fh`. Nothing here leaks into the rest of the
-   Platform page, which keeps its own paler treatment.
+   Supply page, which keeps its own paler treatment.
 
    The hero runs a warmer, higher-contrast palette than the page below
-   it: a light neutral ground, near-black charcoal type, and the Platform
+   it: a light neutral ground, near-black charcoal type, and the Supply
    green used only where it means something — the accent word, the
    status of a record, the active capability.
    ===================================================================== */
 
 .fh {
-  --ph-accent: var(--accent, #6c4cf1);
-  --ph-accent-deep: color-mix(in srgb, var(--accent, #6c4cf1) 72%, #000);
-  --ph-ground: #eceff4;
-  --ph-ground-2: #e3e7ef;
+  --sh-accent: var(--accent, #0891b2);
+  --sh-accent-deep: color-mix(in srgb, var(--accent, #0891b2) 72%, #000);
+  --sh-ground: #eceff4;
+  --sh-ground-2: #e3e7ef;
 
   /* stronger ink than the page default — the old hero read washed out */
   --ink: #0c1013;
@@ -31,23 +31,23 @@
      lifted the full height of both and pads the same amount back. The
      field now starts at the top of the screen and is the background for
      the header pill and the product bar; the content does not move. */
-  --ph-lift: 148px;  /* 90px site header + 58px product bar */
+  --sh-lift: 148px;  /* 90px site header + 58px product bar */
 
   position: relative;
   isolation: isolate;
-  margin-top: calc(var(--ph-lift) * -1);
-  padding-top: calc(var(--ph-lift) + 2rem);
+  margin-top: calc(var(--sh-lift) * -1);
+  padding-top: calc(var(--sh-lift) + 2rem);
   background: #f6f7fa;
 }
 
 /* --- background ---
-   Translucent overlapping planes (see PlatformField.jsx): sheets of
+   Translucent overlapping planes (see SupplyField.jsx): sheets of
    frosted glass crossing at shallow angles, each with a bright
    refraction edge, compounding where they overlap. Grain sits over the
    top; the ground gradient shows through everything. */
-.ph-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.sh-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 
-.ph-field {
+.sh-field {
   position: absolute; inset: 0;
   /* Density rises to the right. The statement needs quiet ground behind
      it — a lit edge cutting through the headline is the one place this
@@ -59,17 +59,17 @@
 
 /* Rectangles only — no radial bloom behind them. Every mark in this
    field is one of the sheets below. */
-.ph-plane {
+.sh-plane {
   position: absolute;
   display: block;
-  animation: ph-plane-drift ease-in-out infinite alternate;
+  animation: sh-plane-drift ease-in-out infinite alternate;
   will-change: transform;
 }
 
 /* The body fades out along its length so a sheet never ends in a hard
    stop, and it is softened by a fraction of a pixel — enough to take
    the digital hardness off the fill while leaving the lit edge sharp. */
-.ph-glass {
+.sh-glass {
   display: block;
   width: 100%; height: 100%;
   filter: blur(0.4px);
@@ -79,24 +79,24 @@
 /* the hairline — the refraction. One edge only, the one that crosses
    the fold; a full border would redraw the rectangle we are at pains
    to hide. */
-.ph-glass.lit-t { border-top: 1px solid rgba(255, 255, 255, 0.95); }
-.ph-glass.lit-b { border-bottom: 1px solid rgba(255, 255, 255, 0.95); }
-.ph-glass.lit-l { border-left: 1px solid rgba(255, 255, 255, 0.95); }
+.sh-glass.lit-t { border-top: 1px solid rgba(255, 255, 255, 0.95); }
+.sh-glass.lit-b { border-bottom: 1px solid rgba(255, 255, 255, 0.95); }
+.sh-glass.lit-l { border-left: 1px solid rgba(255, 255, 255, 0.95); }
 
-.ph-glass.cool {
+.sh-glass.cool {
   background: rgba(255, 255, 255, 0.55);
 }
 
-.ph-glass.violet {
+.sh-glass.violet {
   background: rgba(255, 255, 255, 0.5);
 }
 
-@keyframes ph-plane-drift {
+@keyframes sh-plane-drift {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-1.4%, 1.8%, 0); }
 }
 
-.ph-bg-noise {
+.sh-bg-noise {
   position: absolute; inset: 0;
   opacity: 0.3;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
@@ -105,7 +105,7 @@
 /* =====================================================================
    TOP AREA — statement left, product right
    ===================================================================== */
-.ph-top {
+.sh-top {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.04fr);
   grid-template-areas:
@@ -114,16 +114,16 @@
   align-content: center;
   column-gap: clamp(2.5rem, 4.5vw, 5rem);
   row-gap: 2.5rem;
-  padding: clamp(1.25rem, 2.2vw, 2.25rem) var(--pn-gutter, max(96px, calc((100vw - 1500px) / 2))) clamp(2.75rem, 4vw, 4rem);
+  padding: clamp(1.25rem, 2.2vw, 2.25rem) var(--sn-gutter, max(96px, calc((100vw - 1500px) / 2))) clamp(2.75rem, 4vw, 4rem);
 }
 
-.ph-head { grid-area: head; align-self: end; }
-.ph-cta { grid-area: cta; align-self: start; }
-.ph-stage { grid-area: stage; align-self: center; min-width: 0; position: relative; }
+.sh-head { grid-area: head; align-self: end; }
+.sh-cta { grid-area: cta; align-self: start; }
+.sh-stage { grid-area: stage; align-self: center; min-width: 0; position: relative; }
 
 /* the frame sits in its own pool of light, so it reads as lit rather
    than pasted onto the field behind it */
-.ph-stage::before {
+.sh-stage::before {
   content: '';
   position: absolute;
   inset: -14% -10% -18%;
@@ -135,9 +135,9 @@
 /* --- statement ---
    The eyebrow pill and the heading are the home page's, to the pixel —
    same dimensions, weights and tracking as .features-kicker and
-   .features-heading in index.css. Only the accent changes: Platform
+   .features-heading in index.css. Only the accent changes: Supply
    green in place of the site orange. */
-.ph-pill {
+.sh-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -147,21 +147,21 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--ph-accent) 84%, #000);
-  background: color-mix(in srgb, var(--ph-accent) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ph-accent) 25%, transparent);
+  color: #0e7490;
+  background: color-mix(in srgb, var(--sh-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 25%, transparent);
   margin-bottom: 1.5rem;
 }
-.ph-pill::before {
+.sh-pill::before {
   content: '';
   display: block;
   width: 8px; height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--ph-accent) 55%, #fff);
+  background: color-mix(in srgb, var(--sh-accent) 55%, #fff);
 }
 
-.ph-h1 {
+.sh-h1 {
   margin: 0;
   font-size: clamp(2.4rem, 3.5vw, 3.5rem);
   font-weight: 800;
@@ -169,16 +169,16 @@
   letter-spacing: -1.5px;
   color: #0b1730;
 }
-.ph-h1-line { display: block; }
+.sh-h1-line { display: block; }
 
 /* the accent word, gradient-clipped exactly like .text-accent */
-.ph-accent,
-.ph-accent .mk > span {
-  -webkit-text-fill-color: color-mix(in srgb, var(--ph-accent) 78%, #fff);
-  color: color-mix(in srgb, var(--ph-accent) 78%, #fff);
+.sh-accent,
+.sh-accent .mk > span {
+  -webkit-text-fill-color: color-mix(in srgb, var(--sh-accent) 78%, #fff);
+  color: color-mix(in srgb, var(--sh-accent) 78%, #fff);
 }
 
-.ph-lede {
+.sh-lede {
   margin: 1.9rem 0 0;
   max-width: 42ch;
   font-size: clamp(1.02rem, 1.16vw, 1.16rem);
@@ -188,13 +188,13 @@
 }
 
 /* --- calls to action ---
-   The home page's 3D pill, in Platform green: a gradient shell with an
+   The home page's 3D pill, in Supply green: a gradient shell with an
    inset top highlight so it catches light, a lifted drop shadow, and
    an arrow disc on the end. Same geometry as .btn-get-started and
    .cta-btn-primary in index.css — only the accent differs. */
-.ph-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.sh-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-.ph-btn {
+.sh-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
@@ -207,7 +207,7 @@
   transition: transform 0.15s ease, background 0.25s ease;
 }
 
-.ph-btn-disc {
+.sh-btn-disc {
   display: grid;
   place-items: center;
   width: 34px; height: 34px;
@@ -215,39 +215,39 @@
   border-radius: 50%;
   transition: transform 0.2s ease;
 }
-.ph-btn:hover .ph-btn-disc { transform: scale(1.05); }
+.sh-btn:hover .sh-btn-disc { transform: scale(1.05); }
 
 /* dominant: green shell, white disc */
-.ph-btn-solid {
+.sh-btn-solid {
   color: #fff;
-  background: color-mix(in srgb, var(--ph-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--sh-accent) 85%, #fff);
   border: 1px solid rgba(255, 255, 255, 0.22);
 }
-.ph-btn-solid .ph-btn-disc {
+.sh-btn-solid .sh-btn-disc {
   background: #fff;
-  color: var(--ph-accent);
+  color: var(--sh-accent);
 }
-.ph-btn-solid:hover {
+.sh-btn-solid:hover {
   transform: translateY(-2px);
 }
 
 /* quiet: white shell, green disc — the header's Get Started, in green */
-.ph-btn-shell {
+.sh-btn-shell {
   color: #16181d;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
-.ph-btn-shell .ph-btn-disc {
+.sh-btn-shell .sh-btn-disc {
   color: #fff;
-  background: color-mix(in srgb, var(--ph-accent) 85%, #fff);
+  background: color-mix(in srgb, var(--sh-accent) 85%, #fff);
 }
-.ph-btn-shell:hover {
+.sh-btn-shell:hover {
   transform: translateY(-2px);
 }
 
-.ph-btn:active { transform: translateY(1px); }
+.sh-btn:active { transform: translateY(1px); }
 
-.ph-note {
+.sh-note {
   margin: 1.1rem 0 0;
   font-size: 0.815rem;
   letter-spacing: -0.005em;
@@ -258,7 +258,7 @@
    THE PRODUCT FRAME
    A demonstration window, not a floating dashboard.
    ===================================================================== */
-.ph-frame {
+.sh-frame {
   --mx: 50%; --my: 50%;
   position: relative;
   border-radius: 14px;
@@ -272,25 +272,25 @@
     box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ph-frame:hover {
+.sh-frame:hover {
   transform: translateY(-3px) scale(1.006);
   border-color: rgba(12, 16, 19, 0.24);
 }
 
 /* the spotlight rides the cursor across the glass and never touches
    the interface underneath it */
-.ph-frame-glass {
+.sh-frame-glass {
   position: absolute; inset: 0; z-index: 6;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.45s ease;
   background: var(--mx);
 }
-.ph-frame:hover .ph-frame-glass { opacity: 1; }
+.sh-frame:hover .sh-frame-glass { opacity: 1; }
 
-.ph-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.sh-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 
-.ph-frame-ctl {
+.sh-frame-ctl {
   position: absolute; left: 12px; bottom: 12px; z-index: 8;
   width: 28px; height: 28px;
   display: grid; place-items: center;
@@ -304,23 +304,23 @@
   transform: translateY(4px);
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
 }
-.ph-frame:hover .ph-frame-ctl,
-.ph-frame-ctl:focus-visible { opacity: 1; transform: translateY(0); }
-.ph-frame-ctl:hover { background: rgba(12, 16, 19, 0.88); }
+.sh-frame:hover .sh-frame-ctl,
+.sh-frame-ctl:focus-visible { opacity: 1; transform: translateY(0); }
+.sh-frame-ctl:hover { background: rgba(12, 16, 19, 0.88); }
 
-.ph-frame-cap {
+.sh-frame-cap {
   display: flex; align-items: center; gap: 0.55rem;
   margin: 0.95rem 0 0;
   font-size: 0.775rem;
   letter-spacing: -0.004em;
   color: var(--ink-3);
 }
-.ph-frame-dot {
+.sh-frame-dot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--ph-accent);
+  background: var(--sh-accent);
 }
 
-.ph-sr {
+.sh-sr {
   position: absolute;
   width: 1px; height: 1px;
   margin: -1px; padding: 0;
@@ -333,7 +333,7 @@
    Everything is sized off the frame so the whole demonstration scales
    as one image rather than reflowing.
    ===================================================================== */
-.ph-f {
+.sh-f {
   position: relative;
   aspect-ratio: 16 / 10;
   display: flex; flex-direction: column;
@@ -342,64 +342,64 @@
   container-type: inline-size;
 }
 
-.ph-f b, .ph-f h3 { font-weight: 500; }
+.sh-f b, .sh-f h3 { font-weight: 500; }
 
 /* --- chrome --- */
-.ph-f-chrome {
+.sh-f-chrome {
   display: flex; align-items: center; gap: 0.5rem;
   height: 30px; flex-shrink: 0;
   padding: 0 0.6rem;
   border-bottom: 1px solid var(--hair);
   background: #fff;
 }
-.ph-f-dots { display: flex; gap: 4px; }
-.ph-f-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(12, 16, 19, 0.13); }
-.ph-f-mark {
+.sh-f-dots { display: flex; gap: 4px; }
+.sh-f-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(12, 16, 19, 0.13); }
+.sh-f-mark {
   width: 17px; height: 17px; border-radius: 5px;
   display: grid; place-items: center;
   margin-left: 0.25rem;
   font-size: 7px; font-weight: 600; letter-spacing: 0.02em;
   color: #fff; background: var(--ink);
 }
-.ph-f-crumb {
+.sh-f-crumb {
   display: flex; align-items: center; gap: 0.25rem;
   font-size: 9.5px; color: var(--ink-4); white-space: nowrap;
 }
-.ph-f-crumb b { color: var(--ink); }
-.ph-f-omni {
+.sh-f-crumb b { color: var(--ink); }
+.sh-f-omni {
   display: flex; align-items: center; gap: 0.35rem;
   margin-left: auto;
   height: 19px; padding: 0 0.4rem;
   border: 1px solid var(--hair); border-radius: 5px;
   font-size: 9px; color: var(--ink-4);
 }
-.ph-f-omni kbd {
+.sh-f-omni kbd {
   font-family: inherit; font-size: 8px;
   padding: 0 3px; border-radius: 3px;
   background: rgba(12, 16, 19, 0.05);
 }
-.ph-f-bell { position: relative; color: var(--ink-4); display: grid; place-items: center; }
-.ph-f-bell.on { color: var(--ink); }
-.ph-f-bell i {
+.sh-f-bell { position: relative; color: var(--ink-4); display: grid; place-items: center; }
+.sh-f-bell.on { color: var(--ink); }
+.sh-f-bell i {
   position: absolute; top: -1px; right: -1px;
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--ph-accent);
+  background: var(--sh-accent);
 }
-.ph-f-face {
+.sh-f-face {
   width: 18px; height: 18px; border-radius: 50%;
   display: grid; place-items: center;
   font-size: 7.5px; color: #fff; background: #3f4750;
 }
 
 /* --- body --- */
-.ph-f-body {
+.sh-f-body {
   position: relative; flex: 1; min-height: 0; display: flex;
   opacity: 1;
   transition: opacity 0.45s ease;
 }
-.ph-f-body.dim { opacity: 0; }
+.sh-f-body.dim { opacity: 0; }
 
-.ph-f-rail {
+.sh-f-rail {
   width: 34px; flex-shrink: 0;
   display: flex; flex-direction: column; gap: 2px;
   padding: 0.45rem 0;
@@ -407,15 +407,15 @@
   border-right: 1px solid var(--hair);
   background: #fff;
 }
-.ph-f-rail-i {
+.sh-f-rail-i {
   width: 24px; height: 24px; border-radius: 6px;
   display: grid; place-items: center;
   color: var(--ink-4);
   transition: color 0.35s ease, background 0.35s ease;
 }
-.ph-f-rail-i.on { color: var(--ph-accent); background: color-mix(in srgb, var(--ph-accent) 10%, transparent); }
+.sh-f-rail-i.on { color: var(--sh-accent); background: color-mix(in srgb, var(--sh-accent) 10%, transparent); }
 
-.ph-f-main {
+.sh-f-main {
   flex: 1; min-width: 0;
   display: flex; flex-direction: column;
   gap: 6px;
@@ -423,30 +423,30 @@
 }
 
 /* --- the group position --- */
-.ph-f-kpis {
+.sh-f-kpis {
   display: flex; align-items: center; gap: 0;
   flex-shrink: 0;
   border: 1px solid var(--hair); border-radius: 7px;
   background: #fff;
 }
-.ph-f-kpis > div {
+.sh-f-kpis > div {
   flex: 1; min-width: 0;
   display: flex; flex-direction: column; gap: 1px;
   padding: 7px 9px;
   border-right: 1px solid var(--hair);
 }
-.ph-f-kpis > div:last-of-type { border-right: 0; }
-.ph-f-kpis span { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.02em; }
-.ph-f-num {
+.sh-f-kpis > div:last-of-type { border-right: 0; }
+.sh-f-kpis span { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.02em; }
+.sh-f-num {
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-variant-numeric: tabular-nums;
   font-size: 12px; letter-spacing: -0.03em; color: var(--ink);
 }
-.ph-f-kpis em { font-style: normal; font-size: 8px; color: var(--ink-4); }
-.ph-f-kpis em.up { color: var(--ph-accent); }
-.ph-f-kpis em.move { color: #a06010; }
+.sh-f-kpis em { font-style: normal; font-size: 8px; color: var(--ink-4); }
+.sh-f-kpis em.up { color: var(--sh-accent); }
+.sh-f-kpis em.move { color: #a06010; }
 
-.ph-f-live {
+.sh-f-live {
   display: flex !important; flex-direction: row !important;
   align-items: center; gap: 4px;
   flex: 0 0 auto !important;
@@ -454,17 +454,17 @@
   font-size: 8.5px; color: var(--ink-3);
   border-right: 0 !important;
 }
-.ph-f-live i {
+.sh-f-live i {
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--ph-accent);
-  animation: ph-pulse 2s ease-in-out infinite;
+  background: var(--sh-accent);
+  animation: sh-pulse 2s ease-in-out infinite;
 }
-@keyframes ph-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes sh-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 /* --- panels --- */
-.ph-f-cols { display: flex; gap: 6px; flex: 1; min-height: 0; }
+.sh-f-cols { display: flex; gap: 6px; flex: 1; min-height: 0; }
 
-.ph-f-panel {
+.sh-f-panel {
   position: relative;
   display: flex; flex-direction: column;
   min-width: 0; min-height: 0;
@@ -476,52 +476,52 @@
 /* Panels that change contents mid-film stack their two states on top of
    one another and cross-fade. Taking turns left the panel empty for a
    third of a second, which reads as a fault rather than a transition. */
-.ph-f-layer { position: absolute; inset: 0; }
-.ph-f-cols > .ph-f-panel:first-child { flex: 1.5; }
-.ph-f-insp { flex: 1; max-width: 42%; }
+.sh-f-layer { position: absolute; inset: 0; }
+.sh-f-cols > .sh-f-panel:first-child { flex: 1.5; }
+.sh-f-insp { flex: 1; max-width: 42%; }
 
-.ph-f-panel header {
+.sh-f-panel header {
   display: flex; align-items: center; gap: 0.4rem;
   height: 24px; flex-shrink: 0;
   padding: 0 8px;
   border-bottom: 1px solid var(--hair);
 }
-.ph-f-panel header b { font-size: 9.5px; color: var(--ink); }
-.ph-f-count { font-size: 8.5px; color: var(--ink-4); margin-left: auto; }
-.ph-f-panel header .ph-f-tag { margin-left: auto; }
-.ph-f-panel header .ph-f-count + .ph-f-tag { margin-left: 0.4rem; }
+.sh-f-panel header b { font-size: 9.5px; color: var(--ink); }
+.sh-f-count { font-size: 8.5px; color: var(--ink-4); margin-left: auto; }
+.sh-f-panel header .sh-f-tag { margin-left: auto; }
+.sh-f-panel header .sh-f-count + .sh-f-tag { margin-left: 0.4rem; }
 
 /* --- transaction feed ---
    The feed is deliberately longer than the panel at narrow widths. The
    mask fades the overflow out instead of slicing a row in half, which
    is how a real list behaves and how a real screenshot of one looks. */
-.ph-f-rows {
+.sh-f-rows {
   flex: 1; min-height: 0; overflow: hidden;
   -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent 100%);
   mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent 100%);
 }
-.ph-f-row {
+.sh-f-row {
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr) auto 62px;
   align-items: center; gap: 6px;
   padding: 5.5px 8px;
   border-bottom: 1px solid rgba(12, 16, 19, 0.045);
 }
-.ph-f-row.sel { background: color-mix(in srgb, var(--ph-accent) 4.5%, transparent); }
-.ph-f-ref {
+.sh-f-row.sel { background: color-mix(in srgb, var(--sh-accent) 4.5%, transparent); }
+.sh-f-ref {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 8.5px; color: var(--ink-3); letter-spacing: -0.02em;
 }
-.ph-f-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
-.ph-f-txt b { font-size: 9.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-f-txt i { font-style: normal; font-size: 8.5px; color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-f-amt {
+.sh-f-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
+.sh-f-txt b { font-size: 9.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-f-txt i { font-style: normal; font-size: 8.5px; color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-f-amt {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-variant-numeric: tabular-nums;
   font-size: 9.5px; color: var(--ink); text-align: right; letter-spacing: -0.02em;
 }
 
-.ph-f-tag {
+.sh-f-tag {
   display: inline-flex; align-items: center; gap: 3px;
   justify-self: end;
   padding: 1.5px 5px;
@@ -529,31 +529,31 @@
   font-size: 8px; font-style: normal; letter-spacing: 0.01em;
   white-space: nowrap;
 }
-.ph-f-tag.ok { color: var(--ph-accent-deep); background: color-mix(in srgb, var(--ph-accent) 12%, transparent); }
-.ph-f-tag.wait { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
-.ph-f-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.1); }
-.ph-f-tag.mute { color: var(--ink-4); background: rgba(12, 16, 19, 0.05); }
-.ph-f-pulse {
+.sh-f-tag.ok { color: var(--sh-accent-deep); background: color-mix(in srgb, var(--sh-accent) 12%, transparent); }
+.sh-f-tag.wait { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
+.sh-f-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.1); }
+.sh-f-tag.mute { color: var(--ink-4); background: rgba(12, 16, 19, 0.05); }
+.sh-f-pulse {
   width: 5px; height: 5px; border-radius: 50%;
   background: #d97706;
-  animation: ph-pulse 1.6s ease-in-out infinite;
+  animation: sh-pulse 1.6s ease-in-out infinite;
 }
 
 /* --- approvals queue --- */
-.ph-f-queue { display: flex; flex-direction: column; height: 100%; }
-.ph-f-queue p { margin: 8px 8px 0; font-size: 8.5px; color: var(--ink-4); }
-.ph-f-queue-rows { display: flex; flex-direction: column; gap: 1px; padding: 6px 8px; }
-.ph-f-queue-rows span {
+.sh-f-queue { display: flex; flex-direction: column; height: 100%; }
+.sh-f-queue p { margin: 8px 8px 0; font-size: 8.5px; color: var(--ink-4); }
+.sh-f-queue-rows { display: flex; flex-direction: column; gap: 1px; padding: 6px 8px; }
+.sh-f-queue-rows span {
   display: flex; align-items: center;
   font-size: 9px; color: var(--ink-2);
   padding: 3.5px 0;
   border-bottom: 1px solid rgba(12, 16, 19, 0.04);
 }
-.ph-f-queue-rows i {
+.sh-f-queue-rows i {
   margin-left: auto; font-style: normal;
   font-size: 8.5px; color: var(--ink); font-variant-numeric: tabular-nums;
 }
-.ph-f-queue-foot {
+.sh-f-queue-foot {
   display: flex; align-items: center; gap: 4px;
   margin-top: auto; padding: 6px 8px;
   font-size: 8.5px; color: var(--ink-4);
@@ -561,43 +561,43 @@
 }
 
 /* --- the invoice --- */
-.ph-f-invoice { display: flex; flex-direction: column; height: 100%; }
-.ph-f-invoice header { border-bottom: 1px solid var(--hair); }
-.ph-f-inv-k { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.05em; text-transform: uppercase; }
-.ph-f-invoice header b { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: -0.02em; }
+.sh-f-invoice { display: flex; flex-direction: column; height: 100%; }
+.sh-f-invoice header { border-bottom: 1px solid var(--hair); }
+.sh-f-inv-k { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.05em; text-transform: uppercase; }
+.sh-f-invoice header b { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: -0.02em; }
 
-.ph-f-inv-amt {
+.sh-f-inv-amt {
   padding: 7px 9px 6px;
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-variant-numeric: tabular-nums;
   font-size: 17px; letter-spacing: -0.04em; color: var(--ink);
   border-bottom: 1px solid var(--hair);
 }
-.ph-f-inv-amt span { font-size: 10px; color: var(--ink-4); margin-right: 3px; letter-spacing: 0; }
+.sh-f-inv-amt span { font-size: 10px; color: var(--ink-4); margin-right: 3px; letter-spacing: 0; }
 
 /* Nothing here may be clipped — the approval row and the Approve
    button are the whole point of the beat. The panel is given the room
-   instead (see .ph-f-strip) and the block sizes are kept tight. */
-.ph-f-inv-fields {
+   instead (see .sh-f-strip) and the block sizes are kept tight. */
+.sh-f-inv-fields {
   margin: 0; padding: 4px 9px;
   display: flex; flex-direction: column; gap: 1px;
   flex-shrink: 0;
 }
-.ph-f-inv-fields > div {
+.sh-f-inv-fields > div {
   display: flex; align-items: center; gap: 8px;
   padding: 3px 0;
   border-bottom: 1px solid rgba(12, 16, 19, 0.04);
 }
-.ph-f-inv-fields dt { font-size: 8.5px; color: var(--ink-4); width: 44px; flex-shrink: 0; }
-.ph-f-inv-fields dd {
+.sh-f-inv-fields dt { font-size: 8.5px; color: var(--ink-4); width: 44px; flex-shrink: 0; }
+.sh-f-inv-fields dd {
   margin: 0; margin-left: auto;
   display: flex; align-items: center; gap: 3px;
   font-size: 9px; color: var(--ink); text-align: right;
 }
-.ph-f-inv-fields dd.ok { color: var(--ph-accent-deep); }
+.sh-f-inv-fields dd.ok { color: var(--sh-accent-deep); }
 
-.ph-f-inv-actions { display: flex; gap: 5px; margin-top: auto; padding: 7px 9px 8px; flex-shrink: 0; }
-.ph-f-btn {
+.sh-f-inv-actions { display: flex; gap: 5px; margin-top: auto; padding: 7px 9px 8px; flex-shrink: 0; }
+.sh-f-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 4px;
   flex: 1;
   height: 22px;
@@ -606,32 +606,32 @@
   color: #fff; background: var(--ink);
   transition: background 0.35s ease, color 0.35s ease;
 }
-.ph-f-btn.done { color: #fff; background: var(--ph-accent); }
-.ph-f-btn.quiet { flex: 0 0 42px; color: var(--ink-3); background: transparent; border: 1px solid var(--hair); }
+.sh-f-btn.done { color: #fff; background: var(--sh-accent); }
+.sh-f-btn.quiet { flex: 0 0 42px; color: var(--ink-3); background: transparent; border: 1px solid var(--hair); }
 
 /* --- the ledger strip, then the report --- */
-.ph-f-strip { flex: 0 0 30%; }
-.ph-f-ledger, .ph-f-report { display: flex; flex-direction: column; }
-.ph-f-jrows { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-.ph-f-jrow {
+.sh-f-strip { flex: 0 0 30%; }
+.sh-f-ledger, .sh-f-report { display: flex; flex-direction: column; }
+.sh-f-jrows { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.sh-f-jrow {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr) 82px 82px;
   align-items: center; gap: 6px;
   padding: 5px 9px;
 }
-.ph-f-jhead {
+.sh-f-jhead {
   padding-top: 6px; padding-bottom: 3px;
   font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--ink-4);
 }
-.ph-f-jhead span:nth-child(n + 3) { text-align: right; }
-.ph-f-acct {
+.sh-f-jhead span:nth-child(n + 3) { text-align: right; }
+.sh-f-acct {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 8.5px; color: var(--ink-4);
 }
-.ph-f-jname { font-size: 9px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-f-jname { font-size: 9px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.ph-f-jfoot {
+.sh-f-jfoot {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 82px 82px;
   align-items: center; gap: 6px;
@@ -640,68 +640,68 @@
   border-top: 1px solid var(--hair);
   background: #fcfcfb;
 }
-.ph-f-jfoot span {
+.sh-f-jfoot span {
   display: flex; align-items: center; gap: 4px;
-  font-size: 8.5px; color: var(--ph-accent-deep);
+  font-size: 8.5px; color: var(--sh-accent-deep);
 }
 
 /* --- the report ---
-   No `position` here: .ph-f-layer already makes this an absolutely
+   No `position` here: .sh-f-layer already makes this an absolutely
    positioned, full-panel layer, and it is its own containing block for
    the readout below. Re-declaring `relative` cancelled the layer and
    collapsed the panel to the height of its header. */
-.ph-f-bars {
+.sh-f-bars {
   display: flex; align-items: flex-end; gap: 5px;
   flex: 1; min-height: 0;
   padding: 8px 9px 9px;
   margin-right: 96px;
 }
-.ph-f-bars i {
+.sh-f-bars i {
   flex: 1;
   border-radius: 2px 2px 0 0;
   background: rgba(12, 16, 19, 0.14);
 }
-.ph-f-bars i.last { background: var(--ph-accent); }
-.ph-f-report-side {
+.sh-f-bars i.last { background: var(--sh-accent); }
+.sh-f-report-side {
   position: absolute; right: 9px; bottom: 9px;
   display: flex; flex-direction: column; gap: 1px;
   text-align: right;
 }
-.ph-f-report-side span { font-size: 8.5px; color: var(--ink-4); }
-.ph-f-report-side em { font-style: normal; font-size: 8px; color: var(--ph-accent); }
+.sh-f-report-side span { font-size: 8.5px; color: var(--ink-4); }
+.sh-f-report-side em { font-style: normal; font-size: 8px; color: var(--sh-accent); }
 
 /* --- the notification ---
    Top right, directly under the bell that lights up with it and where
    the pointer travels on the closing beat. Bottom right put it on top
    of the report's own readout. */
-.ph-f-toast {
+.sh-f-toast {
   position: absolute; right: 8px; top: 7px; z-index: 20;
   display: flex; align-items: center; gap: 7px;
   padding: 7px 10px;
   border: 1px solid var(--hair); border-radius: 8px;
   background: #fff;
-  color: var(--ph-accent);
+  color: var(--sh-accent);
 }
 
 /* --- the pointer --- */
-.ph-f-cursor { position: absolute; z-index: 30; pointer-events: none; }
-.ph-f-cursor i {
+.sh-f-cursor { position: absolute; z-index: 30; pointer-events: none; }
+.sh-f-cursor i {
   position: absolute; left: -13px; top: -13px;
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--ph-accent) 40%, transparent);
+  background: color-mix(in srgb, var(--sh-accent) 40%, transparent);
 }
 
 /* --- loop position --- */
-.ph-f-progress {
+.sh-f-progress {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 12;
   height: 2px;
   background: rgba(12, 16, 19, 0.06);
 }
-.ph-f-progress i {
+.sh-f-progress i {
   display: block; height: 100%;
   transform-origin: left;
-  background: var(--ph-accent);
+  background: var(--sh-accent);
 }
 
 /* =====================================================================
@@ -713,53 +713,53 @@
 /* No band of its own: the cards sit directly on the hero's field, so
    the sheets behind them are the same sheets behind the statement and
    the product. The rail is part of the fold, not a strip under it. */
-.ph-rail {
+.sh-rail {
   position: relative;
   padding: 0.5rem 0 3.25rem;
   background: transparent;
 }
 
-.ph-rail-marquee {
+.sh-rail-marquee {
   display: flex;
   overflow: hidden;
   user-select: none;
   gap: 3rem;
-  padding: 1rem var(--pn-gutter, max(96px, calc((100vw - 1500px) / 2)));
+  padding: 1rem var(--sn-gutter, max(96px, calc((100vw - 1500px) / 2)));
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 76px, #000 calc(100% - 76px), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 76px, #000 calc(100% - 76px), transparent 100%);
 }
 
-.ph-rail-marquee-content {
+.sh-rail-marquee-content {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: space-around;
   gap: 3rem;
   min-width: 100%;
-  animation: ph-marquee 30s linear infinite;
+  animation: sh-marquee 30s linear infinite;
 }
 
-.ph-rail-marquee-content.paused {
+.sh-rail-marquee-content.paused {
   animation-play-state: paused;
 }
 
-@keyframes ph-marquee {
+@keyframes sh-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-100% - 3rem)); }
 }
 
-.ph-cap-marquee-item {
+.sh-cap-marquee-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.ph-cap-ic {
+.sh-cap-ic {
   display: flex;
   color: var(--cc);
 }
 
-.ph-cap-name {
+.sh-cap-name {
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--ink);
@@ -767,7 +767,7 @@
   white-space: nowrap;
 }
 
-.ph-cap-sep {
+.sh-cap-sep {
   color: var(--ink-4);
   font-size: 1rem;
   margin-left: 0.5rem;
@@ -781,41 +781,41 @@
    calls to action, rail — the product stays prominent throughout.
    ===================================================================== */
 @media (max-width: 1180px) {
-  .ph-top {
+  .sh-top {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'head' 'stage' 'cta';
     row-gap: 2.25rem;
-    padding-left: var(--pn-gutter);
-    padding-right: var(--pn-gutter);
+    padding-left: var(--sn-gutter);
+    padding-right: var(--sn-gutter);
   }
-  .ph-head { align-self: auto; max-width: 40rem; }
-  .ph-stage { max-width: 48rem; }
-  .ph-h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
+  .sh-head { align-self: auto; max-width: 40rem; }
+  .sh-stage { max-width: 48rem; }
+  .sh-h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
 }
 
 @media (max-width: 760px) {
-  .fh { padding-top: calc(var(--ph-lift) + 1.25rem); }
-  .ph-top { padding-left: var(--pn-gutter); padding-right: var(--pn-gutter); }
-  .ph-h1 { font-size: clamp(2.1rem, 8.4vw, 2.9rem); }
-  .ph-lede { font-size: 1rem; }
-  .ph-actions { gap: 0.55rem; }
-  .ph-btn { flex: 1 1 auto; justify-content: space-between; font-size: 0.9rem; }
+  .fh { padding-top: calc(var(--sh-lift) + 1.25rem); }
+  .sh-top { padding-left: var(--sn-gutter); padding-right: var(--sn-gutter); }
+  .sh-h1 { font-size: clamp(2.1rem, 8.4vw, 2.9rem); }
+  .sh-lede { font-size: 1rem; }
+  .sh-actions { gap: 0.55rem; }
+  .sh-btn { flex: 1 1 auto; justify-content: space-between; font-size: 0.9rem; }
 
   /* the film keeps its aspect but drops the density it cannot show */
-  .ph-f { font-size: 10px; }
-  .ph-f-rail { display: none; }
-  .ph-f-omni, .ph-f-crumb { display: none; }
-  .ph-f-kpis > div:nth-child(2) { display: none; }
-  .ph-f-strip { display: none; }
-  .ph-f-insp { max-width: 50%; }
+  .sh-f { font-size: 10px; }
+  .sh-f-rail { display: none; }
+  .sh-f-omni, .sh-f-crumb { display: none; }
+  .sh-f-kpis > div:nth-child(2) { display: none; }
+  .sh-f-strip { display: none; }
+  .sh-f-insp { max-width: 50%; }
 
-  .ph-rail-marquee {
-    padding-left: var(--pn-gutter); padding-right: var(--pn-gutter);
+  .sh-rail-marquee {
+    padding-left: var(--sn-gutter); padding-right: var(--sn-gutter);
     gap: 1.5rem;
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
     mask-image: linear-gradient(90deg, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
   }
-  .ph-rail-marquee-content { gap: 1.5rem; }
+  .sh-rail-marquee-content { gap: 1.5rem; }
 }
 
 /* =====================================================================
@@ -823,8 +823,8 @@
    The hero must read identically with animation switched off.
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .ph-f-live i, .ph-f-pulse, .ph-plane { animation: none; }
-  .ph-f-body, .ph-frame, .ph-cap,
-  .ph-rail-dots i, .ph-frame-ctl, .ph-frame-glass { transition: none; }
-  .ph-frame:hover, .ph-cap:hover, .ph-cap:focus-within { transform: none; }
+  .sh-f-live i, .sh-f-pulse, .sh-plane { animation: none; }
+  .sh-f-body, .sh-frame, .sh-cap,
+  .sh-rail-dots i, .sh-frame-ctl, .sh-frame-glass { transition: none; }
+  .sh-frame:hover, .sh-cap:hover, .sh-cap:focus-within { transform: none; }
 }

@@ -6,6 +6,7 @@ import {
   scrollToY, safeRange, EASE,
 } from './motion';
 import './system.css';
+import './heads.css';
 
 /* =====================================================================
    Shared page furniture. Each page composes these differently — the

@@ -4,7 +4,8 @@ import ProductNav from '../shared/nav';
 import { Faq, ContactSection } from '../shared/blocks';
 import { FINANCE_FAQ, FINANCE_CONTACT, FINANCE_NAV } from './FinanceSections';
 import {
-  Capabilities, HowItWorks, Automation, Integrations, Security, WhyEmvive,
+  CapabilitiesGrid, Capabilities, HowItWorks, Automation, Integrations, Security, WhyEmvive,
+  WhyEmviveWide,
 } from './FinanceStory';
 import FinanceHero from './FinanceHero';
 import './FinanceApp.css';
@@ -38,15 +39,19 @@ const Finance = () => (
     <FinanceHero />
 
     <Capabilities />
+    <CapabilitiesGrid />
     <HowItWorks />
     <Automation />
-    <Integrations />
+    {/* <Integrations /> */}
     <Security />
     <WhyEmvive />
+    {/* 07b — the same section as one long card, no photo, no quotes */}
+    <WhyEmviveWide />
 
     <Faq
       eyebrow="08 — FAQ"
-      title="Before you put your ledger on it."
+      title="Before you put"
+      accent="your ledger on it."
       lede="The six things every controller and CFO raises in the first call, answered plainly."
       items={FINANCE_FAQ}
       aside={(
@@ -55,7 +60,7 @@ const Finance = () => (
       )}
     />
 
-    <ContactSection {...FINANCE_CONTACT} />
+    <ContactSection {...FINANCE_CONTACT} variant="card" />
 
     <Footer />
   </ProductPage>

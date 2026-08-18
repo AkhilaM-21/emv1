@@ -67,9 +67,9 @@ body.dark-theme .su { background: #100e0b; color: #f4f1ea; }
 .su-rail { position: relative; margin: 1.4rem 0 0; padding-left: 3.6rem; }
 .su-rail .ui-rail { left: 5px; background: rgba(22, 19, 15, 0.14); }
 body.dark-theme .su-rail .ui-rail { background: rgba(244, 241, 234, 0.14); }
-.su-rail .ui-rail i { background: linear-gradient(to bottom, transparent, currentColor 20%, currentColor); color: #16130f; }
+.su-rail .ui-rail i { color: #16130f; }
 body.dark-theme .su-rail .ui-rail i { color: #f4f1ea; }
-.su-rail .ui-rail i b { background: currentColor; box-shadow: 0 0 0 4px rgba(22, 19, 15, 0.12); }
+.su-rail .ui-rail i b { background: currentColor; }
 
 .su-stage {
   position: relative;

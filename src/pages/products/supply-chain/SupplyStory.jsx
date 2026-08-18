@@ -4,7 +4,11 @@ import {
   BookOpen, Receipt, CreditCard, Wallet, PieChart, TrendingUp, FileText, Scale,
   Check, ArrowRight, Clock, ShieldCheck, Landmark, Building2, Users,
   Layers, Lock, Database, RefreshCw, FileCheck2, GitBranch, Banknote,
-  ChartPie, Percent, Globe, Play, Pause, Inbox, Send, User, X
+  ChartPie, Percent, Globe, Play, Pause, Inbox, Send, User, X,
+  /* the supply chain's own icons — the list above arrived with the file
+     when it was copied from Finance, and a ledger book is the wrong mark
+     for supplier management */
+  Factory, ShoppingCart, Cog, Warehouse, Truck, Network, PackageCheck,
 } from 'lucide-react';
 import {
   motion, Reveal, MaskText, useLive, EASE, useInView, useReducedMotion,
@@ -13,8 +17,8 @@ import { Spotlight, ScrollNumber } from '../shared/stage';
 import { Spark, LiveBars, Ring } from '../shared/viz';
 import {
   Toolbar, LedgerTable, ApprovalPanel, StatementPanel,
-} from './FinanceApp';
-import './FinanceStory.css';
+} from './SupplyApp';
+import './SupplyStory.css';
 
 /* =====================================================================
    EMVIVE FINANCE — THE PAGE AFTER THE HERO
@@ -30,29 +34,29 @@ import './FinanceStory.css';
      07  Why Emvive               why should we choose it?
      08  FAQ + contact            I understand it — let's talk.
 
-   08 is the shared Faq/ContactSection pair and lives in Finance.jsx.
+   08 is the shared Faq/ContactSection pair and lives in Supply.jsx.
 
    Every section opens with the same head: its number, its name, and the
    question in the reader's own words. That question is the section's
    brief — if a block on the page is not answering it, the block does
    not belong there.
 
-   Namespace `fs-`.
+   Namespace `ss-`.
    ===================================================================== */
 
 /* ---------------------------------------------------------------
    THE PALETTE
-   The same eight colours the capability rail in the hero runs on, so
-   the page below the fold is coloured by the same hand that coloured
-   the fold. `rgb` is the raw triple, which is what lets the CSS build
-   translucent tints from the same value.
 
-   A colour is always attached to a THING — a module, a step, a
-   connection, a number — never to a section. Two sections never share
-   a colour scheme, and no block is coloured just to be colourful.
+   Eight colours, the same way Finance runs eight: a colour belongs to a
+   THING — a capability, a step — never to a section, so two neighbouring
+   cards are always told apart by hue. The first slot is the page accent,
+   which is why the first and most important capability wears it.
+
+   `rgb` is the raw triple, which is what lets the CSS build translucent
+   tints from the same value.
    --------------------------------------------------------------- */
 const C = {
-  green: ['#0a8f5e', '10, 143, 94'],
+  green: ['#3557d8', '53, 87, 216'],
   violet: ['#6c50b2', '108, 80, 178'],
   blue: ['#2563eb', '37, 99, 235'],
   orange: ['#e2601f', '226, 96, 31'],
@@ -87,9 +91,9 @@ const StoryVideo = ({ src, label, tone }) => {
   }, [inView, reduced]);
 
   return (
-    <div className="fs-film" style={tone}>
+    <div className="ss-film" style={tone}>
       <video ref={ref} src={src} muted loop playsInline preload="metadata" aria-label={label} />
-      <span className="fs-film-wash" aria-hidden="true" />
+      <span className="ss-film-wash" aria-hidden="true" />
     </div>
   );
 };
@@ -98,23 +102,23 @@ const StoryVideo = ({ src, label, tone }) => {
    The section head, used by all six sections below.
    --------------------------------------------------------------- */
 const Head = ({ n, label, ask, title, accent, lede, tone = '' }) => (
-  <div className={`fs-head ${tone}`}>
+  <div className={`ss-head ${tone}`}>
     <Reveal duration={0.7}>
-      <span className="fs-eyebrow">
+      <span className="ss-eyebrow">
         <i aria-hidden="true" />
         {label}
       </span>
     </Reveal>
 
-    <MaskText text={title} accent={accent} as="h2" className="fs-h2" />
+    <MaskText text={title} accent={accent} as="h2" className="ss-h2" />
 
     {ask && (
       <Reveal delay={0.14} y={12}>
-        <p className="fs-ask">{ask}</p>
+        <p className="ss-ask">{ask}</p>
       </Reveal>
     )}
 
-    {lede && <Reveal delay={0.2} y={14}><p className="fs-lede">{lede}</p></Reveal>}
+    {lede && <Reveal delay={0.2} y={14}><p className="ss-lede">{lede}</p></Reveal>}
   </div>
 );
 
@@ -127,99 +131,92 @@ const Head = ({ n, label, ask, title, accent, lede, tone = '' }) => (
    ===================================================================== */
 const CAPS = [
   {
-    k: 'General Ledger', c: 'green', icon: BookOpen,
-    line: 'The single book every other module posts into.',
-    body: 'A multi-entity, multi-currency chart of accounts with dimensions instead of endless account codes. Journals arrive from the sub-ledgers already coded, already approved and already matched.',
-    points: ['Multi-entity, multi-book, multi-currency', 'Dimensions: cost centre, project, segment, site', 'Automatic FX revaluation and translation', 'Period locks with maker–checker enforcement', 'Automated accruals and prepayments'],
-    stat: ['1.2M', 'journal lines a month'],
+    k: 'Supplier Management', c: 'green', icon: Factory,
+    line: 'Onboarding, scorecards and contracts.',
+    body: 'Supplier CR, VAT, ISO and insurance certificates tracked with expiry alerting before an order can be placed. Performance by delivery and quality.',
+    points: ['Supplier onboarding and scorecards', 'Price lists and contract terms', 'Compliance documents with expiry alerting', 'RFQ and quotation comparison', 'Performance by delivery and quality'],
+    stat: ['412', 'active suppliers'],
   },
   {
-    k: 'Accounts Payable', c: 'violet', icon: Receipt,
-    line: 'Match before you pay, not after.',
-    body: 'Supplier invoices arrive by email, portal or EDI and are read, coded and matched three ways against the purchase order and the goods receipt. Variances are held rather than nodded through.',
-    points: ['Three-way matching with tolerance rules', 'Duplicate and fraud detection on capture', 'Payment runs with bank file generation', 'Supplier self-service for invoice status', 'Vendor portal for invoice submission'],
-    stat: ['128', 'invoices a day, 84% touchless'],
+    k: 'Procurement', c: 'violet', icon: ShoppingCart,
+    line: 'Every order acknowledged, every supplier scored.',
+    body: 'Requisition to receipt on one document trail. Budget is checked when the commitment is made, approvals route by value and category.',
+    points: ['Requisition, RFQ, PO and acknowledgement', 'Commitment accounting against live budgets', 'Approval routing by value and category', 'ASN and goods receipt matching', 'Variance holds instead of nodded-through receipts'],
+    stat: ['128', 'open POs'],
   },
   {
-    k: 'Accounts Receivable', c: 'blue', icon: CreditCard,
-    line: 'Shorten the cash cycle without a collections team.',
-    body: 'Credit limits are checked before dispatch, not after the debt exists. Reminder sequences fire on their own schedule and escalate by ageing bucket.',
-    points: ['Credit limits enforced at order entry', 'Automated dunning by ageing and segment', 'Cash application with bank-feed matching', 'Customer statements and payment portal', 'Integrated online payment gateways'],
-    stat: ['31 days', 'DSO, down from 40'],
+    k: 'Manufacturing', c: 'blue', icon: Cog,
+    line: 'Bill of materials and shop-floor issue.',
+    body: 'The bill of materials issues stock from the right bins and back-flushes the finished goods when the run closes.',
+    points: ['Bill of materials and routing', 'Shop-floor issue and back-flush', 'Work order scheduling against capacity', 'Batch and serial traceability', 'Yield and scrap reporting'],
+    stat: ['9', 'work orders'],
   },
   {
-    k: 'Expenses', c: 'orange', icon: Wallet,
-    line: 'Claims that check themselves against policy.',
-    body: 'Receipts are captured on a phone, read on the spot and tested against the grade, category and city rules before anyone is asked to approve them.',
-    points: ['Mobile capture with receipt extraction', 'Policy rules by grade, category and location', 'Per-diem and mileage calculators', 'Reimbursement posted through payroll', 'Corporate card automated reconciliation'],
-    stat: ['412', 'claimants, 2-day turnaround'],
+    k: 'Warehouse', c: 'orange', icon: Warehouse,
+    line: 'Down to the bin, down to the batch.',
+    body: 'Putaway, picking, packing and counting run on a scanner that works when the signal does not. Stock is held at bin and batch level.',
+    points: ['Bin, batch and serial level stock', 'Putaway, picking, packing and counting', 'FEFO selection with wave planning', 'Offline-first scanning, synced in range', 'Cycle counts with variance approval'],
+    stat: ['46', 'aisles'],
   },
   {
-    k: 'Budgeting', c: 'teal', icon: PieChart,
-    line: 'A budget the ledger actually enforces.',
-    body: 'Budgets are held per dimension and checked at commitment, not at month end. A purchase requisition that would breach its cost centre is stopped where it is raised.',
-    points: ['Bottom-up and top-down budget builds', 'Commitment accounting on requisitions', 'Budget-versus-actual on live balances', 'Reforecast cycles with version history', 'Approval workflows for budget transfers'],
-    stat: ['9', 'cost centres, monthly reforecast'],
+    k: 'Transportation', c: 'teal', icon: Truck,
+    line: 'You hear about the delay before the customer does.',
+    body: 'Loads are built by weight and drop sequence, trips are tracked against plan, and cold chain is logged the whole way.',
+    points: ['Load building by weight and drop', 'Live ETA against plan', 'Temperature and humidity logging', 'Proof of delivery with signature and photo', 'Driver, trip and fleet records'],
+    stat: ['342', 'in transit'],
   },
   {
-    k: 'Forecasting', c: 'cyan', icon: TrendingUp,
-    line: 'Thirteen weeks of cash you can plan against.',
-    body: 'Committed flows from open orders, payables and payroll are combined with expected flows to produce a rolling cash forecast that updates as the underlying documents change.',
-    points: ['13-week rolling cash forecast', 'Scenario modelling on collection assumptions', 'Bank position across four institutions', 'Variance tracking against last forecast', 'Cash flow sensitivity analysis'],
-    stat: ['13 weeks', 'rolling, updated daily'],
+    k: 'Distribution', c: 'cyan', icon: Network,
+    line: 'Cross-docked and allocated across hubs.',
+    body: 'Allocation across hubs happens against live demand rather than a monthly plan.',
+    points: ['Replenishment and allocation', 'Inter-site transfers and returns', 'Cross-docking at the hub', 'Outlet-level stock visibility', 'Demand-led distribution, not monthly plans'],
+    stat: ['18', 'hubs'],
   },
   {
-    k: 'Reporting', c: 'purple', icon: FileText,
-    line: 'The statutory pack as a view, not a project.',
-    body: 'Elimination, translation and consolidation have already run. P&L, balance sheet, cash flow and the notes are produced from the same postings the operational dashboards read.',
-    points: ['IFRS and local GAAP presentations', 'Consolidated and entity-level statements', 'Drill from any figure to its journal', 'Scheduled distribution to the board pack', 'Interactive custom dashboard builder'],
-    stat: ['3', 'currencies consolidated'],
-  },
-  {
-    k: 'Reconciliation', c: 'rose', icon: Scale,
-    line: 'Reconciled overnight, reviewed in the morning.',
-    body: 'Bank feeds, intercompany balances and control accounts are matched by rule every night. What reaches a person is the exception list, not the whole population.',
-    points: ['Daily bank-feed reconciliation', 'Intercompany auto-matching and elimination', 'Control account and sub-ledger tie-outs', 'Exception queue with ageing and owner', 'AI-assisted matching recommendations'],
-    stat: ['96%', 'matched without a human'],
-  },
+    k: 'Customer Planning', c: 'purple', icon: Users,
+    line: 'Demand forecasting by outlet.',
+    body: 'The outlet sees the same record the supplier did. Fill rate is measured on the line, not on the invoice.',
+    points: ['Demand forecasting by outlet', 'Inventory targets and reorder points', 'Risk and stock-out prediction', 'Scenario planning on assumptions', 'Fill rate and OTIF measurement'],
+    stat: ['212', 'outlets'],
+  }
 ];
 
 export const CapabilitiesGrid = () => {
   return (
-    <section className="fs-caps" id="capabilities-grid">
-      <div className="fs-in">
+    <section className="ss-caps" id="capabilities-grid">
+      <div className="ss-in">
         <Head
           n="02b"
           label="Product & capabilities (Grid)"
-          title="Eight modules."
-          accent="One ledger underneath."
-          lede="Nothing here is a separate product with its own database. Every module writes to the same journals and inherits the same controls, so what one module knows, all of them know."
+          title="Seven modules."
+          accent="One stock ledger underneath."
+          lede="Nothing here is a separate product with its own database. Every module writes to the same stock and document records, so what one of them knows, all of them know."
         />
 
-        <div className="fs-caps-body fs-folder-grid">
+        <div className="ss-caps-body ss-folder-grid">
           {CAPS.map((cap, idx) => (
             <motion.div 
               key={cap.k} 
-              className="fs-folder-card" 
+              className="ss-folder-card" 
               style={tint(cap.c)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
             >
-              <div className="fs-folder-tab">
+              <div className="ss-folder-tab">
                 {cap.k}
               </div>
-              <div className="fs-folder-body">
-                <div className="fs-folder-icon">
+              <div className="ss-folder-body">
+                <div className="ss-folder-icon">
                   <cap.icon size={48} strokeWidth={1.2} />
                 </div>
-                <div className="fs-folder-divider" />
-                <div className="fs-folder-text">
-                  <ul className="fs-folder-points">
+                <div className="ss-folder-divider" />
+                <div className="ss-folder-text">
+                  <ul className="ss-folder-points">
                     {cap.points.slice(0, 5).map((pt, i) => (
                       <li key={i} style={{ '--i': i }}>
-                        <span className="fs-folder-bullet"></span>
+                        <span className="ss-folder-bullet"></span>
                         <span>{pt}</span>
                       </li>
                     ))}
@@ -238,38 +235,38 @@ export const Capabilities = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="fs-caps" id="capabilities">
-      <div className="fs-in">
+    <section className="ss-caps" id="capabilities">
+      <div className="ss-in">
         <Head
           n="02"
           label="Product & capabilities"
-          title="Eight modules."
-          accent="One ledger underneath."
-          lede="Nothing here is a separate product with its own database. Every module writes to the same journals and inherits the same controls, so what one module knows, all of them know."
+          title="Seven modules."
+          accent="One stock ledger underneath."
+          lede="Nothing here is a separate product with its own database. Every module writes to the same stock and document records, so what one of them knows, all of them know."
         />
 
-        <div className="fs-ms-layout" style={{ marginTop: '3rem' }}>
-          <div className="fs-ms-accordion">
+        <div className="ss-ms-layout" style={{ marginTop: '3rem' }}>
+          <div className="ss-ms-accordion">
             {CAPS.map((cap, idx) => {
               const isActive = idx === activeTab;
               return (
                 <div 
                   key={cap.k} 
-                  className={`fs-ms-accordion-item ${isActive ? 'active' : ''}`}
+                  className={`ss-ms-accordion-item ${isActive ? 'active' : ''}`}
                   style={tint(cap.c)}
                 >
                   <button 
-                    className="fs-ms-accordion-header"
+                    className="ss-ms-accordion-header"
                     onClick={() => setActiveTab(idx)}
                     aria-expanded={isActive}
                   >
-                    <div className="fs-ms-accordion-title-wrap">
-                      <cap.icon size={20} strokeWidth={2.2} className="fs-ms-accordion-icon" />
-                      <span className="fs-ms-accordion-title">
+                    <div className="ss-ms-accordion-title-wrap">
+                      <cap.icon size={20} strokeWidth={2.2} className="ss-ms-accordion-icon" />
+                      <span className="ss-ms-accordion-title">
                         {cap.k}
                       </span>
                     </div>
-                    <span className="fs-ms-chevron">
+                    <span className="ss-ms-chevron">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         {isActive ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
                       </svg>
@@ -278,15 +275,15 @@ export const Capabilities = () => {
                   <AnimatePresence>
                     {isActive && (
                       <motion.div 
-                        className="fs-ms-accordion-content"
+                        className="ss-ms-accordion-content"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: EASE }}
                       >
-                        <div className="fs-ms-accordion-inner">
+                        <div className="ss-ms-accordion-inner">
                           <p>{cap.body}</p>
-                          <a href="#how" className="fs-ms-link" style={{ color: 'var(--c)' }}>Explore module</a>
+                          <a href="#how" className="ss-ms-link" style={{ color: 'var(--c)' }}>Explore module</a>
                         </div>
                       </motion.div>
                     )}
@@ -296,11 +293,11 @@ export const Capabilities = () => {
             })}
           </div>
 
-          <div className="fs-ms-display" style={tint(CAPS[activeTab].c)}>
+          <div className="ss-ms-display" style={tint(CAPS[activeTab].c)}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                className="fs-ms-display-inner only-visual full-image"
+                className="ss-ms-display-inner only-visual full-image"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
@@ -309,7 +306,7 @@ export const Capabilities = () => {
                 <img 
                   src={`/images/${['capture_step', 'post_step', 'control_step', 'automate_step', 'close_step', 'capture_step', 'post_step', 'control_step'][activeTab]}.jpg`} 
                   alt={CAPS[activeTab].k} 
-                  className="fs-ms-full-img" 
+                  className="ss-ms-full-img" 
                 />
               </motion.div>
             </AnimatePresence>
@@ -331,94 +328,94 @@ export const Capabilities = () => {
    ===================================================================== */
 const STEPS = [
   {
-    k: 'Capture', c: 'green', icon: Inbox,
-    t: 'The document arrives and codes itself',
-    d: 'Invoices and receipts are automatically read and coded to account and dimension before a person sees them.',
-    crumb: 'General ledger',
+    k: 'Purchase', c: 'green', icon: ShoppingCart,
+    t: 'Requisition became a purchase order',
+    d: 'Budget checked at commitment, approval routed by value, order sent and acknowledged — no email in the loop.',
+    crumb: 'Procurement',
     img: '/images/capture_step.jpg',
   },
   {
-    k: 'Post', c: 'blue', icon: Send,
-    t: 'It posts to the ledger in real time',
-    d: 'Journals are written directly to the general ledger as work happens, producing a continuous trial balance.',
-    crumb: 'Journal entries',
+    k: 'Produce', c: 'blue', icon: Cog,
+    t: 'Work order consumes the components',
+    d: 'The bill of materials issues stock from the right bins and back-flushes the finished goods when the run closes.',
+    crumb: 'Manufacturing',
     img: '/images/post_step.jpg',
   },
   {
-    k: 'Control', c: 'violet', icon: ShieldCheck,
-    t: 'The controls decide who signs, and when',
-    d: 'Matching tolerances and delegation rules instantly route entries to the right person for approval.',
-    crumb: 'Approvals',
+    k: 'Warehouse', c: 'violet', icon: Warehouse,
+    t: 'Putaway, then picked against wave',
+    d: 'FEFO batch selection, bin-level allocation, and a pick path that walks the aisles once.',
+    crumb: 'Warehouse',
     img: '/images/control_step.jpg',
   },
   {
-    k: 'Automate', c: 'orange', icon: RefreshCw,
-    t: 'Rules run while the office is closed',
-    d: 'Reconciliation and revaluation run against live balances on schedule without manual intervention.',
-    crumb: 'Automations',
+    k: 'Transit', c: 'orange', icon: Truck,
+    t: 'Truck departs dock',
+    d: 'Load built by weight and drop sequence, temperature logged end to end, proof of delivery captured on the driver’s phone.',
+    crumb: 'Logistics',
     img: '/images/automate_step.jpg',
   },
   {
-    k: 'Close', c: 'rose', icon: FileCheck2,
-    t: 'The period closes on day three',
-    d: 'With live ledgers and nightly reconciliations, the month-end close becomes a simple administrative lock.',
-    crumb: 'Period close',
+    k: 'Delivery', c: 'rose', icon: PackageCheck,
+    t: 'On the shelf, in stock, on time',
+    d: 'The outlet sees the same record the supplier did. Fill rate is measured on the line, not on the invoice.',
+    crumb: 'Distribution',
     img: '/images/close_step.jpg',
-  },
+  }
 ];
 
 export const HowItWorks = () => {
   return (
-    <section className="fs-how" id="how">
-      <div className="fs-in">
+    <section className="ss-how" id="how">
+      <div className="ss-in">
         <Head
           n="03"
           label="How it works"
-          title="From document to signed close,"
-          accent="in five moves."
-          lede="The same record travels the whole way. Nothing is re-keyed, re-exported or reconciled against a second system — each step below is the one screen where that move actually happens."
+          title="From the purchase order"
+          accent="to the carton on the shelf."
+          lede="The same order travels the whole way. Procurement, the warehouse and the fleet read and write the same records, so a quantity never has to be reconciled between two systems that both claim to be right."
         />
 
-        <div className="fs-how-split" style={{ marginTop: '4rem' }}>
+        <div className="ss-how-split" style={{ marginTop: '4rem' }}>
           
           <motion.div 
-            className="fs-how-tall-card"
+            className="ss-how-tall-card"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <img src="/images/automate_step.jpg" alt="How it works" className="fs-how-tall-img" />
-            <div className="fs-how-tall-overlay" />
-            <div className="fs-how-tall-content">
+            <img src="/images/automate_step.jpg" alt="How it works" className="ss-how-tall-img" />
+            <div className="ss-how-tall-overlay" />
+            <div className="ss-how-tall-content">
               <h3>Five seamless moves</h3>
               <p>Watch how a single document flows through the entire system without ever leaving the ledger.</p>
             </div>
           </motion.div>
 
-          <div className="fs-how-features-wrapper">
-            <div className="fs-ms-features-grid fs-grid-2-col">
+          <div className="ss-how-features-wrapper">
+            <div className="ss-ms-features-grid ss-grid-2-col">
               {STEPS.map((st, idx) => (
                 <motion.div
                   key={st.k}
-                  className="fs-ms-feature-card"
+                  className="ss-ms-feature-card"
                   style={tint(st.c)}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '0px 0px -10% 0px' }}
                   transition={{ duration: 0.5, delay: idx * 0.05 }}
                 >
-                  <div className="fs-ms-feature-top">
-                    <div className="fs-ms-feature-icon">
+                  <div className="ss-ms-feature-top">
+                    <div className="ss-ms-feature-icon">
                       <st.icon size={20} strokeWidth={2.2} />
                     </div>
-                    <span className="fs-ms-feature-name">{st.k}</span>
+                    <span className="ss-ms-feature-name">{st.k}</span>
                   </div>
-                  <div className="fs-ms-feature-header">
-                    <div className="fs-ms-feature-bar" />
-                    <h3 className="fs-ms-feature-title">{st.t}</h3>
+                  <div className="ss-ms-feature-header">
+                    <div className="ss-ms-feature-bar" />
+                    <h3 className="ss-ms-feature-title">{st.t}</h3>
                   </div>
-                  <p className="fs-ms-feature-desc">{st.d}</p>
+                  <p className="ss-ms-feature-desc">{st.d}</p>
                 </motion.div>
               ))}
             </div>
@@ -435,23 +432,23 @@ export const HowItWorks = () => {
    ===================================================================== */
 const AUTOMATION_TABS = [
   {
-    id: 'financial-close',
-    label: 'Financial Close',
+    id: 'stock-replenishment',
+    label: 'Stock & Replenishment',
     items: [
-      { name: 'Bank feed reconciliation' },
-      { name: 'FX revaluation' },
-      { name: 'Depreciation run' },
-      { name: 'Intercompany elimination' },
+      { name: 'Reorder point breach' },
+      { name: 'FEFO batch selection' },
+      { name: 'Cycle count scheduling' },
+      { name: 'Transfer suggestions' },
     ]
   },
   {
-    id: 'payables-receivables',
-    label: 'Payables & Receivables',
+    id: 'procurement-transport',
+    label: 'Procurement & Transport',
     items: [
-      { name: 'Three-way invoice match' },
-      { name: 'Dunning escalation' },
-      { name: 'Payment allocations' },
-      { name: 'Credit limit enforcement' },
+      { name: 'PO acknowledgement chasing' },
+      { name: 'Three-way receipt match' },
+      { name: 'Load building by drop' },
+      { name: 'ETA slip alerting' },
     ]
   }
 ];
@@ -460,26 +457,26 @@ export const Automation = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="fs-auto" id="automation">
-      <div className="fs-in">
+    <section className="ss-auto" id="automation">
+      <div className="ss-in">
         <Head
           n="04"
           label="Automation"
           title="The routine work stops"
           accent="reaching a person."
-          lede="Rules run against live balances on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
+          lede="Rules run against live stock on a schedule or on an event. What lands in somebody's queue is the exception — never the whole population."
         />
 
-        <div className="fs-auto-card">
-          <div className="fs-auto-left">
+        <div className="ss-auto-card">
+          <div className="ss-auto-left">
             <h2>Our Offerings</h2>
             <p>We help enterprises pursue a path of smart transformation</p>
             
-            <div className="fs-auto-tabs">
+            <div className="ss-auto-tabs">
               {AUTOMATION_TABS.map((tab, i) => (
                 <button 
                   key={tab.id}
-                  className={`fs-auto-tab ${activeTab === i ? 'on' : ''}`}
+                  className={`ss-auto-tab ${activeTab === i ? 'on' : ''}`}
                   onClick={() => setActiveTab(i)}
                 >
                   {tab.label}
@@ -488,15 +485,15 @@ export const Automation = () => {
             </div>
           </div>
           
-          <div className="fs-auto-right">
-            <div className="fs-auto-hero">
+          <div className="ss-auto-right">
+            <div className="ss-auto-hero">
               <img src="/abstract.png" alt="Automation Abstract" />
             </div>
             
-            <div className="fs-auto-grid">
+            <div className="ss-auto-grid">
               {AUTOMATION_TABS[activeTab].items.map((item, i) => (
-                <div className="fs-auto-item" key={i}>
-                  <span className="fs-auto-item-n">0{i + 1}. {item.name}</span>
+                <div className="ss-auto-item" key={i}>
+                  <span className="ss-auto-item-n">0{i + 1}. {item.name}</span>
                 </div>
               ))}
             </div>
@@ -552,37 +549,37 @@ export const Integrations = () => {
   );
 
   return (
-    <section className="fs-int" id="integrations" ref={ref}>
-      <div className="fs-in">
+    <section className="ss-int" id="integrations" ref={ref}>
+      <div className="ss-in">
         <Head
           n="05"
           label="Integrations"
-          title="One ledger, wired to"
+          title="One stock ledger, wired to"
           accent="everything else."
-          lede="Emvive Finance is the accounting core, not an island. What posts into it and what reads out of it are both live connections — no exports, no overnight file drops nobody owns."
+          lede="Emvive Supply is the accounting core, not an island. What posts into it and what reads out of it are both live connections — no exports, no overnight file drops nobody owns."
         />
 
-        <div className="fs-google-wrapper">
-          <div className="fs-google-grid">
+        <div className="ss-google-wrapper">
+          <div className="ss-google-grid">
             
             {/* LEFT COLUMN: Bank Feeds (Geometric Nodes) */}
-            <div className="fs-google-col left">
+            <div className="ss-google-col left">
               {SOURCES.map(([Icon, name, state, col, meta], i) => {
                 const targetY = (2 - i) * 100; 
                 const gColors = ['#FBBC04', '#34A853', '#EA4335', '#4285F4', '#FBBC04'];
                 const color = gColors[i % gColors.length];
                 
                 return (
-                  <Reveal className="fs-google-left-node" key={name} delay={i * 0.1}>
-                    <div className="fs-google-left-content">
-                      <div className="fs-google-icon-box" style={{ borderBottomColor: color }}>
+                  <Reveal className="ss-google-left-node" key={name} delay={i * 0.1}>
+                    <div className="ss-google-left-content">
+                      <div className="ss-google-icon-box" style={{ borderBottomColor: color }}>
                         <Icon size={18} strokeWidth={2.5} color="#5f6368" />
                       </div>
-                      <span className="fs-google-label">{name}</span>
+                      <span className="ss-google-label">{name}</span>
                     </div>
                     
                     {/* SVG Line: Thin -> Circle -> Thick -> Dotted Curve */}
-                    <svg width="300" height="2" className="fs-google-svg left-svg">
+                    <svg width="300" height="2" className="ss-google-svg left-svg">
                       <line x1="0" y1="0" x2="60" y2="0" stroke="#dadce0" strokeWidth="2" />
                       <circle cx="60" cy="0" r="3" fill="#fff" stroke={color} strokeWidth="2" />
                       <line x1="63" y1="0" x2="160" y2="0" stroke={color} strokeWidth="4" />
@@ -594,38 +591,38 @@ export const Integrations = () => {
             </div>
 
             {/* CENTER COLUMN: Solid Blue Block */}
-            <div className="fs-google-col center">
-              <Reveal className="fs-google-center-card" delay={0.2}>
-                <div className="fs-google-center-logo">
+            <div className="ss-google-col center">
+              <Reveal className="ss-google-center-card" delay={0.2}>
+                <div className="ss-google-center-logo">
                   <span style={{ fontSize: 64, fontWeight: 'bold', color: '#fff', fontFamily: 'Inter, sans-serif' }}>E</span>
                 </div>
               </Reveal>
             </div>
 
             {/* RIGHT COLUMN: Dashboard UI Cards */}
-            <div className="fs-google-col right">
+            <div className="ss-google-col right">
               {CONSUMERS.map(([Icon, name, state, col, meta], i) => {
                 const targetY = (2 - i) * 100; 
                 
                 return (
-                  <Reveal className="fs-google-right-node" key={name} delay={0.3 + i * 0.1}>
+                  <Reveal className="ss-google-right-node" key={name} delay={0.3 + i * 0.1}>
                     {/* SVG Line: Geometric elbows & zigzags */}
-                    <svg width="300" height="2" className="fs-google-svg right-svg">
+                    <svg width="300" height="2" className="ss-google-svg right-svg">
                       {i === 2 ? (
                         // Special zigzag for the middle one to match ref
-                        <polyline points={`300,0 260,-15 220,15 180,-15 140,15 100,-15 60,15 0,${targetY}`} fill="none" stroke="#34A853" strokeWidth="3" />
+                        <polyline points={`300,0 260,-15 220,15 180,-15 140,15 100,-15 60,15 0,${targetY}`} fill="none" stroke="#0891b2" strokeWidth="3" />
                       ) : (
                         // Standard elbow lines for others
-                        <path d={`M 300 0 L 150 0 L 150 ${targetY} L 0 ${targetY}`} fill="none" stroke="#4285F4" strokeWidth="2" strokeDasharray={i % 2 === 0 ? "none" : "6 4"} />
+                        <path d={`M 300 0 L 150 0 L 150 ${targetY} L 0 ${targetY}`} fill="none" stroke="#0891b2" strokeWidth="2" strokeDasharray={i % 2 === 0 ? "none" : "6 4"} />
                       )}
                     </svg>
 
-                    <div className="fs-google-dash-card">
-                      <div className="fs-google-dash-header">
+                    <div className="ss-google-dash-card">
+                      <div className="ss-google-dash-header">
                         <div className="dash-dot"></div>
                         <div className="dash-dot"></div>
                       </div>
-                      <div className="fs-google-dash-body">
+                      <div className="ss-google-dash-body">
                         <Icon size={14} color="#80868b" />
                         <b>{name}</b>
                       </div>
@@ -717,14 +714,14 @@ const D = {
   mid: '#475569',
   soft: '#94a3b8',
   hair: '#e2e8f0',
-  green: '#0a8f5e',
-  wash: 'rgba(10, 143, 94, 0.09)',
+  green: '#0891b2',
+  wash: 'rgba(8, 145, 178, 0.09)',
   stop: '#e11d48',
 };
 
 const Dia = ({ span, h, children }) => (
   <svg
-    className="fs-sec-dia"
+    className="ss-sec-dia"
     data-span={span}
     viewBox={`0 0 240 ${h}`}
     fill="none"
@@ -940,25 +937,25 @@ const SecGraphic = ({ id, span }) => {
 
 export const Security = () => {
   return (
-    <section className="fs-sec-new" id="security">
-      <div className="fs-in">
+    <section className="ss-sec-new" id="security">
+      <div className="ss-in">
         <Head
           n="06"
           label="Security & controls"
           ask="Can we trust it?"
           title="Every field that changes"
           accent="leaves a record."
-          lede="Controls here are system behaviour, not a policy document. Emvive Finance is built on immutable ledgers with strict role-based access."
+          lede="Controls here are system behaviour, not a policy document. Emvive Supply is built on immutable ledgers with strict role-based access."
         />
 
-        <div className="fs-sec-grid-6">
+        <div className="ss-sec-grid-6">
           {SEC_CARDS.map((card, i) => (
-            <Reveal className="fs-sec-card-clean" style={{ gridColumn: `span ${card.span}` }} key={card.title} delay={i * 0.06}>
-              <div className="fs-sec-card-text-clean">
+            <Reveal className="ss-sec-card-clean" style={{ gridColumn: `span ${card.span}` }} key={card.title} delay={i * 0.06}>
+              <div className="ss-sec-card-text-clean">
                 <h3>{card.title}</h3>
                 <p>{card.desc}</p>
               </div>
-              <div className="fs-sec-card-graphic-clean">
+              <div className="ss-sec-card-graphic-clean">
                  <SecGraphic id={card.id} span={card.span} />
               </div>
             </Reveal>
@@ -973,14 +970,14 @@ export const Security = () => {
    07 — WHY EMVIVE / BUSINESS IMPACT
    "Why should we choose it?"
 
-   The close is the number finance is judged on, so it is drawn against
+   The close is the number supply-chain is judged on, so it is drawn against
    the month it has to fit inside rather than shown as an oversized
    numeral. Everything else sits underneath at a size that lets the
    close keep the stage.
    ===================================================================== */
 const CLOSE = [
-  { k: 'Before Emvive', days: 19, tone: 'was', note: 'Nineteen working days, most of it chasing' },
-  { k: 'With Emvive', days: 3, tone: 'now', note: 'Reviewed, signed and filed by day three' },
+  { k: 'Before Emvive', days: 11, tone: 'was', note: 'Eleven days, most of it waiting on a status' },
+  { k: 'With Emvive', days: 4, tone: 'now', note: 'Acknowledged, picked, loaded and delivered' },
 ];
 
 const IMPACT = [
@@ -996,25 +993,25 @@ const REASONS = [
   [Building2, 'Built for this region', 'ZATCA Phase 2, Arabic presentation, multi-currency groups and data held in Saudi Arabia, the UAE or India.', 'green'],
 ];
 
-const DAYS = 31;
+const DAYS = 20;
 const pct = (d) => `${(d / DAYS) * 100}%`;
 
 /* the ruler the two bars are measured against — each tick sits at the
    same scale the bars are drawn on, so day 19 on the ruler is the end
    of the 19-day bar underneath it */
-const RULER = [1, 5, 10, 15, 20, 25, 31];
+const RULER = [1, 4, 7, 10, 14, 18, 20];
 
 const STATS = [
-  { icon: Clock, value: '3', suffix: ' days', label: 'To close' },
-  { icon: Layers, value: '42', suffix: '%', label: 'Less manual work' },
-  { icon: Users, value: '7', suffix: '', label: 'Entities consolidated' },
-  { icon: ShieldCheck, value: '99.8', suffix: '%', label: 'First-pass clearance' },
+  { icon: Clock, value: '4', suffix: ' days', label: 'Order to shelf' },
+  { icon: Layers, value: '99.1', suffix: '%', label: 'Fill rate' },
+  { icon: Users, value: '18', suffix: '', label: 'Hubs consolidated' },
+  { icon: ShieldCheck, value: '96.4', suffix: '%', label: 'OTIF' },
 ];
 
 const QUOTES = [
-  'Sub-ledgers post in real time and reconciliations run nightly, so period end reviews work that is already done.',
-  'ZATCA Phase 2, Arabic presentation, multi-currency groups and data held in Saudi Arabia, UAE or India.',
-  'A closed period rejects a posting. Approval limits and duty segregation are enforced by the ledger, not by memo.',
+  'Stock is held at bin and batch level, so what the system says is on the shelf is what the picker finds on the shelf.',
+  'Loads are built by weight and drop sequence, and an ETA that slips lists the outlets affected before the customer calls.',
+  'A buyer cannot receive their own order. Approval limits and duty segregation are enforced by the ledger, not by memo.',
 ];
 
 /* ---------------------------------------------------------------
@@ -1024,14 +1021,14 @@ const QUOTES = [
    card had to be made twice, and the two would drift.
    --------------------------------------------------------------- */
 const CloseCard = () => (
-  <Reveal className="fs-close" y={22}>
-    <div className="fs-close-top">
-      <span className="fs-close-k">THE MONTH-END CLOSE</span>
-      <span className="fs-close-sub">Working days after period end</span>
+  <Reveal className="ss-close" y={22}>
+    <div className="ss-close-top">
+      <span className="ss-close-k">ORDER TO SHELF</span>
+      <span className="ss-close-sub">Working days from PO to outlet</span>
     </div>
 
-    <div className="fs-close-ruler">
-      <span className="fs-close-ruler-track">
+    <div className="ss-close-ruler">
+      <span className="ss-close-ruler-track">
         {RULER.map((d) => (
           <i key={d} style={{ left: pct(d) }}>{d}</i>
         ))}
@@ -1039,13 +1036,13 @@ const CloseCard = () => (
     </div>
 
     {CLOSE.map((c, i) => (
-      <div className={`fs-close-row ${c.tone}`} key={c.k}>
-        <span className="fs-close-label">
+      <div className={`ss-close-row ${c.tone}`} key={c.k}>
+        <span className="ss-close-label">
           <b>{c.k}</b>
           <em>{c.note}</em>
         </span>
 
-        <span className="fs-close-track">
+        <span className="ss-close-track">
           <motion.i
             style={{ width: pct(c.days) }}
             initial={{ scaleX: 0 }}
@@ -1055,28 +1052,28 @@ const CloseCard = () => (
           />
         </span>
 
-        <span className="fs-close-days"><b>{c.days}</b> days</span>
+        <span className="ss-close-days"><b>{c.days}</b> days</span>
       </div>
     ))}
 
-    <div className="fs-close-delta">
-      <span className="fs-close-gap" style={{ marginLeft: pct(3), width: pct(16) }}><i /></span>
-      <span className="fs-close-claim">
-        <b><ScrollNumber to={16} prefix="−" /> days</b>
-        returned to the team, every month
+    <div className="ss-close-delta">
+      <span className="ss-close-gap" style={{ marginLeft: pct(3), width: pct(16) }}><i /></span>
+      <span className="ss-close-claim">
+        <b><ScrollNumber to={7} prefix="−" /> days</b>
+        off the cycle, on every order
       </span>
     </div>
   </Reveal>
 );
 
 const StatsBand = ({ className = '' }) => (
-  <div className={`fs-stats-grid ${className}`}>
+  <div className={`ss-stats-grid ${className}`}>
     {STATS.map((s, i) => (
-      <Reveal className="fs-stat-item" key={s.label} delay={i * 0.08}>
-        <div className="fs-stat-icon">
+      <Reveal className="ss-stat-item" key={s.label} delay={i * 0.08}>
+        <div className="ss-stat-icon">
           <s.icon size={24} strokeWidth={2} />
         </div>
-        <div className="fs-stat-value">
+        <div className="ss-stat-value">
           <b>{s.value}<span>{s.suffix}</span></b>
           <p>{s.label}</p>
         </div>
@@ -1086,36 +1083,36 @@ const StatsBand = ({ className = '' }) => (
 );
 
 export const WhyEmvive = () => (
-  <section className="fs-why" id="impact">
-    <div className="fs-in">
+  <section className="ss-why" id="impact">
+    <div className="ss-in">
       <Head
         n="07"
         label="Why Emvive · business impact"
         title="What changes in"
         accent="the first year."
-        lede="One real group — seven legal entities, three currencies — twelve months after go-live. Measured in working days after period end."
+        lede="One real group — eighteen hubs, two hundred and twelve outlets — twelve months after go-live. Measured on the line, not on the invoice."
       />
       {/* one rounded panel, split: the close card and the figures on a
           grey ground, the photograph filling the other half, and the
           three quotes lying across the seam between them */}
-      <div className="fs-why-panel">
-        <div className="fs-why-panel-left">
+      <div className="ss-why-panel">
+        <div className="ss-why-panel-left">
           <CloseCard />
           <StatsBand />
         </div>
 
-        <div className="fs-why-panel-photo">
+        <div className="ss-why-panel-photo">
           <img
             src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=900"
-            alt="Finance professional"
-            className="fs-quotes-bg-img"
+            alt="Supply professional"
+            className="ss-quotes-bg-img"
           />
         </div>
 
-        <div className="fs-quotes-overlay">
+        <div className="ss-quotes-overlay">
           {QUOTES.map((q, i) => (
-            <Reveal className="fs-quote-card" key={i} delay={0.1 + i * 0.1}>
-              <span className="fs-quote-mark">❝</span>
+            <Reveal className="ss-quote-card" key={i} delay={0.1 + i * 0.1}>
+              <span className="ss-quote-mark">❝</span>
               <p>{q}</p>
             </Reveal>
           ))}
@@ -1132,19 +1129,19 @@ export const WhyEmvive = () => (
    underneath. Same components, same surface, different arrangement.
    ===================================================================== */
 export const WhyEmviveWide = () => (
-  <section className="fs-why fs-why-wide" id="impact-wide">
-    <div className="fs-in">
+  <section className="ss-why ss-why-wide" id="impact-wide">
+    <div className="ss-in">
       <Head
         n="07b"
         label="Why Emvive · business impact"
         title="What changes in"
         accent="the first year."
-        lede="One real group — seven legal entities, three currencies — twelve months after go-live. Measured in working days after period end."
+        lede="One real group — eighteen hubs, two hundred and twelve outlets — twelve months after go-live. Measured on the line, not on the invoice."
       />
 
-      <div className="fs-why-panel fs-why-panel-wide">
+      <div className="ss-why-panel ss-why-panel-wide">
         <CloseCard />
-        <StatsBand className="fs-stats-row" />
+        <StatsBand className="ss-stats-row" />
       </div>
     </div>
   </section>

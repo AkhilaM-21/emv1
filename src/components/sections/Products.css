@@ -82,9 +82,7 @@
 }
 
 /* Full-width tab row above the divider */
-.emv-apps-wrap .emv-app-tabs {
-  margin-bottom: 1.5rem;
-}
+.emv-apps-wrap 
 
 /* Divider line spans the full width, below the tabs */
 .emv-featured-apps-container {
@@ -93,7 +91,7 @@
   gap: 4rem;
   margin: 0;
   padding-top: 2.5rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 /* Divider line — heavy in the middle, fading to transparent at the ends,
    in the active app's colour (same treatment as the footer / CTA line). */
@@ -146,6 +144,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   text-align: left;
   transition: background 0.4s ease, box-shadow 0.4s ease;
   box-shadow:
@@ -222,40 +221,12 @@
 }
 
 /* Tab buttons above the divider line */
-.emv-app-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 1.5rem;
-}
-.emv-app-tab {
-  appearance: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #475569;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.emv-app-tab svg { color: var(--ac); transition: color 0.2s ease; }
-.emv-app-tab:hover {
-  border-color: var(--ac);
-  color: #0f172a;
-}
-.emv-app-tab.active {
-  color: #ffffff;
-  background: var(--ac);
-  border-color: var(--ac);
-  box-shadow: 0 6px 16px -6px var(--ac);
-}
-.emv-app-tab.active svg { color: #ffffff; }
+
+
+
+
+
+
 
 .emv-apps-header {
   display: flex;
@@ -1197,4 +1168,60 @@
 
 .prod-dot.active {
   background: linear-gradient(90deg, #3b5fc0 0%, #1e3a8a 100%) !important;
+}
+
+.emv-app-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  /* hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.emv-app-tabs::-webkit-scrollbar {
+  display: none;
+}
+.emv-app-tab {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 16px 20px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #334155;
+  background: #ffffff;
+  border: none;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.emv-app-tab:last-child {
+  border-right: none;
+}
+.emv-app-tab:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.emv-app-tab.active {
+  color: #0f172a;
+  font-weight: 600;
+  border-bottom-color: var(--ac);
+  background: #ffffff;
+  box-shadow: none;
+}
+.emv-app-tab svg {
+  color: var(--ac);
+  margin-right: 4px;
+  transition: color 0.2s ease;
 }

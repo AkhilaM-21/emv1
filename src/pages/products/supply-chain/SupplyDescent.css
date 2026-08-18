@@ -19,9 +19,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(90% 60% at 58% 46%, rgba(94, 130, 255, 0.15) 0%, transparent 62%),
-    radial-gradient(60% 40% at 4% 8%, rgba(94, 130, 255, 0.08) 0%, transparent 60%);
+  background: rgba(94, 130, 255, 0.15);
 }
 
 .dc-inner { position: relative; padding: 0 max(28px, calc((100vw - 1620px) / 2)); }
@@ -73,8 +71,7 @@
   display: block;
   width: 100%;
   border-radius: 2px;
-  background: linear-gradient(to bottom, #8ea8ff, #5e82ff);
-  box-shadow: 0 0 12px rgba(142, 168, 255, 0.7);
+  background: #8ea8ff;
 }
 
 .dc-stop {
@@ -110,7 +107,6 @@
   background: #8ea8ff;
   border-color: #8ea8ff;
   transform: scale(1.14);
-  box-shadow: 0 0 0 5px rgba(142, 168, 255, 0.16);
 }
 
 .dc-stop-t { display: flex; flex-direction: column; gap: 0.18rem; min-width: 0; }
@@ -147,7 +143,6 @@
   background: #0a0c14;
   overflow: hidden;
   isolation: isolate;
-  box-shadow: 0 70px 140px -60px rgba(0, 0, 0, 0.98);
 }
 
 /* explicit z-index: the layer animates transform and opacity, which
@@ -183,12 +178,11 @@
   flex-shrink: 0;
   border-radius: 5px;
   background: rgba(142, 168, 255, 0.1);
-  box-shadow: 0 0 0 1px rgba(142, 168, 255, 0.45), 0 0 34px -6px rgba(94, 130, 255, 0.7);
   animation: dc-breathe 2.4s ease-in-out infinite;
 }
 @keyframes dc-breathe {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(142, 168, 255, 0.4), 0 0 26px -8px rgba(94, 130, 255, 0.55); }
-  50% { box-shadow: 0 0 0 1px rgba(142, 168, 255, 0.85), 0 0 44px -4px rgba(94, 130, 255, 0.95); }
+  0%, 100% { }
+  50% { }
 }
 /* corner brackets — a focus reticle, not a border */
 .dc-target-box i {
@@ -215,7 +209,6 @@
   border: 1px solid rgba(142, 168, 255, 0.34);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.95);
   transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .dc-target-tag svg { color: #8ea8ff; }

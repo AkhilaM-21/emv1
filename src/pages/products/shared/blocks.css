@@ -525,3 +525,151 @@
   .bk-q-body p, .bk-q-points { padding-left: 0; }
   .bk-logos { gap: 0.8rem 1.8rem; }
 }
+
+/* =====================================================================
+   CONTACT — CARD VARIANT  (opt in with variant="card")
+
+   One white card holding both halves: the aside on a solid accent
+   ground, the form beside it on plain paper with underlined fields.
+   Everything is scoped under .bk-contact-card, so a page that does not
+   ask for the variant is untouched by any of it.
+   ===================================================================== */
+
+.bk-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  /* the card frames both halves, so its own padding is the gutter */
+  padding: clamp(0.5rem, 0.9vw, 0.85rem);
+  border-radius: 26px;
+  background: var(--bg, #fff);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04), 0 34px 70px -46px rgba(9, 9, 11, 0.4);
+}
+
+.bk-card-side {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-radius: 20px;
+  color: #fff;
+  /* darkened FROM the accent rather than running to --accent-2: that
+     token is a lighter tint on Platform (#a78bfa), which would leave the
+     white text at about 2.8:1 down at the foot of the panel. Mixing
+     toward black keeps every page legible whatever its accent is. */
+  background: var(--accent);
+}
+
+.bk-card-side h3 {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: #fff;
+}
+
+.bk-card-side > p {
+  margin: 0.65rem 0 0;
+  max-width: 32ch;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.bk-card-rows {
+  margin-top: clamp(1.75rem, 3vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* the aside rows are the shared ones, re-tinted for the accent ground */
+.bk-card-side .bk-aside-ic {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+}
+.bk-card-side .bk-aside-row b { color: #fff; }
+.bk-card-side .bk-aside-row em { color: rgba(255, 255, 255, 0.72); }
+
+/* the quarter circle bleeding out of the bottom corner */
+.bk-card-orb {
+  position: absolute;
+  z-index: -1;
+  right: -3.5rem;
+  bottom: -5.5rem;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.bk-card-main { padding: clamp(1.25rem, 2.4vw, 2rem); }
+
+/* Underlined fields: the boxes would be a second frame inside a card
+   that is already framing everything. */
+.bk-card-main .bk-field input,
+.bk-card-main .bk-field textarea,
+.bk-card-main .bk-select select {
+  padding: 0.5rem 0;
+  border: 0;
+  border-bottom: 1.5px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.95rem;
+}
+
+.bk-card-main .bk-select select { padding-right: 1.6rem; }
+.bk-card-main .bk-select svg { right: 0.15rem; }
+.bk-card-main .bk-field textarea { min-height: 4.5rem; }
+
+.bk-card-main .bk-field input:focus,
+.bk-card-main .bk-field textarea:focus,
+.bk-card-main .bk-select select:focus {
+  background: transparent;
+  border-bottom-color: var(--accent);
+  box-shadow: none;
+}
+
+/* the label goes accent while its field has focus, as in the reference */
+.bk-card-main .bk-field:focus-within .bk-label { color: var(--accent); }
+
+.bk-card-main .bk-form-foot {
+  margin-top: 1.6rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+@media (max-width: 900px) {
+  .bk-card { grid-template-columns: minmax(0, 1fr); }
+  .bk-card-orb { display: none; }
+}
+
+/* --- card variant: the form's own height -----------------------------
+   Underlined fields carry no box, so the row spacing built for boxed
+   inputs reads as slack here. Every number below is the same rhythm
+   pulled in, plus the message box which was four rows tall by default.
+   Together they take roughly 130px off the card, and the accent panel
+   comes down with it since the two halves share a row. */
+.bk-contact-card { padding-top: clamp(2.5rem, 4.5vw, 4rem); }
+
+.bk-card { padding: clamp(0.4rem, 0.7vw, 0.6rem); }
+.bk-card-main { padding: clamp(1rem, 1.9vw, 1.5rem); }
+
+.bk-card-main .bk-fields { gap: 0.85rem 1.4rem; }
+.bk-card-main .bk-field { gap: 0.3rem; }
+
+/* four rows of message box is more than the question needs */
+.bk-card-main .bk-field textarea {
+  min-height: 0;
+  height: 4.5rem;
+}
+
+.bk-card-main .bk-choices { gap: 0.4rem; }
+.bk-card-main .bk-choices button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.84rem;
+  border-radius: 9px;
+}
+
+.bk-card-main .bk-form-foot { margin-top: 1.1rem; }
+.bk-card-main .bk-submit { height: 44px; }
