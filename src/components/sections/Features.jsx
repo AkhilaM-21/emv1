@@ -1,6 +1,7 @@
-import React from 'react';
-import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight, HardHat, ShoppingBag, Truck, Briefcase, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight, ChevronLeft, ChevronRight, HardHat, ShoppingBag, Truck, Briefcase, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
 import './Features.css';
+import './Industries.css';
 
 /* Emvive applications (Master Document §4 / §6). Each app carries its own
    accent colour; `rgb` is the same colour as a raw triple so the CSS can
@@ -15,6 +16,65 @@ const FEATURES = [
   { id: 7, icon: HeartPulse, title: 'Healthcare', color: '#0ea5e9', rgb: '14, 165, 233', desc: 'Connect patients, staff, inventory, billing, and compliance.', points: ['Patient Records', 'Clinic Scheduling', 'Medical Inventory', 'Billing & Claims', 'Compliance Management'], link: 'Explore Healthcare' },
   { id: 8, icon: Building2, title: 'Real Estate & Property', color: '#ec4899', rgb: '236, 72, 153', desc: 'Connect properties, leasing, tenants, payments, and finance.', points: ['Lease Management', 'Tenant Portals', 'Facility Maintenance', 'Rent Collection', 'Contract Renewals'], link: 'Explore Real Estate & Property' }
 ];
+
+/* =====================================================================
+   INDUSTRIES — a card carousel
+
+   The shape is Microsoft's "Featured news" strip on the Dynamics 365
+   home page: eyebrow and heading on the left, the controls on their own
+   line under the heading (prev arrow, a row of slide indicators, next
+   arrow), then a horizontally scrolling track of borderless cards —
+   a rounded media panel on top, then title, body, and a link whose
+   round arrow sits before its text.
+
+   Three cards to a view on desktop, two at tablet, one-and-a-peek on a
+   phone. The track is a real scroll container with snap points, so a
+   trackpad swipe works and the arrows are an alternative rather than
+   the only way through.
+   ===================================================================== */
+
+const useCarousel = (count) => {
+  const trackRef = useRef(null);
+  const [index, setIndex] = useState(0);
+  const [atEnd, setAtEnd] = useState(false);
+
+  /* One card plus one gap, taken from the live layout rather than the
+     stylesheet, so the arrows keep stepping correctly through every
+     breakpoint. */
+  const stepOf = (track) => {
+    const cards = track.children;
+    if (cards.length < 2) return track.clientWidth;
+    return cards[1].offsetLeft - cards[0].offsetLeft;
+  };
+
+  const sync = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const step = stepOf(track);
+    setIndex(step ? Math.round(track.scrollLeft / step) : 0);
+    setAtEnd(track.scrollLeft >= track.scrollWidth - track.clientWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    sync();
+    const track = trackRef.current;
+    if (!track) return undefined;
+    const ro = new ResizeObserver(sync);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [sync, count]);
+
+  /* scrollTo clamps at the ends by itself, so a click on one of the
+     last indicators lands on the final view instead of overshooting —
+     the scroll handler then reports the position it actually reached. */
+  const goTo = useCallback((i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollTo({ left: Math.max(0, i) * stepOf(track), behavior: 'smooth' });
+  }, []);
+
+  return { trackRef, index, atEnd, sync, goTo };
+};
 
 const Arrow = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +99,7 @@ const FeatureCard = ({ feature, variant }) => {
       )}
 
       <span className="feature-ic">
-        <Icon size={34} strokeWidth={1.4} />
+        <Icon size={26} strokeWidth={1.5} />
       </span>
 
       <div className="feature-body">
@@ -64,39 +124,64 @@ const FeatureCard = ({ feature, variant }) => {
 };
 
 const Features = ({ variant = 'mono', id = 'features' }) => {
-  const colored = variant === 'color';
   const solid = variant === 'solid';
+  const colored = variant === 'color';
 
-  const sectionClass = `features-section${
+  const sectionClass = `features-section ind-section${
     solid ? ' features-section--solid' : colored ? ' features-section--color' : ''
   }`;
+
+  const { trackRef, index, atEnd, sync, goTo } = useCarousel(FEATURES.length);
 
   return (
     <section className={sectionClass} id={id}>
       <div className="features-container">
-        <div className="features-header">
-          <div className="features-header-text">
-            <span className="features-kicker">INDUSTRIES</span>
-            <h2 className="features-heading">
-              Built for the way{' '}
-              <span className="text-accent">your industry works.</span>
-            </h2>
-            <p className="features-sub">
-              Different industries have different processes, priorities and operational demands. We bring the business functions behind them into a connected platform designed to support everyday operations.
-            </p>
-          </div>
-          <a href="#products" className="features-cta">
-            Explore All Applications
-            <Arrow />
-          </a>
-        </div>
+        <header className="ind-head">
+          <span className="ind-eyebrow">Industries</span>
+          <h2 className="ind-heading">
+            Built for the way{' '}
+            <span className="text-accent">your industry works.</span>
+          </h2>
+          <p className="ind-sub">
+            Different industries have different processes, priorities and operational demands.
+            We bring the business functions behind them into a connected platform designed to
+            support everyday operations.
+          </p>
+        </header>
 
-        <div className="features-grid">
+        <div className="features-grid ind-track" ref={trackRef} onScroll={sync}>
           {FEATURES.map((feature) => (
             <FeatureCard key={feature.id} feature={feature} variant={variant} />
           ))}
-
         </div>
+
+        <div className="ind-controls">
+          <button
+            type="button"
+            className="carousel-arrow"
+            onClick={() => goTo(index - 1)}
+            disabled={index === 0}
+            aria-label="Previous industries"
+          >
+            <ChevronLeft size={20} strokeWidth={2.2} />
+          </button>
+
+          <button
+            type="button"
+            className="carousel-arrow"
+            onClick={() => goTo(index + 1)}
+            disabled={atEnd}
+            aria-label="Next industries"
+          >
+            <ChevronRight size={20} strokeWidth={2.2} />
+          </button>
+
+          <a href="#products" className="ind-all">
+            Explore all applications
+            <ArrowRight size={15} strokeWidth={2.2} />
+          </a>
+        </div>
+
       </div>
     </section>
   );

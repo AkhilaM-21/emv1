@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, MapPin, Globe, ChevronDown, ShoppingCart, Calculator, Truck, Activity, FileText, Users, Settings, Box, CheckCircle, Package, PenTool, BarChart2, X, Moon, Sun, Menu,
   Cloud, TrendingUp, BarChart3, Workflow, Blocks, CircleDollarSign, Store, Factory, Receipt, Handshake, ClipboardCheck, LayoutGrid, Plug, ShieldCheck, UserCheck, Layers, ArrowUpRight,
-  Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase,
+  Boxes, Puzzle, Zap, Sparkles, PackageCheck, Database, MousePointerClick, KeyRound, Filter, Webhook, Smartphone, Globe2, Lock, Briefcase, Clock,
   HardHat, Wrench, HeartPulse, Building2, Utensils
 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -39,6 +39,22 @@ const MEGA_META = {
   'Mobile Optimized': { icon: Smartphone, sub: 'Works on any device', color: '#d97706' },
   'Custom Domains': { icon: Globe2, sub: 'Your own URL', color: '#059669' },
   'Studio': { icon: LayoutGrid, sub: 'Drag & drop builder', color: '#7c3aed' },
+  /* Platform & Builder column — the three group entries */
+  'App Builder': { icon: Blocks, sub: '', color: '#e2601f' },
+  'Workflow & Automation': { icon: Zap, sub: '', color: '#0891b2' },
+  /* ...and what sits under App Builder */
+  'Form Builder (Drag & Drop)': { icon: MousePointerClick, sub: '', color: '#7c3aed' },
+  'Object Builder (Table)': { icon: Database, sub: '', color: '#2563eb' },
+  'Document Sequence Designer': { icon: FileText, sub: '', color: '#0891b2' },
+  'Navigation Designer': { icon: LayoutGrid, sub: '', color: '#d97706' },
+  'Functions Designer (Code)': { icon: Puzzle, sub: '', color: '#e2601f' },
+  /* Platform & Builder column — Workflow & Automation */
+  'Workflow': { icon: Workflow, sub: '', color: '#0891b2' },
+  'Flow Designer': { icon: Activity, sub: '', color: '#0891b2' },
+  'Approvals': { icon: CheckCircle, sub: '', color: '#059669' },
+  'Scheduled Workflows': { icon: Clock, sub: '', color: '#4f46e5' },
+  'API & Webhooks': { icon: Webhook, sub: '', color: '#db2777' },
+  'Reporting & Analysis': { icon: BarChart3, sub: '', color: '#be123c' },
   'Flow': { icon: Workflow, sub: 'Workflow automation', color: '#0891b2' },
   'Integration Layer': { icon: Plug, sub: 'APIs & webhooks', color: '#e2601f' },
   'Security': { icon: ShieldCheck, sub: 'Roles & audit logs', color: '#4f46e5' },
@@ -75,6 +91,38 @@ const MEGA_CORE_APPS = [
   'Healthcare', 'Real Estate & Property', 'Hospitality & Restaurants',
 ];
 
+/* The Platform & Builder column. Each group name is a menu entry in its
+   own right — same row treatment as every other item in the panel — and
+   what it contains is listed under it, small and quiet, so the three
+   things the platform does read first and the detail second.
+   An empty `items` is simply a group with nothing under it yet. */
+const PLATFORM_GROUPS = [
+  {
+    label: 'App Builder',
+    items: [
+      'Form Builder (Drag & Drop)',
+      'Object Builder (Table)',
+      'Document Sequence Designer',
+      'Navigation Designer',
+      'Functions Designer (Code)',
+    ],
+  },
+  {
+    label: 'Workflow & Automation',
+    items: [
+      'Workflow',
+      'Flow Designer',
+      'Approvals',
+      'Scheduled Workflows',
+      'API & Webhooks',
+    ],
+  },
+  { label: 'Reporting & Analysis', items: [] },
+];
+
+/* every platform entry opens the Platform & Builder page */
+const PLATFORM_TITLES = PLATFORM_GROUPS.flatMap((g) => (g.items.length ? g.items : [g.label]));
+
 /* deterministic pools for any label not in the map above */
 const FALLBACK_ICONS = [Boxes, Puzzle, Plug, LayoutGrid, Workflow, ShieldCheck, Zap, Sparkles, PackageCheck, FileText, Database, Filter];
 const FALLBACK_COLORS = ['#2563eb', '#7c3aed', '#0891b2', '#db2777', '#0d9488', '#d97706', '#4f46e5', '#059669', '#9333ea', '#be123c'];
@@ -95,7 +143,9 @@ const megaMeta = (title) => {
 
 /* One tile row: icon chip · title + subtitle · trailing arrow.
    The tile's accent colour rides on the --mc custom property. */
-const MegaItem = ({ title, active, onEnter, onClick, noSub }) => {
+/* `caret` swaps the trailing go-there arrow for a chevron: the row no
+   longer navigates, it opens the list underneath it. */
+const MegaItem = ({ title, active, onEnter, onClick, noSub, caret, expanded }) => {
   const { icon: Icon, sub, color } = megaMeta(title);
   return (
     <button
@@ -103,12 +153,21 @@ const MegaItem = ({ title, active, onEnter, onClick, noSub }) => {
       style={{ '--mc': color }}
       onMouseEnter={onEnter}
       onClick={onClick}
+      aria-expanded={caret ? expanded : undefined}
     >
       <span className="mega-item-ic"><Icon size={23} strokeWidth={1.9} /></span>
       <span className="mega-item-txt">
         <span className="mega-item-title">{title}</span>
       </span>
-      <ArrowUpRight size={15} className="mega-item-arrow" aria-hidden="true" />
+      {caret ? (
+        <ChevronDown
+          size={15}
+          className={`mega-item-caret${expanded ? ' open' : ''}`}
+          aria-hidden="true"
+        />
+      ) : (
+        <ArrowUpRight size={15} className="mega-item-arrow" aria-hidden="true" />
+      )}
     </button>
   );
 };
@@ -163,6 +222,7 @@ const Header = () => {
     [t('megaMenu.retail.inventory', 'Inventory for Retail & POS')]: '/products/retail-inventory',
     Studio: '/products/platform',
     Flow: '/products/platform',
+    ...Object.fromEntries(PLATFORM_TITLES.map((title) => [title, '/products/platform'])),
   };
 
   /* `section` scrolls the target page to one of its anchors (Studio / Flow
@@ -193,6 +253,9 @@ const Header = () => {
   };
 
   // Mega Menu State
+  // which Platform & Builder group has its list open; one at a time so
+  // the column cannot grow taller than the panel
+  const [openPlatformGroup, setOpenPlatformGroup] = useState(null);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [activeIndustryIndex, setActiveIndustryIndex] = useState(0);
 
@@ -374,12 +437,22 @@ const Header = () => {
               )}
             </div>
 
-            <a href="#started" className="btn-get-started">
-              {t('header.getStarted', 'Get Started')}
-              <span className="arrow-circle">
-                <ArrowRight size={14} color="#fff" />
-              </span>
-            </a>
+            {/* Sign in is the quiet one, sign up carries the weight —
+                the pill keeps the shape "Get Started" had here. */}
+            <div className="auth-actions">
+              <a href="#signin" className="btn-get-started btn-signin">
+                {t('header.signIn', 'Sign In')}
+                <span className="arrow-circle">
+                  <ArrowRight size={14} color="#fff" />
+                </span>
+              </a>
+              <a href="#signup" className="btn-get-started btn-signup">
+                {t('header.signUp', 'Sign Up')}
+                <span className="arrow-circle">
+                  <ArrowRight size={14} color="#fff" />
+                </span>
+              </a>
+            </div>
 
             {/* Hamburger — only visible on tablet/mobile */}
             <button
@@ -474,24 +547,55 @@ const Header = () => {
                               );
                             })}
 
-                            {/* Platform & Builder has no ERP module entry of its
-                                own, so surface Studio and Flow directly. */}
-                            {[
-                              { title: 'Studio', section: 'studio', Icon: LayoutGrid, desc: 'Drag-and-drop app builder' },
-                              { title: 'Flow', section: 'flow', Icon: Workflow, desc: 'Workflow automation' },
-                            ].map(({ title, section, Icon, desc }) => (
-                              <div
-                                key={title}
-                                className="mobile-module-card"
-                                onClick={() => goProduct(title, section)}
-                              >
-                                <div className="module-icon"><Icon size={20} /></div>
-                                <div className="module-text">
-                                  <h3>{title}</h3>
-                                  <p>{desc}</p>
-                                </div>
-                              </div>
-                            ))}
+                            {/* Platform & Builder has no ERP module entry of
+                                its own, so surface its groups directly — the
+                                same list the desktop column renders. */}
+                            {PLATFORM_GROUPS.map((group) => {
+                              const { icon: Icon } = megaMeta(group.label);
+                              const hasItems = group.items.length > 0;
+                              const expanded = openPlatformGroup === group.label;
+                              return (
+                                <React.Fragment key={group.label}>
+                                  <div
+                                    className="mobile-module-card"
+                                    onClick={() => (hasItems
+                                      ? setOpenPlatformGroup(expanded ? null : group.label)
+                                      : goProduct(group.label))}
+                                  >
+                                    <div className="module-icon"><Icon size={20} /></div>
+                                    <div className="module-text">
+                                      <h3>{group.label}</h3>
+                                    </div>
+                                    {hasItems && (
+                                      <ChevronDown
+                                        size={16}
+                                        className={`mobile-module-caret${expanded ? ' open' : ''}`}
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                  </div>
+                                  {hasItems && expanded && (
+                                    <ul className="mobile-module-sub">
+                                      {group.items.map((title) => {
+                                        const { icon: SubIcon, color: subColor } = megaMeta(title);
+                                        return (
+                                          <li key={title}>
+                                            <button
+                                              type="button"
+                                              style={{ '--mc': subColor }}
+                                              onClick={() => goProduct(title)}
+                                            >
+                                              <SubIcon size={17} strokeWidth={1.9} aria-hidden="true" />
+                                              <span>{title}</span>
+                                            </button>
+                                          </li>
+                                        );
+                                      })}
+                                    </ul>
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -557,16 +661,28 @@ const Header = () => {
             </div>
           </div>
 
-          <a
-            href="#started"
-            className="btn-get-started mobile-get-started"
-            onClick={() => setMobileOpen(false)}
-          >
-            {t('header.getStarted', 'Get Started')}
-            <span className="arrow-circle">
-              <ArrowRight size={14} color="#fff" />
-            </span>
-          </a>
+          <div className="mobile-auth-actions">
+            <a
+              href="#signin"
+              className="btn-get-started btn-signin mobile-signin"
+              onClick={() => setMobileOpen(false)}
+            >
+              {t('header.signIn', 'Sign In')}
+              <span className="arrow-circle">
+                <ArrowRight size={14} color="#fff" />
+              </span>
+            </a>
+            <a
+              href="#signup"
+              className="btn-get-started btn-signup mobile-get-started"
+              onClick={() => setMobileOpen(false)}
+            >
+              {t('header.signUp', 'Sign Up')}
+              <span className="arrow-circle">
+                <ArrowRight size={14} color="#fff" />
+              </span>
+            </a>
+          </div>
         </div>
       )}
 
@@ -618,9 +734,44 @@ const Header = () => {
             {/* Column 3: PLATFORM & BUILDER */}
             <div className="infor-column">
               <h3 className="infor-col-header">Platform & Builder</h3>
-              <div className="mega-items">
-                <MegaItem title="Studio" onClick={() => goProduct('Studio', 'studio')} />
-                <MegaItem title="Flow" onClick={() => goProduct('Flow', 'flow')} />
+              <div className="mega-items mega-items--grouped">
+                {PLATFORM_GROUPS.map((group) => {
+                  const hasItems = group.items.length > 0;
+                  const expanded = openPlatformGroup === group.label;
+                  return (
+                    <div className="mega-group" key={group.label}>
+                      <MegaItem
+                        title={group.label}
+                        noSub
+                        caret={hasItems}
+                        expanded={expanded}
+                        onClick={() => (hasItems
+                          ? setOpenPlatformGroup(expanded ? null : group.label)
+                          : goProduct(group.label))}
+                      />
+                      {hasItems && expanded && (
+                        <ul className="mega-sub">
+                          {group.items.map((title) => {
+                            const { icon: SubIcon, color: subColor } = megaMeta(title);
+                            return (
+                              <li key={title}>
+                                <button
+                                  type="button"
+                                  className="mega-sub-item"
+                                  style={{ '--mc': subColor }}
+                                  onClick={() => goProduct(title)}
+                                >
+                                  <SubIcon size={17} strokeWidth={1.9} aria-hidden="true" />
+                                  <span>{title}</span>
+                                </button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <a
                 href="#all-platforms"

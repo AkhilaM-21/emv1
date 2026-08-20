@@ -1099,8 +1099,54 @@ body.dark-theme .gs-foot { color: #a9b8d6; }
   text-anchor: middle;
 }
 
+/* ---- The active pin: a beacon, not a dot ----
+   Three white rings leave the pin on a stagger and fade as they widen,
+   so one is always travelling outward. Only the selected pin runs them,
+   which is what makes the animation mean "here" instead of reading as
+   decoration on all three. */
+.wm-ripple {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.6;
+  transform-origin: center;
+  transform-box: fill-box;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wm-pin.active .wm-ripple {
+  animation: wm-ripple 2.7s cubic-bezier(0.15, 0.6, 0.3, 1) infinite;
+}
+.wm-pin.active .wm-ripple-2 { animation-delay: 0.9s; }
+.wm-pin.active .wm-ripple-3 { animation-delay: 1.8s; }
+
+@keyframes wm-ripple {
+  0%   { transform: scale(0.4); opacity: 0; }
+  10%  { opacity: 0.9; }
+  70%  { opacity: 0.18; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
+
+/* the dot itself lit from within, so the white ring around it reads as
+   the source the ripples are leaving from */
+.wm-pin.active .wm-dot {
+  filter:
+    drop-shadow(0 0 5px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 14px rgba(226, 96, 31, 0.9));
+  animation: wm-dot-glow 2.7s ease-in-out infinite;
+}
+
+@keyframes wm-dot-glow {
+  0%, 100% { r: 6.5; }
+  50%      { r: 8; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .wm-pin.active .wm-halo { animation: none; }
+  .wm-pin.active .wm-halo,
+  .wm-pin.active .wm-ripple,
+  .wm-pin.active .wm-dot { animation: none; }
+  /* the lit dot still marks the spot without any movement */
+  .wm-pin.active .wm-ripple { opacity: 0.35; }
 }
 
 /* ---- Dot map polish ---- */

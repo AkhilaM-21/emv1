@@ -4,17 +4,24 @@
    Scoped entirely to `.fh`. Nothing here leaks into the rest of the
    Supply page, which keeps its own paler treatment.
 
-   The hero runs a warmer, higher-contrast palette than the page below
-   it: a light neutral ground, near-black charcoal type, and the Supply
-   green used only where it means something — the accent word, the
-   status of a record, the active capability.
+   Three bands on white, stacked: the statement, the capability
+   scroller, then the illustration full-bleed at the foot. Between the
+   scroller and the artwork sits the shade band — white at the top,
+   the artwork's own sky at the bottom — so the image rises out of the
+   page rather than starting at a hard edge.
+
+   --sh-sky is sampled from the artwork (rgb 77 175 224). The band and
+   the image ground share it; swap the file and change this one token
+   and the seam stays invisible.
    ===================================================================== */
 
 .fh {
   --sh-accent: var(--accent, #0891b2);
-  --sh-accent-deep: color-mix(in srgb, var(--accent, #0891b2) 72%, #000);
-  --sh-ground: #eceff4;
-  --sh-ground-2: #e3e7ef;
+  /* the artwork's sky — see the note above */
+  --sh-sky: #4dafe0;
+
+  /* how tall the white-to-sky fade runs before the image begins */
+  --sh-shade: clamp(120px, 15vw, 240px);
 
   /* stronger ink than the page default — the old hero read washed out */
   --ink: #0c1013;
@@ -28,108 +35,29 @@
      header paints nothing behind its floating pill, and the product bar
      rides this section (ProductNav `stickAfter`). What was showing
      behind them was the product page's own white offset, so the hero is
-     lifted the full height of both and pads the same amount back. The
-     field now starts at the top of the screen and is the background for
-     the header pill and the product bar; the content does not move. */
+     lifted the full height of both and pads the same amount back. White
+     now runs to the top of the screen and is the background for the
+     header pill and the product bar; the content does not move. */
   --sh-lift: 148px;  /* 90px site header + 58px product bar */
 
   position: relative;
   isolation: isolate;
   margin-top: calc(var(--sh-lift) * -1);
   padding-top: calc(var(--sh-lift) + 2rem);
-  background: #f6f7fa;
-}
-
-/* --- background ---
-   Translucent overlapping planes (see SupplyField.jsx): sheets of
-   frosted glass crossing at shallow angles, each with a bright
-   refraction edge, compounding where they overlap. Grain sits over the
-   top; the ground gradient shows through everything. */
-.sh-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-
-.sh-field {
-  position: absolute; inset: 0;
-  /* Density rises to the right. The statement needs quiet ground behind
-     it — a lit edge cutting through the headline is the one place this
-     treatment cannot go — so the field is held back over the copy and
-     carries its full weight behind the product. */
-  -webkit-mask-image: linear-gradient(102deg, rgba(0, 0, 0, 0.34) 6%, rgba(0, 0, 0, 0.7) 34%, #000 62%);
-  mask-image: linear-gradient(102deg, rgba(0, 0, 0, 0.34) 6%, rgba(0, 0, 0, 0.7) 34%, #000 62%);
-}
-
-/* Rectangles only — no radial bloom behind them. Every mark in this
-   field is one of the sheets below. */
-.sh-plane {
-  position: absolute;
-  display: block;
-  animation: sh-plane-drift ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-/* The body fades out along its length so a sheet never ends in a hard
-   stop, and it is softened by a fraction of a pixel — enough to take
-   the digital hardness off the fill while leaving the lit edge sharp. */
-.sh-glass {
-  display: block;
-  width: 100%; height: 100%;
-  filter: blur(0.4px);
-  background: rgba(255, 255, 255, 0.62);
-}
-
-/* the hairline — the refraction. One edge only, the one that crosses
-   the fold; a full border would redraw the rectangle we are at pains
-   to hide. */
-.sh-glass.lit-t { border-top: 1px solid rgba(255, 255, 255, 0.95); }
-.sh-glass.lit-b { border-bottom: 1px solid rgba(255, 255, 255, 0.95); }
-.sh-glass.lit-l { border-left: 1px solid rgba(255, 255, 255, 0.95); }
-
-.sh-glass.cool {
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.sh-glass.violet {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-@keyframes sh-plane-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-1.4%, 1.8%, 0); }
-}
-
-.sh-bg-noise {
-  position: absolute; inset: 0;
-  opacity: 0.3;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background: #fff;
 }
 
 /* =====================================================================
-   TOP AREA — statement left, product right
+   THE STATEMENT — one centred column, at the top and nothing beside it
    ===================================================================== */
 .sh-top {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.04fr);
-  grid-template-areas:
-    'head stage'
-    'cta  stage';
-  align-content: center;
-  column-gap: clamp(2.5rem, 4.5vw, 5rem);
-  row-gap: 2.5rem;
-  padding: clamp(1.25rem, 2.2vw, 2.25rem) var(--sn-gutter, max(96px, calc((100vw - 1500px) / 2))) clamp(2.75rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 3rem) var(--sn-gutter, max(96px, calc((100vw - 1500px) / 2))) clamp(1.5rem, 2.5vw, 2.5rem);
 }
 
-.sh-head { grid-area: head; align-self: end; }
-.sh-cta { grid-area: cta; align-self: start; }
-.sh-stage { grid-area: stage; align-self: center; min-width: 0; position: relative; }
-
-/* the frame sits in its own pool of light, so it reads as lit rather
-   than pasted onto the field behind it */
-.sh-stage::before {
-  content: '';
-  position: absolute;
-  inset: -14% -10% -18%;
-  z-index: -1;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+.sh-head {
+  max-width: 62rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* --- statement ---
@@ -179,8 +107,8 @@
 }
 
 .sh-lede {
-  margin: 1.9rem 0 0;
-  max-width: 42ch;
+  margin: 1.9rem auto 0;
+  max-width: 60ch;
   font-size: clamp(1.02rem, 1.16vw, 1.16rem);
   line-height: 1.58;
   letter-spacing: -0.012em;
@@ -192,7 +120,13 @@
    inset top highlight so it catches light, a lifted drop shadow, and
    an arrow disc on the end. Same geometry as .btn-get-started and
    .cta-btn-primary in index.css — only the accent differs. */
-.sh-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.sh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
 
 .sh-btn {
   display: inline-flex;
@@ -255,468 +189,20 @@
 }
 
 /* =====================================================================
-   THE PRODUCT FRAME
-   A demonstration window, not a floating dashboard.
-   ===================================================================== */
-.sh-frame {
-  --mx: 50%; --my: 50%;
-  position: relative;
-  border-radius: 14px;
-  border: 1px solid rgba(12, 16, 19, 0.13);
-  background: #fff;
-  overflow: hidden;
-  transform: translateZ(0);
-  transition:
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.4s ease,
-    box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.sh-frame:hover {
-  transform: translateY(-3px) scale(1.006);
-  border-color: rgba(12, 16, 19, 0.24);
-}
-
-/* the spotlight rides the cursor across the glass and never touches
-   the interface underneath it */
-.sh-frame-glass {
-  position: absolute; inset: 0; z-index: 6;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.45s ease;
-  background: var(--mx);
-}
-.sh-frame:hover .sh-frame-glass { opacity: 1; }
-
-.sh-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-
-.sh-frame-ctl {
-  position: absolute; left: 12px; bottom: 12px; z-index: 8;
-  width: 28px; height: 28px;
-  display: grid; place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(12, 16, 19, 0.72);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
-}
-.sh-frame:hover .sh-frame-ctl,
-.sh-frame-ctl:focus-visible { opacity: 1; transform: translateY(0); }
-.sh-frame-ctl:hover { background: rgba(12, 16, 19, 0.88); }
-
-.sh-frame-cap {
-  display: flex; align-items: center; gap: 0.55rem;
-  margin: 0.95rem 0 0;
-  font-size: 0.775rem;
-  letter-spacing: -0.004em;
-  color: var(--ink-3);
-}
-.sh-frame-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--sh-accent);
-}
-
-.sh-sr {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-/* =====================================================================
-   THE FILM — the interface inside the frame
-   Everything is sized off the frame so the whole demonstration scales
-   as one image rather than reflowing.
-   ===================================================================== */
-.sh-f {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  display: flex; flex-direction: column;
-  background: #fbfbfa;
-  font-size: 11px;
-  container-type: inline-size;
-}
-
-.sh-f b, .sh-f h3 { font-weight: 500; }
-
-/* --- chrome --- */
-.sh-f-chrome {
-  display: flex; align-items: center; gap: 0.5rem;
-  height: 30px; flex-shrink: 0;
-  padding: 0 0.6rem;
-  border-bottom: 1px solid var(--hair);
-  background: #fff;
-}
-.sh-f-dots { display: flex; gap: 4px; }
-.sh-f-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(12, 16, 19, 0.13); }
-.sh-f-mark {
-  width: 17px; height: 17px; border-radius: 5px;
-  display: grid; place-items: center;
-  margin-left: 0.25rem;
-  font-size: 7px; font-weight: 600; letter-spacing: 0.02em;
-  color: #fff; background: var(--ink);
-}
-.sh-f-crumb {
-  display: flex; align-items: center; gap: 0.25rem;
-  font-size: 9.5px; color: var(--ink-4); white-space: nowrap;
-}
-.sh-f-crumb b { color: var(--ink); }
-.sh-f-omni {
-  display: flex; align-items: center; gap: 0.35rem;
-  margin-left: auto;
-  height: 19px; padding: 0 0.4rem;
-  border: 1px solid var(--hair); border-radius: 5px;
-  font-size: 9px; color: var(--ink-4);
-}
-.sh-f-omni kbd {
-  font-family: inherit; font-size: 8px;
-  padding: 0 3px; border-radius: 3px;
-  background: rgba(12, 16, 19, 0.05);
-}
-.sh-f-bell { position: relative; color: var(--ink-4); display: grid; place-items: center; }
-.sh-f-bell.on { color: var(--ink); }
-.sh-f-bell i {
-  position: absolute; top: -1px; right: -1px;
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--sh-accent);
-}
-.sh-f-face {
-  width: 18px; height: 18px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-size: 7.5px; color: #fff; background: #3f4750;
-}
-
-/* --- body --- */
-.sh-f-body {
-  position: relative; flex: 1; min-height: 0; display: flex;
-  opacity: 1;
-  transition: opacity 0.45s ease;
-}
-.sh-f-body.dim { opacity: 0; }
-
-.sh-f-rail {
-  width: 34px; flex-shrink: 0;
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 0.45rem 0;
-  align-items: center;
-  border-right: 1px solid var(--hair);
-  background: #fff;
-}
-.sh-f-rail-i {
-  width: 24px; height: 24px; border-radius: 6px;
-  display: grid; place-items: center;
-  color: var(--ink-4);
-  transition: color 0.35s ease, background 0.35s ease;
-}
-.sh-f-rail-i.on { color: var(--sh-accent); background: color-mix(in srgb, var(--sh-accent) 10%, transparent); }
-
-.sh-f-main {
-  flex: 1; min-width: 0;
-  display: flex; flex-direction: column;
-  gap: 6px;
-  padding: 7px;
-}
-
-/* --- the group position --- */
-.sh-f-kpis {
-  display: flex; align-items: center; gap: 0;
-  flex-shrink: 0;
-  border: 1px solid var(--hair); border-radius: 7px;
-  background: #fff;
-}
-.sh-f-kpis > div {
-  flex: 1; min-width: 0;
-  display: flex; flex-direction: column; gap: 1px;
-  padding: 7px 9px;
-  border-right: 1px solid var(--hair);
-}
-.sh-f-kpis > div:last-of-type { border-right: 0; }
-.sh-f-kpis span { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.02em; }
-.sh-f-num {
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 12px; letter-spacing: -0.03em; color: var(--ink);
-}
-.sh-f-kpis em { font-style: normal; font-size: 8px; color: var(--ink-4); }
-.sh-f-kpis em.up { color: var(--sh-accent); }
-.sh-f-kpis em.move { color: #a06010; }
-
-.sh-f-live {
-  display: flex !important; flex-direction: row !important;
-  align-items: center; gap: 4px;
-  flex: 0 0 auto !important;
-  padding: 0 10px !important;
-  font-size: 8.5px; color: var(--ink-3);
-  border-right: 0 !important;
-}
-.sh-f-live i {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--sh-accent);
-  animation: sh-pulse 2s ease-in-out infinite;
-}
-@keyframes sh-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-/* --- panels --- */
-.sh-f-cols { display: flex; gap: 6px; flex: 1; min-height: 0; }
-
-.sh-f-panel {
-  position: relative;
-  display: flex; flex-direction: column;
-  min-width: 0; min-height: 0;
-  border: 1px solid var(--hair); border-radius: 7px;
-  background: #fff;
-  overflow: hidden;
-}
-
-/* Panels that change contents mid-film stack their two states on top of
-   one another and cross-fade. Taking turns left the panel empty for a
-   third of a second, which reads as a fault rather than a transition. */
-.sh-f-layer { position: absolute; inset: 0; }
-.sh-f-cols > .sh-f-panel:first-child { flex: 1.5; }
-.sh-f-insp { flex: 1; max-width: 42%; }
-
-.sh-f-panel header {
-  display: flex; align-items: center; gap: 0.4rem;
-  height: 24px; flex-shrink: 0;
-  padding: 0 8px;
-  border-bottom: 1px solid var(--hair);
-}
-.sh-f-panel header b { font-size: 9.5px; color: var(--ink); }
-.sh-f-count { font-size: 8.5px; color: var(--ink-4); margin-left: auto; }
-.sh-f-panel header .sh-f-tag { margin-left: auto; }
-.sh-f-panel header .sh-f-count + .sh-f-tag { margin-left: 0.4rem; }
-
-/* --- transaction feed ---
-   The feed is deliberately longer than the panel at narrow widths. The
-   mask fades the overflow out instead of slicing a row in half, which
-   is how a real list behaves and how a real screenshot of one looks. */
-.sh-f-rows {
-  flex: 1; min-height: 0; overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent 100%);
-  mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent 100%);
-}
-.sh-f-row {
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr) auto 62px;
-  align-items: center; gap: 6px;
-  padding: 5.5px 8px;
-  border-bottom: 1px solid rgba(12, 16, 19, 0.045);
-}
-.sh-f-row.sel { background: color-mix(in srgb, var(--sh-accent) 4.5%, transparent); }
-.sh-f-ref {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 8.5px; color: var(--ink-3); letter-spacing: -0.02em;
-}
-.sh-f-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
-.sh-f-txt b { font-size: 9.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sh-f-txt i { font-style: normal; font-size: 8.5px; color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sh-f-amt {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 9.5px; color: var(--ink); text-align: right; letter-spacing: -0.02em;
-}
-
-.sh-f-tag {
-  display: inline-flex; align-items: center; gap: 3px;
-  justify-self: end;
-  padding: 1.5px 5px;
-  border-radius: 4px;
-  font-size: 8px; font-style: normal; letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-.sh-f-tag.ok { color: var(--sh-accent-deep); background: color-mix(in srgb, var(--sh-accent) 12%, transparent); }
-.sh-f-tag.wait { color: #8a5510; background: rgba(217, 119, 6, 0.13); }
-.sh-f-tag.info { color: #1c4fa8; background: rgba(37, 99, 235, 0.1); }
-.sh-f-tag.mute { color: var(--ink-4); background: rgba(12, 16, 19, 0.05); }
-.sh-f-pulse {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: #d97706;
-  animation: sh-pulse 1.6s ease-in-out infinite;
-}
-
-/* --- approvals queue --- */
-.sh-f-queue { display: flex; flex-direction: column; height: 100%; }
-.sh-f-queue p { margin: 8px 8px 0; font-size: 8.5px; color: var(--ink-4); }
-.sh-f-queue-rows { display: flex; flex-direction: column; gap: 1px; padding: 6px 8px; }
-.sh-f-queue-rows span {
-  display: flex; align-items: center;
-  font-size: 9px; color: var(--ink-2);
-  padding: 3.5px 0;
-  border-bottom: 1px solid rgba(12, 16, 19, 0.04);
-}
-.sh-f-queue-rows i {
-  margin-left: auto; font-style: normal;
-  font-size: 8.5px; color: var(--ink); font-variant-numeric: tabular-nums;
-}
-.sh-f-queue-foot {
-  display: flex; align-items: center; gap: 4px;
-  margin-top: auto; padding: 6px 8px;
-  font-size: 8.5px; color: var(--ink-4);
-  border-top: 1px solid var(--hair);
-}
-
-/* --- the invoice --- */
-.sh-f-invoice { display: flex; flex-direction: column; height: 100%; }
-.sh-f-invoice header { border-bottom: 1px solid var(--hair); }
-.sh-f-inv-k { font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.05em; text-transform: uppercase; }
-.sh-f-invoice header b { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: -0.02em; }
-
-.sh-f-inv-amt {
-  padding: 7px 9px 6px;
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 17px; letter-spacing: -0.04em; color: var(--ink);
-  border-bottom: 1px solid var(--hair);
-}
-.sh-f-inv-amt span { font-size: 10px; color: var(--ink-4); margin-right: 3px; letter-spacing: 0; }
-
-/* Nothing here may be clipped — the approval row and the Approve
-   button are the whole point of the beat. The panel is given the room
-   instead (see .sh-f-strip) and the block sizes are kept tight. */
-.sh-f-inv-fields {
-  margin: 0; padding: 4px 9px;
-  display: flex; flex-direction: column; gap: 1px;
-  flex-shrink: 0;
-}
-.sh-f-inv-fields > div {
-  display: flex; align-items: center; gap: 8px;
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(12, 16, 19, 0.04);
-}
-.sh-f-inv-fields dt { font-size: 8.5px; color: var(--ink-4); width: 44px; flex-shrink: 0; }
-.sh-f-inv-fields dd {
-  margin: 0; margin-left: auto;
-  display: flex; align-items: center; gap: 3px;
-  font-size: 9px; color: var(--ink); text-align: right;
-}
-.sh-f-inv-fields dd.ok { color: var(--sh-accent-deep); }
-
-.sh-f-inv-actions { display: flex; gap: 5px; margin-top: auto; padding: 7px 9px 8px; flex-shrink: 0; }
-.sh-f-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-  flex: 1;
-  height: 22px;
-  border-radius: 5px;
-  font-size: 9px; font-weight: 500;
-  color: #fff; background: var(--ink);
-  transition: background 0.35s ease, color 0.35s ease;
-}
-.sh-f-btn.done { color: #fff; background: var(--sh-accent); }
-.sh-f-btn.quiet { flex: 0 0 42px; color: var(--ink-3); background: transparent; border: 1px solid var(--hair); }
-
-/* --- the ledger strip, then the report --- */
-.sh-f-strip { flex: 0 0 30%; }
-.sh-f-ledger, .sh-f-report { display: flex; flex-direction: column; }
-.sh-f-jrows { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-.sh-f-jrow {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 82px 82px;
-  align-items: center; gap: 6px;
-  padding: 5px 9px;
-}
-.sh-f-jhead {
-  padding-top: 6px; padding-bottom: 3px;
-  font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--ink-4);
-}
-.sh-f-jhead span:nth-child(n + 3) { text-align: right; }
-.sh-f-acct {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 8.5px; color: var(--ink-4);
-}
-.sh-f-jname { font-size: 9px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-.sh-f-jfoot {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 82px 82px;
-  align-items: center; gap: 6px;
-  margin-top: auto;
-  padding: 6px 9px;
-  border-top: 1px solid var(--hair);
-  background: #fcfcfb;
-}
-.sh-f-jfoot span {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 8.5px; color: var(--sh-accent-deep);
-}
-
-/* --- the report ---
-   No `position` here: .sh-f-layer already makes this an absolutely
-   positioned, full-panel layer, and it is its own containing block for
-   the readout below. Re-declaring `relative` cancelled the layer and
-   collapsed the panel to the height of its header. */
-.sh-f-bars {
-  display: flex; align-items: flex-end; gap: 5px;
-  flex: 1; min-height: 0;
-  padding: 8px 9px 9px;
-  margin-right: 96px;
-}
-.sh-f-bars i {
-  flex: 1;
-  border-radius: 2px 2px 0 0;
-  background: rgba(12, 16, 19, 0.14);
-}
-.sh-f-bars i.last { background: var(--sh-accent); }
-.sh-f-report-side {
-  position: absolute; right: 9px; bottom: 9px;
-  display: flex; flex-direction: column; gap: 1px;
-  text-align: right;
-}
-.sh-f-report-side span { font-size: 8.5px; color: var(--ink-4); }
-.sh-f-report-side em { font-style: normal; font-size: 8px; color: var(--sh-accent); }
-
-/* --- the notification ---
-   Top right, directly under the bell that lights up with it and where
-   the pointer travels on the closing beat. Bottom right put it on top
-   of the report's own readout. */
-.sh-f-toast {
-  position: absolute; right: 8px; top: 7px; z-index: 20;
-  display: flex; align-items: center; gap: 7px;
-  padding: 7px 10px;
-  border: 1px solid var(--hair); border-radius: 8px;
-  background: #fff;
-  color: var(--sh-accent);
-}
-
-/* --- the pointer --- */
-.sh-f-cursor { position: absolute; z-index: 30; pointer-events: none; }
-.sh-f-cursor i {
-  position: absolute; left: -13px; top: -13px;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--sh-accent) 40%, transparent);
-}
-
-/* --- loop position --- */
-.sh-f-progress {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 12;
-  height: 2px;
-  background: rgba(12, 16, 19, 0.06);
-}
-.sh-f-progress i {
-  display: block; height: 100%;
-  transform-origin: left;
-  background: var(--sh-accent);
-}
-
-/* =====================================================================
-   CAPABILITY RAIL
-   Six short cards on one moving rail. No section heading — the page
+   CAPABILITY SCROLLER
+   Six capabilities on one moving rail. No section heading — the page
    already has a capabilities section that explains these properly, so
    here they are only a glance at what the product covers.
    ===================================================================== */
-/* No band of its own: the cards sit directly on the hero's field, so
-   the sheets behind them are the same sheets behind the statement and
-   the product. The rail is part of the fold, not a strip under it. */
+/* Band two of three: white above it, the shade band below. Hairlines
+   top and bottom are what separate it from the statement and give the
+   fade something to start from. */
 .sh-rail {
   position: relative;
-  padding: 0.5rem 0 3.25rem;
+  padding: 0.5rem 0 0.5rem;
   background: transparent;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
 }
 
 .sh-rail-marquee {
@@ -776,20 +262,58 @@
 
 
 /* =====================================================================
+   THE ILLUSTRATION
+   Band three: full-bleed artwork, and the shade band that carries the
+   page into it.
+   ===================================================================== */
+.sh-visual {
+  position: relative;
+  /* the artwork's own ground, so any sub-pixel seam under the image is
+     the same colour as the image */
+  background: var(--sh-sky);
+}
+
+/* white at the top, the sky at the bottom, and the colour arriving
+   late — most of the band still reads as page, the last third as sky.
+   This is the whole transition; there is no border under it. */
+.sh-visual-shade {
+  height: var(--sh-shade);
+  background:
+    linear-gradient(
+      180deg,
+      #fff 0%,
+      color-mix(in srgb, var(--sh-sky) 6%, #fff) 34%,
+      color-mix(in srgb, var(--sh-sky) 26%, #fff) 58%,
+      color-mix(in srgb, var(--sh-sky) 62%, #fff) 78%,
+      color-mix(in srgb, var(--sh-sky) 88%, #fff) 91%,
+      var(--sh-sky) 100%
+    );
+}
+
+.sh-visual-img {
+  display: block;
+  width: 100%;
+  /* The artwork is 1200x500. Left to scale freely it would be a
+     thousand pixels tall on a wide monitor, so the band is given its
+     own height and the image covers it. What gets cropped is the flat
+     sky above the aircraft and the empty water below the hulls — the
+     chain itself is in the middle band and always stays whole. */
+  height: clamp(280px, 30vw, 500px);
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* =====================================================================
    RESPONSIVE
-   Desktop is two columns. Below that the order is headline, product,
-   calls to action, rail — the product stays prominent throughout.
+   One centred column throughout; only the measures and the depth of
+   the shade band change.
    ===================================================================== */
 @media (max-width: 1180px) {
   .sh-top {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'head' 'stage' 'cta';
-    row-gap: 2.25rem;
     padding-left: var(--sn-gutter);
     padding-right: var(--sn-gutter);
   }
-  .sh-head { align-self: auto; max-width: 40rem; }
-  .sh-stage { max-width: 48rem; }
+  .sh-head { max-width: 46rem; }
   .sh-h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
 }
 
@@ -801,13 +325,10 @@
   .sh-actions { gap: 0.55rem; }
   .sh-btn { flex: 1 1 auto; justify-content: space-between; font-size: 0.9rem; }
 
-  /* the film keeps its aspect but drops the density it cannot show */
-  .sh-f { font-size: 10px; }
-  .sh-f-rail { display: none; }
-  .sh-f-omni, .sh-f-crumb { display: none; }
-  .sh-f-kpis > div:nth-child(2) { display: none; }
-  .sh-f-strip { display: none; }
-  .sh-f-insp { max-width: 50%; }
+  /* the artwork is wide and thin; at phone widths it is shown as a
+     crop of fixed height so the vehicles stay readable instead of
+     shrinking to a stripe */
+  .sh-visual-img { height: 210px; object-position: 62% center; }
 
   .sh-rail-marquee {
     padding-left: var(--sn-gutter); padding-right: var(--sn-gutter);
@@ -823,8 +344,7 @@
    The hero must read identically with animation switched off.
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .sh-f-live i, .sh-f-pulse, .sh-plane { animation: none; }
-  .sh-f-body, .sh-frame, .sh-cap,
-  .sh-rail-dots i, .sh-frame-ctl, .sh-frame-glass { transition: none; }
-  .sh-frame:hover, .sh-cap:hover, .sh-cap:focus-within { transform: none; }
+  .sh-rail-marquee-content { animation: none; }
+  .sh-btn { transition: none; }
+  .sh-btn:hover { transform: none; }
 }

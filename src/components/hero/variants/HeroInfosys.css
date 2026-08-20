@@ -7,13 +7,19 @@
 .hi-hero {
   position: relative;
   isolation: isolate;
-  min-height: 100vh;
+  /* Was a full 100vh, which pushed everything below it clean off the
+     first screen. 78vh still reads as a banner but lets the section
+     under it show, so the page announces that it continues. */
+  min-height: 78vh;
   display: flex;
   align-items: center;
   overflow: hidden;
   background: #060a14; /* holds the frame before the video paints */
 }
 
+/* One film per slide, stacked and cross-faded with the words above them.
+   All three sit at z-index 0 under the scrim; only the current one is
+   opaque, and only the current one is playing (see the component). */
 .hi-video {
   position: absolute;
   inset: 0;
@@ -22,7 +28,15 @@
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.85s ease;
   animation: hi-drift 26s ease-in-out infinite alternate both;
+}
+
+.hi-video.is-current { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hi-video { transition: none; animation: none; }
 }
 
 @keyframes hi-drift {
@@ -69,7 +83,7 @@
   z-index: 2;
   display: grid;
   place-items: center;
-  padding: 7rem 2.5rem;
+  padding: 4.5rem 2.5rem;
   pointer-events: none;
 }
 
@@ -99,14 +113,69 @@
   color: transparent;
 }
 
+/* ---- The carousel ----
+   All three slides are stacked in the same cell and cross-faded. The
+   film underneath belongs to the section, not to a slide, so it plays
+   straight through the change and is fetched once. Nothing here is
+   clickable: the banner rotates on its own, with no arrows or dots. */
+.hi-slides {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  width: 100%;
+}
+
+.hi-slide {
+  grid-area: 1 / 1;
+  /* the stack is as tall as its tallest slide — the one with the buttons
+     — so the shorter ones centre in that height instead of sitting high
+     with a gap where the buttons would have been */
+  display: grid;
+  align-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s ease, visibility 0s linear 0.85s;
+}
+
+.hi-slide.is-current {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.85s ease, visibility 0s;
+}
+
+/* the slide off screen must not swallow clicks meant for the one on it */
+.hi-slide:not(.is-current) { pointer-events: none; }
+
+/* ---- Prev / next ----
+   The site's shared arrow control (.carousel-arrow in index.css), parked
+   on the banner's edges where they clear the centred headline at every
+   width. Above the slides, which sit at z-index 3. */
+.hi-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+}
+
+.hi-arrow-prev { left: clamp(0.75rem, 3vw, 2.5rem); }
+.hi-arrow-next { right: clamp(0.75rem, 3vw, 2.5rem); }
+
+/* the shared rule lifts on hover with a plain translateY, which would
+   drop the centring — re-state it with the offset kept */
+.hi-arrow:hover { transform: translateY(calc(-50% - 2px)); }
+.hi-arrow:active { transform: translateY(-50%) scale(0.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hi-slide { transition: none; }
+}
+
 /* ---- Act 3: the finished banner ---- */
 .hi-inner {
   position: relative;
-  z-index: 3;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 7rem 2.5rem;
+  padding: 4.5rem 2.5rem;
   color: #fff;
   text-align: center;
   animation: hi-focus 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -186,9 +255,9 @@
 }
 
 @media (max-width: 1024px) {
-  .hi-hero { min-height: 82vh; }
+  .hi-hero { min-height: 68vh; }
   .hi-inner,
-  .hi-intro { padding: 6rem 1.75rem; }
+  .hi-intro { padding: 4rem 1.75rem; }
   .hi-title,
   .hi-intro-line { max-width: 100%; }
 }
@@ -196,6 +265,14 @@
 @media (max-width: 560px) {
   .hi-ctas { flex-direction: column; align-items: stretch; }
   .hi-btn { justify-content: center; }
+
+  /* side arrows would land on the headline at this width — move the pair
+     to the foot of the banner instead */
+  .hi-arrow { top: auto; bottom: 1.25rem; transform: none; }
+  .hi-arrow:hover { transform: translateY(-2px); }
+  .hi-arrow:active { transform: scale(0.96); }
+  .hi-arrow-prev { left: 50%; margin-left: -3rem; }
+  .hi-arrow-next { right: 50%; margin-right: -3rem; }
 }
 
 /* No theatre for anyone who asked for less motion: the intro is skipped

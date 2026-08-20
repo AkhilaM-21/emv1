@@ -19,7 +19,6 @@ const Home = () => {
       <HeroInfosys video="/images/network.mp4" />
       <Products />
       <Features variant="color" />
-      <Clients />
       {/* Hidden for now — the "Your Business Works Together" card with the
           procure-to-pay / order-to-cash flow. Component is untouched in
           components/sections/Announcement.jsx; drop <Announcement /> back
@@ -27,6 +26,9 @@ const Home = () => {
       <AppBuilder />
       <WhyEmvive />
       <GlobeSection variant="map" id="global-map" />
+      {/* "Meet the platform" leads straight into the stories it points at —
+          its own CTA is "View all customer stories". */}
+      <Clients />
       <CustomerStory />
       <Resources />
       <CTA />

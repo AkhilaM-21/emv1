@@ -1,0 +1,146 @@
+/* =====================================================================
+   INDUSTRIES — card carousel
+
+   Modelled on the "Featured news" strip on the Dynamics 365 home page:
+   a quiet neutral ground, a left-aligned eyebrow and heading, a row of
+   controls on its own line, and borderless cards on a scroll track.
+
+   The cards carry no border, no shadow and no fill — the rounded media
+   panel is the only shape on the page, and everything under it is set
+   directly on the section ground. That restraint is the whole look;
+   adding a card outline back would undo it.
+   ===================================================================== */
+
+.ind-section {
+  --ind-gap: 1.75rem;
+  --ind-cols: 3;
+}
+
+/* the section's own ground, a shade off white */
+.ind-section.features-section:not(.features-section--solid) {
+  padding: 6.5rem 0;
+  background-color: #f7f8fa;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   HEADER
+   --------------------------------------------------------------- */
+.ind-head {
+  max-width: 60rem;
+  margin: 0 0 2.25rem;
+}
+
+.ind-eyebrow {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e2601f;
+}
+
+.ind-heading {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.4vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -1.4px;
+  color: #0b1730;
+  text-wrap: balance;
+}
+
+.ind-sub {
+  margin: 1.1rem 0 0;
+  max-width: 64ch;
+  font-size: 1.02rem;
+  line-height: 1.62;
+  color: #64748b;
+}
+
+/* ---------------------------------------------------------------
+   CONTROLS
+   Under the track, not above it: the two arrows at the bottom left,
+   the catch-all link pushed to the far right of the same line.
+   --------------------------------------------------------------- */
+.ind-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+}
+
+/* The arrows are the site's shared prev/next control (.carousel-arrow
+   in index.css) — the orange gradient tile used by the customer-story,
+   hero and product carousels. Nothing is restyled here; that rule set
+   is !important precisely so every carousel matches. */
+
+.ind-all {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e2601f;
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+
+.ind-all:hover { gap: 0.8rem; }
+
+/* ---------------------------------------------------------------
+   TRACK
+   A real scroll container with snap points, so a trackpad swipe works
+   and the arrows are an alternative rather than the only way through.
+
+   It keeps the .features-grid class so every existing card rule still
+   applies — the cards are unchanged; only the row they sit in is. The
+   compound selector outranks the plain .features-grid grid rules, and
+   the grid-template-columns in the breakpoints below are inert once
+   the container is flex.
+   --------------------------------------------------------------- */
+.features-grid.ind-track {
+  display: flex;
+  gap: var(--ind-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* Vertical padding only. Horizontal padding would move the snapport
+     off the first card's origin and put the arrows half a gap out of
+     step with the snap points; the room here is only for the cards'
+     resting shadow, which overflow-y would otherwise shave. */
+  padding: 4px 0 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.features-grid.ind-track::-webkit-scrollbar { display: none; }
+
+.features-grid.ind-track > .feature-card {
+  flex: 0 0 calc((100% - (var(--ind-cols) - 1) * var(--ind-gap)) / var(--ind-cols));
+  scroll-snap-align: start;
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .ind-section { --ind-cols: 2; --ind-gap: 1.25rem; }
+}
+
+@media (max-width: 720px) {
+  .ind-section { --ind-cols: 1.12; --ind-gap: 1rem; }
+  .ind-section.features-section:not(.features-section--solid) { padding: 4.5rem 0; }
+  .ind-head { margin-bottom: 1.75rem; }
+  .ind-sub { font-size: 0.95rem; }
+
+  .ind-controls { gap: 0.6rem; }
+  .ind-all { font-size: 0.85rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .features-grid.ind-track { scroll-behavior: auto; }
+}

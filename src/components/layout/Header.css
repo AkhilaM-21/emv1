@@ -240,6 +240,27 @@
 }
 
 /* 3D pill button (white, embossed, with dark circular icon) */
+/* --- Sign in / Sign up ---
+   Replaces the single Get Started pill. Both carry the same .btn-get-started
+   shell — gradient, border, shadow, hover lift — so they read as a matched
+   pair: same gradient, border, shadow, hover lift and orange arrow badge. */
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+
+
+/* the mobile drawer stacks them full width */
+.mobile-auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.mobile-auth-actions .mobile-get-started { justify-content: space-between; }
+
 .btn-get-started {
   display: flex;
   align-items: center;
@@ -613,6 +634,121 @@
   gap: 5px;
   flex: 1;
 }
+
+/* The Platform column: each group name is a full menu row that opens a
+   small list beneath it. Collapsed by default, one open at a time — with
+   all three expanded the column ran half again as tall as the panel.
+   The list is indented to the row's text column (0.75rem of item
+   padding + the 30px icon + the 0.85rem gap) so the children hang off
+   the title rather than off the icon. */
+.mega-items--grouped { gap: 0.15rem; }
+
+/* the chevron in place of the go-there arrow */
+.mega-item-caret {
+  color: #94a3b8;
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+.mega-item-caret.open { transform: rotate(180deg); }
+.mega-item:hover .mega-item-caret { color: var(--mc, #64748b); }
+
+.mega-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mega-sub {
+  list-style: none;
+  margin: 0.1rem 0 0.45rem;
+  animation: mega-sub-in 0.22s ease both;
+  /* Indented so the child's *label* lands on the parent's title column:
+     1.35rem here + the button's 0.5rem + the 17px icon + the 0.55rem gap
+     comes to the same x as 0.75rem + 30px + 0.85rem above it. */
+  padding: 0 0 0 1.35rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mega-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 5px 0.5rem;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.45;
+  /* the same ink as the rows above — these read as menu entries, not
+     as caption text under one */
+  color: #1f2937;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+/* icons carry the entry's accent, as they do everywhere else in the panel */
+.mega-sub-item svg {
+  flex-shrink: 0;
+  color: var(--mc, #64748b);
+  transition: color 0.2s ease;
+}
+
+.mega-sub-item:hover {
+  color: #d9531f;
+  background: rgba(226, 96, 31, 0.06);
+}
+
+@keyframes mega-sub-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-sub { animation: none; }
+  .mega-item-caret { transition: none; }
+}
+
+.mobile-module-caret {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: #94a3b8;
+  transition: transform 0.25s ease;
+}
+.mobile-module-caret.open { transform: rotate(180deg); }
+
+/* mobile: same idea under each module card */
+.mobile-module-sub {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0 0 0 3.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-module-sub button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 7px 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: #1f2937;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-module-sub button svg {
+  flex-shrink: 0;
+  color: var(--mc, #64748b);
+}
+
+.mobile-module-sub button:hover { color: #d9531f; }
 
 /* one tile row */
 .mega-item {

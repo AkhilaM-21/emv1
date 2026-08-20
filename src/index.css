@@ -816,6 +816,20 @@ body.dark-theme .emv-subtitle {
   padding: 6rem 0 !important;
 }
 
+/* 1b. ...with one exception: the section directly under the hero.
+   The shared 6rem rhythm is right between two sections, but under the
+   film banner 96px of flat colour before the first word reads as dead
+   ground. 2.5rem closes most of it and still keeps the eyebrow off the
+   seam. The adjacent-sibling selector means only whichever section
+   follows the hero is affected; the same section keeps the full rhythm
+   anywhere else it appears. It needs !important and two classes to
+   outrank the rule above. */
+.hi-hero + .products-section,
+.hi-hero + .features-section,
+.hi-hero + .emv-clients-section {
+  padding-top: 2.5rem !important;
+}
+
 /* 2. Horizontal gutter — the hero's own geometry, everywhere */
 .container,
 .products-section .container,

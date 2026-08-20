@@ -403,11 +403,12 @@
 
 @media (max-width: 900px) { .features-heading { font-size: 2.4rem; } }
 
+
 /* ---- Grid ---- */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.15rem;
 }
 
 /* Animated GIF filling the empty last grid cell — no background */
@@ -442,17 +443,17 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* trimmed from 340px / 2.25rem — enough off to lose the empty band
-     under the link, without the card turning into a tile */
-  min-height: 292px;
+  /* trimmed again for the pager: one row has to sit comfortably in
+     the fold, so the card carries the same five points in less height */
+  min-height: 244px;
   text-align: left;
-  padding: 1.85rem 1.5rem 1.55rem;
+  padding: 1.3rem 1.2rem 1.15rem;
   border-radius: 16px;
   background: #ffffff;
   /* shadows as committed on main, with the orange border */
   background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
   border: 1px solid rgba(226, 96, 31, 0.4);
-  border-radius: 24px;
+  border-radius: 18px;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -2px 3px rgba(0, 0, 0, 0.04),
@@ -477,7 +478,7 @@
   display: inline-flex;
   line-height: 0;
   color: #0b1730;
-  margin-bottom: 1.6rem;
+  margin-bottom: 0.95rem;
   transition: color 0.3s ease;
 }
 
@@ -489,18 +490,18 @@
 }
 
 .features-grid .feature-card-title {
-  font-size: 1.35rem;
+  font-size: 1.08rem;
   font-weight: 600;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
   line-height: 1.25;
   color: #0b1730;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   text-wrap: balance;
 }
 
 .features-grid .feature-card-desc {
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.82rem;
+  line-height: 1.5;
   color: #6b7482;
   margin: 0;
   text-wrap: pretty;
@@ -513,8 +514,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #e2601f;
   transition: color 0.3s ease, gap 0.3s ease;
@@ -901,10 +902,16 @@
 
 .features-section--color .features-grid .feature-card:hover {
   border-color: rgba(var(--fc-rgb), 0.55);
+  /* Hover changes the border and the wash inside the card and nothing
+     else. The 44px coloured glow that used to sit under here spread the
+     industry's colour well past the corners, which read as the fill
+     leaking out rather than as the card lifting — so the shadow is the
+     same one the card rests on, unchanged. */
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 2px 6px rgba(15, 23, 42, 0.06),
-    0 26px 44px -26px rgba(var(--fc-rgb), 0.5);
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.08),
+    0 15px 30px rgba(0, 0, 0, 0.05);
 }
 
 .features-section--color .features-grid .feature-card:hover::after {
@@ -1045,25 +1052,25 @@ body.dark-theme .features-section--solid .features-sub {
    each row darts forward one after another (same as the Why Emvive cards). */
 .feature-points {
   list-style: none;
-  margin: 1rem 0 0;
+  margin: 0.7rem 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 .feature-points li {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 0.88rem;
-  line-height: 1.45;
+  gap: 7px;
+  font-size: 0.78rem;
+  line-height: 1.4;
   color: #6b7482;
   transition: color 0.5s ease;
   transition-delay: calc(var(--i) * 140ms);
 }
 .feature-points li svg {
   flex-shrink: 0;
-  margin-top: 3px;
+  margin-top: 2px;
   color: var(--fc, #e2601f);
   transition: color 0.4s ease;
 }

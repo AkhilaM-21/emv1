@@ -11,6 +11,79 @@ const OFFICES = [
   { coords: [55.27, 25.20], label: 'Dubai', regionKey: 'dubai', tagDx: -30, address: 'Sheikh Zayed Road, Trade Centre, Dubai, UAE' },
 ];
 
+/* Which of the three offices the visitor sits closest to.
+
+   The pin for that region is the one left flashing, so the ping reads
+   as a "you are here" pointer instead of a decoration cycling through
+   all three. Everything else on the map stays put. */
+const REGION_INDEX = OFFICES.reduce((m, o, i) => ({ ...m, [o.regionKey]: i }), {});
+
+// Where an unrecognised visitor lands.
+const DEFAULT_REGION = 'india';
+
+const COUNTRY_TO_REGION = {
+  IN: 'india',
+  SA: 'saudi',
+  AE: 'dubai',
+  // the rest of the GCC is served out of the Dubai entity
+  KW: 'dubai', QA: 'dubai', BH: 'dubai', OM: 'dubai',
+};
+
+/* The timezone is already in the browser — no request, no third party,
+   no wait. It answers on the first paint and is what stands if the IP
+   lookup below is blocked, rate-limited or simply slow. */
+const TZ_TO_REGION = {
+  'Asia/Kolkata': 'india',
+  'Asia/Calcutta': 'india',
+  'Asia/Riyadh': 'saudi',
+  'Asia/Dubai': 'dubai',
+  'Asia/Muscat': 'dubai',
+  'Asia/Qatar': 'dubai',
+  'Asia/Kuwait': 'dubai',
+  'Asia/Bahrain': 'dubai',
+};
+
+const timezoneRegion = () => {
+  try {
+    return TZ_TO_REGION[Intl.DateTimeFormat().resolvedOptions().timeZone] || DEFAULT_REGION;
+  } catch {
+    return DEFAULT_REGION;
+  }
+};
+
+/* Resolves the visitor's region: timezone immediately, then the IP
+   lookup overrides it if it comes back with something we cover. The
+   fetch is aborted after four seconds — a slow geolocation service must
+   never be the reason the map sits on the wrong pin. */
+const useIpRegion = () => {
+  const [region, setRegion] = useState(timezoneRegion);
+
+  useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+
+    fetch('https://ipwho.is/?fields=country_code', { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const key = data && COUNTRY_TO_REGION[data.country_code];
+        if (!cancelled && key) setRegion(key);
+      })
+      .catch(() => {
+        /* offline, blocked or timed out — the timezone guess stands */
+      })
+      .finally(() => clearTimeout(timer));
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, []);
+
+  return region;
+};
+
 // Nodes that shoot arcs to the offices to simulate global traffic
 const TRAFFIC_NODES = [
   { coords: [-74.006, 40.712] }, // New York
@@ -590,6 +663,12 @@ const WorldMap = ({ selected = 0, onSelect = () => {} }) => {
             onClick={() => onSelect(i)}
           >
             <circle r="22" className="wm-halo" />
+            {/* Three rings on a stagger, so the active pin is always
+                throwing one outward — a beacon on the location rather
+                than a single blink you can miss between card changes. */}
+            <circle r="12" className="wm-ripple wm-ripple-1" />
+            <circle r="12" className="wm-ripple wm-ripple-2" />
+            <circle r="12" className="wm-ripple wm-ripple-3" />
             <circle r="6.5" className="wm-dot" />
             <g className="wm-tag" transform={`translate(${p.tagDx || 0}, ${p.labelBelow ? 34 : -20})`}>
               <rect x="-52" y="-16" width="104" height="26" rx="13" />
@@ -604,19 +683,25 @@ const WorldMap = ({ selected = 0, onSelect = () => {} }) => {
 
 const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState(0);
+  const ipRegion = useIpRegion();
+  const [selected, setSelected] = useState(REGION_INDEX[DEFAULT_REGION] ?? 0);
+  // set once the visitor picks a region themselves — their choice then
+  // outranks anything the IP lookup reports back later
+  const [chosen, setChosen] = useState(false);
   const office = OFFICES[selected];
   const rows = REGION_DETAILS[office.regionKey] || [];
 
-  // Regions advance on their own; clicking a pin jumps to it and
-  // restarts the dwell from there (the effect re-runs on `selected`).
+  /* The map no longer rotates through the three regions. It settles on
+     the visitor's own and stays there, which is what makes the flashing
+     pin mean something. */
   useEffect(() => {
-    const timer = setTimeout(
-      () => setSelected((i) => (i + 1) % OFFICES.length),
-      5000
-    );
-    return () => clearTimeout(timer);
-  }, [selected]);
+    if (!chosen) setSelected(REGION_INDEX[ipRegion] ?? 0);
+  }, [ipRegion, chosen]);
+
+  const choose = (i) => {
+    setChosen(true);
+    setSelected(i);
+  };
 
   return (
     <section className="globe-section" id={id}>
@@ -666,7 +751,7 @@ const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
                     type="button"
                     aria-label={o.label}
                     className={`gd-dot${selected === i ? ' active' : ''}`}
-                    onClick={() => setSelected(i)}
+                    onClick={() => choose(i)}
                   />
                 ))}
               </div>
@@ -675,9 +760,9 @@ const GlobeSection = ({ variant = 'globe', id = 'global' }) => {
             {/* Globe — left */}
             <div className={`globe-stage${variant === 'map' ? ' globe-stage--map' : ''}`}>
               {variant === 'map' ? (
-                <WorldMap selected={selected} onSelect={setSelected} />
+                <WorldMap selected={selected} onSelect={choose} />
               ) : (
-                <Globe selected={selected} onSelect={setSelected} />
+                <Globe selected={selected} onSelect={choose} />
               )}
             </div>
           </div>
