@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight, ChevronLeft, ChevronRight, HardHat, ShoppingBag, Truck, Briefcase, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
+import { CircleDollarSign, TrendingUp, Users, Package, BarChart3, FolderKanban, Factory, Store, FileCheck, Blocks, Workflow, ArrowRight, ChevronLeft, ChevronRight, CheckCircle2, HardHat, ShoppingBag, Truck, Briefcase, Wrench, HeartPulse, Building2, Utensils } from 'lucide-react';
 import './Features.css';
 import './Industries.css';
 
@@ -7,14 +7,14 @@ import './Industries.css';
    accent colour; `rgb` is the same colour as a raw triple so the CSS can
    build translucent tints from it. */
 const FEATURES = [
-  { id: 1, icon: HardHat, title: 'Construction & Engineering', color: '#cb8c1f', rgb: '203, 140, 31', desc: 'Connect projects, procurement, workforce, costs, and finance.', points: ['Project Costing', 'Subcontractor Management', 'Bill of Quantities (BOQ)', 'Equipment Tracking', 'Progress Billing'], link: 'Explore Construction & Engineering' },
-  { id: 2, icon: ShoppingBag, title: 'Retail & Commerce', color: '#b14a2f', rgb: '177, 74, 47', desc: 'Connect POS, inventory, purchasing, people, and finance.', points: ['Point of Sale (POS)', 'Inventory Optimization', 'Customer Loyalty', 'Multi-Store Management', 'E-commerce Integration'], link: 'Explore Retail & Commerce' },
-  { id: 3, icon: Factory, title: 'Manufacturing', color: '#c85a1e', rgb: '200, 90, 30', desc: 'Connect production, inventory, procurement, sales, and finance.', points: ['Production Planning', 'Bill of Materials (BOM)', 'Shop Floor Control', 'Quality Management', 'Equipment Maintenance'], link: 'Explore Manufacturing' },
-  { id: 4, icon: Truck, title: 'Supply Chain & Distribution', color: '#6c50b2', rgb: '108, 80, 178', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', points: ['Warehouse Management', 'Fleet Tracking', 'Vendor Portals', 'Order Fulfillment', 'Demand Forecasting'], link: 'Explore Supply Chain & Distribution' },
-  { id: 5, icon: Briefcase, title: 'Professional Services', color: '#d9722a', rgb: '217, 114, 42', desc: 'Connect projects, people, customers, expenses, and billing.', points: ['Time & Expense Tracking', 'Resource Scheduling', 'Project Profitability', 'Client Billing', 'Contract Management'], link: 'Explore Professional Services' },
-  { id: 6, icon: Wrench, title: 'Field Service Management', color: '#4f46e5', rgb: '79, 70, 229', desc: 'Connect scheduling, technicians, assets, billing, and finance.', points: ['Technician Dispatch', 'Mobile Work Orders', 'Route Optimization', 'Service Contracts', 'Warranty Management'], link: 'Explore Field Service Management' },
-  { id: 7, icon: HeartPulse, title: 'Healthcare', color: '#0ea5e9', rgb: '14, 165, 233', desc: 'Connect patients, staff, inventory, billing, and compliance.', points: ['Patient Records', 'Clinic Scheduling', 'Medical Inventory', 'Billing & Claims', 'Compliance Management'], link: 'Explore Healthcare' },
-  { id: 8, icon: Building2, title: 'Real Estate & Property', color: '#ec4899', rgb: '236, 72, 153', desc: 'Connect properties, leasing, tenants, payments, and finance.', points: ['Lease Management', 'Tenant Portals', 'Facility Maintenance', 'Rent Collection', 'Contract Renewals'], link: 'Explore Real Estate & Property' }
+  { id: 1, icon: HardHat, title: 'Construction & Engineering', color: '#cb8c1f', rgb: '203, 140, 31', desc: 'Connect projects, procurement, workforce, costs, and finance.', points: ['Project Costing', 'Subcontractor Management', 'Bill of Quantities (BOQ)', 'Equipment Tracking', 'Progress Billing'], link: 'Explore Construction & Engineering', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=640&q=70' },
+  { id: 2, icon: ShoppingBag, title: 'Retail & Commerce', color: '#b14a2f', rgb: '177, 74, 47', desc: 'Connect POS, inventory, purchasing, people, and finance.', points: ['Point of Sale (POS)', 'Inventory Optimization', 'Customer Loyalty', 'Multi-Store Management', 'E-commerce Integration'], link: 'Explore Retail & Commerce', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=640&q=70' },
+  { id: 3, icon: Factory, title: 'Manufacturing', color: '#c85a1e', rgb: '200, 90, 30', desc: 'Connect production, inventory, procurement, sales, and finance.', points: ['Production Planning', 'Bill of Materials (BOM)', 'Shop Floor Control', 'Quality Management', 'Equipment Maintenance'], link: 'Explore Manufacturing', img: 'https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=640&q=70' },
+  { id: 4, icon: Truck, title: 'Supply Chain & Distribution', color: '#6c50b2', rgb: '108, 80, 178', desc: 'Connect suppliers, stock, customer orders, invoicing, and finance.', points: ['Warehouse Management', 'Fleet Tracking', 'Vendor Portals', 'Order Fulfillment', 'Demand Forecasting'], link: 'Explore Supply Chain & Distribution', img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=640&q=70' },
+  { id: 5, icon: Briefcase, title: 'Professional Services', color: '#d9722a', rgb: '217, 114, 42', desc: 'Connect projects, people, customers, expenses, and billing.', points: ['Time & Expense Tracking', 'Resource Scheduling', 'Project Profitability', 'Client Billing', 'Contract Management'], link: 'Explore Professional Services', img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=640&q=70' },
+  { id: 6, icon: Wrench, title: 'Field Service Management', color: '#4f46e5', rgb: '79, 70, 229', desc: 'Connect scheduling, technicians, assets, billing, and finance.', points: ['Technician Dispatch', 'Mobile Work Orders', 'Route Optimization', 'Service Contracts', 'Warranty Management'], link: 'Explore Field Service Management', img: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=640&q=70' },
+  { id: 7, icon: HeartPulse, title: 'Healthcare', color: '#0ea5e9', rgb: '14, 165, 233', desc: 'Connect patients, staff, inventory, billing, and compliance.', points: ['Patient Records', 'Clinic Scheduling', 'Medical Inventory', 'Billing & Claims', 'Compliance Management'], link: 'Explore Healthcare', img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=640&q=70' },
+  { id: 8, icon: Building2, title: 'Real Estate & Property', color: '#ec4899', rgb: '236, 72, 153', desc: 'Connect properties, leasing, tenants, payments, and finance.', points: ['Lease Management', 'Tenant Portals', 'Facility Maintenance', 'Rent Collection', 'Contract Renewals'], link: 'Explore Real Estate & Property', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=640&q=70' }
 ];
 
 /* =====================================================================
@@ -98,9 +98,16 @@ const FeatureCard = ({ feature, variant }) => {
         </div>
       )}
 
-      <span className="feature-ic">
-        <Icon size={26} strokeWidth={1.5} />
-      </span>
+      {/* photo banner, with the industry's icon on its top-left corner */}
+      <div className="feature-photo">
+        <img src={feature.img} alt="" loading="lazy" decoding="async" />
+        <span className="feature-photo-wash" aria-hidden="true" />
+
+        <span className="feature-ic">
+          <Icon size={22} strokeWidth={2} />
+        </span>
+
+      </div>
 
       <div className="feature-body">
         <h3 className="feature-card-title">{feature.title}</h3>
@@ -108,7 +115,7 @@ const FeatureCard = ({ feature, variant }) => {
         <ul className="feature-points">
           {feature.points.map((pt, i) => (
             <li key={pt} style={{ '--i': i }}>
-              <ArrowRight size={15} strokeWidth={2.2} aria-hidden="true" />
+              <CheckCircle2 size={16} strokeWidth={2.6} aria-hidden="true" />
               <span>{pt}</span>
             </li>
           ))}
@@ -137,16 +144,25 @@ const Features = ({ variant = 'mono', id = 'features' }) => {
     <section className={sectionClass} id={id}>
       <div className="features-container">
         <header className="ind-head">
-          <span className="ind-eyebrow">Industries</span>
-          <h2 className="ind-heading">
-            Built for the way{' '}
-            <span className="text-accent">your industry works.</span>
-          </h2>
-          <p className="ind-sub">
-            Different industries have different processes, priorities and operational demands.
-            We bring the business functions behind them into a connected platform designed to
-            support everyday operations.
-          </p>
+          <div className="ind-head-text">
+            <span className="ind-eyebrow">Industries</span>
+            <h2 className="ind-heading">
+              Built for the way{' '}
+              <span className="text-accent">your industry works.</span>
+            </h2>
+            <p className="ind-sub">
+              Different industries have different processes, priorities and operational demands.
+              We bring the business functions behind them into a connected platform designed to
+              support everyday operations.
+            </p>
+          </div>
+
+          {/* the site's shared section pill (.section-cta in index.css) —
+              same control the Resources and Products sections use */}
+          <a href="#products" className="section-cta">
+            Explore all applications
+            <ArrowRight size={16} />
+          </a>
         </header>
 
         <div className="features-grid ind-track" ref={trackRef} onScroll={sync}>
@@ -175,11 +191,6 @@ const Features = ({ variant = 'mono', id = 'features' }) => {
           >
             <ChevronRight size={20} strokeWidth={2.2} />
           </button>
-
-          <a href="#products" className="ind-all">
-            Explore all applications
-            <ArrowRight size={15} strokeWidth={2.2} />
-          </a>
         </div>
 
       </div>
