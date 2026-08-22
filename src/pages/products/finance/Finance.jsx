@@ -1,66 +1,56 @@
 import React from 'react';
 import { ProductPage, Footer } from '../shared/system';
-import ProductNav from '../shared/nav';
-import { Faq, ContactSection } from '../shared/blocks';
-import { FINANCE_FAQ, FINANCE_CONTACT, FINANCE_NAV } from './FinanceSections';
 import {
-  CapabilitiesGrid, Capabilities, HowItWorks, Automation, Integrations, Security, WhyEmvive,
-  WhyEmviveWide,
-} from './FinanceStory';
-import FinanceHero from './FinanceHero';
+  FinanceHeroBlade, Overview, Features, Pricing, Partners,
+  CustomerStories, Resources, Platform, ClosingBanner,
+} from './FinanceD365';
 import './FinanceApp.css';
 import './Finance.css';
 
 /* =====================================================================
    EMVIVE FINANCE
 
-   The page is eight sections and nothing else. Each one answers a
-   single question, in the order a buyer actually asks it — and if a
-   block does not answer the question at the top of its section, the
-   block does not belong on the page.
+   Rebuilt to the section order and component shapes of the Dynamics 365
+   Finance product page:
 
-     01  Hero                     what is it?                FinanceHero
-     02  Product & capabilities   what can it do?            Capabilities
-     03  How it works             how does it work?          HowItWorks
-     04  Automation               what can it automate?      Automation
-     05  Integrations             does it connect?           Integrations
-     06  Security & controls      can we trust it?           Security
-     07  Why Emvive               why should we choose it?   WhyEmvive
-     08  FAQ + contact            let's talk.                Faq + Contact
+   Navigation is the anchor bar the hero renders beneath itself, as in
+   the reference. The site's ProductNav is deliberately not mounted —
+   two bars stacked was one more than the design has.
 
-   02 to 07 live in FinanceStory.jsx; 08 is the shared Faq/Contact pair
-   every product page uses. No AI section on this page, by design.
+     01  Hero blade        FinanceHeroBlade  + anchor bar
+     02  Overview          Overview          pill bar → accordion → shot
+     03  Features          Features          six cards
+     04  Pricing           Pricing           three plans
+     05  Partners          Partners          three cards
+     06  Customer stories  CustomerStories   three-up
+     07  Resources         Resources         three-up
+     08  Platform          Platform          two statements
+     09  Closing banner    ClosingBanner
+
+   Every section the reference's anchor bar lists is present, in its
+   order. The one thing NOT carried over is a price: the plan cards say
+   what each tier includes and send the number to a conversation,
+   because inventing figures on a pricing page is worse than not
+   showing one. The reference's News carousel is also absent — it is
+   not in its own anchor list.
+
+   The previous page's sections — How it works, Automation, Security,
+   Why Emvive, FAQ — are no longer mounted here. FinanceStory.jsx still
+   holds them, and still owns CAPS, which is the content this page
+   reads from, so nothing has been deleted.
    ===================================================================== */
 
 const Finance = () => (
-  <ProductPage accent="#0a8f5e" accent2="#07724b" wash="rgba(10,143,94,0.09)" className="fn">
-    <ProductNav {...FINANCE_NAV} />
-
-    <FinanceHero />
-
-    <Capabilities />
-    <CapabilitiesGrid />
-    <HowItWorks />
-    <Automation />
-    {/* <Integrations /> */}
-    <Security />
-    <WhyEmvive />
-    {/* 07b — the same section as one long card, no photo, no quotes */}
-    <WhyEmviveWide />
-
-    <Faq
-      eyebrow="08 — FAQ"
-      title="Before you put"
-      accent="your ledger on it."
-      lede="The six things every controller and CFO raises in the first call, answered plainly."
-      items={FINANCE_FAQ}
-      aside={(
-        <>Something not answered here? Ask it in the form below — it goes to the same
-        people who would run your implementation.</>
-      )}
-    />
-
-    <ContactSection {...FINANCE_CONTACT} variant="card" />
+  <ProductPage accent="#0a8f5e" accent2="#07724b" wash="rgba(10,143,94,0.09)" className="fn fd-page">
+    <FinanceHeroBlade />
+    <Overview />
+    <Features />
+    <Pricing />
+    <Partners />
+    <CustomerStories />
+    <Resources />
+    <Platform />
+    <ClosingBanner />
 
     <Footer />
   </ProductPage>

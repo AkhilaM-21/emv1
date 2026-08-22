@@ -21,7 +21,6 @@
   --sh-sky: #4dafe0;
 
   /* how tall the white-to-sky fade runs before the image begins */
-  --sh-shade: clamp(120px, 15vw, 240px);
 
   /* stronger ink than the page default — the old hero read washed out */
   --ink: #0c1013;
@@ -31,14 +30,13 @@
   --line: rgba(12, 16, 19, 0.12);
   --hair: rgba(12, 16, 19, 0.075);
 
-  /* The two bars above this section are both transparent — the site
-     header paints nothing behind its floating pill, and the product bar
-     rides this section (ProductNav `stickAfter`). What was showing
-     behind them was the product page's own white offset, so the hero is
-     lifted the full height of both and pads the same amount back. White
-     now runs to the top of the screen and is the background for the
-     header pill and the product bar; the content does not move. */
-  --sh-lift: 148px;  /* 90px site header + 58px product bar */
+  /* Only the site header sits above this section now — the product bar
+     was moved below the hero. The header paints nothing behind its
+     floating pill, so what would show through is the product page's own
+     white offset; the hero is lifted the header's height and pads the
+     same amount back, which puts white to the top of the screen behind
+     the pill without moving the content. */
+  --sh-lift: 90px;  /* the site header, and nothing else above it now */
 
   position: relative;
   isolation: isolate;
@@ -55,40 +53,16 @@
 }
 
 .sh-head {
-  max-width: 62rem;
+  /* no measure — the statement runs the full band, edge to edge */
+  max-width: none;
   margin: 0 auto;
   text-align: center;
 }
 
 /* --- statement ---
-   The eyebrow pill and the heading are the home page's, to the pixel —
-   same dimensions, weights and tracking as .features-kicker and
-   .features-heading in index.css. Only the accent changes: Supply
-   green in place of the site orange. */
-.sh-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: #0e7490;
-  background: color-mix(in srgb, var(--sh-accent) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--sh-accent) 25%, transparent);
-  margin-bottom: 1.5rem;
-}
-.sh-pill::before {
-  content: '';
-  display: block;
-  width: 8px; height: 8px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--sh-accent) 55%, #fff);
-}
-
+   The heading is the home page's, to the pixel — same dimensions,
+   weights and tracking as .features-heading in index.css. Only the
+   accent changes: Supply green in place of the site orange. */
 .sh-h1 {
   margin: 0;
   font-size: clamp(2.4rem, 3.5vw, 3.5rem);
@@ -97,18 +71,16 @@
   letter-spacing: -1.5px;
   color: #0b1730;
 }
-.sh-h1-line { display: block; }
-
-/* the accent word, gradient-clipped exactly like .text-accent */
-.sh-accent,
-.sh-accent .mk > span {
+/* The accent half. Inline, so the whole statement sits on one line and
+   wraps as words only when the viewport cannot hold it. */
+.sh-h1 .sh-accent {
   -webkit-text-fill-color: color-mix(in srgb, var(--sh-accent) 78%, #fff);
   color: color-mix(in srgb, var(--sh-accent) 78%, #fff);
 }
 
 .sh-lede {
   margin: 1.9rem auto 0;
-  max-width: 60ch;
+  max-width: none;
   font-size: clamp(1.02rem, 1.16vw, 1.16rem);
   line-height: 1.58;
   letter-spacing: -0.012em;
@@ -120,74 +92,6 @@
    inset top highlight so it catches light, a lifted drop shadow, and
    an arrow disc on the end. Same geometry as .btn-get-started and
    .cta-btn-primary in index.css — only the accent differs. */
-.sh-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 2.25rem;
-}
-
-.sh-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.35rem 0.35rem 0.35rem 1.4rem;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: transform 0.15s ease, background 0.25s ease;
-}
-
-.sh-btn-disc {
-  display: grid;
-  place-items: center;
-  width: 34px; height: 34px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  transition: transform 0.2s ease;
-}
-.sh-btn:hover .sh-btn-disc { transform: scale(1.05); }
-
-/* dominant: green shell, white disc */
-.sh-btn-solid {
-  color: #fff;
-  background: color-mix(in srgb, var(--sh-accent) 85%, #fff);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
-.sh-btn-solid .sh-btn-disc {
-  background: #fff;
-  color: var(--sh-accent);
-}
-.sh-btn-solid:hover {
-  transform: translateY(-2px);
-}
-
-/* quiet: white shell, green disc — the header's Get Started, in green */
-.sh-btn-shell {
-  color: #16181d;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-.sh-btn-shell .sh-btn-disc {
-  color: #fff;
-  background: color-mix(in srgb, var(--sh-accent) 85%, #fff);
-}
-.sh-btn-shell:hover {
-  transform: translateY(-2px);
-}
-
-.sh-btn:active { transform: translateY(1px); }
-
-.sh-note {
-  margin: 1.1rem 0 0;
-  font-size: 0.815rem;
-  letter-spacing: -0.005em;
-  color: var(--ink-3);
-}
-
 /* =====================================================================
    CAPABILITY SCROLLER
    Six capabilities on one moving rail. No section heading — the page
@@ -197,12 +101,31 @@
 /* Band two of three: white above it, the shade band below. Hairlines
    top and bottom are what separate it from the statement and give the
    fade something to start from. */
+/* THE WASH.
+   White under the statement, arriving at the artwork's own sky by the
+   foot of the rail — so the copy, the scroller and the illustration read
+   as one field rather than three stacked bands. The gradient lives on a
+   wrapper around exactly those two, which is what lets it finish on the
+   artwork's edge whatever height the copy runs to. */
+.sh-lead {
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #fff 42%,
+    color-mix(in srgb, var(--sh-sky) 10%, #fff) 64%,
+    color-mix(in srgb, var(--sh-sky) 34%, #fff) 80%,
+    color-mix(in srgb, var(--sh-sky) 68%, #fff) 92%,
+    var(--sh-sky) 100%
+  );
+}
+
 .sh-rail {
   position: relative;
   padding: 0.5rem 0 0.5rem;
   background: transparent;
   border-top: 1px solid var(--hair);
-  border-bottom: 1px solid var(--hair);
+  /* no bottom hairline — it would cut the wash off right where it is
+     meant to run into the artwork */
 }
 
 .sh-rail-marquee {
@@ -273,23 +196,6 @@
   background: var(--sh-sky);
 }
 
-/* white at the top, the sky at the bottom, and the colour arriving
-   late — most of the band still reads as page, the last third as sky.
-   This is the whole transition; there is no border under it. */
-.sh-visual-shade {
-  height: var(--sh-shade);
-  background:
-    linear-gradient(
-      180deg,
-      #fff 0%,
-      color-mix(in srgb, var(--sh-sky) 6%, #fff) 34%,
-      color-mix(in srgb, var(--sh-sky) 26%, #fff) 58%,
-      color-mix(in srgb, var(--sh-sky) 62%, #fff) 78%,
-      color-mix(in srgb, var(--sh-sky) 88%, #fff) 91%,
-      var(--sh-sky) 100%
-    );
-}
-
 .sh-visual-img {
   display: block;
   width: 100%;
@@ -300,7 +206,11 @@
      chain itself is in the middle band and always stays whole. */
   height: clamp(280px, 30vw, 500px);
   object-fit: cover;
-  object-position: center center;
+  /* Biased to the bottom of the source rather than its middle. The crop
+     then takes its slice from lower down the artwork, which drops the
+     empty sky off the top and lifts the freight chain up the band —
+     centre was leaving a third of the frame as flat sky. */
+  object-position: center 82%;
 }
 
 /* =====================================================================
@@ -313,7 +223,7 @@
     padding-left: var(--sn-gutter);
     padding-right: var(--sn-gutter);
   }
-  .sh-head { max-width: 46rem; }
+  .sh-head { max-width: none; }
   .sh-h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
 }
 
@@ -322,8 +232,6 @@
   .sh-top { padding-left: var(--sn-gutter); padding-right: var(--sn-gutter); }
   .sh-h1 { font-size: clamp(2.1rem, 8.4vw, 2.9rem); }
   .sh-lede { font-size: 1rem; }
-  .sh-actions { gap: 0.55rem; }
-  .sh-btn { flex: 1 1 auto; justify-content: space-between; font-size: 0.9rem; }
 
   /* the artwork is wide and thin; at phone widths it is shown as a
      crop of fixed height so the vehicles stay readable instead of
@@ -345,6 +253,4 @@
    ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .sh-rail-marquee-content { animation: none; }
-  .sh-btn { transition: none; }
-  .sh-btn:hover { transform: none; }
 }

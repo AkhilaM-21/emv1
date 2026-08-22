@@ -28,9 +28,20 @@
      Every band on this page lines up against this and nothing else. It
      was four different measures before — 1320, 1480, 1560 and 1660 —
      which is why the bar sat a hundred pixels inside the hero. */
-  /* one definition, in shared/system.css */
-  --sn-gutter: var(--page-gutter);
+  /* FULL WIDTH.
+     --page-gutter is max(96px, (100vw - 1500px) / 2), which caps the
+     content band at 1500px and turns everything past that into gutter —
+     420px of it a side on a 1920 screen. The band now runs the width of
+     the viewport less a fixed edge, so the content fills the page and the
+     gutter stays constant instead of growing with the screen.
+
+     The two steps below are the ones --page-gutter itself uses, kept so
+     narrow screens are unchanged. */
+  --sn-gutter: max(96px, 4vw);
 }
+
+@media (max-width: 1080px) { .sn { --sn-gutter: 48px; } }
+@media (max-width: 620px) { .sn { --sn-gutter: 20px; } }
 
 /* The shared shells are centred inside their own max-width, which is a
    different edge again. Scoped to `.sn` so Finance and Platform

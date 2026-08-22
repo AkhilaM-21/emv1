@@ -1446,6 +1446,64 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 }
 
 /* =====================================================================
+   PILL BAR (Capabilities)
+   A row of outcome pills above the accordion, each swapping the whole
+   group beneath it. Scrolls sideways rather than wrapping, so the bar
+   stays one line at every width and the panel below never shifts down
+   as the labels reflow.
+   ===================================================================== */
+.fs-pill-bar {
+  display: flex;
+  gap: 0.6rem;
+  margin: 2.5rem 0 2.25rem;
+  padding-bottom: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.fs-pill-bar::-webkit-scrollbar { display: none; }
+
+.fs-pill {
+  flex-shrink: 0;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid rgba(11, 23, 48, 0.14);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #475569;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fs-pill:hover {
+  color: #0b1730;
+  border-color: rgba(11, 23, 48, 0.28);
+}
+
+/* the selected pill takes the page's accent, which on this page is the
+   Finance green set by ProductPage */
+.fs-pill.active {
+  color: #ffffff;
+  border-color: transparent;
+  background: var(--accent, #0a8f5e);
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--accent, #0a8f5e) 80%, transparent);
+}
+
+@media (max-width: 720px) {
+  .fs-pill { padding: 0.6rem 1.1rem; font-size: 0.86rem; }
+  .fs-pill-bar { margin: 1.75rem 0 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-pill { transition: none; }
+}
+
+/* =====================================================================
    MS ACCORDION LAYOUT (Capabilities)
    ===================================================================== */
 .fs-ms-layout {

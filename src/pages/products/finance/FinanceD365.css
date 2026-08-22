@@ -1,0 +1,1687 @@
+/* =====================================================================
+   EMVIVE FINANCE — page styles
+
+   The palette, radii, spacing and type scale below are the Dynamics 365
+   design tokens, read out of the reference site's own stylesheet rather
+   than eyeballed from a screenshot. The page deliberately does NOT use
+   the Emvive green that ProductPage sets on --accent; every colour here
+   is declared locally so the section reads in the reference's blues.
+
+   The structure, radii, spacing and type scale are theirs; the colour
+   is Emvive's. Their brilliant-blue ramp is replaced role-for-role by
+   a green ramp built around the Finance accent (#0a8f5e) and its deeper
+   partner (#07724b), so every place the reference puts its primary,
+   this page puts the Finance green.
+   ===================================================================== */
+
+.fd-page {
+  /* the Finance green ramp — the primary */
+  --bb-50:  #e8f6f0;
+  --bb-100: #bfe3d3;
+  --bb-200: #93d2b6;
+  --bb-300: #52b88c;
+  --bb-500: #0a8f5e;   /* the Finance accent */
+  --bb-700: #07724b;   /* its deeper partner */
+  --bb-800: #065c3d;
+  --bb-900: #043826;
+
+  /* buttons, rails and pills — the accent and its darker steps */
+  --db-100: #c6ded3;
+  --db-500: #0a8f5e;
+  --db-600: #07724b;
+  --db-700: #065c3d;
+  --db-800: #065c3d;
+  --db-900: #043826;
+
+  /* warm accent, used sparingly the way the reference does */
+  --sp-200: #ffb4a4;
+  --sp-500: #ff5c39;
+
+  /* surfaces */
+  --card:        #fefefe;
+  --card-border: #e2f0e9;
+  --card-edge:   #dcdedd;
+  --band:        #eef7f3;
+
+  /* text — a green-leaning near-black rather than their navy-black */
+  --ink:        #0c1f18;
+  --ink-subtle: #3a4a44;
+  --ink-hi:     #07724b;   /* eyebrows take the deep accent */
+
+  /* Type scale, verbatim from their tokens. It steps at 860px and
+     1440px rather than fluid-scaling, so it is set as three fixed
+     values here too — a clamp() would land between their sizes at
+     almost every width. */
+  --h1-size: 2.5rem;
+  --h1-line: 3rem;
+  --h2-size: 2rem;
+  --h2-line: 2.5rem;
+  --h-weight: 500;
+
+  /* radii and spacing, exactly their scale */
+  --r-xs: 0.25rem;
+  --r-s:  0.5rem;
+  --r-l:  1rem;
+  --r-circle: 12.5rem;
+
+  /* the site header is fixed site-wide and 90px tall */
+  --site-header: 90px;
+  --anchor-h: 68px;
+
+  /* the two page gradients the reference leans on */
+  --mesh-blue: linear-gradient(122deg, #bfe3d3 -18.47%, #52b88c 50.34%, #93d2b6 118.4%);
+  --mesh-blue-black: linear-gradient(131deg, #043826 0%, #06211a 50.25%, #07724b 100%);
+
+  background: #fff;
+}
+
+@media (min-width: 860px) {
+  .fd-page { --h1-size: 2.75rem; --h1-line: 3.5rem; --h2-size: 2.5rem; --h2-line: 3rem; }
+}
+
+@media (min-width: 1440px) {
+  .fd-page { --h1-size: 3.875rem; --h1-line: 4.5rem; --h2-size: 3rem; --h2-line: 3.5rem; }
+}
+
+/* Measured off the reference: at a ~1905px viewport the content band
+   runs 124 -> 1780, i.e. 1656px wide with 124px gutters. This formula
+   reproduces that exactly and falls back to a 4rem gutter once the
+   viewport is narrower than the band.
+
+   The old cap here was 1400px, which made every column ~17% narrower
+   than the reference — the hero media came out 682px against their
+   817px. That, not the blade height, is why the hero read small. */
+.fd-in {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 max(4rem, calc((100% - 1656px) / 2));
+}
+
+/* The site's own section rhythm — .section-padding in index.css is
+   6rem top and bottom, and this page now keeps to it so a Finance
+   section is spaced like every other section on the site. */
+.fd-section { padding: 6rem 0; }
+
+/* alternating bands rather than borders — background-base-fade */
+.fd-section--band { background: var(--band); }
+
+/* ---- shared type ----
+   The section pill and the section heading are the site's own
+   (.global-section-badge / .global-section-title in index.css), so this
+   page's headings are the same object as the home page's rather than a
+   second set that has to be kept in step. Only what those two do not
+   set is declared here. */
+.fd-h2 {
+  max-width: none;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* the heading's own bottom margin is the site's 1.5rem; the lede sits
+   under it without adding a second gap */
+.fd-h2 + .fd-lede { margin-top: 0; }
+
+.fd-lede {
+  margin: 1rem 0 0;
+  max-width: 64ch;
+  font-size: 1rem;
+  line-height: 1.5rem;      /* their body line-height is a length, not a ratio */
+  color: var(--ink-subtle);
+}
+
+/* ---- buttons ----
+   Only the box model here; the 3D shell, the shadows and the hover lift
+   live in one place further down so every button on the page is the
+   same object. */
+.fd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* their link colour is the dark blue, with the underline on hover */
+.fd-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--db-800);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.fd-inline-link:hover { border-bottom-color: currentColor; }
+
+/* ---- image slots ----
+   Sized, so the page is laid out before any art exists and nothing
+   reflows when it arrives. The empty state carries the reference's own
+   mesh gradient rather than a grey box — an unfilled slot reads as a
+   deliberate colour panel, not a broken image. */
+.fd-slot {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--r-xs);
+  background: var(--bb-50);
+}
+
+.fd-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.fd-slot-empty {
+  position: absolute;
+  inset: 0;
+  background: var(--mesh-blue);
+}
+
+/* the ramp is walked per section so the page is not one flat blue */
+.fd-overview .fd-slot-empty { background: linear-gradient(122deg, #e8f6f0 -18%, #93d2b6 50%, #52b88c 118%); }
+.fd-stories .fd-slot-empty { background: linear-gradient(122deg, #bfe3d3 -18%, #52b88c 50%, #07724b 118%); }
+.fd-partners .fd-slot-empty { background: linear-gradient(122deg, #93d2b6 -18%, #0a8f5e 50%, #065c3d 118%); }
+.fd-resources .fd-slot-empty { background: linear-gradient(122deg, #ffb4a4 -18%, #93d2b6 50%, #52b88c 118%); }
+.fd-closing  .fd-slot-empty { background: linear-gradient(122deg, #52b88c -18%, #07724b 50%, #043826 118%); }
+
+/* =====================================================================
+   1 — HERO BLADE
+
+   Reading the reference's hero as three layers rather than one picture:
+
+     1  a warm tan field across the whole blade  (#e8e2dd, their
+        warm-white-600 — not a pink-white)
+     2  one very large disc bleeding off the right edge, so what shows
+        is a shallow convex arc running the full height, NOT a small
+        blob floating in the corner
+     3  a soft rounded panel tucked behind the media, lighter than the
+        disc, peeking out below and to its left
+
+   The copy sits at a light weight and a large size (their hero h1 runs
+   near 4rem at 400, not a heavy 600), and the buttons take the small
+   radii-xs corner rather than a soft pill.
+   ===================================================================== */
+.fd-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  /* Straight from their rules, not measured off a screenshot:
+       .section-master--min-h-hero-slim   { --sm-media-min-height: 580px }
+       .section-master--breadth-comfortable {
+           --sm-breadth-top: var(--root-spacing-3xl);      // 3rem
+           --sm-breadth-bottom: var(--root-spacing-3xl); }  // 3rem
+     So the blade is a 580px floor with 3rem of breadth top and bottom,
+     and the media inside is what pushes it past that — which is how it
+     ends up ~707px on their page. Setting 44rem here was pinning a
+     result instead of the rule that produces it. */
+  min-height: 580px;
+  padding: 3rem 0;
+  /* warm cream, the ground the soft forms drift over */
+  background: #faf7f3;
+  overflow: hidden;
+}
+
+.fd-hero-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+
+/* ---- the ground ----
+   Soft, airy and light: a warm cream field, a handful of heavily
+   blurred colour forms drifting across it, and two dot fields over the
+   top. Nothing has a hard edge — the blur is doing the work, so the
+   forms read as light rather than as shapes sitting on the page.
+
+   One lavender form among the greens keeps it from going monotone; it
+   is the same role the reference's lavender plays. */
+.fd-hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  /* the blur is large relative to the form — that ratio is what makes
+     it read as a wash instead of a circle */
+  filter: blur(60px);
+}
+
+/* the big one behind the heading */
+.fd-hero-orb--1 {
+  left: 18%;
+  top: -22%;
+  width: 34%;
+  height: 78%;
+  background: radial-gradient(closest-side, rgba(122, 197, 155, 0.55) 0%, rgba(122, 197, 155, 0) 100%);
+}
+
+/* lower left, under the buttons */
+.fd-hero-orb--2 {
+  left: 6%;
+  bottom: -30%;
+  width: 30%;
+  height: 70%;
+  background: radial-gradient(closest-side, rgba(150, 212, 176, 0.5) 0%, rgba(150, 212, 176, 0) 100%);
+}
+
+/* centre, tucked under the media's left edge */
+.fd-hero-orb--3 {
+  left: 34%;
+  bottom: -34%;
+  width: 26%;
+  height: 62%;
+  background: radial-gradient(closest-side, rgba(168, 221, 197, 0.55) 0%, rgba(168, 221, 197, 0) 100%);
+}
+
+/* the lavender note, bottom right */
+.fd-hero-orb--4 {
+  right: -4%;
+  bottom: -26%;
+  width: 24%;
+  height: 58%;
+  background: radial-gradient(closest-side, rgba(197, 180, 227, 0.55) 0%, rgba(197, 180, 227, 0) 100%);
+}
+
+/* ---- dot fields ----
+   A dot grid drawn as a repeating radial-gradient, masked so it fades
+   out rather than ending on a straight cut. */
+.fd-hero-dots {
+  position: absolute;
+  background-image: radial-gradient(circle, rgba(120, 150, 132, 0.34) 1.4px, transparent 1.5px);
+  background-size: 15px 15px;
+}
+
+.fd-hero-dots--tr {
+  right: 4%;
+  top: 8%;
+  width: 9rem;
+  height: 5.5rem;
+  -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 40%, transparent 100%);
+}
+
+.fd-hero-dots--bl {
+  left: 30%;
+  bottom: 6%;
+  width: 11rem;
+  height: 6rem;
+  -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 40%, transparent 100%);
+}
+
+.fd-hero-in {
+  position: relative;
+  display: grid;
+  /* Measured off the reference at desktop: a 1656px content band split
+     721px copy / 118px gutter / 817px media — so the media is the wider
+     column, at a fraction over half. */
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6.2vw, 7.4rem);
+  width: 100%;
+}
+
+/* large and light, the way the reference sets its hero heading */
+.fd-hero-title {
+  margin: 0;
+  font-size: var(--h1-size);      /* 2.5 / 2.75 / 3.875rem */
+  line-height: var(--h1-line);    /* 3 / 3.5 / 4.5rem */
+  font-weight: var(--h-weight);   /* 500 */
+  letter-spacing: -1.5px;
+  color: var(--ink);
+}
+
+.fd-hero-lede {
+  margin: 1.5rem 0 0;
+  max-width: 44ch;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--ink-subtle);
+}
+
+.fd-hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.25rem; }
+
+/* ---- buttons ----
+   The site's own 3D pill, the same recipe
+   the product heroes use (.fh-btn in FinanceHero.css) — a gradient
+   shell, an inset top highlight so it catches light, an inset bottom
+   shade, a contact shadow and a coloured throw. Brought over rather
+   than imported, because that stylesheet is no longer loaded on this
+   page. --fh-accent there is --bb-500 here.
+
+   No trailing arrow disc, so the padding is even rather than the
+   0.35rem right edge that recipe leaves for the badge. */
+.fd-btn {
+  padding: 0.95rem 1.9rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.25s ease;
+}
+
+/* dominant: green shell, white disc */
+.fd-btn-solid {
+  color: #fff;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--bb-500) 85%, #fff) 0%,
+    var(--bb-500) 55%,
+    color-mix(in srgb, var(--bb-500) 88%, #000) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.06),
+    0 2px 4px rgba(6, 96, 63, 0.22),
+    0 10px 22px -8px color-mix(in srgb, var(--bb-500) 70%, transparent);
+}
+
+.fd-btn-solid:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 8px rgba(6, 96, 63, 0.24),
+    0 16px 30px -10px color-mix(in srgb, var(--bb-500) 72%, transparent);
+}
+
+/* quiet: white shell, green disc */
+.fd-btn-shell {
+  color: #16181d;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f6 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 18px rgba(0, 0, 0, 0.16);
+}
+
+.fd-btn-shell:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.12),
+    0 14px 26px rgba(0, 0, 0, 0.22);
+}
+
+.fd-btn:active { transform: translateY(1px); }
+
+/* --- the framed screenshot ---
+   The shot is inset inside a tinted glass panel rather than sitting
+   flush, which is what gives the reference's hero its depth. */
+.fd-hero-media { position: relative; }
+
+.fd-hero-frame {
+  position: relative;
+  /* a plain white mat with a wide, soft shadow — the frame reads as a
+     device sitting above the page rather than as tinted glass */
+  padding: 0.85rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 2px 6px rgba(12, 31, 24, 0.05),
+    0 30px 60px -24px rgba(12, 31, 24, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.fd-hero-frame .fd-slot { border-radius: 0.65rem; }
+
+.fd-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--db-900);
+  cursor: pointer;
+  box-shadow: 0 4px 14px -4px rgba(12, 31, 24, 0.3);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.fd-play:hover { background: #fff; color: var(--bb-500); }
+
+/* the caption chip sits low over the shot, small and dark */
+.fd-hero-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 1.9rem;
+  transform: translateX(-50%);
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+  background: rgba(6, 41, 30, 0.86);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* =====================================================================
+   1b — SECTION BAR
+
+   Sits below the hero in flow, then pins to the top once it gets there.
+   It only ever reaches the top after the site header has hidden itself
+   (see the swap at the foot of this file), so the two are never on
+   screen together.
+
+   Measured off the reference: links 60px apart at 1rem semibold in
+   near-black, on a white bar 68px tall closed by a light hairline.
+   ===================================================================== */
+.fd-nav-sentinel { display: block; height: 1px; margin-top: -1px; }
+
+.fd-anchors {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: #fff;
+  border-bottom: 1px solid #e8e6e3;
+}
+
+.fd-anchors-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--anchor-h);
+}
+
+.fd-anchors ul {
+  display: flex;
+  gap: 3.75rem;          /* their 60px */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fd-anchors ul::-webkit-scrollbar { display: none; }
+
+/* scoped to the list: `.fd-anchors a` also caught the Contact sales
+   button, and being one element more specific than .fd-anchors-cta it
+   won — stripping the button's own padding and stretching it out */
+.fd-anchors ul a {
+  display: block;
+  padding: 1.35rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.fd-anchors ul a:hover { border-bottom-color: var(--db-500); }
+
+.fd-anchors ul a.is-current {
+  color: var(--db-600);
+  border-bottom-color: var(--db-500);
+}
+
+/* the same pill, sized to the bar rather than to the page */
+.fd-anchors-cta {
+  flex-shrink: 0;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* =====================================================================
+   2 — OVERVIEW
+   ===================================================================== */
+/* The overview heading runs at the h1 step, not the h2 one — on the
+   reference it is the largest type on the page after the blade, and at
+   the h2 size the section reads as a subsection of the hero. */
+.fd-overview .fd-lede { margin-top: 1.25rem; max-width: none; }
+
+.fd-pillbar {
+  display: flex;
+  gap: 0.75rem;
+  margin: 2.25rem 0 2.5rem;
+  padding-bottom: 4px;
+  /* scrolls rather than wraps, so the bar stays one line at every width
+     and the panel below never shifts down as labels reflow */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fd-pillbar::-webkit-scrollbar { display: none; }
+
+/* full-round pills — their radii-circle.
+   Unselected is the quiet one: a soft neutral fill and no border. The
+   selection is what carries weight, so the ring below belongs to
+   .is-current alone. */
+.fd-pill {
+  position: relative;
+  /* contains the autoplay bar below, which sits at a negative z-index so
+     it paints over the pill background but under the label */
+  isolation: isolate;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--r-circle);
+  border: 2px solid transparent;
+  background: #eff2f1;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--ink);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fd-pill:hover { background: #e3e9e6; }
+
+/* their selected pill is a double ring, not a fill: the accent, a hair
+   of page white, then the accent again. Drawn as border + two inset
+   shadows so the pill's own size never changes between states. */
+.fd-pill.is-current {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--db-700);
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 3.5px var(--db-700);
+}
+
+.fd-pill.is-current:hover { background: #fff; }
+
+/* how far through its own group the autoplay has got — a tint sweeping
+   the pill left to right, clipped to its round shape */
+.fd-pill-bar {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.14);
+  transform-origin: left center;
+  animation: fd-sweep-x linear forwards;
+}
+
+@keyframes fd-sweep-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.fd-ov-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 44rem) minmax(0, 1fr);
+  /* the gutter was eating close to 140px that the copy could use */
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+.fd-acc { display: flex; flex-direction: column; }
+
+/* The item carries the rail and the rule itself, so both can run the
+   full height of an open item — the rail beside the whole block, the
+   rule inset to where the text starts rather than under the rail.
+
+   --c and --c-rgb come from the module itself (FinanceStory's palette,
+   set inline per item), so every module is its own colour here and it
+   is the same colour it wears elsewhere on the page. The fallbacks keep
+   the section on the Finance green if an item ever arrives untinted. */
+.fd-acc-item {
+  position: relative;
+  padding-left: 1.75rem;
+  /* the icon chip's footprint, reused to line the body up under the
+     title rather than under the icon */
+  --ic: 2.5rem;
+  --ic-gap: 0.9rem;
+  /* the reference draws this as a hairline, not a slab */
+  --rail: 3px;
+}
+
+.fd-acc-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: var(--rail);
+  border-radius: var(--r-xs);
+  background: transparent;
+  transition: background 0.25s ease;
+}
+
+.fd-acc-item.is-open::before { background: var(--c, var(--db-500)); }
+
+/* while the autoplay is timing this item the rail is the track and the
+   fill below is what runs down it */
+.fd-acc-item.is-timing::before { background: rgba(var(--c-rgb, 10, 143, 94), 0.22); }
+
+.fd-acc-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: var(--rail);
+  border-radius: var(--r-xs);
+  background: var(--c, var(--db-500));
+  transform-origin: top center;
+  animation: fd-sweep-y linear forwards;
+}
+
+@keyframes fd-sweep-y {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* a soft chip of the module's own colour, carrying its icon */
+.fd-acc-ic {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--ic);
+  height: var(--ic);
+  border-radius: var(--r-s);
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.1);
+  color: var(--c, var(--db-500));
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.fd-acc-head:hover .fd-acc-ic { background: rgba(var(--c-rgb, 10, 143, 94), 0.16); }
+
+.fd-acc-item.is-open .fd-acc-ic {
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.14);
+}
+
+.fd-acc-item::after {
+  content: '';
+  position: absolute;
+  left: 1.75rem;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--db-100);
+}
+
+.fd-acc-head {
+  display: flex;
+  align-items: center;
+  gap: var(--ic-gap);
+  width: 100%;
+  padding: 1.15rem 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fd-acc-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+}
+
+/* sits directly after the title, not pushed to the far edge — the
+   reference keeps the two together and leaves the rest of the row empty */
+.fd-acc-chev {
+  flex-shrink: 0;
+  color: var(--ink);
+  transition: transform 0.25s ease;
+}
+
+.fd-acc-item.is-open .fd-acc-chev { transform: rotate(180deg); }
+
+.fd-acc-body { overflow: hidden; }
+
+/* indented past the icon so the copy starts under the title, not under
+   the chip */
+.fd-acc-inner { padding: 0 0 1.75rem calc(var(--ic) + var(--ic-gap)); }
+
+.fd-acc-inner p {
+  margin: 0;
+  /* no measure cap — the copy runs the width of the column it is in */
+  max-width: none;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--ink-subtle);
+}
+
+/* the in-accordion picture only exists where there is no column beside
+   the list — see the breakpoint at the foot of this file */
+.fd-acc-shot { display: none; margin-top: 1.5rem; }
+
+/* below the section bar, plus a little air */
+.fd-ov-shot { position: sticky; top: calc(var(--anchor-h) + 1.5rem); }
+
+.fd-ov-shot .fd-slot {
+  border-radius: var(--r-s);
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+}
+
+/* =====================================================================
+   3 — FEATURES
+   ===================================================================== */
+/* Their feature grid has no card chrome at all — no border, no fill, no
+   shadow. What separates one feature from the next is space, so the gaps
+   are wide and the cards themselves are just stacked type. */
+.fd-fgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3.5rem clamp(2rem, 4vw, 5rem);
+  margin-top: 3rem;
+}
+
+.fd-fcard {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* a white tile on a hairline, carrying the module's own icon and colour */
+.fd-fcard-ic {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--r-s);
+  border: 1px solid var(--card-border);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(6, 41, 30, 0.06);
+  color: var(--c, var(--bb-500));
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.fd-fcard:hover .fd-fcard-ic {
+  border-color: rgba(var(--c-rgb, 10, 143, 94), 0.35);
+  box-shadow: 0 6px 16px -8px rgba(var(--c-rgb, 10, 143, 94), 0.5);
+}
+
+/* their block-feature title indicator: a short rail hanging off the left
+   of the title only — the body below returns to the card's edge */
+.fd-fcard-title {
+  position: relative;
+  margin: 1.75rem 0 0;
+  padding-left: 0.9rem;
+  font-size: 1.375rem;
+  line-height: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+}
+
+.fd-fcard-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.12em;
+  bottom: 0.12em;
+  width: 3px;
+  border-radius: var(--r-xs);
+  background: var(--c, var(--db-500));
+}
+
+.fd-fcard-body {
+  margin: 1rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink-subtle);
+  /* flush on both edges, so the six cards read as one block rather than
+     six different ragged shapes */
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* =====================================================================
+   3c — PRICING / PARTNERS grids
+   ===================================================================== */
+.fd-pngrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+/* the chip on the chosen pricing plan */
+.fd-badge {
+  display: inline-block;
+  margin: 0 0 0.9rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--card-border);
+  background: var(--bb-50);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-hi);
+}
+
+.fd-badge--solid {
+  border-color: transparent;
+  background: var(--db-500);
+  color: #fff;
+}
+
+/* =====================================================================
+   3c — PRICING
+   ===================================================================== */
+.fd-pgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  align-items: stretch;
+}
+
+.fd-pcard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.5rem;
+  border-radius: var(--r-l);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+}
+
+/* the chosen plan is marked by weight, not by a different colour */
+.fd-pcard.is-featured {
+  border-color: var(--db-500);
+  box-shadow: 0 12px 30px -16px rgba(12, 31, 24, 0.3);
+}
+
+.fd-pcard-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.fd-pcard-line {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--ink-subtle);
+}
+
+.fd-pcard-points {
+  flex: 1;
+  margin: 0 0 1.5rem;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--ink-subtle);
+}
+
+.fd-pcard-points li::marker { color: var(--bb-500); }
+
+.fd-pcard-cta { align-self: flex-start; padding: 0.75rem 1.6rem; }
+
+/* =====================================================================
+   3d — PARTNERS
+   ===================================================================== */
+/* THE CARD.
+   Their partner card, and the shell the customer stories use too: the
+   picture is inset from the card edge by a hair rather than bleeding to
+   it, and the copy is inset further again. The card is a column so the
+   link can be pinned to the bottom and the three sit level however long
+   the headlines run. */
+.fd-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.5rem 1.75rem;
+  border-radius: var(--r-l);
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  box-shadow: 0 2px 8px -5px rgba(6, 41, 30, 0.18);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.fd-card:hover {
+  border-color: rgba(var(--c-rgb, 10, 143, 94), 0.3);
+  box-shadow: 0 18px 36px -20px rgba(6, 41, 30, 0.35);
+  transform: translateY(-2px);
+}
+
+.fd-card > .fd-slot { border-radius: var(--r-s); }
+
+/* everything below the picture shares one inset */
+.fd-card-kicker,
+.fd-card-title,
+.fd-card-body,
+.fd-card-cta { padding-inline: 1rem; }
+
+.fd-card-kicker {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--c, var(--db-600));
+}
+
+.fd-card-title {
+  margin: 0.6rem 0 0;
+  font-size: 1.375rem;
+  line-height: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* optional — the stories carry a paragraph here, the partner cards do
+   not, and the card is the same object either way */
+.fd-card-body {
+  margin: 0.9rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-subtle);
+}
+
+/* pinned to the foot of the card by the auto margin, so the three links
+   line up across the row */
+.fd-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: auto;
+  padding-top: 2.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.fd-card-cta i {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: var(--c, var(--db-600));
+  color: #fff;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.fd-card-cta:hover i { transform: translateX(3px); }
+.fd-card-cta:hover { text-decoration: underline; text-underline-offset: 5px; }
+
+/* =====================================================================
+   4 — CUSTOMER STORIES
+   ===================================================================== */
+/* One story fills the band, and the whole thing is a single card: copy
+   on the left, a tall picture on the right, both inside the one box. */
+.fd-story-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+  align-items: stretch;
+  margin-top: 3rem;
+  padding: clamp(1.25rem, 1.8vw, 1.75rem);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-l);
+  background: var(--card);
+  box-shadow: 0 2px 12px -7px rgba(6, 41, 30, 0.22);
+}
+
+.fd-story-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0.25rem 0;
+}
+
+.fd-story-quote {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.35vw, 1.5rem);
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.fd-story-author {
+  margin: 1rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink-subtle);
+}
+
+/* the figure carries a short rail on its left; the caption below lines
+   up with the figure, not with the rail */
+.fd-story-stat {
+  position: relative;
+  margin-top: 1.35rem;
+  padding-left: 1rem;
+}
+
+.fd-story-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  height: 1.15em;
+  width: 3px;
+  border-radius: var(--r-xs);
+  background: var(--c, var(--db-500));
+}
+
+.fd-story-stat-n {
+  display: block;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.fd-story-stat-l {
+  display: block;
+  margin-top: 0.4rem;
+  max-width: 34ch;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ink-subtle);
+}
+
+.fd-story-products { margin-top: 1.35rem; }
+
+.fd-story-products-h {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.fd-story-products ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fd-story-products li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+/* each product wears its own module colour, as it does everywhere else */
+.fd-story-products li i {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--r-xs);
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.12);
+  color: var(--c, var(--db-500));
+}
+
+
+
+/* the media takes its height from the row, which the copy sets — with a
+   floor so it cannot collapse to a sliver on a short quote */
+.fd-story-media {
+  height: 100%;
+  min-height: 17rem;
+  border-radius: var(--r-s);
+}
+
+/* ---- the picker strip ----
+   One cell per customer, a row of equal boxes under the panel. The one
+   on screen is marked; the rest are the way back to it. */
+.fd-logos {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  /* narrower than the card above it and centred under it, the way the
+     reference sets its logo strip */
+  gap: 1rem;
+  width: min(100%, 76%);
+  margin: 2.25rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* nothing in the box but the customer's mark, centred — the box itself
+   is the button */
+.fd-logo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 5.5rem;
+  padding: 1.25rem 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-s);
+  background: var(--card);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.fd-logo:hover {
+  border-color: rgba(var(--c-rgb, 10, 143, 94), 0.4);
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.05);
+}
+
+.fd-logo-name {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink-subtle);
+  transition: color 0.2s ease;
+}
+
+.fd-logo.is-current {
+  border-color: var(--c, var(--db-500));
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.08);
+}
+.fd-logo.is-current .fd-logo-name { color: var(--c, var(--ink)); }
+
+
+/* =====================================================================
+   5 — RESOURCES
+   ===================================================================== */
+.fd-rgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* the resource card is the shared card; only its top panel differs —
+   a tinted ground holding a mark rather than a photograph bleeding to
+   the edges, so the panel keeps its own inset */
+.fd-rcard { text-decoration: none; }
+
+.fd-rcard-mark {
+  background: rgba(var(--c-rgb, 10, 143, 94), 0.07);
+  border-radius: var(--r-s);
+}
+
+.fd-rcard-mark .fd-slot-empty {
+  inset: 18%;
+  border-radius: var(--r-s);
+  opacity: 0.85;
+}
+
+.fd-rcard:hover .fd-card-title { text-decoration: underline; text-underline-offset: 4px; }
+
+/* =====================================================================
+   6 — PLATFORM
+   The supply-chain page's Automation card, rebuilt here in the Finance
+   green: one card, a tab rail down the left, and on the right a picture
+   over a numbered grid of what the selected tab covers.
+   ===================================================================== */
+.fd-auto-card {
+  display: flex;
+  margin-top: 2.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-l);
+  background: var(--card);
+  box-shadow: 0 2px 12px -7px rgba(6, 41, 30, 0.22);
+  overflow: hidden;
+}
+
+.fd-auto-left {
+  flex: 0 0 34%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.25rem;
+  background: rgba(9, 9, 11, 0.015);
+  border-right: 1px solid var(--card-border);
+}
+
+.fd-auto-left h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+}
+
+.fd-auto-left p {
+  margin: 0.75rem 0 2rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-subtle);
+}
+
+.fd-auto-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* the rail marks the open tab down its left edge, as it does there */
+.fd-auto-tab {
+  position: relative;
+  padding: 0.9rem 1.1rem;
+  border: 0;
+  border-radius: var(--r-s);
+  background: transparent;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.fd-auto-tab:hover { background: rgba(9, 9, 11, 0.04); }
+
+.fd-auto-tab.is-current {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(6, 41, 30, 0.06);
+}
+
+.fd-auto-tab.is-current::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--db-500);
+}
+
+.fd-auto-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+}
+
+/* the artwork carries its own ground, so it fills the panel rather than
+   floating inside a tint */
+.fd-auto-hero {
+  /* a fixed band rather than flex:1 — the panel keeps its height and the
+     grid below takes whatever the card has left */
+  flex: 0 0 22rem;
+  background: rgba(10, 143, 94, 0.06);
+  overflow: hidden;
+}
+
+.fd-auto-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fd-auto-body {
+  flex: 1;
+  padding: 1.5rem 2.25rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.fd-auto-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1.5rem;
+}
+
+/* the icon leads, the name follows */
+.fd-auto-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.fd-auto-item i {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: var(--r-xs);
+  background: rgba(10, 143, 94, 0.1);
+  color: var(--db-500);
+}
+
+/* =====================================================================
+   6 — CLOSING BANNER
+   ===================================================================== */
+.fd-closing-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+  padding: clamp(1.25rem, 1.8vw, 1.75rem);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-l);
+  background: var(--card);
+  box-shadow: 0 2px 12px -7px rgba(6, 41, 30, 0.22);
+}
+
+.fd-closing-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1rem, 2vw, 2rem) 0 clamp(1rem, 2vw, 2rem) clamp(0.5rem, 1.5vw, 1.5rem);
+}
+
+.fd-closing-hours {
+  margin: 1.25rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-subtle);
+}
+
+/* the button and the phone number sit on one line, the number carrying
+   the underline rather than a second button competing with the first */
+.fd-closing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.fd-closing-call {
+  font-size: 1rem;
+  color: var(--ink-subtle);
+}
+
+.fd-closing-call a {
+  color: var(--db-600);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.fd-closing-call a:hover { color: var(--db-700); }
+
+.fd-closing-media {
+  height: 100%;
+  min-height: 18rem;
+  border-radius: var(--r-s);
+}
+
+/* =====================================================================
+   SCROLL ANIMATION
+
+   Keyframes, durations and the stagger below are copied out of the
+   reference's own stylesheet, not estimated:
+
+     fade-in            opacity 0 -> 1
+     slide-up           translateY(100px) -> 0
+     slide-right        translateX(50px)  -> 0
+     multi-slide-up-N   75 / 225 / 375 / 525px, one per child
+     duration           1200ms, ease-in-out
+     base delay         250ms
+     child stagger      25ms apart
+
+   A section starts hidden and is revealed when `.effect-on` lands on
+   it. That class is only ever added by script, so the hidden state is
+   gated on `.fd-anim` being present — with JS off, or if the observer
+   never fires, nothing is applied and the page renders as normal
+   static content rather than a blank screen.
+   ===================================================================== */
+@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+@keyframes slide-up {
+  0%   { opacity: 0; transform: translateY(100px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-right {
+  0%   { opacity: 0; transform: translateX(50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes multi-slide-up-1 { 0% { opacity: 0; transform: translateY(75px); }  100% { opacity: 1; transform: translateY(0); } }
+@keyframes multi-slide-up-2 { 0% { opacity: 0; transform: translateY(225px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes multi-slide-up-3 { 0% { opacity: 0; transform: translateY(375px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes multi-slide-up-4 { 0% { opacity: 0; transform: translateY(525px); } 100% { opacity: 1; transform: translateY(0); } }
+
+.fd-anim {
+  --animation-duration: 1200ms;
+  /* their .animation base */
+  animation-delay: 250ms;
+}
+
+/* held until the observer says the section is in view */
+.fd-anim:not(.effect-on) { opacity: 0; }
+
+.fd-anim--up.effect-on {
+  animation:
+    fade-in var(--animation-duration),
+    slide-up var(--animation-duration) ease-in-out 0s 1 normal none;
+}
+
+.fd-anim--right.effect-on {
+  animation:
+    fade-in var(--animation-duration),
+    slide-right var(--animation-duration) ease-in-out 0s 1 normal none;
+}
+
+/* Children come in behind the section on a 25ms stagger, each from a
+   little further away than the last — that widening distance is what
+   makes the row read as one movement instead of four. */
+.effect-on .fd-stagger > * {
+  --animation-duration: 1200ms;
+  animation: fade-in var(--animation-duration), multi-slide-up-1 var(--animation-duration) ease-in-out 25ms 1 normal none;
+}
+.effect-on .fd-stagger > :nth-child(2) { animation-name: fade-in, multi-slide-up-2; animation-delay: 50ms; }
+.effect-on .fd-stagger > :nth-child(3) { animation-name: fade-in, multi-slide-up-3; animation-delay: 75ms; }
+.effect-on .fd-stagger > :nth-child(4) { animation-name: fade-in, multi-slide-up-4; animation-delay: 100ms; }
+.effect-on .fd-stagger > :nth-child(5) { animation-name: fade-in, multi-slide-up-4; animation-delay: 125ms; }
+.effect-on .fd-stagger > :nth-child(6) { animation-name: fade-in, multi-slide-up-4; animation-delay: 150ms; }
+
+/* whichever bar is at the top, it is one bar tall — the section bar
+   once the hero has gone by, the site header before that */
+.fd-section { scroll-margin-top: var(--anchor-h); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-anim, .fd-anim.effect-on,
+  .effect-on .fd-stagger > * { animation: none; opacity: 1; }
+  .fd-anim:not(.effect-on) { opacity: 1; }
+}
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 1080px) {
+  .fd-hero-in { grid-template-columns: minmax(0, 1fr); }
+  .fd-fgrid, .fd-rgrid,
+  .fd-pgrid, .fd-pngrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-closing-card { grid-template-columns: minmax(0, 1fr); }
+  .fd-auto-card { flex-direction: column; }
+  .fd-auto-left { border-right: 0; border-bottom: 1px solid var(--card-border); }
+
+  /* below this width there is no column for the screenshot, so it moves
+     inside the open accordion item instead of disappearing */
+  .fd-ov-grid { grid-template-columns: minmax(0, 1fr); }
+  .fd-ov-shot { display: none; }
+  .fd-acc-shot { display: block; }
+}
+
+@media (max-width: 720px) {
+  .fd-section { padding: 4rem 0; }
+  .fd-in { padding: 0 1.25rem; }
+  .fd-page { --site-header: 76px; --anchor-h: 60px; }
+  .fd-anchors-in { min-height: 60px; }
+  .fd-fgrid, .fd-rgrid,
+  .fd-pgrid, .fd-pngrid { grid-template-columns: minmax(0, 1fr); }
+  .fd-btn { flex: 1 1 auto; }
+  .fd-acc-item { --ic: 2.25rem; --ic-gap: 0.75rem; padding-left: 1.25rem; }
+  .fd-acc-item::after { left: 1.25rem; }
+  .fd-fgrid { gap: 2.5rem; }
+  .fd-fcard-title { font-size: 1.25rem; line-height: 1.7rem; }
+  .fd-fcard-body { font-size: 1rem; }
+  .fd-auto-grid { grid-template-columns: minmax(0, 1fr); }
+  .fd-auto-body { padding-inline: 1.5rem; }
+  .fd-card-title { font-size: 1.25rem; line-height: 1.7rem; }
+  .fd-story-panel { grid-template-columns: minmax(0, 1fr); }
+  .fd-logos { grid-auto-flow: row; width: 100%; gap: 0.75rem; }
+  .fd-acc-title { font-size: 1.25rem; line-height: 1.75rem; }
+  .fd-acc-inner p { max-width: none; font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-btn, .fd-play, .fd-pill, .fd-fcard, .fd-inline-link,
+  .fd-acc-item::before, .fd-acc-chev, .fd-acc-ic { transition: none; }
+  /* the section does not play itself here either — see the guard in the
+     component — so these never render, but belt and braces */
+  .fd-acc-fill, .fd-pill-bar { animation: none; display: none; }
+  .fd-btn:hover { transform: none; }
+}
+
+/* =====================================================================
+   THE SWAP
+   Past the hero the site header steps aside and the section bar takes
+   the top. The header stays `position: fixed` throughout — only its
+   transform and opacity change — so nothing reflows and no other page
+   is affected. body.fd-nav-swap is added and removed by the hero.
+   ===================================================================== */
+.neurox-header {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+body.fd-nav-swap .neurox-header {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neurox-header { transition: none; }
+}
+
+/* =====================================================================
+   THE PAGE'S OWN SCALE
+
+   Two things this page does to the site's shared heading objects:
+
+   1  COLOUR. .global-section-badge and .text-gradient resolve to the
+      site orange. Finance runs on green, so both are re-pointed at the
+      Finance ramp here. Scoped to .fd-page, so no other page moves.
+
+   2  SIZE. The shared title is 3.2rem and the cards under it had grown
+      to match. Everything below steps the whole page down one notch —
+      headings, card titles, body copy and the pills — so a section
+      reads at a normal size rather than shouting.
+
+   Both need !important only because the rules in index.css carry it.
+   ===================================================================== */
+
+.fd-page {
+  --fin-gradient: linear-gradient(135deg, #52b88c 0%, #0a8f5e 50%, #07724b 100%);
+}
+
+/* ---- the section pill, in green ---- */
+.fd-page .global-section-badge {
+  padding: 6px 16px !important;
+  font-size: 0.8125rem !important;
+  color: var(--db-700) !important;
+  margin-bottom: 1.15rem !important;
+}
+
+.fd-page .global-badge-dot {
+  width: 7px !important;
+  height: 7px !important;
+  background: var(--fin-gradient) !important;
+}
+
+/* ---- the section heading, smaller ---- */
+.fd-page .global-section-title {
+  font-size: 2.25rem !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.8px !important;
+  margin-bottom: 0 !important;
+}
+
+.fd-page .text-gradient {
+  background: var(--fin-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- the hero, brought down with the rest ---- */
+.fd-hero-title {
+  font-size: 2.75rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.fd-hero-lede { max-width: 52ch; font-size: 0.9375rem; line-height: 1.6; }
+
+/* ---- section copy ---- */
+.fd-lede { margin-top: 1rem; font-size: 0.9375rem; line-height: 1.6; }
+
+.fd-pill { padding: 0.6rem 1.25rem; font-size: 0.875rem; }
+
+/* ---- the overview accordion ---- */
+.fd-acc-item { --ic: 2.25rem; }
+.fd-acc-head { padding: 1rem 0; }
+.fd-acc-title { font-size: 1.0625rem; line-height: 1.5rem; }
+.fd-acc-inner { padding-bottom: 1.35rem; }
+.fd-acc-inner p { font-size: 0.9375rem; line-height: 1.6; }
+
+/* ---- the feature cards ---- */
+.fd-fcard-ic { width: 2.75rem; height: 2.75rem; }
+.fd-fcard-ic svg { width: 20px; height: 20px; }
+.fd-fcard-title { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.5rem; }
+.fd-fcard-body { margin-top: 0.7rem; font-size: 0.9375rem; line-height: 1.6; }
+.fd-fgrid { gap: 2.5rem clamp(1.5rem, 3vw, 3.5rem); margin-top: 2.5rem; }
+
+/* ---- the shared card: partners, stories, resources ---- */
+.fd-card-kicker { margin-top: 1.15rem; font-size: 0.8125rem; }
+.fd-card-title { margin-top: 0.45rem; font-size: 1.0625rem; line-height: 1.5rem; }
+.fd-card-body { margin-top: 0.6rem; font-size: 0.9375rem; line-height: 1.6; }
+.fd-card-cta { padding-top: 1.5rem; font-size: 0.9375rem; }
+.fd-card-cta i { width: 2.125rem; height: 2.125rem; }
+.fd-card-cta i svg { width: 17px; height: 17px; }
+
+/* ---- the story panel ---- */
+.fd-story-quote { font-size: 1.125rem; line-height: 1.55; }
+.fd-story-author { margin-top: 0.9rem; font-size: 0.875rem; }
+.fd-story-stat { margin-top: 1.15rem; }
+.fd-story-stat-n { font-size: 1.25rem; }
+.fd-story-stat-l { font-size: 0.8125rem; }
+.fd-story-products { margin-top: 1.15rem; }
+.fd-story-products-h { font-size: 0.875rem; }
+.fd-story-products li { font-size: 0.875rem; }
+.fd-story-media { min-height: 14rem; }
+.fd-logo { min-height: 4.5rem; padding: 1rem; }
+.fd-logo-name { font-size: 0.9375rem; }
+
+/* ---- the plan cards ---- */
+.fd-pcard-title { font-size: 1.0625rem; }
+.fd-pcard-line { font-size: 0.9375rem; }
+.fd-pcard-points { font-size: 0.875rem; }
+
+/* ---- buttons and links ---- */
+.fd-btn { font-size: 0.875rem; }
+.fd-inline-link { font-size: 0.875rem; }
+.fd-anchors ul a { font-size: 0.9375rem; }
+
+/* ---- grids close up a little at the smaller type ---- */
+.fd-pngrid, .fd-rgrid, .fd-pgrid { gap: 1.25rem; margin-top: 2.5rem; }
+.fd-pillbar { margin: 1.75rem 0 2rem; }
+.fd-story-panel { margin-top: 2.5rem; }
+
+@media (max-width: 720px) {
+  .fd-page .global-section-title { font-size: 1.75rem !important; }
+  .fd-hero-title { font-size: 2rem; }
+}

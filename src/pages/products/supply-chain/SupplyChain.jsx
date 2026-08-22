@@ -20,6 +20,7 @@ import './SupplyChain.css';
    block does not belong on the page.
 
      01  Hero                     what is it?                SupplyHero
+         (the product bar follows the hero rather than preceding it)
      02  Product & capabilities   what can it do?            Capabilities
      03  How it works             how does it work?          HowItWorks
      04  Automation               what can it automate?      Automation
@@ -34,9 +35,12 @@ import './SupplyChain.css';
 
 const SupplyChain = () => (
   <ProductPage accent="#0891b2" accent2="#0e7490" wash="rgba(8,145,178,0.09)" className="sn">
-    <ProductNav {...SUPPLY_NAV} />
-
     <SupplyHero />
+
+    {/* the bar sits below the hero, not above it — it is `position: sticky`,
+        so it rides down with the page and pins under the site header once
+        the hero has scrolled past */}
+    <ProductNav {...SUPPLY_NAV} />
 
     <Capabilities />
     <CapabilitiesGrid />

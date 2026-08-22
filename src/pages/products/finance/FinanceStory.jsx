@@ -63,7 +63,7 @@ const C = {
 };
 
 /* every coloured element takes its colour the same way */
-const tint = (k) => ({ '--c': C[k][0], '--c-rgb': C[k][1] });
+export const tint = (k) => ({ '--c': C[k][0], '--c-rgb': C[k][1] });
 
 /* ---------------------------------------------------------------
    A film panel. Plays only while it is on screen and only if motion
@@ -125,58 +125,59 @@ const Head = ({ n, label, ask, title, accent, lede, tone = '' }) => (
    Eight modules, one detail panel. A list the reader drives, rather
    than eight identical cards they have to compare themselves.
    ===================================================================== */
-const CAPS = [
+/* exported so the rebuilt page can reuse the content without copying it */
+export const CAPS = [
   {
-    k: 'General Ledger', c: 'green', icon: BookOpen,
+    k: 'General Ledger', c: 'green', icon: BookOpen, img: 'post_step',
     line: 'The single book every other module posts into.',
     body: 'A multi-entity, multi-currency chart of accounts with dimensions instead of endless account codes. Journals arrive from the sub-ledgers already coded, already approved and already matched.',
     points: ['Multi-entity, multi-book, multi-currency', 'Dimensions: cost centre, project, segment, site', 'Automatic FX revaluation and translation', 'Period locks with maker–checker enforcement', 'Automated accruals and prepayments'],
     stat: ['1.2M', 'journal lines a month'],
   },
   {
-    k: 'Accounts Payable', c: 'violet', icon: Receipt,
+    k: 'Accounts Payable', c: 'violet', icon: Receipt, img: 'capture_step',
     line: 'Match before you pay, not after.',
     body: 'Supplier invoices arrive by email, portal or EDI and are read, coded and matched three ways against the purchase order and the goods receipt. Variances are held rather than nodded through.',
     points: ['Three-way matching with tolerance rules', 'Duplicate and fraud detection on capture', 'Payment runs with bank file generation', 'Supplier self-service for invoice status', 'Vendor portal for invoice submission'],
     stat: ['128', 'invoices a day, 84% touchless'],
   },
   {
-    k: 'Accounts Receivable', c: 'blue', icon: CreditCard,
+    k: 'Accounts Receivable', c: 'blue', icon: CreditCard, img: 'close_step',
     line: 'Shorten the cash cycle without a collections team.',
     body: 'Credit limits are checked before dispatch, not after the debt exists. Reminder sequences fire on their own schedule and escalate by ageing bucket.',
     points: ['Credit limits enforced at order entry', 'Automated dunning by ageing and segment', 'Cash application with bank-feed matching', 'Customer statements and payment portal', 'Integrated online payment gateways'],
     stat: ['31 days', 'DSO, down from 40'],
   },
   {
-    k: 'Expenses', c: 'orange', icon: Wallet,
+    k: 'Expenses', c: 'orange', icon: Wallet, img: 'capture_step',
     line: 'Claims that check themselves against policy.',
     body: 'Receipts are captured on a phone, read on the spot and tested against the grade, category and city rules before anyone is asked to approve them.',
     points: ['Mobile capture with receipt extraction', 'Policy rules by grade, category and location', 'Per-diem and mileage calculators', 'Reimbursement posted through payroll', 'Corporate card automated reconciliation'],
     stat: ['412', 'claimants, 2-day turnaround'],
   },
   {
-    k: 'Budgeting', c: 'teal', icon: PieChart,
+    k: 'Budgeting', c: 'teal', icon: PieChart, img: 'control_step',
     line: 'A budget the ledger actually enforces.',
     body: 'Budgets are held per dimension and checked at commitment, not at month end. A purchase requisition that would breach its cost centre is stopped where it is raised.',
     points: ['Bottom-up and top-down budget builds', 'Commitment accounting on requisitions', 'Budget-versus-actual on live balances', 'Reforecast cycles with version history', 'Approval workflows for budget transfers'],
     stat: ['9', 'cost centres, monthly reforecast'],
   },
   {
-    k: 'Forecasting', c: 'cyan', icon: TrendingUp,
+    k: 'Forecasting', c: 'cyan', icon: TrendingUp, img: 'automate_step',
     line: 'Thirteen weeks of cash you can plan against.',
     body: 'Committed flows from open orders, payables and payroll are combined with expected flows to produce a rolling cash forecast that updates as the underlying documents change.',
     points: ['13-week rolling cash forecast', 'Scenario modelling on collection assumptions', 'Bank position across four institutions', 'Variance tracking against last forecast', 'Cash flow sensitivity analysis'],
     stat: ['13 weeks', 'rolling, updated daily'],
   },
   {
-    k: 'Reporting', c: 'purple', icon: FileText,
+    k: 'Reporting', c: 'purple', icon: FileText, img: 'control_step',
     line: 'The statutory pack as a view, not a project.',
     body: 'Elimination, translation and consolidation have already run. P&L, balance sheet, cash flow and the notes are produced from the same postings the operational dashboards read.',
     points: ['IFRS and local GAAP presentations', 'Consolidated and entity-level statements', 'Drill from any figure to its journal', 'Scheduled distribution to the board pack', 'Interactive custom dashboard builder'],
     stat: ['3', 'currencies consolidated'],
   },
   {
-    k: 'Reconciliation', c: 'rose', icon: Scale,
+    k: 'Reconciliation', c: 'rose', icon: Scale, img: 'close_step',
     line: 'Reconciled overnight, reviewed in the morning.',
     body: 'Bank feeds, intercompany balances and control accounts are matched by rule every night. What reaches a person is the exception list, not the whole population.',
     points: ['Daily bank-feed reconciliation', 'Intercompany auto-matching and elimination', 'Control account and sub-ledger tie-outs', 'Exception queue with ageing and owner', 'AI-assisted matching recommendations'],
@@ -234,8 +235,38 @@ export const CapabilitiesGrid = () => {
   );
 };
 
+/* The eight modules, grouped under four outcome pills. The pill bar is
+   the shape Microsoft uses on the Dynamics 365 Finance overview: a row
+   of pills above the panel, each swapping the whole accordion beneath
+   it rather than scrolling one long list of eight.
+
+   Grouping is by outcome, not by module name, because that is the
+   question a buyer is actually asking — "can it handle what I pay and
+   what I collect", not "do you have an AP module". Two modules per pill
+   keeps every group the same weight. */
+const CAP_PILLS = [
+  { k: 'Record and reconcile', modules: ['General Ledger', 'Reconciliation'] },
+  { k: 'Pay and get paid', modules: ['Accounts Payable', 'Accounts Receivable'] },
+  { k: 'Control spend', modules: ['Expenses', 'Budgeting'] },
+  { k: 'Plan and report', modules: ['Forecasting', 'Reporting'] },
+];
+
+/* resolved once, by name — so reordering CAPS cannot silently reshuffle
+   which modules sit under which pill */
+const CAP_GROUPS = CAP_PILLS.map((p) => p.modules.map((n) => CAPS.findIndex((c) => c.k === n)));
+
 export const Capabilities = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [pill, setPill] = useState(0);
+  const [activeTab, setActiveTab] = useState(CAP_GROUPS[0][0]);
+
+  const members = CAP_GROUPS[pill];
+
+  /* changing pill opens that group's first module, so the panel is never
+     showing a module the visible accordion no longer lists */
+  const choosePill = (i) => {
+    setPill(i);
+    setActiveTab(CAP_GROUPS[i][0]);
+  };
 
   return (
     <section className="fs-caps" id="capabilities">
@@ -248,26 +279,40 @@ export const Capabilities = () => {
           lede="Nothing here is a separate product with its own database. Every module writes to the same journals and inherits the same controls, so what one module knows, all of them know."
         />
 
-        <div className="fs-ms-layout" style={{ marginTop: '3rem' }}>
+        <div className="fs-pill-bar" role="tablist" aria-label="Capability groups">
+          {CAP_PILLS.map((p, i) => (
+            <button
+              key={p.k}
+              type="button"
+              role="tab"
+              className={`fs-pill${i === pill ? ' active' : ''}`}
+              aria-selected={i === pill}
+              onClick={() => choosePill(i)}
+            >
+              {p.k}
+            </button>
+          ))}
+        </div>
+
+        <div className="fs-ms-layout">
           <div className="fs-ms-accordion">
-            {CAPS.map((cap, idx) => {
+            {members.map((idx) => {
+              const cap = CAPS[idx];
               const isActive = idx === activeTab;
               return (
-                <div 
-                  key={cap.k} 
+                <div
+                  key={cap.k}
                   className={`fs-ms-accordion-item ${isActive ? 'active' : ''}`}
                   style={tint(cap.c)}
                 >
-                  <button 
+                  <button
                     className="fs-ms-accordion-header"
                     onClick={() => setActiveTab(idx)}
                     aria-expanded={isActive}
                   >
                     <div className="fs-ms-accordion-title-wrap">
                       <cap.icon size={20} strokeWidth={2.2} className="fs-ms-accordion-icon" />
-                      <span className="fs-ms-accordion-title">
-                        {cap.k}
-                      </span>
+                      <span className="fs-ms-accordion-title">{cap.k}</span>
                     </div>
                     <span className="fs-ms-chevron">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -277,7 +322,7 @@ export const Capabilities = () => {
                   </button>
                   <AnimatePresence>
                     {isActive && (
-                      <motion.div 
+                      <motion.div
                         className="fs-ms-accordion-content"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
@@ -306,10 +351,12 @@ export const Capabilities = () => {
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.4, ease: EASE }}
               >
-                <img 
-                  src={`/images/${['capture_step', 'post_step', 'control_step', 'automate_step', 'close_step', 'capture_step', 'post_step', 'control_step'][activeTab]}.jpg`} 
-                  alt={CAPS[activeTab].k} 
-                  className="fs-ms-full-img" 
+                {/* the visual travels with the module (CAPS[].img) rather
+                    than being looked up by position */}
+                <img
+                  src={`/images/${CAPS[activeTab].img}.jpg`}
+                  alt={CAPS[activeTab].k}
+                  className="fs-ms-full-img"
                 />
               </motion.div>
             </AnimatePresence>

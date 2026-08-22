@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  BookOpen, Receipt, CreditCard, Wallet, TrendingUp, ChartPie, ArrowRight,
+  BookOpen, Receipt, CreditCard, Wallet, TrendingUp, ChartPie,
 } from 'lucide-react';
 import {
-  motion, EASE, MaskText, Reveal, useReducedMotion,
+  motion, EASE, Reveal, useReducedMotion,
 } from '../shared/motion';
 import './SupplyHero.css';
 
@@ -77,10 +77,8 @@ const CapabilityRail = () => {
 
 /* ---------------------------------------------------------------
    THE ILLUSTRATION
-   Full-bleed, and preceded by the shade band. The band is the only
-   thing between the white statement and the artwork's sky, so it does
-   the whole transition: white at the top, the sky's own blue at the
-   bottom, nothing in between but the fade.
+   Full-bleed. The artwork meets the white statement directly — there
+   is no fade band between them.
    --------------------------------------------------------------- */
 const HeroVisual = () => {
   const reduced = useReducedMotion();
@@ -92,7 +90,6 @@ const HeroVisual = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.1, delay: 0.4, ease: EASE }}
     >
-      <div className="sh-visual-shade" aria-hidden="true" />
       <img
         className="sh-visual-img"
         src={HERO_IMAGE}
@@ -111,44 +108,34 @@ const HeroVisual = () => {
    ===================================================================== */
 const SupplyHero = () => (
   <section className="fh" id="top">
-    <div className="sh-top">
-      <div className="sh-head">
-        <Reveal duration={0.7}>
-          <span className="sh-pill">Emvive Supply</span>
-        </Reveal>
+    {/* the statement and the rail share one wash, so it can finish at the
+        artwork's sky exactly where the artwork starts */}
+    <div className="sh-lead">
+      <div className="sh-top">
+        <div className="sh-head">
+          {/* A plain heading, not MaskText. MaskText animates each word up
+              out of an overflow:hidden box from y:112%, so if that animation
+              does not resolve the headline is invisible while still taking
+              its space — which is exactly what was happening here. The hero
+              headline is the one thing on the page that must never depend on
+              an animation firing, so it uses the same Reveal the lede does. */}
+          <Reveal delay={0.06} y={16}>
+            <h1 className="sh-h1">
+              Supply chain, <span className="sh-accent">connected.</span>
+            </h1>
+          </Reveal>
 
-        <h1 className="sh-h1">
-          <MaskText text="Supply chain," as="span" className="sh-h1-line" delay={0.06} />
-          <MaskText text="connected." as="span" className="sh-h1-line sh-accent" delay={0.18} />
-        </h1>
-
-        <Reveal delay={0.36} y={16}>
-          <p className="sh-lede">
-            Connect procurement, manufacturing, logistics and distribution in one platform
-            built to give your business greater visibility and control.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.46} y={16}>
-          <div className="sh-actions">
-            <a href="#start" className="sh-btn sh-btn-solid">
-              Request a Demo
-              <span className="sh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
-            </a>
-            <a href="#overview" className="sh-btn sh-btn-shell">
-              Explore Supply
-              <span className="sh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
-            </a>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.56} y={12}>
-          <p className="sh-note">Built for modern supply-chain teams.</p>
-        </Reveal>
+          <Reveal delay={0.36} y={16}>
+            <p className="sh-lede">
+              Connect procurement, manufacturing, logistics and distribution in one platform
+              built to give your business greater visibility and control.
+            </p>
+          </Reveal>
+        </div>
       </div>
-    </div>
 
-    <CapabilityRail />
+      <CapabilityRail />
+    </div>
 
     <HeroVisual />
   </section>
