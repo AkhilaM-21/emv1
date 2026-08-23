@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductPage, Footer } from '../shared/system';
+import { ProductPage } from '../shared/system';
 import {
   FinanceHeroBlade, Overview, Solutions, Products, Pricing,
   Platform,
@@ -53,8 +53,6 @@ const Finance = () => (
     <div id="stories"><CustomerStory /></div>
     <div id="resources"><Resources /></div>
     <CTA />
-
-    <Footer />
   </ProductPage>
 );
 

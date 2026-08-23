@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import {
-  BadgeDollarSign, BookOpen, Boxes, Briefcase, Building2, ChevronDown, ChevronRight, Cloud, ArrowRight,
+  BadgeDollarSign, BookOpen, Boxes, Briefcase, Building2, ChevronDown, ChevronLeft, ChevronRight, Cloud, ArrowRight,
   Factory, FileText, GitMerge, Globe, Handshake, HardDrive, Landmark, Languages,
   Layers, LayoutDashboard, Percent, Play, Receipt, ReceiptText, RefreshCw, Search, Share2,
   ShieldCheck, ShoppingCart, Sparkles, TrendingUp, Truck, Users, Wallet,
@@ -611,110 +611,77 @@ export const Solutions = () => {
    2.5 — PRODUCTS
    ===================================================================== */
 const PRODUCTS_DATA = [
-  {
-    id: 'finance',
-    tab: 'Finance',
-    icon: BadgeDollarSign,
-    title: 'Run Your Finances with Greater Control',
-    link: 'Explore Finance',
-    img: '/images/general_ledger.jpg',
-    caption: 'One connected view of your ledger, cash, payables, and assets.',
-    color: '#7c3aed',
-  },
-  {
-    id: 'supply',
-    tab: 'Supply Chain',
-    icon: Truck,
-    title: 'Connect Purchasing, Inventory and Warehouses',
-    link: 'Explore Supply Chain',
-    img: '/images/automate_step.jpg',
-    caption: 'Procurement, inventory, and warehouses managed end to end.',
-    color: '#0891b2',
-  },
-  {
-    id: 'sales',
-    tab: 'Sales & CRM',
-    icon: TrendingUp,
-    title: 'Manage the Customer Journey from Lead to Order',
-    link: 'Explore Sales & CRM',
-    img: '/images/control_step.jpg',
-    caption: 'From lead to order to payment in one connected flow.',
-    color: '#059669',
-  },
-  {
-    id: 'hcm',
-    tab: 'HCM',
-    icon: Users,
-    title: 'Manage Your Workforce from Hire to Payroll',
-    link: 'Explore HCM',
-    img: '/images/close_step.jpg',
-    caption: 'Core HR, payroll, and attendance with compliance built in.',
-    color: '#2563eb',
-  },
-  {
-    id: 'pos',
-    tab: 'POS',
-    icon: ShoppingCart,
-    title: 'Connect Every Sale with Your Business Operations',
-    link: 'Explore POS',
-    img: '/images/capture_step.jpg',
-    caption: 'Fast billing across every branch — online or offline.',
-    color: '#9333ea',
-  },
-  {
-    id: 'einv',
-    tab: 'E-Invoicing',
-    icon: ReceiptText,
-    title: 'Make Compliance Part of Your Invoicing Process',
-    link: 'Explore E-Invoicing',
-    img: '/images/post_step.jpg',
-    caption: 'Compliant e-invoicing with real-time ZATCA clearance.',
-    color: '#0d9488',
-  },
-  {
-    id: 'projects',
-    tab: 'Projects',
-    icon: Briefcase,
-    title: 'Keep Projects, Resources and Financials in View',
-    link: 'Explore Projects',
-    img: '/images/general_ledger.jpg',
-    caption: 'Plan, resource, track, and bill projects in one place.',
-    color: '#d97706',
-  },
-  {
-    id: 'mfg',
-    tab: 'Manufacturing',
-    icon: Factory,
-    title: 'Connect Production with Inventory and Cost',
-    link: 'Explore Manufacturing',
-    img: '/images/automate_step.jpg',
-    caption: 'Production, materials, and costing kept connected.',
-    color: '#be123c',
-  }
+  { id: 'gl', tab: 'General Ledger', icon: BookOpen, title: 'General Ledger', link: 'Explore General Ledger', img: '/images/general_ledger.jpg', color: '#7c3aed', caption: 'Manage your core accounting operations with a multi-company General Ledger.', body: 'Maintain financial records and transactions within a unified accounting structure, supporting organisations that operate across multiple companies.' },
+  { id: 'ap_ar', tab: 'AP & AR', icon: Receipt, title: 'Accounts Payable & Accounts Receivable', link: 'Explore AP & AR', img: '/images/accounts_payable_receivable.jpg', color: '#0891b2', caption: 'Manage payables and receivables as connected parts of your financial operations.', body: 'Support vendor and customer-related financial transactions while keeping accounting activities integrated with the wider business workflow.' },
+  { id: 'cash_bank', tab: 'Cash & Bank', icon: Landmark, title: 'Cash & Bank Management', link: 'Explore Cash & Bank', img: 'https://picsum.photos/seed/bank/1280/720', color: '#059669', caption: 'Manage cash and bank transactions within your financial system.', body: 'Keep banking activities connected with your accounting operations and maintain a unified view of your financial transactions.' },
+  { id: 'fixed_assets', tab: 'Fixed Assets', icon: Building2, title: 'Fixed Assets Management', link: 'Explore Fixed Assets', img: 'https://picsum.photos/seed/assets/1280/720', color: '#2563eb', caption: 'Manage fixed assets as part of your financial operations.', body: 'Keep asset-related information connected with your accounting processes within the same financial platform.' },
+  { id: 'adv_payments', tab: 'Advance Payments', icon: Wallet, title: 'Advance Payments', link: 'Explore Advance Payments', img: 'https://picsum.photos/seed/adv/1280/720', color: '#9333ea', caption: 'Manage advance payments across Accounts Receivable and Accounts Payable.', body: 'Support advance payment transactions as part of your customer and vendor financial processes.' },
+  { id: 'retention', tab: 'Retention Mgt', icon: ShieldCheck, title: 'Retention Management', link: 'Explore Retention', img: 'https://picsum.photos/seed/ret/1280/720', color: '#0d9488', caption: 'Manage retention-related financial transactions within your accounting processes.', body: 'Emvive supports retention management across the financial workflows where retained amounts form part of business transactions.' },
+  { id: 'budgeting', tab: 'Budgeting', icon: TrendingUp, title: 'Budgeting & Forecasting', link: 'Explore Budgeting', img: 'https://picsum.photos/seed/budg/1280/720', color: '#d97706', caption: 'Plan and monitor your financial activities with budgeting and forecasting capabilities.', body: 'Use financial planning information alongside your accounting data to support ongoing financial management.' },
+  { id: 'cost_centres', tab: 'Cost Centres', icon: Layers, title: 'Cost Centres & Dimensions', link: 'Explore Cost Centres', img: 'https://picsum.photos/seed/cost/1280/720', color: '#be123c', caption: 'Structure financial information using cost centres and dimensions.', body: 'Organise financial data according to the areas, entities or dimensions relevant to your organisation and its reporting requirements.' },
+  { id: 'intercompany', tab: 'Intercompany', icon: Share2, title: 'Intercompany Accounting', link: 'Explore Intercompany', img: 'https://picsum.photos/seed/inter/1280/720', color: '#7c3aed', caption: 'Support financial transactions between companies within your organisation through intercompany accounting.', body: 'This is particularly relevant for businesses managing multiple entities within a connected financial environment.' },
+  { id: 'consolidation', tab: 'Consolidation', icon: GitMerge, title: 'Financial Consolidation', link: 'Explore Consolidation', img: 'https://picsum.photos/seed/cons/1280/720', color: '#0891b2', caption: 'Bring financial information together across multiple companies through consolidation.', body: 'Support a consolidated view of financial information for organisations operating across multiple entities.' },
+  { id: 'auto_bank_rec', tab: 'Auto Bank Rec', icon: RefreshCw, title: 'Auto Bank Reconciliation', link: 'Explore Auto Bank Rec', img: 'https://picsum.photos/seed/recon/1280/720', color: '#059669', caption: 'Automate bank reconciliation as part of your financial operations.', body: 'Emvive includes auto bank reconciliation to connect banking activity with your accounting processes.' },
+  { id: 'dashboards', tab: 'Dashboards', icon: LayoutDashboard, title: 'Financial Dashboards', link: 'Explore Dashboards', img: 'https://picsum.photos/seed/dash/1280/720', color: '#2563eb', caption: 'Bring financial information into dashboards for a clearer view of business performance.', body: "Financial dashboards are part of Emvive's analytics and reporting capabilities." },
+  { id: 'custom_reports', tab: 'Custom Reports', icon: FileText, title: 'Custom Report Builder', link: 'Explore Custom Reports', img: 'https://picsum.photos/seed/report/1280/720', color: '#9333ea', caption: 'Create customised reports to analyse the business information relevant to your organisation.', body: "Emvive's analytics capabilities include a custom report builder for flexible reporting." },
+  { id: 'drill_down', tab: 'Drill-Down', icon: Search, title: 'Drill-Down Analysis', link: 'Explore Drill-Down', img: 'https://picsum.photos/seed/drill/1280/720', color: '#0d9488', caption: 'Move from high-level financial information into the underlying details with drill-down analysis.', body: 'This allows users to explore the information behind reported figures rather than relying only on summary-level views.' },
+  { id: 'global_ops', tab: 'Global Ops', icon: Globe, title: 'Multi-Country, Multi-Company & Multi-Currency', link: 'Explore Global Ops', img: 'https://picsum.photos/seed/multi/1280/720', color: '#d97706', caption: 'Support business operations across multiple countries, companies and currencies through Emvive\'s global capabilities.', body: 'These capabilities provide the foundation for organisations operating across different entities and markets.' },
+  { id: 'tax_mgmt', tab: 'Tax Management', icon: Percent, title: 'Tax Management', link: 'Explore Tax Management', img: 'https://picsum.photos/seed/tax/1280/720', color: '#be123c', caption: 'Support different tax requirements through the Emvive Tax Engine, including VAT, GST, sales tax, withholding tax and reverse charge.', body: '' },
+  { id: 'multi_lang', tab: 'Multi-Language', icon: Languages, title: 'Multi-Language Financial Operations', link: 'Explore Multi-Language', img: 'https://picsum.photos/seed/lang/1280/720', color: '#7c3aed', caption: 'Support English and Arabic with RTL, along with multilingual documents, for businesses operating across different markets.', body: '' },
+  { id: 'connected_ops', tab: 'Connected Ops', icon: GitMerge, title: 'Connected Financial Operations', link: 'Explore Connected Ops', img: 'https://picsum.photos/seed/connected/1280/720', color: '#0891b2', caption: 'Emvive Finance is part of a broader Business Operating System that connects Finance with Supply Chain, Sales, Projects, Manufacturing, Human Capital, POS and other business functions.', body: 'This allows financial processes to operate as part of connected business workflows rather than as an isolated accounting system.' },
+  { id: 'secure_cloud', tab: 'Secure Cloud', icon: Cloud, title: 'Built on a Secure Cloud Platform', link: 'Explore Secure Cloud', img: 'https://picsum.photos/seed/cloud/1280/720', color: '#059669', caption: 'Emvive is designed as a SaaS, multi-tenant, cloud-native platform with scalability and security features including zero-downtime updates, backup and disaster recovery.', body: '' },
 ];
 
 export const Products = () => {
   const ref = useReveal();
   const [activeTab, setActiveTab] = useState(0);
+  const tabsRef = useRef(null);
 
   const cur = PRODUCTS_DATA[activeTab];
+
+  const handlePrev = () => {
+    const newIdx = activeTab > 0 ? activeTab - 1 : PRODUCTS_DATA.length - 1;
+    setActiveTab(newIdx);
+    scrollToTab(newIdx);
+  };
+
+  const handleNext = () => {
+    const newIdx = activeTab < PRODUCTS_DATA.length - 1 ? activeTab + 1 : 0;
+    setActiveTab(newIdx);
+    scrollToTab(newIdx);
+  };
+
+  const scrollToTab = (idx) => {
+    if (tabsRef.current) {
+      const tab = tabsRef.current.children[idx];
+      if (tab) {
+        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  };
 
   return (
     <section id="products" className="fd-products" ref={ref}>
       <div className="fd-in fd-products-in">
-        <div className="fd-prod-head">
+        <div className="fd-prod-head" style={{ position: 'relative' }}>
           <span className="emv-subtitle" style={{ marginBottom: '1rem', display: 'inline-block', textTransform: 'uppercase' }}>PRODUCTS</span>
           <h2 className="fd-h2 global-section-title" style={{ letterSpacing: '-0.03em', textAlign: 'center', marginBottom: '1.5rem' }}>
-            Do more with Emvive business applications to <span className="text-gradient">help run your organization</span>
+            Bring your financial operations together with <span className="text-gradient">Emvive Finance</span>
           </h2>
           <p className="fd-prod-sub">
-            See how Emvive works with your data to give every team an edge.
+            From everyday accounting to advanced financial management, Emvive Finance provides a connected platform for managing financial processes across your organisation.
           </p>
         </div>
 
-        {/* Scrollable Tabs */}
-        <div className="fd-prod-tabs-wrapper">
-          <ul className="fd-prod-tabs">
+      {/* Scrollable Tabs */}
+      <div className="fd-prod-tabs-container" style={{ display: 'flex', alignItems: 'center', width: '100%', marginBottom: '4rem', gap: '20px' }}>
+        
+        <button type="button" onClick={handlePrev} className="fd-orange-btn" aria-label="Previous tab" style={{ flexShrink: 0, transform: 'translateY(-5px)' }}>
+          <ChevronLeft size={20} strokeWidth={3} />
+        </button>
+
+        <div className="fd-prod-tabs-wrapper" style={{ margin: 0, paddingBottom: '10px', flex: 1, maxWidth: '100%', overflowX: 'auto' }}>
+          <ul className="fd-prod-tabs" ref={tabsRef} style={{ scrollBehavior: 'smooth' }}>
             {PRODUCTS_DATA.map((p, idx) => {
               const TabIcon = p.icon;
               return (
@@ -722,7 +689,7 @@ export const Products = () => {
                   <button
                     type="button"
                     className={`fd-prod-tab ${activeTab === idx ? 'is-active' : ''}`}
-                    onClick={() => setActiveTab(idx)}
+                    onClick={() => { setActiveTab(idx); scrollToTab(idx); }}
                     style={activeTab === idx ? { '--tab-color': p.color } : undefined}
                   >
                     <TabIcon size={16} color={p.color} />
@@ -734,24 +701,32 @@ export const Products = () => {
           </ul>
         </div>
 
-        {/* Tab Content */}
+        <button type="button" onClick={handleNext} className="fd-orange-btn" aria-label="Next tab" style={{ flexShrink: 0, transform: 'translateY(-5px)' }}>
+          <ChevronRight size={20} strokeWidth={3} />
+        </button>
+      </div>
+
+      {/* Tab Content */}
         <div className="fd-prod-content">
-          <h3 className="fd-prod-body-title">{cur.title}</h3>
-          <a href="#start" className="fd-prod-link">
-            <span className="fd-prod-link-icon" style={{ backgroundColor: cur.color }}>
-              <Cloud size={14} color="white" strokeWidth={3} />
-            </span>
-            {cur.link}
-          </a>
+          <div className="fd-prod-text" style={{ paddingRight: '2rem', textAlign: 'left' }}>
+            <h3 className="fd-prod-body-title">{cur.title}</h3>
+            {(cur.caption || cur.body) && (
+              <div className="fd-prod-body-desc" style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.6', marginBottom: '2rem' }}>
+                {cur.caption && <p style={{ marginBottom: cur.body ? '1rem' : '0' }}>{cur.caption}</p>}
+                {cur.body && <p>{cur.body}</p>}
+              </div>
+            )}
+            <a href="#start" className="fd-prod-link">
+              <span className="fd-prod-link-icon" style={{ backgroundColor: cur.color }}>
+                <ArrowRight size={14} color="white" strokeWidth={3} />
+              </span>
+              {cur.link}
+            </a>
+          </div>
 
           <div className="fd-prod-media">
             <div className="fd-prod-media-bg">
               <Slot ratio="16 / 9" src={cur.img} alt={cur.tab} />
-              {/* Floating caption pill */}
-              <div className="fd-prod-caption">
-                <Sparkles size={16} color="#d6461a" className="fd-prod-caption-icon" />
-                <span>{cur.caption}</span>
-              </div>
             </div>
           </div>
         </div>
@@ -1110,7 +1085,9 @@ export const Resources = () => {
           </button>
         ))}
       </div>
+    </div>
 
+    <div className="fd-in">
       <div className="fd-rgrid">
         {shown.map((r) => (
           <article className="fd-card fd-rcard" key={r.id} style={tint(r.c)}>

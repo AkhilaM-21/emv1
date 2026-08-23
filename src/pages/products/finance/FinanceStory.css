@@ -2698,3 +2698,10 @@ body.dark-theme .fs-close-row.was .fs-close-track i { background: rgba(255, 255,
 .fs-int {
   background: none;
 }
+
+/* Dashboard Panel Styling for Right Side */
+.fs-google-right-content { background: #ffffff; border: 1px solid #dadce0; border-radius: 8px; width: 140px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; }
+.fs-google-node-header { height: 12px; background: #f1f3f4; border-bottom: 1px solid #dadce0; display: flex; align-items: center; padding: 0 8px; gap: 4px; }
+.fs-google-node-dots { width: 4px; height: 4px; border-radius: 50%; background: #bdc1c6; }
+.fs-google-node-body { padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.fs-google-illustration { width: 100%; height: auto; }

@@ -570,12 +570,75 @@ const SOURCES = [
   [Users, 'Payroll & HRMS', 'connected', 'orange', '412 staff'],
 ];
 
+// Right Side Consumer Nodes with Google-style Geometric Vector Illustrations
 const CONSUMERS = [
-  [ChartPie, 'Power BI / Tableau', 'connected', 'purple', 'Refreshed 2m'],
-  [ShieldCheck, 'ZATCA clearance', 'connected', 'green', '4,182 cleared'],
-  [TrendingUp, 'Board reporting', 'syncing', 'blue', 'Generating'],
-  [Percent, 'Tax authority filing', 'connected', 'orange', 'Q4 filed'],
-  [FileCheck2, 'Auditor portal', 'connected', 'teal', 'Read-only'],
+  {
+    name: 'Power BI / Tableau',
+    col: '#34A853',
+    offset: { top: '-20px', left: '0' },
+    illustration: (
+      <svg viewBox="0 0 100 60" width="100%" height="80" style={{ padding: '10px' }}>
+        <circle cx="30" cy="30" r="15" fill="#f1f3f4" />
+        <path d="M30 30 L30 15 A15 15 0 0 1 45 30 Z" fill="#EA4335" />
+        <rect x="60" y="25" width="8" height="20" rx="2" fill="#4285F4" />
+        <rect x="72" y="15" width="8" height="30" rx="2" fill="#34A853" />
+        <rect x="84" y="30" width="8" height="15" rx="2" fill="#FBBC04" />
+      </svg>
+    )
+  },
+  {
+    name: 'ZATCA clearance',
+    col: '#4285F4',
+    offset: { top: '20px', left: '30px' },
+    illustration: (
+      <svg viewBox="0 0 100 60" width="100%" height="80" style={{ padding: '10px' }}>
+        <rect x="35" y="5" width="30" height="45" rx="3" fill="#f8f9fa" stroke="#e8eaed" strokeWidth="2" />
+        <circle cx="50" cy="27" r="10" fill="#34A853" />
+        <path d="M46 27 L49 30 L55 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="40" y1="42" x2="60" y2="42" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    )
+  },
+  {
+    name: 'Board reporting',
+    col: '#EA4335',
+    offset: { top: '0px', left: '-10px' },
+    illustration: (
+      <svg viewBox="0 0 100 60" width="100%" height="80" style={{ padding: '10px' }}>
+        <rect x="10" y="10" width="80" height="40" rx="4" fill="#f1f3f4" />
+        <polyline points="15,40 35,20 55,30 85,15" fill="none" stroke="#EA4335" strokeWidth="3" strokeLinejoin="round" />
+      </svg>
+    )
+  },
+  {
+    name: 'Tax authority filing',
+    col: '#FBBC04',
+    offset: { top: '25px', left: '20px' },
+    illustration: (
+      <svg viewBox="0 0 100 60" width="100%" height="80" style={{ padding: '10px' }}>
+        <rect x="30" y="5" width="40" height="50" fill="#fff" stroke="#e8eaed" strokeWidth="2" />
+        <line x1="36" y1="15" x2="64" y2="15" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+        <line x1="36" y1="25" x2="55" y2="25" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+        <line x1="36" y1="35" x2="60" y2="35" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+        <line x1="36" y1="45" x2="64" y2="45" stroke="#FBBC04" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    )
+  },
+  {
+    name: 'Auditor portal',
+    col: '#34A853',
+    offset: { top: '-15px', left: '-20px' },
+    illustration: (
+      <svg viewBox="0 0 100 60" width="100%" height="80" style={{ padding: '10px' }}>
+        <rect x="10" y="10" width="80" height="40" rx="2" fill="#fff" stroke="#e8eaed" strokeWidth="2" />
+        <rect x="10" y="10" width="80" height="12" fill="#f8f9fa" />
+        <circle cx="18" cy="30" r="3" fill="#4285F4" />
+        <line x1="28" y1="30" x2="80" y2="30" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="18" cy="42" r="3" fill="#34A853" />
+        <line x1="28" y1="42" x2="60" y2="42" stroke="#dadce0" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    )
+  }
 ];
 
 
@@ -651,11 +714,11 @@ export const Integrations = () => {
 
             {/* RIGHT COLUMN: Dashboard UI Cards */}
             <div className="fs-google-col right">
-              {CONSUMERS.map(([Icon, name, state, col, meta], i) => {
+              {CONSUMERS.map((item, i) => {
                 const targetY = (2 - i) * 100; 
                 
                 return (
-                  <Reveal className="fs-google-right-node" key={name} delay={0.3 + i * 0.1}>
+                  <Reveal className="fs-google-right-node" key={item.name} delay={0.3 + i * 0.1} style={{ transform: `translate(${item.offset.left}, ${item.offset.top})` }}>
                     {/* SVG Line: Geometric elbows & zigzags */}
                     <svg width="300" height="2" className="fs-google-svg right-svg">
                       {i === 2 ? (
@@ -666,15 +729,15 @@ export const Integrations = () => {
                         <path d={`M 300 0 L 150 0 L 150 ${targetY} L 0 ${targetY}`} fill="none" stroke="#4285F4" strokeWidth="2" strokeDasharray={i % 2 === 0 ? "none" : "6 4"} />
                       )}
                     </svg>
-
-                    <div className="fs-google-dash-card">
-                      <div className="fs-google-dash-header">
-                        <div className="dash-dot"></div>
-                        <div className="dash-dot"></div>
+                    
+                    <div className="fs-google-right-content">
+                      <div className="fs-google-node-header">
+                        <span className="fs-google-node-dots" />
+                        <span className="fs-google-node-dots" />
                       </div>
-                      <div className="fs-google-dash-body">
-                        <Icon size={14} color="#80868b" />
-                        <b>{name}</b>
+                      <div className="fs-google-node-body" style={{ flexDirection: 'column', alignItems: 'center' }}>
+                        {item.illustration}
+                        <span style={{ padding: '0 0 10px 0', fontSize: '13px', fontWeight: 600 }}>{item.name}</span>
                       </div>
                     </div>
                   </Reveal>
