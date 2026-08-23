@@ -228,11 +228,11 @@ const FinanceHero = () => (
         <Reveal delay={0.46} y={16}>
           <div className="fh-actions">
             <a href="#start" className="fh-btn fh-btn-solid">
-              Request a Demo
+              Try for free
               <span className="fh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
             </a>
             <a href="#overview" className="fh-btn fh-btn-shell">
-              Explore Finance
+              Request a demo
               <span className="fh-btn-disc"><ArrowRight size={15} strokeWidth={2.2} /></span>
             </a>
           </div>

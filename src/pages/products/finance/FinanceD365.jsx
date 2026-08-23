@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import {
-  BookOpen, Boxes, Briefcase, Building2, ChevronDown, ChevronRight, Cloud,
+  BadgeDollarSign, BookOpen, Boxes, Briefcase, Building2, ChevronDown, ChevronRight, Cloud, ArrowRight,
   Factory, FileText, GitMerge, Globe, Handshake, HardDrive, Landmark, Languages,
-  Layers, LayoutDashboard, Percent, Play, Receipt, RefreshCw, Search, Share2,
-  ShieldCheck, ShoppingCart, TrendingUp, Truck, Users, Wallet,
+  Layers, LayoutDashboard, Percent, Play, Receipt, ReceiptText, RefreshCw, Search, Share2,
+  ShieldCheck, ShoppingCart, Sparkles, TrendingUp, Truck, Users, Wallet,
 } from 'lucide-react';
 import { tint } from './FinanceStory';
+import '../../../components/hero/variants/HeroInfosys.css';
 import './FinanceD365.css';
 
 /* =====================================================================
@@ -160,13 +161,12 @@ const useNavSwap = () => {
 
 const ANCHORS = [
   ['overview', 'Overview'],
-  ['features', 'Features'],
+  ['solutions', 'Solutions'],
+  ['products', 'Products'],
   ['pricing', 'Pricing'],
-  ['partners', 'Partners'],
+  ['platform', 'Platform'],
   ['stories', 'Customer stories'],
   ['resources', 'Resources'],
-  ['platform', 'Platform'],
-  ['start', 'Next steps'],
 ];
 
 /* =====================================================================
@@ -194,18 +194,19 @@ export const FinanceHeroBlade = () => {
 
       <div className="fd-in fd-hero-in">
         <div className="fd-hero-copy">
-          <h1 className="fd-hero-title">
-            Complete financial management for connected businesses
+          <h1 className="hi-title" style={{ alignItems: 'flex-start', margin: 0, textShadow: 'none', fontSize: '65px' }}>
+            <span className="hi-line" style={{ color: 'var(--ink)' }}>Complete financial</span>
+            <span className="hi-line" style={{ color: 'var(--ink)' }}>management for</span>
+            <span className="hi-line hi-accent">connected businesses</span>
           </h1>
-          <p className="fd-hero-lede">
-            Emvive Finance brings core accounting and advanced financial management together
-            in one integrated platform. From general ledger and receivables to budgeting,
-            consolidation and bank reconciliation, it supports the financial operations of
-            businesses managing single or multiple entities.
-          </p>
-          <div className="fd-hero-actions">
-            <a href="#start" className="fd-btn fd-btn-solid">Request a demo</a>
-            <a href="#start" className="fd-btn fd-btn-shell">Start free trial</a>
+
+          <div className="fd-hero-actions" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <a href="#demo" className="cta-btn-primary">
+              Request a demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
+            </a>
+            <a href="#demo" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
+              Start free trial
+            </a>
           </div>
         </div>
 
@@ -406,168 +407,176 @@ const AUTOPLAY_MS = 6000;
 
 export const Overview = () => {
   const reveal = useReveal();
-  const [pill, setPill] = useState(0);
-  const [open, setOpen] = useState(GROUPS[0][0]);
-  /* the screenshot follows the last item that was opened and stays put
-     when one is closed — otherwise collapsing the only open item leaves
-     the column beside it empty */
-  const [shot, setShot] = useState(GROUPS[0][0]);
 
-  /* AUTOPLAY.
-     The section walks itself: each item holds, then the next one opens,
-     and when a group runs out the pill moves on too and its first item
-     opens — so the whole overview plays through on its own.
+  return (
+    <section className="fd-section fd-overview fd-anim fd-anim--up" id="overview" ref={reveal}>
+      <div className="fd-in">
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div className="emv-subtitle" style={{ margin: '0 auto' }}>OVERVIEW</div>
+          <h2 className="fd-h2 global-section-title" style={{ marginTop: '1rem', letterSpacing: '-0.03em' }}>Get to know <span className="text-gradient">Emvive Finance</span></h2>
+          <p className="fd-lede" style={{ maxWidth: '100%', margin: '1rem auto 0' }}>
+            Learn more about our solutions and products across accounting, consolidation, tax, and reporting.
+          </p>
+        </div>
+        
+        <div className="fd-overview-grid">
+          <div className="fd-ocard">
+            <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work1/1280/720" alt="What is Emvive Finance?" />
+            <div className="fd-ocard-content">
+              <h3 className="fd-ocard-title">What is Emvive Finance?</h3>
+              <p className="fd-ocard-body">Become more data-driven and innovative with a unified platform for all your financial operations.</p>
+              <a href="#explore" className="fd-ocard-cta">
+                <i aria-hidden="true"><ChevronRight /></i> Explore Emvive Finance
+              </a>
+            </div>
+          </div>
 
-     It only runs while the section is actually on screen, it pauses
-     under the pointer, and the first click anywhere in here ends it for
-     good. Something that keeps moving after you have taken hold of it
-     is the thing that makes a carousel infuriating. */
+          <div className="fd-ocard">
+            <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work2/1280/720" alt="Take a guided tour" />
+            <div className="fd-ocard-content">
+              <h3 className="fd-ocard-title">Take a guided tour</h3>
+              <p className="fd-ocard-body">Get a closer look at how to improve specific business processes with our financial tools.</p>
+              <a href="#tour" className="fd-ocard-cta">
+                <i aria-hidden="true"><ChevronRight /></i> Start your tour
+              </a>
+            </div>
+          </div>
+
+          <div className="fd-ocard">
+            <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work3/1280/720" alt="Compare plans and pricing" />
+            <div className="fd-ocard-content">
+              <h3 className="fd-ocard-title">Compare plans and pricing</h3>
+              <p className="fd-ocard-body">Find the right plan for your business needs by exploring the different options.</p>
+              <a href="#pricing" className="fd-ocard-cta">
+                <i aria-hidden="true"><ChevronRight /></i> See pricing overview
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* =====================================================================
+   2b — SOLUTIONS
+   ===================================================================== */
+const SOLUTIONS_DATA = [
+  {
+    k: 'Modernize your financial operations',
+    line: 'Enhance accounting across payables, receivables, and cash management with an integrated financial solution.',
+    link: 'Explore financial operations',
+    img: '/images/general_ledger.jpg',
+    c: '#10b981', // Green
+  },
+  {
+    k: 'Achieve more with automated reporting',
+    line: 'Gain instant visibility into business performance with real-time analytics and consolidated financial views.',
+    link: 'Discover analytics',
+    img: '/images/automate_step.jpg',
+    c: '#3b82f6', // Blue
+  },
+  {
+    k: 'Improve compliance and tax efficiency',
+    line: 'Stay ahead of regional requirements with an embedded tax engine and automated localized reporting tools.',
+    link: 'See compliance tools',
+    img: '/images/control_step.jpg',
+    c: '#8b5cf6', // Purple
+  },
+  {
+    k: 'Personalize stakeholder experiences',
+    line: 'Deliver custom dashboards, drill-down capabilities, and multi-language support to your global teams.',
+    link: 'View global capabilities',
+    img: '/images/close_step.jpg',
+    c: '#d6461a', // Orange
+  },
+];
+
+export const Solutions = () => {
+  const reveal = useReveal();
+  const [active, setActive] = useState(0);
+
   const grid = useRef(null);
   const onScreen = useInView(grid, { margin: '0px 0px -15% 0px' });
   const reduced = useReducedMotion();
   const [auto, setAuto] = useState(true);
   const [hover, setHover] = useState(false);
 
+  const AUTOPLAY_MS = 6000;
   const running = auto && onScreen && !hover && !reduced;
 
   const stop = () => setAuto(false);
-
-  const toggle = (idx) => {
-    stop();
-    setOpen((cur) => (cur === idx ? null : idx));
-    setShot(idx);
-  };
-
-  const choose = (i) => { setPill(i); setOpen(GROUPS[i][0]); setShot(GROUPS[i][0]); };
-
-  const pick = (i) => { stop(); choose(i); };
+  const pick = (idx) => { stop(); setActive(idx); };
 
   useEffect(() => {
     if (!running) return undefined;
-
     const timer = setTimeout(() => {
-      const order = GROUPS[pill];
-      const at = order.indexOf(open);
-
-      /* still items left under this pill */
-      if (at < order.length - 1) {
-        const next = order[at + 1];
-        setOpen(next);
-        setShot(next);
-        return;
-      }
-
-      /* group exhausted — the pill advances and takes its first item */
-      const nextPill = (pill + 1) % PILLS.length;
-      setPill(nextPill);
-      setOpen(GROUPS[nextPill][0]);
-      setShot(GROUPS[nextPill][0]);
+      setActive((prev) => (prev + 1) % SOLUTIONS_DATA.length);
     }, AUTOPLAY_MS);
-
     return () => clearTimeout(timer);
-    /* open and pill are what restart the clock on every step */
-  }, [running, open, pill]);
-
-  const cap = MODULES[shot];
+  }, [running, active]);
 
   return (
-    <section className="fd-section fd-overview fd-anim fd-anim--up" id="overview" ref={reveal}>
+    <section className="fd-section fd-solutions fd-anim fd-anim--up" id="solutions" ref={reveal}>
       <div className="fd-in">
-        <span className="global-section-badge"><span className="global-badge-dot" aria-hidden="true" /> Overview</span>
-        <h2 className="fd-h2 global-section-title">Core accounting and <span className="text-gradient">advanced financial management</span>, together</h2>
-        <p className="fd-lede">
-          Seventeen capabilities on one financial platform — from general ledger and
-          receivables to consolidation, tax and reporting. Each one is part of the same
-          system rather than a separate product bolted alongside it.
-        </p>
-
-        <div className="fd-pillbar" role="tablist" aria-label="Capability groups">
-          {PILLS.map((p, i) => (
-            <button
-              key={p.k}
-              type="button"
-              role="tab"
-              aria-selected={i === pill}
-              className={`fd-pill${i === pill ? ' is-current' : ''}`}
-              onClick={() => pick(i)}
-            >
-              {p.k}
-              {/* the selected pill carries a bar showing how far through
-                  its own group the autoplay has got, so the moment it
-                  hands over to the next pill is not a surprise */}
-              {i === pill && running && (
-                <span
-                  className="fd-pill-bar"
-                  key={`bar-${pill}`}
-                  style={{ animationDuration: `${GROUPS[i].length * AUTOPLAY_MS}ms` }}
-                  aria-hidden="true"
-                />
-              )}
-            </button>
-          ))}
+        <div style={{ marginBottom: '3rem' }}>
+          <p className="emv-subtitle" style={{ marginBottom: '1rem', textTransform: 'uppercase' }}>Solutions</p>
+          <h2 className="fd-h2 global-section-title" style={{ letterSpacing: '-0.03em' }}>
+            Move from a system of record to a <span className="text-gradient">system of action</span>
+          </h2>
         </div>
 
         <div
-          className="fd-ov-grid"
+          className="fd-sol-grid"
           ref={grid}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
-          <div className="fd-acc">
-            {GROUPS[pill].map((idx) => {
-              const c = MODULES[idx];
-              const isOpen = idx === open;
-              const Icon = c.icon;
+          {/* Left Accordion */}
+          <div className="fd-sol-accordion">
+            {SOLUTIONS_DATA.map((item, idx) => {
+              const isOpen = active === idx;
               return (
-                /* each module carries its own colour — the same one it
-                   wears everywhere else on the page — and the rail, the
-                   icon and the link all read from it */
-                <div
-                  key={c.k}
-                  className={`fd-acc-item${isOpen ? ' is-open' : ''}${isOpen && running ? ' is-timing' : ''}`}
-                  style={tint(c.c)}
-                >
-                  {/* the rail fills as the item's turn runs out, so the
-                      hand-off to the next one is visible before it happens */}
-                  {isOpen && running && (
+                <div key={item.k} className={`fd-sol-item ${isOpen ? 'is-open' : ''}`}>
+                  {isOpen && (
                     <span
-                      className="fd-acc-fill"
-                      key={`fill-${idx}`}
-                      style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
+                      className="fd-sol-fill"
+                      style={{
+                        backgroundColor: item.c,
+                        ...(running 
+                          ? { animationDuration: `${AUTOPLAY_MS}ms` } 
+                          : { animation: 'none', transform: 'scaleY(1)' }
+                        )
+                      }}
                       aria-hidden="true"
                     />
                   )}
                   <button
                     type="button"
-                    className="fd-acc-head"
+                    className="fd-sol-head"
                     aria-expanded={isOpen}
-                    onClick={() => toggle(idx)}
+                    onClick={() => pick(idx)}
                   >
-                    <span className="fd-acc-ic" aria-hidden="true">
-                      <Icon size={20} strokeWidth={1.9} />
-                    </span>
-                    <span className="fd-acc-title">{c.k}</span>
+                    <span className="fd-sol-title">{item.k}</span>
                     <ChevronDown
-                      className="fd-acc-chev"
+                      className="fd-sol-chev"
                       size={22}
-                      strokeWidth={2.2}
+                      strokeWidth={2}
                       aria-hidden="true"
+                      style={isOpen ? { color: item.c } : undefined}
                     />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
-                        className="fd-acc-body"
+                        className="fd-sol-body"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <div className="fd-acc-inner">
-                          <p>{c.body}</p>
-                          {/* the picture rides inside the item on narrow
-                              screens, where there is no column beside it */}
-                          <Slot className="fd-acc-shot" ratio="16 / 9" src={c.img} alt={c.k} />
+                        <div className="fd-sol-inner">
+                          <p>{item.line}</p>
                         </div>
                       </motion.div>
                     )}
@@ -577,16 +586,18 @@ export const Overview = () => {
             })}
           </div>
 
-          <div className="fd-ov-shot">
+          {/* Right Media */}
+          <div className="fd-sol-media-col">
             <AnimatePresence mode="wait">
               <motion.div
-                key={shot}
-                initial={{ opacity: 0, scale: 0.985 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.985 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                key={active}
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="fd-sol-img-wrapper"
               >
-                <Slot ratio="16 / 9" src={cap.img} alt={cap.k} />
+                <Slot ratio="16 / 12" src={SOLUTIONS_DATA[active].img} alt={SOLUTIONS_DATA[active].k} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -597,63 +608,155 @@ export const Overview = () => {
 };
 
 /* =====================================================================
-   3 — FEATURES
-   Six cards, one per group in the product content.
+   2.5 — PRODUCTS
    ===================================================================== */
-/* The six groups the product content is organised into. The overview
-   above carries each capability in full; these are the headings over
-   them, so the two never repeat the same paragraph. */
-const FEATURES = [
+const PRODUCTS_DATA = [
   {
-    k: 'Core accounting', c: 'green', icon: BookOpen,
-    line: 'General ledger, payables and receivables, cash and bank, and fixed assets, held in one unified accounting structure across every company.',
+    id: 'finance',
+    tab: 'Finance',
+    icon: BadgeDollarSign,
+    title: 'Run Your Finances with Greater Control',
+    link: 'Explore Finance',
+    img: '/images/general_ledger.jpg',
+    caption: 'One connected view of your ledger, cash, payables, and assets.',
+    color: '#7c3aed',
   },
   {
-    k: 'Advanced financial management', c: 'violet', icon: Wallet,
-    line: 'Advance payments, retention, budgeting and forecasting, and cost centres and dimensions, working against the same accounting data.',
+    id: 'supply',
+    tab: 'Supply Chain',
+    icon: Truck,
+    title: 'Connect Purchasing, Inventory and Warehouses',
+    link: 'Explore Supply Chain',
+    img: '/images/automate_step.jpg',
+    caption: 'Procurement, inventory, and warehouses managed end to end.',
+    color: '#0891b2',
   },
   {
-    k: 'Multi-company financial management', c: 'blue', icon: Share2,
-    line: 'Intercompany accounting and financial consolidation for organisations running multiple entities in one connected financial environment.',
+    id: 'sales',
+    tab: 'Sales & CRM',
+    icon: TrendingUp,
+    title: 'Manage the Customer Journey from Lead to Order',
+    link: 'Explore Sales & CRM',
+    img: '/images/control_step.jpg',
+    caption: 'From lead to order to payment in one connected flow.',
+    color: '#059669',
   },
   {
-    k: 'Bank reconciliation and automation', c: 'teal', icon: RefreshCw,
-    line: 'Auto bank reconciliation as part of your financial operations, connecting banking activity directly with your accounting processes.',
+    id: 'hcm',
+    tab: 'HCM',
+    icon: Users,
+    title: 'Manage Your Workforce from Hire to Payroll',
+    link: 'Explore HCM',
+    img: '/images/close_step.jpg',
+    caption: 'Core HR, payroll, and attendance with compliance built in.',
+    color: '#2563eb',
   },
   {
-    k: 'Financial reporting and analytics', c: 'orange', icon: LayoutDashboard,
-    line: 'Financial dashboards, a custom report builder and drill-down analysis from any reported figure into the detail behind it.',
+    id: 'pos',
+    tab: 'POS',
+    icon: ShoppingCart,
+    title: 'Connect Every Sale with Your Business Operations',
+    link: 'Explore POS',
+    img: '/images/capture_step.jpg',
+    caption: 'Fast billing across every branch — online or offline.',
+    color: '#9333ea',
   },
   {
-    k: 'Global financial operations', c: 'purple', icon: Globe,
-    line: 'Multi-country, multi-company and multi-currency operations, the Emvive Tax Engine, and English and Arabic with RTL.',
+    id: 'einv',
+    tab: 'E-Invoicing',
+    icon: ReceiptText,
+    title: 'Make Compliance Part of Your Invoicing Process',
+    link: 'Explore E-Invoicing',
+    img: '/images/post_step.jpg',
+    caption: 'Compliant e-invoicing with real-time ZATCA clearance.',
+    color: '#0d9488',
   },
+  {
+    id: 'projects',
+    tab: 'Projects',
+    icon: Briefcase,
+    title: 'Keep Projects, Resources and Financials in View',
+    link: 'Explore Projects',
+    img: '/images/general_ledger.jpg',
+    caption: 'Plan, resource, track, and bill projects in one place.',
+    color: '#d97706',
+  },
+  {
+    id: 'mfg',
+    tab: 'Manufacturing',
+    icon: Factory,
+    title: 'Connect Production with Inventory and Cost',
+    link: 'Explore Manufacturing',
+    img: '/images/automate_step.jpg',
+    caption: 'Production, materials, and costing kept connected.',
+    color: '#be123c',
+  }
 ];
 
-export const Features = () => {
-  const reveal = useReveal();
-  return (
-  <section className="fd-section fd-features fd-anim fd-anim--up" id="features" ref={reveal}>
-    <div className="fd-in">
-      <span className="global-section-badge"><span className="global-badge-dot" aria-hidden="true" /> Features</span>
-      <h2 className="fd-h2 global-section-title">
-        Financial operations, from everyday accounting to <span className="text-gradient">global reporting</span>
-      </h2>
+export const Products = () => {
+  const ref = useReveal();
+  const [activeTab, setActiveTab] = useState(0);
 
-      <div className="fd-fgrid fd-stagger">
-        {FEATURES.map((f) => {
-          const Icon = f.icon;
-          return (
-            <article className="fd-fcard" key={f.k} style={tint(f.c)}>
-              <span className="fd-fcard-ic"><Icon size={24} strokeWidth={1.8} /></span>
-              <h3 className="fd-fcard-title">{f.k}</h3>
-              <p className="fd-fcard-body">{f.line}</p>
-            </article>
-          );
-        })}
+  const cur = PRODUCTS_DATA[activeTab];
+
+  return (
+    <section id="products" className="fd-products" ref={ref}>
+      <div className="fd-in fd-products-in">
+        <div className="fd-prod-head">
+          <span className="emv-subtitle" style={{ marginBottom: '1rem', display: 'inline-block', textTransform: 'uppercase' }}>PRODUCTS</span>
+          <h2 className="fd-h2 global-section-title" style={{ letterSpacing: '-0.03em', textAlign: 'center', marginBottom: '1.5rem' }}>
+            Do more with Emvive business applications to <span className="text-gradient">help run your organization</span>
+          </h2>
+          <p className="fd-prod-sub">
+            See how Emvive works with your data to give every team an edge.
+          </p>
+        </div>
+
+        {/* Scrollable Tabs */}
+        <div className="fd-prod-tabs-wrapper">
+          <ul className="fd-prod-tabs">
+            {PRODUCTS_DATA.map((p, idx) => {
+              const TabIcon = p.icon;
+              return (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    className={`fd-prod-tab ${activeTab === idx ? 'is-active' : ''}`}
+                    onClick={() => setActiveTab(idx)}
+                    style={activeTab === idx ? { '--tab-color': p.color } : undefined}
+                  >
+                    <TabIcon size={16} color={p.color} />
+                    {p.tab}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Tab Content */}
+        <div className="fd-prod-content">
+          <h3 className="fd-prod-body-title">{cur.title}</h3>
+          <a href="#start" className="fd-prod-link">
+            <span className="fd-prod-link-icon" style={{ backgroundColor: cur.color }}>
+              <Cloud size={14} color="white" strokeWidth={3} />
+            </span>
+            {cur.link}
+          </a>
+
+          <div className="fd-prod-media">
+            <div className="fd-prod-media-bg">
+              <Slot ratio="16 / 9" src={cur.img} alt={cur.tab} />
+              {/* Floating caption pill */}
+              <div className="fd-prod-caption">
+                <Sparkles size={16} color="#d6461a" className="fd-prod-caption-icon" />
+                <span>{cur.caption}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
   );
 };
 
@@ -688,7 +791,7 @@ export const Pricing = () => {
   return (
     <section className="fd-section fd-section--band fd-pricing fd-anim fd-anim--up" id="pricing" ref={reveal}>
       <div className="fd-in">
-        <span className="global-section-badge"><span className="global-badge-dot" aria-hidden="true" /> Pricing</span>
+        <span className="global-section-badge fd-badge-orange"><span className="global-badge-dot" aria-hidden="true" /> PRICING</span>
         <h2 className="fd-h2 global-section-title">Emvive Finance <span className="text-gradient">pricing</span></h2>
         <p className="fd-lede">
           Priced on entities, users and the modules you turn on. Tell us how you are
@@ -1045,24 +1148,24 @@ const PLATFORM = [
     /* generated artwork — see tools_platform_art.py at the repo root */
     img: '/images/platform_connected.png',
     items: [
-      { name: 'Supply Chain', icon: Truck },
-      { name: 'Sales', icon: Handshake },
-      { name: 'Projects', icon: Briefcase },
-      { name: 'Manufacturing', icon: Factory },
-      { name: 'Human Capital', icon: Users },
-      { name: 'POS', icon: ShoppingCart },
+      { name: 'Supply Chain', icon: Truck, color: '#f0883e' },
+      { name: 'Sales', icon: Handshake, color: '#10b981' },
+      { name: 'Projects', icon: Briefcase, color: '#3b82f6' },
+      { name: 'Manufacturing', icon: Factory, color: '#8b5cf6' },
+      { name: 'Human Capital', icon: Users, color: '#ec4899' },
+      { name: 'POS', icon: ShoppingCart, color: '#06b6d4' },
     ],
   },
   {
     k: 'Built on a secure cloud platform',
     img: '/images/platform_cloud.png',
     items: [
-      { name: 'SaaS, multi-tenant', icon: Boxes },
-      { name: 'Cloud-native', icon: Cloud },
-      { name: 'Built to scale', icon: TrendingUp },
-      { name: 'Zero-downtime updates', icon: RefreshCw },
-      { name: 'Backup', icon: HardDrive },
-      { name: 'Disaster recovery', icon: ShieldCheck },
+      { name: 'SaaS, multi-tenant', icon: Boxes, color: '#f59e0b' },
+      { name: 'Cloud-native', icon: Cloud, color: '#3b82f6' },
+      { name: 'Built to scale', icon: TrendingUp, color: '#10b981' },
+      { name: 'Zero-downtime updates', icon: RefreshCw, color: '#ef4444' },
+      { name: 'Backup', icon: HardDrive, color: '#8b5cf6' },
+      { name: 'Disaster recovery', icon: ShieldCheck, color: '#06b6d4' },
     ],
   },
 ];
@@ -1075,7 +1178,7 @@ export const Platform = () => {
   return (
     <section className="fd-section fd-platform fd-anim fd-anim--up" id="platform" ref={reveal}>
       <div className="fd-in">
-        <span className="global-section-badge"><span className="global-badge-dot" aria-hidden="true" /> Platform</span>
+        <span className="global-section-badge fd-badge-orange"><span className="global-badge-dot" aria-hidden="true" /> PLATFORM</span>
         <h2 className="fd-h2 global-section-title">Finance as part of the business, <span className="text-gradient">not beside it</span></h2>
 
         <div className="fd-auto-card">
@@ -1110,7 +1213,7 @@ export const Platform = () => {
                   const Icon = item.icon;
                   return (
                     <span className="fd-auto-item" key={item.name}>
-                      <i aria-hidden="true"><Icon size={17} strokeWidth={2} /></i>
+                      <i aria-hidden="true" style={{ color: item.color }}><Icon size={20} strokeWidth={2} /></i>
                       {item.name}
                     </span>
                   );

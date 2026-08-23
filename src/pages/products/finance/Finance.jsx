@@ -1,9 +1,12 @@
 import React from 'react';
 import { ProductPage, Footer } from '../shared/system';
 import {
-  FinanceHeroBlade, Overview, Features, Pricing, Partners,
-  CustomerStories, Resources, Platform, ClosingBanner,
+  FinanceHeroBlade, Overview, Solutions, Products, Pricing,
+  Platform,
 } from './FinanceD365';
+import CustomerStory from '../../../components/sections/CustomerStory';
+import Resources from '../../../components/sections/Resources';
+import CTA from '../../../components/sections/CTA';
 import './FinanceApp.css';
 import './Finance.css';
 
@@ -21,11 +24,10 @@ import './Finance.css';
      02  Overview          Overview          pill bar → accordion → shot
      03  Features          Features          six cards
      04  Pricing           Pricing           three plans
-     05  Partners          Partners          three cards
-     06  Customer stories  CustomerStories   three-up
-     07  Resources         Resources         three-up
-     08  Platform          Platform          two statements
-     09  Closing banner    ClosingBanner
+     05  Customer stories  CustomerStories   three-up
+     06  Resources         Resources         three-up
+     07  Platform          Platform          two statements
+     08  CTA               CTA               home page cta
 
    Every section the reference's anchor bar lists is present, in its
    order. The one thing NOT carried over is a price: the plan cards say
@@ -41,16 +43,16 @@ import './Finance.css';
    ===================================================================== */
 
 const Finance = () => (
-  <ProductPage accent="#0a8f5e" accent2="#07724b" wash="rgba(10,143,94,0.09)" className="fn fd-page">
+  <ProductPage accent="#f0883e" accent2="#d6461a" wash="rgba(240, 136, 62, 0.09)" className="fn fd-page">
     <FinanceHeroBlade />
     <Overview />
-    <Features />
+    <Solutions />
+    <Products />
     <Pricing />
-    <Partners />
-    <CustomerStories />
-    <Resources />
     <Platform />
-    <ClosingBanner />
+    <div id="stories"><CustomerStory /></div>
+    <div id="resources"><Resources /></div>
+    <CTA />
 
     <Footer />
   </ProductPage>
