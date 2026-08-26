@@ -1,0 +1,331 @@
+/* =====================================================================
+   PRODUCTS — the Infosys IKI top hero.  Prefix `hb-`.
+
+   Rebuilt from the banner at the top of infosys.com/iki.html. Their
+   root is `font-size: 10px`, so every rem in their stylesheet is that
+   many pixels; the values below are already converted.
+
+     .sliderContainer
+       .slider.single-item              a Slick carousel of banners
+         .banner-image
+           img.hero-banner              absolute, z-index -1, cover
+           .banner-main                 padding 175px top / 234px bottom
+             a.btn.btn-secondary        the small square label
+             p.heading1                 80px / 75px line-height, white
+       .progressBarContainer            absolute, bottom 0, width 100%,
+                                        transform: translateY(40%)
+         .banner-slick                  #fff, margin-top: -114px,
+                                        box-shadow 0 2px 8px rgba(0,0,0,.16)
+           .item                        flex column, cursor: pointer
+             .slick-inner               padding 25px 0 25px 20px
+               .inner-details           padding-right 20px,
+                                        border-right 1px solid
+                                        rgba(169,174,177,.6)
+                 h4 / p / a.find-more
+             span.progressBar           8px tall
+               .inProgress              width 0 -> 100%,
+                                        linear-gradient(to right,
+                                        #007cc3, #fff)
+
+   THE MECHANIC: the white strip is not a caption, it is the navigation.
+   Four items sit permanently across the foot of the banner, the one
+   whose turn it is runs a progress bar along its bottom edge, and when
+   the bar fills the banner cross-fades to the next. Clicking an item
+   jumps straight to it.
+
+   WHAT IS NOT THEIRS: the colour. Their accent is Infosys blue
+   (#007cc3) on the label, the chevron and the progress gradient; all
+   three take this page's orange instead. Their headline face is
+   Tungsten/Oswald condensed at 80px, which the site does not carry, so
+   the heading is Plus Jakarta Sans like every other heading here.
+   ===================================================================== */
+
+.hb {
+  padding: 5.5rem 0 6rem;
+  background: #fff;
+}
+
+.hb-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+.hb-head {
+  /* left, like the Solutions head — nothing on this page is centred */
+  text-align: left;
+  margin-bottom: 2.75rem;
+}
+
+.hb-sub {
+  max-width: 70ch;
+  margin: 1rem 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* ---------------------------------------------------------------
+   THE BANNER
+   --------------------------------------------------------------- */
+.hb-stage {
+  position: relative;
+  height: 470px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #101b2d;
+  isolation: isolate;
+}
+
+/* the slides are stacked and cross-faded, which is what Slick's
+   fade mode does */
+.hb-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.hb-slide.is-current { opacity: 1; pointer-events: auto; }
+
+.hb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* the copy sits on the left over a wash that keeps it off the picture,
+   the way theirs does */
+.hb-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to right,
+      rgba(6, 10, 20, 0.88) 0%,
+      rgba(6, 10, 20, 0.62) 38%,
+      rgba(6, 10, 20, 0.12) 68%,
+      rgba(6, 10, 20, 0.05) 100%
+    );
+}
+
+.hb-copy {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 max(28px, 4vw);
+  max-width: 900px;
+}
+
+/* their .btn-secondary label — a small square tag, not a pill */
+.hb-tag {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 3px;
+  background: #e2601f;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.hb-title {
+  margin: 22px 0 0;
+  max-width: 800px;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------
+   THE STRIP — pulled up into the banner, and it IS the navigation
+   --------------------------------------------------------------- */
+.hb-strip {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: calc(100% - 2 * max(28px, 4vw));
+  margin: -140px auto 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hb-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0 0 20px;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* the hairline between columns, on the inner block so it stops short
+   of the padding — theirs sits on .inner-details for the same reason */
+.hb-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 20px 22px 0;
+  border-right: 1px solid rgba(169, 174, 177, 0.6);
+}
+
+.hb-item:last-child .hb-inner { border-right: 0; }
+
+.hb-h {
+  display: block;
+  margin: 0 0 14px;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #0b0b0f;
+}
+
+.hb-p {
+  display: block;
+  margin: 0 0 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #3f3f3f;
+}
+
+.hb-more {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0b0b0f;
+}
+
+/* their .icon-chevron-right-circle — a ringed chevron in the accent */
+.hb-more i {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid #e2601f;
+  color: #e2601f;
+  flex-shrink: 0;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.hb-item:hover .hb-more i,
+.hb-item:focus-visible .hb-more i { background: #e2601f; color: #fff; }
+
+.hb-item:focus-visible { outline: 2px solid #e2601f; outline-offset: -2px; }
+
+/* ---------------------------------------------------------------
+   THE PROGRESS BAR — 8px along the foot of each item. Only the one
+   whose turn it is runs; when it fills, the banner moves on.
+   --------------------------------------------------------------- */
+.hb-bar {
+  display: block;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+}
+
+.hb-bar i {
+  display: block;
+  width: 100%;
+  height: 8px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  /* theirs is blue -> white; this is the page's orange -> white */
+  background-image: linear-gradient(to right, #e2601f, #ffd9c4);
+}
+
+.hb-item.is-current .hb-bar i { animation: hb-run linear forwards; }
+
+@keyframes hb-run {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* a turn that is not running still marks where it got to */
+.hb-item.is-current .hb-bar i.is-held {
+  animation: none;
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------
+   NARROW — the reference drops the strip below the banner and lets
+   the items stack rather than squeezing four across a phone.
+   --------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .hb-strip { grid-template-columns: repeat(2, 1fr); }
+  .hb-item:nth-child(2) .hb-inner { border-right: 0; }
+  .hb-item:nth-child(1) .hb-inner,
+  .hb-item:nth-child(2) .hb-inner { border-bottom: 1px solid rgba(169, 174, 177, 0.6); }
+}
+
+@media (max-width: 720px) {
+  .hb { padding: 3.5rem 0 4rem; }
+  .hb-stage { height: 360px; }
+
+  .hb-strip {
+    grid-template-columns: 1fr;
+    width: 100%;
+    /* below the banner rather than pulled into it — there is not
+       enough banner left to overlap at this width */
+    margin-top: 16px;
+  }
+
+  .hb-item .hb-inner {
+    border-right: 0;
+    border-bottom: 1px solid rgba(169, 174, 177, 0.6);
+  }
+
+  .hb-item:last-child .hb-inner { border-bottom: 0; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF — hold the first slide, no cross-fade, no bar.
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .hb-slide { transition: none; }
+  .hb-item.is-current .hb-bar i { animation: none; transform: scaleX(1); }
+  .hb-more i { transition: none; }
+}
+
+/* ---------------------------------------------------------------
+   DARK
+   --------------------------------------------------------------- */
+body.dark-theme .hb { background: #0b0b0f; }
+body.dark-theme .hb-sub { color: #a1a1aa; }
+body.dark-theme .hb-strip { background: #161d2c; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+body.dark-theme .hb-item { background: #161d2c; }
+body.dark-theme .hb-h { color: #f4f4f5; }
+body.dark-theme .hb-p { color: #a1a1aa; }
+body.dark-theme .hb-more { color: #f4f4f5; }
+body.dark-theme .hb-inner { border-right-color: rgba(255, 255, 255, 0.14); }

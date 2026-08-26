@@ -1,0 +1,307 @@
+/* =====================================================================
+   OVERVIEW — the Infosys "What's Happening" carousel.  Prefix `wh-`.
+
+   Rebuilt from the section on infosys.com/services/consulting.html,
+   whose shape is:
+
+     section.whats-new.bg-grey-300.py-75    #e9eef7 band, 75px top/bottom
+       h2 centred
+       .whats-new-swiper
+         .slide-arrows                      absolute, top -70px, right 0
+           .swiper-button-prev              40x40, radius 8, dark ramp
+           .swiper-button-nums              60px, centred, 16px
+           .swiper-button-next
+         (the arrows here are .fd-orange-btn, the page's own control;
+          the counter between them is kept as theirs)
+         .swiper-slide
+           .cs-combo-wrap    height 330px   the picture
+             img             cover, radius 10, scale(1.1) on hover
+           .cs-cnt-wrap                     a WHITE card that rides UP
+                                            over the picture by 60px:
+                                            width 93%, margin -60px auto,
+                                            shadow 0 15px 20px #765fb840,
+                                            padding 20, radius 10
+             .label-head                    navy pill
+             h3                             clamped at two lines
+             a.cta-btn.cta-btn-white        white button, right-aligned
+
+   The overlap is the whole idea: the card is narrower than the picture
+   and pulled up into it, so the two read as one object.
+
+   ANIMATION is theirs too — WOW.js pairs a `fadeInDown` / `fadeInUp`
+   class with an `animatedBlock` class added when the block scrolls into
+   view, then runs a 1s keyframe. Same pairing here, with an
+   IntersectionObserver in place of the library.
+   ===================================================================== */
+
+.wh {
+  background: #e9eef7;
+  padding: 75px 0;
+  overflow: hidden;
+}
+
+.wh-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+/* ---------------------------------------------------------------
+   HEAD — the reference centres this one; left here, so every section
+   head on the page starts from the same edge.
+   --------------------------------------------------------------- */
+.wh-head {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------------------------------------------------------------
+   THE RAIL
+
+   The reference runs Swiper. This is the same behaviour without the
+   dependency: a flex track translated by whole slides. `--per` is how
+   many are in view, and the slide width falls out of it, so the
+   breakpoints only ever change that one number.
+   --------------------------------------------------------------- */
+.wh-rail {
+  position: relative;
+  /* room above for the arrows, which the reference hangs at top: -70px */
+  padding-top: 70px;
+}
+
+.wh-viewport { overflow: hidden; }
+
+.wh-track {
+  display: flex;
+  gap: var(--wh-gap);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.wh-rail {
+  --per: 3;
+  --wh-gap: 24px;
+}
+
+.wh-slide {
+  /* each slide is an equal share of the viewport, less the gaps */
+  flex: 0 0 calc((100% - (var(--per) - 1) * var(--wh-gap)) / var(--per));
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------
+   THE PICTURE
+   --------------------------------------------------------------- */
+.wh-media {
+  height: 330px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wh-media img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  transform: scale(1);
+  transition: transform 0.5s ease;
+}
+
+.wh-slide:hover .wh-media img { transform: scale(1.1); }
+
+/* ---------------------------------------------------------------
+   THE CARD — rides up over the picture
+   --------------------------------------------------------------- */
+.wh-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 93%;
+  margin: -60px auto 25px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 15px 20px 0 rgba(118, 95, 184, 0.25);
+}
+
+.wh-card-top { flex-grow: 1; }
+
+/* the reference's navy pill, the same one the banner used to carry */
+.wh-label {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 7px 9px;
+  border-radius: 5px;
+  background-color: #1a1552;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.wh-title {
+  margin: 0 0 1rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #1f2937;
+
+  /* two lines and no more, so every card in the row is the same height */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wh-cta-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* .cta-btn.cta-btn-white — white ground, black type, the purple-cast
+   shadow the reference puts under every button on the page */
+.wh-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(9, 9, 11, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  color: #0b0b0f;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 18px 0 rgba(118, 95, 184, 0.22);
+  transition: box-shadow 0.4s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.wh-cta:hover,
+.wh-cta:focus-visible {
+  color: #0b0b0f;
+  transform: translateY(-1px);
+  border-color: rgba(9, 9, 11, 0.28);
+  box-shadow: 0 14px 24px 0 rgba(118, 95, 184, 0.34);
+}
+
+.wh-cta i {
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.wh-cta:hover i { transform: translateX(3px); }
+
+/* ---------------------------------------------------------------
+   THE ARROWS — top right, above the rail
+   --------------------------------------------------------------- */
+.wh-arrows {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  z-index: 4;
+}
+
+/* The reference's arrows are dark, square-ish (radius 8) and carry its
+   own 270deg charcoal ramp. These use `.fd-orange-btn` instead — the
+   rounded-square orange button the Products rail on this same page
+   already uses, so the two carousels are driven by the same control
+   rather than by two that nearly match. It lives in FinanceD365.css
+   and carries the whole look: 44x44, radius 10, the 180deg orange
+   ramp, the inset highlight and the hover lift.
+
+   All that is left here is the disabled state, which .fd-orange-btn
+   has no opinion about. */
+.wh-arrow:disabled {
+  background: rgba(9, 9, 11, 0.16);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+.wh-nums {
+  /* the reference sets 60px, which is enough for its own counter but
+     lets "01/06" run under the next arrow at this font — 72px clears it */
+  width: 72px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------
+   THE REVEAL — the reference's own keyframes and its class pairing.
+   `.wh-anim` holds the block at its start state; `.animatedBlock`
+   goes on when it scrolls into view and runs the 1s keyframe.
+   --------------------------------------------------------------- */
+.wh-anim { opacity: 0; }
+
+.wh-anim--down.animatedBlock { animation: wh-fade-in-down 1s forwards; }
+.wh-anim--up.animatedBlock { animation: wh-fade-in-up 1s forwards; }
+
+@keyframes wh-fade-in-down {
+  0%   { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wh-fade-in-up {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE — only `--per` changes
+   --------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .wh-rail { --per: 2; }
+}
+
+@media (max-width: 720px) {
+  .wh { padding: 56px 0; }
+  .wh-rail { --per: 1; --wh-gap: 16px; }
+  .wh-media,
+  .wh-media img { height: 300px; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF — show it, do not move it
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .wh-anim { opacity: 1; }
+  .wh-anim--down.animatedBlock,
+  .wh-anim--up.animatedBlock { animation: none; }
+  .wh-track { transition: none; }
+  .wh-media img,
+  .wh-slide:hover .wh-media img { transition: none; transform: none; }
+}
+
+/* ---------------------------------------------------------------
+   DARK
+   --------------------------------------------------------------- */
+body.dark-theme .wh { background: #0f1420; }
+body.dark-theme .wh-card { background: #161d2c; box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4); }
+body.dark-theme .wh-title { color: #e5e7eb; }
+body.dark-theme .wh-nums { color: #e5e7eb; }
+body.dark-theme .wh-arrow:disabled { background: rgba(255, 255, 255, 0.14); }
+
+body.dark-theme .wh-cta {
+  background: #1d2637;
+  color: #f4f4f5;
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-theme .wh-cta:hover { color: #f4f4f5; }

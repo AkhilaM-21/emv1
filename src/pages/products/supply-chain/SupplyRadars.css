@@ -1,0 +1,323 @@
+/* =====================================================================
+   SOLUTIONS — the Infosys "Our Radars" image accordion.  Prefix `rd-`.
+
+   Rebuilt from the section on infosys.com/iki.html. Their root is
+   `font-size: 10px`, so every rem in their stylesheet is that many
+   pixels; the values below are already converted.
+
+     .accordion-list        display:flex, height 600px, overflow hidden
+       li                   flex: 0, align-items: stretch,
+                            filter: grayscale(100%),
+                            transition: all .5s ease
+       li.active            flex: 5, grayscale(0), cursor: default
+       .theme-image         position:absolute, height 100%, cover
+       li::after            dark gradient, 400px tall, anchored bottom
+       .section-title h4    rotate(-90deg), nowrap, width 80px,
+                            font-size 24px, weight 900   <- COLLAPSED
+       li.active
+         .section-title     display: none
+         .section-content   flex: 4, column, justify-end,
+                            padding 39px 44px, white
+           h3               weight 900
+           p                20px, max-width 330px
+           .details-link    the long arrow
+
+   The whole effect is one `flex` value moving between 0 and 5 under a
+   0.5s transition: the panels share a fixed-height row, so widening one
+   narrows the rest with no layout maths anywhere.
+
+   What is NOT theirs: the type is the site's (Plus Jakarta Sans rather
+   than their Oswald), and the accent bar under an open panel takes the
+   colour already carried in SOLUTIONS_DATA, so the four panels stay
+   told apart the way the rest of the page tells its things apart.
+
+   A panel opens on CLICK only — never on hover, and nothing rotates on
+   its own.
+   ===================================================================== */
+
+.rd {
+  padding: 5.5rem 0 6rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+.rd-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+.rd-head { margin-bottom: 2.75rem; }
+
+/* ---------------------------------------------------------------
+   THE ROW
+   --------------------------------------------------------------- */
+.rd-list {
+  display: flex;
+  height: 600px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border-radius: 14px;
+}
+
+/* ---------------------------------------------------------------
+   A PANEL
+
+   `flex: 0` collapsed, `flex: 5` open. Everything else — the width of
+   the strip, how far the others give way — falls out of that one
+   number, which is why the reference needs no widths here.
+   --------------------------------------------------------------- */
+.rd-panel {
+  position: relative;
+  flex: 0;
+  display: flex;
+  align-items: stretch;
+  min-width: 84px;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: #fff;
+  filter: grayscale(100%);
+  transition: flex 0.5s ease, filter 0.5s ease;
+}
+
+.rd-panel.is-open {
+  flex: 5;
+  cursor: default;
+  filter: grayscale(0);
+}
+
+/* a keyboard user lands on the panel itself — the link inside a closed
+   one is `display: none` and cannot be tabbed to, so focus opens it */
+.rd-panel:focus-visible {
+  outline: 2px solid var(--rd-c, #e2601f);
+  outline-offset: -4px;
+}
+
+.rd-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* THE SCRIM the copy sits on.
+
+   The reference runs a 400px two-stop ramp (transparent -> rgba(0,0,0,
+   .98)), which is enough over its own soft photography. These panels
+   carry a white truck against a bright sky and a lit warehouse, and at
+   the height the heading sits that ramp is only about halfway down —
+   roughly 0.55 alpha, which a white truck cab reads straight through.
+
+   So it runs the full height of the panel and reaches its dark much
+   earlier: clear at the top quarter so the picture still shows, and
+   properly dark by the time the copy starts. Same idea, more ground.
+   --------------------------------------------------------------- */
+.rd-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* TWO layers, the corner one painted over the ramp.
+
+     The vertical ramp below is unchanged — it is what keeps the whole
+     foot of the panel dark. On top of it sits a pool anchored to the
+     BOTTOM-LEFT corner, which is exactly where the copy is (.rd-body
+     is justify-end in a column, padded 39/44). It falls off to nothing
+     by about two-thirds across and two-thirds up, so it deepens the
+     type's own corner without dulling the rest of the picture. */
+  background:
+    radial-gradient(
+      125% 95% at 0% 100%,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.66) 26%,
+      rgba(0, 0, 0, 0.34) 48%,
+      rgba(0, 0, 0, 0) 72%
+    ),
+    linear-gradient(
+      rgba(0, 0, 0, 0) 22%,
+      rgba(0, 0, 0, 0.42) 48%,
+      rgba(0, 0, 0, 0.78) 68%,
+      rgba(0, 0, 0, 0.92) 84%,
+      rgba(0, 0, 0, 0.97) 100%
+    );
+}
+
+/* a collapsed strip is dimmed further, so the open one carries the eye */
+.rd-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(6, 10, 20, 0.42);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.rd-panel.is-open::before { opacity: 0; }
+
+/* ---------------------------------------------------------------
+   COLLAPSED — the title, turned on its side
+   --------------------------------------------------------------- */
+.rd-title {
+  position: relative;
+  z-index: 2;
+  flex: 0;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.rd-title h3 {
+  /* rotate(-90deg) on a fixed-width box, exactly as the reference does
+     it: the text is allowed to overflow that box and the rotation puts
+     the overflow up the panel instead of across it */
+  transform: rotate(-90deg);
+  transform-origin: center;
+  white-space: nowrap;
+  width: 80px;
+  padding: 60px 0;
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+}
+
+.rd-panel.is-open .rd-title { display: none; }
+
+/* ---------------------------------------------------------------
+   OPEN — the copy
+   --------------------------------------------------------------- */
+.rd-body {
+  position: relative;
+  z-index: 2;
+  flex: 0;
+  display: none;
+  opacity: 0;
+  margin: 0;
+  padding: 39px 44px;
+  transition: opacity 0.25s 0.1s ease-out;
+}
+
+.rd-panel.is-open .rd-body {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+}
+
+/* the panel's own colour, so the four stay told apart */
+.rd-rule {
+  width: 54px;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--rd-c, #e2601f);
+}
+
+.rd-body h3 {
+  margin: 0 0 1rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.875rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.rd-body p {
+  margin: 0;
+  max-width: 330px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.rd-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.6rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.rd-link i {
+  display: grid;
+  place-items: center;
+  transition: transform 0.25s ease;
+}
+
+.rd-link:hover { color: #fff; }
+.rd-link:hover i { transform: translateX(4px); }
+
+/* ---------------------------------------------------------------
+   NARROW — the reference stacks the row into a column and un-rotates
+   the titles rather than trying to keep five strips side by side.
+   --------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .rd-list {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .rd-panel {
+    min-width: 0;
+    height: 84px;
+    flex: 0 0 auto;
+    align-items: flex-end;
+    transition: height 0.5s ease, filter 0.5s ease;
+  }
+
+  .rd-panel.is-open { height: 416px; flex: 0 0 auto; }
+
+  .rd-title { align-items: center; height: 100%; }
+
+  .rd-title h3 {
+    transform: rotate(0);
+    width: auto;
+    padding: 20px 32px;
+    font-size: 1.15rem;
+  }
+
+  .rd-body { padding: 24px 32px; }
+}
+
+@media (max-width: 620px) {
+  .rd { padding: 3.5rem 0 4rem; }
+  .rd-panel.is-open { height: 380px; }
+  .rd-body h3 { font-size: 1.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .rd-panel,
+  .rd-body,
+  .rd-link i { transition: none; }
+}
+
+/* ---------------------------------------------------------------
+   DARK
+   --------------------------------------------------------------- */
+body.dark-theme .rd { background: #0b0b0f; }

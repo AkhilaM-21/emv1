@@ -1,0 +1,382 @@
+/* =====================================================================
+   PRICING.  Prefix `pr-`.
+
+   Replaces the `fd-pricing` cards, which had three problems:
+
+     1  the "Most chosen" badge was a full-width bar across the top of
+        the featured card, which read as a section header rather than
+        as a label on the plan
+     2  there is no price to show, so the block where a price normally
+        sits was simply empty — a hole the eye reads as missing content
+     3  the featured plan was told apart only by a 1px orange border,
+        which is not enough to carry "pick this one"
+
+   What this does instead:
+
+     - the price slot is filled by what actually decides the number:
+       the shape of the operation the plan is for, then the note that
+       the figure comes from a conversation. Nothing is invented.
+     - the badge is a pill sitting on the card's top edge
+     - the featured plan stays white and is told apart by a light
+       travelling around its edge — no glow, no halo — and lifts on
+       the row
+     - the ticks carry the accent, so the list scans as inclusions
+       rather than as bullets
+   ===================================================================== */
+
+.pr {
+  padding: 5.5rem 0 6rem;
+  background: #eef4f2;
+}
+
+.pr-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+.pr-head { margin-bottom: 3rem; }
+
+.pr-lede {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* ---------------------------------------------------------------
+   THE ROW
+
+   `align-items: start` so the featured card can be taller than the
+   other two without stretching them to match it.
+   --------------------------------------------------------------- */
+.pr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* ---------------------------------------------------------------
+   A CARD
+   --------------------------------------------------------------- */
+.pr-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(9, 9, 11, 0.09);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pr-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(9, 9, 11, 0.09);
+}
+
+/* THE FEATURED PLAN — white like the others, told apart by one thing
+   only: a light that TRAVELS around its edge.
+   --------------------------------------------------------------- */
+.pr-card.is-featured {
+  padding-top: 40px;
+  margin-top: -12px;
+  background: #fff;
+  /* the ring below replaces the border; a solid one underneath it
+     would show through the dim part of the sweep */
+  border-color: transparent;
+
+  /* NO GLOW. The travelling line is the whole treatment — an orange
+     halo under it as well made the card sit in a haze and blunted the
+     one thing that was meant to catch the eye. This is the same plain
+     shadow the other two cards carry, so the row stays level. */
+  box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04);
+}
+
+.pr-card.is-featured:hover {
+  box-shadow: 0 14px 30px rgba(9, 9, 11, 0.09);
+}
+
+/* The angle the sweep is currently at. It has to be registered with
+   @property or it is just a string to the engine and cannot be
+   interpolated — the animation would jump 0 -> 360 with nothing in
+   between. Registering it as an <angle> is what makes it tween. */
+@property --pr-a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* THE TRAVELLING LINE.
+
+   A conic gradient — mostly dim, with one bright arc — rotated by
+   `--pr-a`. It is masked to a ring so only the card's edge is painted:
+   the two masks are composited with `exclude`, which subtracts the
+   content box from the padding box and leaves exactly the 1.5px frame.
+
+   Rotating the ELEMENT instead would spin its bounding box, and on a
+   card that is taller than it is wide the corners would sweep visibly
+   out of true. Rotating the gradient inside a fixed box does not. */
+.pr-card.is-featured::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  padding: 2px;
+  pointer-events: none;
+  /* A NARROW hot arc, not a broad one. Spread over 80deg it read as a
+     general brightening of one side; at ~34deg it reads as a line with
+     a leading edge, which is the thing that looks like it is moving.
+
+     The hot part is DEEP orange, not white. On a dark card the bright
+     end of a sweep is the pale end — but this card is white, and a
+     white arc travelling over a white card is invisible. Here "bright"
+     has to mean more saturated. */
+  background: conic-gradient(
+    from var(--pr-a),
+    rgba(226, 96, 31, 0.16) 0deg,
+    rgba(226, 96, 31, 0.16) 258deg,
+    rgba(226, 96, 31, 0.7) 288deg,
+    #c9410f 309deg,
+    rgba(226, 96, 31, 0.7) 330deg,
+    rgba(226, 96, 31, 0.16) 356deg,
+    rgba(226, 96, 31, 0.16) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: pr-trace 4.5s linear infinite;
+}
+
+@keyframes pr-trace {
+  to { --pr-a: 360deg; }
+}
+
+/* the badge sits ON the top edge rather than filling it */
+.pr-badge {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: #e2601f;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(226, 96, 31, 0.4);
+}
+
+.pr-name {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0b0b0f;
+}
+
+.pr-line {
+  margin: 0.5rem 0 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #52525b;
+}
+
+/* ---------------------------------------------------------------
+   THE PRICE SLOT
+
+   There is no published figure, so this carries the thing that
+   actually sets it — the shape of the operation — and then says
+   plainly where the number comes from. Better than a blank space, and
+   better than inventing one.
+   --------------------------------------------------------------- */
+.pr-for {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+}
+
+.pr-for-k {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #8b8b93;
+}
+
+.pr-for-v {
+  display: block;
+  margin-top: 6px;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0b0b0f;
+}
+
+.pr-for-n {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #71717a;
+}
+
+/* ---------------------------------------------------------------
+   THE LIST
+   --------------------------------------------------------------- */
+.pr-points {
+  margin: 22px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.pr-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: #3f3f46;
+}
+
+/* a tick, not a bullet — the list is a set of inclusions */
+.pr-points i {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: rgba(226, 96, 31, 0.12);
+  color: #e2601f;
+  flex-shrink: 0;
+}
+
+.pr-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 28px;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid rgba(9, 9, 11, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: #0b0b0f;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.pr-cta:hover {
+  color: #0b0b0f;
+  background: rgba(9, 9, 11, 0.04);
+  border-color: rgba(9, 9, 11, 0.34);
+}
+
+.pr-cta i { display: grid; place-items: center; transition: transform 0.25s ease; }
+.pr-cta:hover i { transform: translateX(3px); }
+
+/* --- the featured card's own colours ---------------------------- */
+/* it is white like the others, so only the button differs */
+.is-featured .pr-cta {
+  background: #e2601f;
+  border-color: #e2601f;
+  color: #fff;
+}
+
+.is-featured .pr-cta:hover {
+  background: #d6461a;
+  border-color: #d6461a;
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1000px) {
+  .pr-grid { grid-template-columns: 1fr; gap: 18px; }
+
+  /* stacked, the lift and the negative margin only misalign things */
+  .pr-card.is-featured { margin-top: 0; }
+}
+
+@media (max-width: 620px) {
+  .pr { padding: 3.5rem 0 4rem; }
+  .pr-card { padding: 28px 22px 24px; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .pr-card,
+  .pr-cta,
+  .pr-cta i { transition: none; }
+  .pr-card:hover { transform: none; }
+
+  /* hold a plain lit edge instead of running the sweep */
+  .pr-card.is-featured::before {
+    animation: none;
+    background: #e2601f;
+  }
+
+}
+
+/* ---------------------------------------------------------------
+   DARK
+   --------------------------------------------------------------- */
+body.dark-theme .pr { background: #0d1117; }
+
+body.dark-theme .pr-card {
+  background: #161d2c;
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+body.dark-theme .pr-card.is-featured {
+  background: #161d2c;
+  border-color: transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .pr-name,
+body.dark-theme .pr-for-v { color: #f4f4f5; }
+body.dark-theme .pr-line,
+body.dark-theme .pr-for-n { color: #a1a1aa; }
+body.dark-theme .pr-points li { color: #d4d4d8; }
+body.dark-theme .pr-lede { color: #a1a1aa; }
+body.dark-theme .pr-for,
+body.dark-theme .pr-points { border-top-color: rgba(255, 255, 255, 0.1); }
+
+body.dark-theme .pr-cta {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #f4f4f5;
+}
+
+body.dark-theme .pr-cta:hover { background: rgba(255, 255, 255, 0.06); color: #f4f4f5; }
+

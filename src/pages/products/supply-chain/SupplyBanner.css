@@ -1,0 +1,274 @@
+/* =====================================================================
+   SUPPLY CHAIN — L1 BANNER.  Prefix `sb-`.
+
+   Built to the shape of the Infosys industry banner
+   (infosys.com/industries/logistics-distribution.html):
+
+     .sb-banner    FIXED height, full bleed, running up behind the
+                   fixed site header
+       .sb-media   the film, absolutely filling the band
+         .sb-fit   object-fit: cover, inset 0
+         ::after   the half-white wash — the lower half of the film
+                   fades to white, and the copy sits on THAT rather
+                   than on a hard white block, which is the whole
+                   trick of the reference banner
+       .sb-align   copy bottom-aligned and centred on the wash
+         .sb-title heading
+         .sb-para  paragraph
+         .sb-btn   buttons
+
+   Where this differs from the reference, and why:
+
+     type      the home page's, not the reference's — Plus Jakarta
+               Sans 800 rather than their thin 300, so the band reads
+               as the same site as the home page
+     no pill   the reference's small navy `.label-head` is dropped
+     one line  the headline is `nowrap` above 620px
+     buttons   the home page's geometry a size down, and a FLAT
+               orange rather than its 180deg ramp
+     accent    flat #e2601f too, not the home page's clipped ramp —
+               one orange across the whole band
+   ===================================================================== */
+
+.sb-banner {
+  position: relative;
+  padding: 0;
+
+  /* FIXED HEIGHT — a real measure, not a share of the viewport, so the
+     band is the same size on every screen. It runs up behind the fixed
+     site header, so the header's height is added on and then pulled
+     back off: 640px of band, wherever the header sits. */
+  height: calc(640px + var(--site-header, 90px));
+  margin-top: calc(-1 * var(--site-header, 90px));
+
+  background: #fff;
+  isolation: isolate;
+}
+
+/* ---------------------------------------------------------------
+   THE FILM
+   --------------------------------------------------------------- */
+.sb-media {
+  /* fills the band, edge to edge, behind everything in it */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+
+  /* square, edge to edge — no radius to leave a corner nub against the
+     page, and nothing inset from the viewport */
+  border-radius: 0;
+
+  /* the ground behind the film while it is still loading */
+  background: #101b2d;
+}
+
+.sb-fit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* THE HALF-WHITE WASH.
+
+   The reference's own trick: the lower half of the film is washed to
+   white, and the copy sits on that rather than on a hard white block.
+   The picture is still there behind the type — it just fades out under
+   it. Transparent through the top half, solid white by the bottom edge,
+   so the band ends flush with the page.
+   --------------------------------------------------------------- */
+.sb-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 34%,
+    rgba(255, 255, 255, 0.62) 58%,
+    rgba(255, 255, 255, 0.93) 80%,
+    #ffffff 96%
+  );
+}
+
+/* ---------------------------------------------------------------
+   THE COPY — on the whitened lower half of the film, bottom-aligned
+   and centred, exactly as the reference sits its own.
+   --------------------------------------------------------------- */
+.sb-align {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+  padding: 0 24px 3.25rem;
+}
+
+.sb-copy {
+  width: 100%;
+  /* the home hero's own measure (.hi-inner), so the headline has the
+     room to stay on one line */
+  max-width: 1280px;
+}
+
+/* ---------------------------------------------------------------
+   TYPE — the home page hero's, not the reference's.
+
+   The reference sets its headline thin (300) at clamp(32px, 5vw, 64px)
+   in its own face. This takes the metrics off .hi-title in
+   HeroInfosys.css instead, so the banner reads as the same site as the
+   home page: Plus Jakarta Sans, 800, clamp(2.6rem, 5.4vw, 4.6rem).
+
+   The copy sits on the WHITENED half of the film, so it is dark ink.
+   .hi-title's text-shadow is the one thing not carried over: it exists
+   to hold white type off a dark film, and on this ground it would read
+   as a smudge.
+   --------------------------------------------------------------- */
+.sb-title {
+  margin: 0 0 1.4rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #0b0b0f;
+
+  /* one line, as asked. Released below 620px, where a single line of
+     this size cannot fit the viewport. */
+  white-space: nowrap;
+}
+
+/* The accent is FLAT orange — the same #e2601f the solid button is, so
+   the two oranges on the band match. The home page's own accent
+   (.hi-accent in HeroInfosys.css) is a 100deg ramp clipped to the
+   glyphs; that is deliberately not used here. */
+.sb-title em {
+  font-style: normal;
+  color: #e2601f;
+}
+
+.sb-para {
+  margin: 0 auto 2.2rem;
+  max-width: 70ch;
+  font-family: 'Inter', sans-serif;  /* --font-body */
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;                  /* the site body's own */
+  color: #3f3f46;
+
+  /* three lines and no more, as the reference clamps it */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   BUTTONS — the home hero's .hi-btn pair, lifted.
+
+   The solid takes the home page's geometry but a FLAT orange rather
+   than its 180deg ramp, and both are set a size down from the home
+   page's. The ghost is not the home page's: theirs is
+   white-on-dark because it sits on a film, and these two sit on the
+   whitened half, where a white ghost is invisible. It keeps the
+   geometry — the pill, the padding, the weight, the blur, the hover
+   lift — and inverts only its two colours.
+   --------------------------------------------------------------- */
+.sb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.sb-btn:hover { transform: translateY(-2px); }
+
+.sb-btn-solid {
+  /* flat, not the home page's 180deg ramp */
+  background: #e2601f;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
+}
+
+.sb-btn-solid:hover,
+.sb-btn-solid:focus-visible { color: #fff; background: #d6461a; }
+
+.sb-btn-ghost {
+  background: rgba(9, 9, 11, 0.05);
+  border: 1px solid rgba(9, 9, 11, 0.22);
+  color: #0b0b0f;
+  backdrop-filter: blur(6px);
+}
+
+.sb-btn-ghost:hover,
+.sb-btn-ghost:focus-visible {
+  background: rgba(9, 9, 11, 0.09);
+  border-color: rgba(9, 9, 11, 0.4);
+  color: #0b0b0f;
+}
+
+/* the arrow nudges along on hover, as .hi-btn-ic does */
+.sb-btn-ic {
+  display: grid;
+  place-items: center;
+  transition: transform 0.25s ease;
+}
+
+.sb-btn:hover .sb-btn-ic,
+.sb-btn:focus-visible .sb-btn-ic { transform: translateX(3px); }
+
+.sb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE — the reference's own steps
+   --------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .sb-banner { height: calc(560px + var(--site-header, 90px)); }
+  .sb-align { padding-bottom: 2.75rem; }
+}
+
+@media (max-width: 620px) {
+  .sb-banner { height: calc(520px + var(--site-header, 90px)); }
+  .sb-align { padding: 0 18px 2.5rem; }
+
+  /* one line stops being possible here — a headline that overflows the
+     viewport is worse than one that wraps */
+  .sb-title { white-space: normal; text-wrap: balance; }
+
+  .sb-actions { flex-direction: column; align-items: stretch; }
+  .sb-btn { width: 100%; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF — hold a frame rather than loop a film nobody asked for.
+   The poster still shows, so the band is never empty.
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .sb-btn,
+  .sb-btn-ic { transition: none; }
+}
+
+/* ---------------------------------------------------------------
+   DARK — nothing to do. The band is a film on a dark ground with white
+   copy over it in both themes, so it reads the same either way.
+   --------------------------------------------------------------- */
