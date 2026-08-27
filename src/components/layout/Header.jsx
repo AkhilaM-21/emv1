@@ -123,6 +123,32 @@ const PLATFORM_GROUPS = [
 /* every platform entry opens the Platform & Builder page */
 const PLATFORM_TITLES = PLATFORM_GROUPS.flatMap((g) => (g.items.length ? g.items : [g.label]));
 
+/* ...and lands on the section of it that entry is about, rather than
+   dropping everyone at the top of the same page. The ids are the
+   anchors the Platform page renders (see ANCHORS in PlatformAuto.jsx),
+   and `goProduct` passes the match through as navigation state, which
+   ProductPage's useScrollTop then scrolls to. */
+const PLATFORM_SECTIONS = {
+  'App Builder': 'build',
+  'Form Builder (Drag & Drop)': 'build',
+  'Object Builder (Table)': 'build',
+  'Document Sequence Designer': 'build',
+  'Navigation Designer': 'build',
+  'Functions Designer (Code)': 'build',
+
+  'Workflow & Automation': 'automate',
+  Workflow: 'automate',
+  'Flow Designer': 'automate',
+  Approvals: 'automate',
+  'Scheduled Workflows': 'automate',
+  'API & Webhooks': 'automate',
+
+  'Reporting & Analysis': 'analyze',
+
+  Studio: 'build',
+  Flow: 'automate',
+};
+
 /* deterministic pools for any label not in the map above */
 const FALLBACK_ICONS = [Boxes, Puzzle, Plug, LayoutGrid, Workflow, ShieldCheck, Zap, Sparkles, PackageCheck, FileText, Database, Filter];
 const FALLBACK_COLORS = ['#2563eb', '#7c3aed', '#0891b2', '#db2777', '#0d9488', '#d97706', '#4f46e5', '#059669', '#9333ea', '#be123c'];
@@ -231,7 +257,10 @@ const Header = () => {
     setOpenNav(null);
     setMobileOpen(false);
     const to = PRODUCT_ROUTES[title];
-    if (to) navigate(to, section ? { state: { section } } : undefined);
+    /* an explicit section wins; otherwise a platform entry brings its
+       own, so "App Builder" opens the Build section and not the top */
+    const at = section || PLATFORM_SECTIONS[title];
+    if (to) navigate(to, at ? { state: { section: at } } : undefined);
   };
 
   // Apply / persist the dark theme

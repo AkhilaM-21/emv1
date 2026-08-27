@@ -1,0 +1,257 @@
+/* =====================================================================
+   THE WORKFLOW CANVAS.  Prefix `pc-`.
+
+   Authored against 1100 x 560 but laid out in PERCENTAGES of that, so
+   the whole figure scales to whatever width the hero gives it and can
+   never spill past its own box. Type scales with it in `cqw` — one
+   container query unit is 1% of this element's width — so nothing has
+   to be re-tuned per breakpoint.
+
+   1cqw = 11px at the authored width, so a size in px is px / 11 cqw.
+
+   The node heights are fixed in the JSX because the wires are drawn to
+   them. So the sizes below have to ADD UP to those heights — the
+   trigger card is 138 tall and its content measures ~130 at the
+   authored scale. Change type here and the card has to grow there.
+   ===================================================================== */
+
+.pc {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1100 / 560;
+  container-type: inline-size;
+  font-family: 'Inter', sans-serif;
+}
+
+.pc-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: #cbd2db;
+}
+
+.pc-wire {
+  stroke: #cbd2db;
+  transition: stroke 0.5s ease;
+}
+
+/* the leg the run has already crossed keeps a warm tint, so the path
+   taken is readable at a glance and not just at the instant the pulse
+   is on it */
+.pc-wire.is-live {
+  stroke: #f4b183;
+  color: #f4b183; /* the arrowhead draws in currentColor */
+}
+
+/* ---------------------------------------------------------------
+   THE PORTS — where a wire meets a card
+   --------------------------------------------------------------- */
+.pc-port {
+  fill: #fff;
+  stroke: #cbd2db;
+  stroke-width: 1.6;
+  transition: stroke 0.5s ease;
+}
+
+.pc-port.is-live { stroke: #e2601f; }
+
+/* ---------------------------------------------------------------
+   THE TRAVELLING LINE
+
+   The same path as the wire, drawn as one short dash and then slid
+   along by animating the offset. `pathLength` normalises every wire to
+   100 units regardless of its real length, so the dash is the same
+   size and speed on the long elbowed legs as on the short straight
+   ones — without it the short hops flash past and the long ones crawl.
+   --------------------------------------------------------------- */
+.pc-pulse {
+  stroke: #e2601f;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 13 100;
+  stroke-dashoffset: 13;
+  animation: pc-flow 2.4s linear infinite;
+}
+
+@keyframes pc-flow {
+  to { stroke-dashoffset: -100; }
+}
+
+/* ---------------------------------------------------------------
+   A NODE
+   --------------------------------------------------------------- */
+.pc-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.1cqw 1.36cqw;
+  border-radius: 1.09cqw;
+  border: 1px solid #e6e8ec;
+  background: linear-gradient(180deg, #fff 0%, #fcfcfd 100%);
+  transition: border-color 0.45s ease, transform 0.45s ease;
+}
+
+/* the card the run is standing on */
+.pc-node.is-on {
+  border-color: #e2601f;
+  transform: translateY(-0.18cqw);
+}
+
+/* one it has already passed — settled, not shouting */
+.pc-node.is-done {
+  border-color: #f0cdb6;
+}
+
+.pc-node--trigger { justify-content: flex-start; }
+
+.pc-node-head {
+  display: flex;
+  align-items: center;
+  gap: 0.91cqw;
+}
+
+.pc-ic {
+  display: grid;
+  place-items: center;
+  width: 2.55cqw;
+  height: 2.55cqw;
+  border-radius: 0.73cqw;
+  flex-shrink: 0;
+}
+
+/* the lucide icons ship a fixed px size — scale them with the box */
+.pc-ic svg { width: 62%; height: 62%; }
+
+.pc-ic--green  { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.pc-ic--violet { background: rgba(139, 92, 246, 0.13); color: #7c3aed; }
+.pc-ic--red    { background: rgba(239, 68, 68, 0.12);  color: #dc2626; }
+.pc-ic--amber  { background: rgba(245, 158, 11, 0.14); color: #d97706; }
+
+.pc-meta { display: flex; flex-direction: column; min-width: 0; }
+
+.pc-meta b {
+  font-size: 1cqw;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #9aa1ab;
+  line-height: 1.5;
+}
+
+.pc-meta i {
+  font-style: normal;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.5cqw;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1f2430;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+/* the little "Live" tag on the trigger */
+.pc-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 0.2cqw 0.64cqw;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  font-size: 0.91cqw;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* the hairline between a card's header and its body */
+.pc-rule {
+  height: 1px;
+  margin: 0.82cqw 0;
+  background: #edeff2;
+}
+
+.pc-node-sub { text-align: left; }
+
+.pc-node-sub p {
+  margin: 0;
+  font-size: 1.36cqw;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1f2430;
+}
+
+/* the record the trigger watches, as a token rather than grey type */
+.pc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.41cqw;
+  height: 2cqw;
+  margin-top: 0.5cqw;
+  padding: 0 0.68cqw;
+  border-radius: 0.5cqw;
+  border: 1px solid #e6e8ec;
+  background: #f6f7f9;
+  color: #6b7280;
+  font-size: 1.05cqw;
+  font-weight: 500;
+}
+
+.pc-chip svg { width: 1.05cqw; height: 1.05cqw; flex-shrink: 0; }
+
+.pc-dots {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.24cqw;
+  padding-left: 0.92cqw;
+  flex-shrink: 0;
+}
+
+.pc-dots b {
+  width: 0.3cqw;
+  height: 0.3cqw;
+  border-radius: 50%;
+  background: #b6bcc6;
+}
+
+/* ---------------------------------------------------------------
+   THE OUTCOME PILLS
+
+   Height comes from the JSX as a percentage of the canvas, the same
+   way the cards get theirs — so a pill sits exactly where the wire
+   into it stops.
+   --------------------------------------------------------------- */
+.pc-pill {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55cqw;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 1.27cqw;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.45s ease;
+}
+
+.pc-pill svg { width: 1.27cqw; height: 1.27cqw; flex-shrink: 0; }
+
+.pc-pill--red   { background: #fdecec; border-color: #f6c6c6; color: #d1453b; }
+.pc-pill--amber { background: #fdf3e2; border-color: #f3d9a8; color: #b46a10; }
+.pc-pill--green { background: #e8f7ee; border-color: #bce4ca; color: #1f8b4c; }
+
+.pc-pill.is-on { transform: translateY(-0.18cqw); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-node,
+  .pc-pill,
+  .pc-wire,
+  .pc-port { transition: none; }
+  .pc-node.is-on { transform: none; }
+  .pc-pill.is-on { transform: none; }
+  .pc-pulse { animation: none; opacity: 0; }
+}

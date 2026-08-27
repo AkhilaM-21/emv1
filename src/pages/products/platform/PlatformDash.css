@@ -1,0 +1,361 @@
+/* =====================================================================
+   ANALYZE — the board.  Prefix `db-`.
+
+   Written fresh. The previous file was gutted by a regex sweep meant
+   to strip the retired line-chart rules — the pattern ran across
+   newlines, so each match swallowed everything up to the next rule and
+   took unrelated ones with it. Every rule below belongs to a class the
+   JSX actually renders; nothing here is left over.
+
+   Colours are ROLES, declared once at the top, so re-skinning the
+   board is this block and nothing else. They are validated for a light
+   surface rather than lightened by eye: the brand orange clears the
+   lightness band, the chroma floor and >= 3:1 on white.
+
+   THE SHAPE: three explanation columns, then a card carrying the
+   readings and the records table, with the two charts hanging off its
+   left and right edges. Nothing sits under the card.
+   ===================================================================== */
+
+.db {
+  --db-panel: #fff;
+  --db-line: rgba(9, 9, 11, 0.1);
+
+  --db-text: #0b0b0f;
+  --db-text-2: #52525b;
+  --db-text-3: #8b8b93;
+
+  --db-series: #e2601f;
+
+  --db-good: #12805a;
+  --db-warn: #9a6a0b;
+  --db-crit: #c93a30;
+
+  --db-soft: #f6f7f9;
+
+  max-width: 1300px;
+  margin: 0 auto;
+  color: var(--db-text);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------------------------------------------------------------
+   WHAT REPORTING ACTUALLY IS
+
+   Icon, heading, copy — no card. Three bordered boxes here fought the
+   unboxed numbers underneath them and put the section in two registers
+   at once. The gap between columns separates them.
+   --------------------------------------------------------------- */
+/* full width — the 1060 cap it carried was narrower than the board
+   below it, so the two blocks did not line up at either edge. It
+   inherits .db's measure now, and moves with it. */
+.db-rep {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
+  padding-bottom: 3.25rem;
+}
+
+.db-rep article { padding: 0 0.5rem; text-align: center; }
+
+/* icon and name on one line, centred together */
+.db-rep h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  margin: 0 0 0.7rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--db-text);
+}
+
+.db-rep h3 span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(226, 96, 31, 0.11);
+  color: var(--db-series);
+  flex-shrink: 0;
+}
+
+.db-rep p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--db-text-2);
+}
+
+/* ---------------------------------------------------------------
+   THE BOARD — a two-column grid, not absolute panels
+
+   Both charts stack down the LEFT and the card takes the rest of the
+   width. This replaced a set of absolutely-positioned panels offset by
+   `calc(50% - 556px)`, which had to be re-derived by hand every time
+   the card or the panel width changed, and put them off the viewport
+   twice when that arithmetic drifted. A grid needs none of it: the
+   track is 236px, the card gets `1fr`, and the two cannot overlap.
+
+   The card is now ~1040 wide instead of 680, which is what stops the
+   larger values truncating in the table.
+   --------------------------------------------------------------- */
+.db-board {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 14px 22px;
+  align-items: start;
+}
+
+.db-core {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  padding: 4px 26px 26px;
+  border-radius: 18px;
+  border: 1px solid var(--db-line);
+  background: var(--db-panel);
+}
+
+/* ---------------------------------------------------------------
+   THE READINGS — type on a rule, not four boxes
+   --------------------------------------------------------------- */
+.db-reads {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--db-line);
+}
+
+.db-read { padding: 0 0.9rem; }
+.db-read:first-child { padding-left: 0; }
+.db-read + .db-read { border-left: 1px solid var(--db-line); }
+
+.db-read-v {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--db-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.db-read-k {
+  margin: 0.45rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--db-text);
+}
+
+.db-read-d {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.db-read-d.is-up { color: var(--db-good); }
+.db-read-d.is-down { color: var(--db-crit); }
+.db-read-d svg { width: 0.95em; height: 0.95em; flex-shrink: 0; }
+.db-read-d span { margin-left: 5px; font-weight: 400; color: var(--db-text-3); }
+
+/* ---------------------------------------------------------------
+   THE RECORDS TABLE — the card's actual content
+
+   Fixed columns for the short fields and a flexible one for the entity
+   name, so the numbers stay in a line and only the name truncates.
+   --------------------------------------------------------------- */
+.db-recs { padding-top: 1.5rem; }
+
+.db-recs-h { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+.db-recs-h > span { display: flex; flex-direction: column; min-width: 0; }
+
+.db-recs-h b {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--db-text);
+}
+
+.db-recs-h i { font-style: normal; font-size: 0.75rem; color: var(--db-text-3); }
+
+.db-recs-h em {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #c3e6d5;
+  background: #e9f7f0;
+  font-style: normal;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--db-good);
+}
+
+.db-row {
+  display: grid;
+  grid-template-columns: 6em minmax(0, 1fr) 5em 9em 7em;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--db-line);
+  font-size: 0.8125rem;
+  color: var(--db-text-2);
+}
+
+.db-row:last-child { border-bottom: 0; }
+.db-row > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.db-row--h {
+  padding-top: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--db-text-3);
+}
+
+.db-id { font-weight: 700; color: var(--db-text); }
+.db-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--db-text); font-weight: 600; }
+.db-row--h span:nth-child(4) { text-align: right; }
+
+/* status is reserved, and carries its word — never a colour alone */
+.db-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-style: normal;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.db-pill.is-good { background: #e9f7f0; border-color: #c3e6d5; color: var(--db-good); }
+.db-pill.is-warn { background: #fdf3e2; border-color: #f2dcae; color: var(--db-warn); }
+.db-pill.is-crit { background: #fdeceb; border-color: #f6cac7; color: var(--db-crit); }
+.db-pill.is-idle { background: var(--db-soft); border-color: var(--db-line); color: var(--db-text-3); }
+
+/* ---------------------------------------------------------------
+   THE SIDE PANELS — the two charts, stacked down the left
+
+   Both are ONE hue: each is a single measure split by category, not
+   several measures, so a ramp is the honest encoding. A categorical
+   palette would have implied unrelated series.
+   --------------------------------------------------------------- */
+.db-side {
+  grid-column: 1;
+  padding: 15px 17px 17px;
+  border-radius: 14px;
+  border: 1px solid var(--db-line);
+  background: var(--db-panel);
+}
+
+.db-side--a { grid-row: 1; }
+.db-side--b { grid-row: 2; }
+
+.db-more-k {
+  margin: 0 0 0.9rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--db-text-3);
+}
+
+/* the donut, every slice named beside it */
+.db-donut { display: flex; align-items: center; gap: 14px; }
+.db-donut svg { width: 84px; height: 84px; flex-shrink: 0; }
+
+.db-slices { margin: 0; padding: 0; list-style: none; min-width: 0; }
+
+.db-slices li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  font-size: 0.75rem;
+  color: var(--db-text-2);
+}
+
+.db-slices i { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+.db-slices b { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--db-text); }
+
+/* the bars */
+.db-hbars { margin: 0; padding: 0; list-style: none; }
+.db-hbars li { position: relative; padding: 6px 0; }
+
+.db-hbars span {
+  display: block;
+  padding-right: 3em;
+  font-size: 0.75rem;
+  color: var(--db-text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.db-hbars i {
+  display: block;
+  height: 8px;
+  margin-top: 5px;
+  border-radius: 4px;
+  background: var(--db-soft);
+}
+
+/* the fill, with a rounded end anchored to the baseline */
+.db-hbars i b {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--db-series);
+}
+
+.db-hbars em {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--db-text);
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1040px) {
+  /* one column: the card first, then the two charts under it */
+  .db-board { grid-template-columns: minmax(0, 1fr); }
+  .db-core { grid-column: 1; grid-row: 1; }
+  .db-side--a { grid-row: 2; }
+  .db-side--b { grid-row: 3; }
+}
+
+@media (max-width: 900px) {
+  .db-rep { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .db-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 0; }
+  .db-read:nth-child(odd) { padding-left: 0; }
+  .db-read:nth-child(3) { border-left: 0; }
+
+  /* the entity name and the date go; the order, its value and its
+     status are what a row is for */
+  .db-row { grid-template-columns: 5.5em minmax(0, 1fr) 6.2em; }
+  .db-row > span:nth-child(2),
+  .db-row > span:nth-child(3) { display: none; }
+}
+
+@media (max-width: 560px) {
+  .db-reads { grid-template-columns: minmax(0, 1fr); }
+  .db-read { padding: 0; border-left: 0 !important; }
+}

@@ -1,69 +1,53 @@
 import React from 'react';
-import { ProductPage, Footer } from '../shared/system';
-import ProductNav from '../shared/nav';
-import { Faq, ContactSection } from '../shared/blocks';
-import { PLATFORM_FAQ, PLATFORM_CONTACT, PLATFORM_NAV } from './PlatformSections';
-import {
-  CapabilitiesGrid, Capabilities, HowItWorks, Automation, Integrations, Security, WhyEmvive,
-  WhyEmviveWide,
-} from './PlatformStory';
-import PlatformHero from './PlatformHero';
-import './PlatformApp.css';
-import './Platform.css';
+import { useLocation } from 'react-router-dom';
+import { ProductPage } from '../shared/system';
+import PlatformAuto from './PlatformAuto';
+import CustomerStory from '../../../components/sections/CustomerStory';
+import Resources from '../../../components/sections/Resources';
+import CTA from '../../../components/sections/CTA';
 
 /* =====================================================================
-   EMVIVE FINANCE
+   EMVIVE PLATFORM
 
-   The page is eight sections and nothing else. Each one answers a
-   single question, in the order a buyer actually asks it — and if a
-   block does not answer the question at the top of its section, the
-   block does not belong on the page.
+   The whole page is PlatformAuto.jsx — see its header for the section
+   order and for what each section was built against.
 
-     01  Hero                     what is it?                PlatformHero
-     02  Product & capabilities   what can it do?            Capabilities
-     03  How it works             how does it work?          HowItWorks
-     04  Automation               what can it automate?      Automation
-     05  Integrations             does it connect?           Integrations
-     06  Security & controls      can we trust it?           Security
-     07  Why Emvive               why should we choose it?   WhyEmvive
-     08  FAQ + contact            let's talk.                Faq + Contact
+   The closing beats are the site's shared sections, the same three
+   Supply Chain ends on and in the same order: customer stories,
+   resources, then the one CTA. The page's own "Ask more of your
+   business system" block is gone — it was a second CTA sitting
+   immediately above the real one.
 
-   02 to 07 live in PlatformStory.jsx; 08 is the shared Faq/Contact pair
-   every product page uses. No AI section on this page, by design.
+   DEEP LINKING. The header sends a section id in navigation state when
+   you pick a platform entry out of the menu — "App Builder" means the
+   Build section, "Approvals" means Automate. ProductPage has always
+   accepted that id and scrolled to it, but nothing was reading the
+   state into the prop, so every entry landed at the top of the page.
+   `useLocation` closes that gap here.
+
+   The previous page's sections (capabilities, how it works,
+   automation, security, why Emvive, FAQ) are no longer mounted.
+   PlatformStory.jsx and PlatformSections.jsx still hold them, so
+   nothing has been deleted.
    ===================================================================== */
 
-const Platform = () => (
-  <ProductPage accent="#6c4cf1" accent2="#a78bfa" wash="rgba(108,76,241,0.12)" className="pb">
-    <ProductNav {...PLATFORM_NAV} />
+const Platform = () => {
+  const { state } = useLocation();
 
-    <PlatformHero />
-
-    <Capabilities />
-    <CapabilitiesGrid />
-    <HowItWorks />
-    <Automation />
-    {/* <Integrations /> */}
-    <Security />
-    <WhyEmvive />
-    {/* 07b — the same section as one long card, no photo, no quotes */}
-    <WhyEmviveWide />
-
-    <Faq
-      eyebrow="08 — FAQ"
-      title="Before you put"
-      accent="your ledger on it."
-      lede="The six things every controller and CFO raises in the first call, answered plainly."
-      items={PLATFORM_FAQ}
-      aside={(
-        <>Something not answered here? Ask it in the form below — it goes to the same
-        people who would run your implementation.</>
-      )}
-    />
-
-    <ContactSection {...PLATFORM_CONTACT} variant="card" />
-
-    <Footer />
-  </ProductPage>
-);
+  return (
+    <ProductPage
+      accent="#e2601f"
+      accent2="#d6461a"
+      wash="rgba(226,96,31,0.09)"
+      className="pb"
+      section={state?.section}
+    >
+      <PlatformAuto />
+      <div id="stories"><CustomerStory /></div>
+      <div id="resources"><Resources /></div>
+      <CTA />
+    </ProductPage>
+  );
+};
 
 export default Platform;

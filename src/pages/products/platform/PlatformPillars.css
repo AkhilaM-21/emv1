@@ -1,0 +1,594 @@
+/* =====================================================================
+   2 — ONE PLATFORM.  Prefix `pl-` for the section, `pm-` for the mocks.
+
+   Four layers, which is what gives the section its depth: a grey shell,
+   three tinted cards on it, a white screen inside each card, and the
+   white entry-point pills along the bottom.
+
+   THE THREE HUES are declared once here as --c on each card, and every
+   tint below is derived from --c-rgb in rgba(). So re-colouring a
+   pillar is two lines, and nothing can drift out of step with it.
+
+   The set is validated, not eyeballed — see the header of
+   PlatformPillars.jsx for the numbers.
+   ===================================================================== */
+
+/* the bottom pad is trimmed because the Build panel below opens with a
+   full 6.5rem of its own — the two stacked to 184px of white between
+   two cards that belong to the same run of the page */
+.pl-sec { padding: 5rem 0 2rem; }
+
+.pl-shell {
+  padding: clamp(2rem, 3.4vw, 3.4rem) clamp(1.25rem, 2.4vw, 2.5rem) clamp(2rem, 3vw, 3rem);
+  border-radius: 26px;
+  border: 1px solid #ececef;
+  background: linear-gradient(180deg, #fbfbfc 0%, #f7f8fa 100%);
+}
+
+/* ---------------------------------------------------------------
+   THE HEADING
+   --------------------------------------------------------------- */
+.pl-head { text-align: center; margin-bottom: clamp(2rem, 3vw, 3rem); }
+
+.pl-eyebrow {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #e6e6ea;
+  background: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--pa-ink-2, #52525b);
+}
+
+.pl-h2 {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(2rem, 3.9vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #0b0b0f;
+}
+
+.pl-h2 em { font-style: normal; }
+.pl-h2 .pl-v { color: #6d4ae0; }
+.pl-h2 .pl-t { color: #0f9b8e; }
+
+.pl-lede {
+  max-width: 56ch;
+  margin: 1.1rem auto 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--pa-ink-2, #52525b);
+}
+
+/* ---------------------------------------------------------------
+   THE ROW
+
+   The arrows sit in real grid tracks between the cards rather than
+   being positioned over the gap, so they stay put at every width.
+   --------------------------------------------------------------- */
+.pl-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0;
+}
+
+.pl-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+}
+
+/* ONE rule running the full width of the gap, handing over from the
+   card on the left to the card on the right — it fades out at both
+   ends so it meets each card rather than butting into it. */
+.pl-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--from), 0) 0%,
+    rgba(var(--from), 0.55) 28%,
+    rgba(var(--to), 0.55) 72%,
+    rgba(var(--to), 0) 100%
+  );
+}
+
+/* and ONE badge on it. It was a hollow dot plus a ringed circle, which
+   read as two loose blobs with a faint line behind them. A single
+   filled disc interrupts the rule cleanly and points into the card it
+   belongs to — so it wears that card's colour, not the previous one's. */
+.pl-link-arrow {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(var(--to));
+  color: #fff;
+}
+
+.pl-link--build-automate { --from: 226, 96, 31; --to: 109, 74, 224; }
+.pl-link--automate-analyze { --from: 109, 74, 224; --to: 15, 155, 142; }
+
+/* ---------------------------------------------------------------
+   A CARD
+   --------------------------------------------------------------- */
+.pl-card {
+  --c: #e2601f;
+  --c-rgb: 226, 96, 31;
+
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.1rem, 1.6vw, 1.6rem);
+  border-radius: 18px;
+  border: 1px solid rgba(var(--c-rgb), 0.24);
+  background: linear-gradient(180deg, rgba(var(--c-rgb), 0.045) 0%, rgba(var(--c-rgb), 0.015) 100%), #fff;
+  transition: border-color 0.28s ease, transform 0.28s ease;
+}
+
+.pl-card--automate { --c: #6d4ae0; --c-rgb: 109, 74, 224; }
+.pl-card--analyze { --c: #0f9b8e; --c-rgb: 15, 155, 142; }
+
+.pl-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--c-rgb), 0.5);
+}
+
+.pl-card-h { display: flex; align-items: center; gap: 14px; }
+
+.pl-ic {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  border: 1px solid rgba(var(--c-rgb), 0.2);
+  background: rgba(var(--c-rgb), 0.11);
+  color: var(--c);
+  flex-shrink: 0;
+}
+
+.pl-card-t { display: flex; flex-direction: column; min-width: 0; }
+
+.pl-card-t i {
+  font-style: normal;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--c);
+}
+
+.pl-card-t b {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #0b0b0f;
+}
+
+.pl-p {
+  margin: 14px 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--pa-ink-2, #52525b);
+}
+
+/* ---------------------------------------------------------------
+   THE SCREEN INSIDE THE CARD
+
+   A container query, with one font size in `cqw` on `.pm` and every
+   size below it in `em` — so the whole screen scales as one piece with
+   the card and can never reflow inside it.
+   --------------------------------------------------------------- */
+.pl-shot {
+  container-type: inline-size;
+  margin-top: 18px;
+  border-radius: 12px;
+  border: 1px solid #eaebee;
+  background: #fff;
+  overflow: hidden;
+}
+
+.pm {
+  /* the one number that sizes every screen below */
+  font-size: clamp(6.5px, 3.15cqw, 13px);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+  color: #14161c;
+
+  /* a floor, so the shortest screen is not dwarfed by the tallest —
+     it goes on .pm and not on .pl-shot because `cqw` on the query
+     container itself resolves against the viewport, not the container */
+  min-height: 62cqw;
+}
+
+/* ---------------------------------------------------------------
+   THE OBJECT BUILDER
+   --------------------------------------------------------------- */
+.pm-obj { display: grid; grid-template-columns: 2.6em minmax(0, 1fr); }
+
+.pm-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.7em 0;
+
+  /* a light rail, not the black one. A dark slab down the side of an
+     otherwise white screen was the heaviest thing in the section and
+     pulled the eye off the fields, which are the point of the shot. It
+     needs the hairline now that it is close to the panel's white. */
+  background: #f5f6f8;
+  border-right: 1px solid #eaecef;
+}
+
+.pm-rail span {
+  display: grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 0.45em;
+  color: #a5acb8;
+}
+
+.pm-rail span svg { width: 0.85em; height: 0.85em; }
+
+/* the open object, marked the way the rest of the page marks a live
+   item — a white chip in the accent, not a lighter grey */
+.pm-rail span.is-on {
+  background: #fff;
+  border: 1px solid rgba(var(--c-rgb), 0.28);
+  color: var(--c);
+}
+
+.pm-panel { min-width: 0; padding: 0.85em 0.95em 0.95em; }
+
+.pm-obj-h { display: flex; align-items: center; gap: 0.55em; }
+.pm-obj-h svg { width: 0.9em; height: 0.9em; color: #9aa1ad; flex-shrink: 0; }
+.pm-obj-h b { font-size: 1.05em; font-weight: 700; letter-spacing: -0.01em; }
+.pm-obj-h svg:last-child { margin-left: auto; }
+
+.pm-tabs {
+  display: flex;
+  gap: 1.1em;
+  margin-top: 0.75em;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.pm-tabs span {
+  padding-bottom: 0.5em;
+  margin-bottom: -1px;
+  border-bottom: 1.5px solid transparent;
+  font-size: 0.8em;
+  color: #9aa1ad;
+}
+
+.pm-tabs span.is-on { color: var(--c); border-bottom-color: var(--c); font-weight: 600; }
+
+.pm-rows { margin-top: 0.2em; }
+
+.pm-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.62em 0;
+  border-bottom: 1px solid #f3f4f7;
+  font-size: 0.82em;
+}
+
+.pm-row b { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-row i { margin-left: auto; font-style: normal; color: #6b7280; white-space: nowrap; }
+.pm-row svg { width: 0.85em; height: 0.85em; color: #b9bfc9; flex-shrink: 0; }
+
+.pm-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  padding: 0.75em 0 0.2em;
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--c);
+}
+
+.pm-add svg { width: 0.85em; height: 0.85em; }
+
+/* ---------------------------------------------------------------
+   THE FLOW CANVAS
+   --------------------------------------------------------------- */
+.pm-flow { display: grid; grid-template-columns: 2.2em minmax(0, 1fr); }
+
+.pm-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.7em 0;
+  border-right: 1px solid #eef0f3;
+  background: #fafbfc;
+}
+
+.pm-tools span {
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 0.4em;
+  color: #a2a9b4;
+}
+
+.pm-tools span svg { width: 0.8em; height: 0.8em; }
+
+.pm-canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 1em 0.9em;
+  background:
+    radial-gradient(rgba(9, 9, 11, 0.1) 1px, transparent 1px) 0 0 / 1.1em 1.1em,
+    #fff;
+}
+
+.pm-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em 0.9em;
+  border-radius: 0.55em;
+  border: 1px solid #e6e8ec;
+  background: #fff;
+  text-align: center;
+}
+
+.pm-node b { display: flex; align-items: center; gap: 0.35em; font-size: 0.85em; font-weight: 600; white-space: nowrap; }
+.pm-node em { font-style: normal; font-size: 0.72em; color: #9aa1ad; white-space: nowrap; }
+
+.pm-dot {
+  display: grid;
+  place-items: center;
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 0.3em;
+  font-style: normal;
+  flex-shrink: 0;
+}
+
+.pm-dot svg { width: 0.72em; height: 0.72em; }
+.pm-dot--green { background: rgba(16, 185, 129, 0.14); color: #059669; }
+.pm-dot--violet { background: rgba(109, 74, 224, 0.14); color: #6d4ae0; }
+
+.pm-drop { width: 2px; height: 1.5em; fill: none; stroke: #ccd2db; stroke-width: 2; }
+/* height AUTO, not a fixed em. The fork keeps its own 300:26 ratio, so
+   a uniform scale maps its three drops onto the three outcome columns
+   below. Pinned to a height instead, the svg would letterbox — the
+   300-unit content shrinking to fit the height and centring, with the
+   drops landing well inside the columns they belong to. */
+.pm-fork { display: block; width: 100%; height: auto; fill: none; stroke: #ccd2db; stroke-width: 1.4; }
+
+.pm-outs { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; }
+
+.pm-out {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  padding: 0.4em 0.6em;
+  border-radius: 0.5em;
+  border: 1px solid;
+  text-align: center;
+}
+
+.pm-out b { display: flex; align-items: center; gap: 0.28em; font-size: 0.78em; font-weight: 700; white-space: nowrap; }
+.pm-out em { font-style: normal; font-size: 0.68em; opacity: 0.72; white-space: nowrap; }
+.pm-out svg { width: 0.72em; height: 0.72em; flex-shrink: 0; }
+
+.pm-out--red { background: #fdecec; border-color: #f6cac7; color: #c93a30; }
+.pm-out--amber { background: #fdf3e2; border-color: #f2dcae; color: #9a6a0b; }
+.pm-out--green { background: #e9f7f0; border-color: #c3e6d5; color: #12805a; }
+
+.pm-end { margin-top: 0.4em; color: #ccd2db; }
+.pm-end svg { width: 0.9em; height: 0.9em; display: block; }
+
+/* ---------------------------------------------------------------
+   THE DASHBOARD
+   --------------------------------------------------------------- */
+.pm-dash { padding: 0.85em 0.95em 0.95em; }
+
+.pm-dash-h { display: flex; align-items: center; gap: 0.6em; }
+.pm-dash-h b { font-size: 0.9em; font-weight: 700; letter-spacing: -0.01em; }
+
+.pm-dash-h span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-left: auto;
+  padding: 0.25em 0.5em;
+  border-radius: 0.4em;
+  border: 1px solid #eaebee;
+  font-size: 0.72em;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.pm-dash-h svg { width: 0.75em; height: 0.75em; flex-shrink: 0; }
+
+.pm-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.45em; margin-top: 0.8em; }
+
+.pm-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0.55em 0.6em;
+  border-radius: 0.5em;
+  border: 1px solid #eef0f3;
+  background: #fafbfc;
+  min-width: 0;
+}
+
+.pm-stat b {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.pm-stat i {
+  font-style: normal;
+  font-size: 0.68em;
+  color: #9aa1ad;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* the arrow is the second encoding — direction never rests on the
+   colour alone */
+.pm-stat em,
+.pm-top-r .is-up {
+  font-style: normal;
+  font-size: 0.68em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.pm-stat em.is-up,
+.pm-top-r .is-up { color: #12805a; }
+.pm-stat em.is-down { color: #c93a30; }
+.pm-stat em { margin-top: 0.2em; }
+
+.pm-k {
+  margin: 0.9em 0 0.4em;
+  font-size: 0.75em;
+  font-weight: 700;
+  color: #14161c;
+}
+
+.pm-chart { border-radius: 0.5em; }
+.pm-chart svg { display: block; width: 100%; height: 3.6em; }
+.pm-chart-l { fill: none; stroke: #0f9b8e; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.pm-chart-f { stroke: none; }
+
+.pm-days {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3em 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.66em;
+  color: #9aa1ad;
+}
+
+.pm-top-r {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3.6em 2.6em;
+  gap: 0.5em;
+  padding: 0.45em 0;
+  border-bottom: 1px solid #f3f4f7;
+  font-size: 0.75em;
+  color: #4b5563;
+}
+
+.pm-top-r:last-child { border-bottom: 0; }
+.pm-top-r span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-top-r span:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+
+.pm-top-r--h {
+  font-size: 0.68em;
+  font-weight: 600;
+  color: #9aa1ad;
+  border-bottom-color: #eaebee;
+}
+
+/* ---------------------------------------------------------------
+   THE ENTRY POINTS along the bottom
+
+   `margin-top: auto` pins them to the foot of the card, so the three
+   rows line up however tall the screen above each one turns out.
+   --------------------------------------------------------------- */
+.pl-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.pl-links li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px 6px;
+  border-radius: 11px;
+  border: 1px solid #eaebee;
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #14161c;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.pl-links svg { color: var(--c); flex-shrink: 0; }
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1180px) {
+  .pl-link { width: 40px; }
+  .pl-link-arrow { width: 26px; height: 26px; }
+  .pl-links li { font-size: 0.8125rem; gap: 5px; padding: 10px 4px; }
+}
+
+@media (max-width: 980px) {
+  /* the row becomes a stack, and the arrows turn with it — only the
+     badge rotates, not the track, or its rule would turn back */
+  .pl-row { grid-template-columns: minmax(0, 1fr); }
+  .pl-link { width: auto; height: 54px; }
+  .pl-link-arrow { transform: rotate(90deg); }
+  .pl-link::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(var(--from), 0) 0%, rgba(var(--from), 0.5) 40%, rgba(var(--to), 0.5) 60%, rgba(var(--to), 0) 100%);
+  }
+
+  /* stacked, each card is full width — the screens would balloon at
+     that scale, so the mock's type stops growing */
+  .pm { font-size: clamp(6.5px, 1.9cqw, 13px); min-height: 0; }
+}
+
+@media (max-width: 560px) {
+  .pl-shell { padding: 1.75rem 1rem 2rem; border-radius: 20px; }
+  .pl-links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .pl-links li { flex-direction: column; gap: 4px; font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-card { transition: none; }
+  .pl-card:hover { transform: none; }
+}

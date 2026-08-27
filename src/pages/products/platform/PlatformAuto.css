@@ -1,0 +1,1067 @@
+/* =====================================================================
+   EMVIVE PLATFORM — landing page.  Prefix `pa-`.
+
+   PRODUCT-FIRST. The page is carried by screens from the product, not
+   by icon cards. That puts most of the visual weight in PlatformShots
+   and PlatformDash; what lives here is the frame around them — the
+   type, the section grounds, and the selectors that swap a screen.
+
+   THE GROUNDS change section to section on purpose, so the page reads
+   as chapters rather than as one long scroll:
+
+     hero            white + a dot grid + an orange wash
+     one platform    white, editorial, big type
+     build           light grey band
+     automate        white with a faint orange field behind the screen
+     quote           white, tight
+     analyze         dark — the one inverted block
+     what you build  white
+     CTA             white, centred
+
+   The accent is this site's orange, used sparingly; the type is the
+   site's Plus Jakarta Sans / Inter pair throughout.
+
+   NO SHADOWS. Nothing on this page casts one — not the frames, not the
+   cards, not the hover states. Separation is carried by hairlines and
+   by ground colour instead. This holds across PlatformCanvas.css,
+   PlatformShots.css, PlatformDash.css and PlatformPillars.css too, so
+   do not reintroduce a box-shadow in any of them without being asked.
+   Where a ring was doing structural work rather than casting — the
+   active node, the focused field, the connector badges — it is an
+   `outline`, which is the honest property for it.
+   ===================================================================== */
+
+.pa {
+  --pa-accent: #e2601f;
+  --pa-accent-soft: rgba(226, 96, 31, 0.1);
+  --pa-ink: #0b0b0f;
+  --pa-ink-2: #52525b;
+  --pa-ink-3: #8b8b93;
+  --pa-line: rgba(9, 9, 11, 0.1);
+  --pa-card: #fff;
+  --pa-band: #f6f7f9;
+  /* the site header is fixed and 90px tall */
+  --pa-header: 90px;
+
+  background: #fff;
+  color: var(--pa-ink);
+  font-family: 'Inter', sans-serif;
+}
+
+/* The site's own measure. Every other section — the supply chain
+   pages included — runs 1500px inside max(24px, 4vw), so this page
+   lines up with them rather than sitting on a narrower 1240. */
+.pa-in {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+.pa-sec { padding: 6.5rem 0; }
+.pa-sec--band { background: var(--pa-band); }
+
+/* ---------------------------------------------------------------
+   SHARED TYPE
+   --------------------------------------------------------------- */
+.pa-eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(226, 96, 31, 0.28);
+  background: var(--pa-accent-soft);
+  color: var(--pa-accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.pa-h2 {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.9rem, 3.1vw, 2.85rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--pa-ink);
+}
+
+/* the one section that goes bigger — "One platform" is the editorial
+   beat of the page, so its headline carries it */
+.pa-h2--xl { font-size: clamp(2.3rem, 4.6vw, 4.1rem); letter-spacing: -0.04em; }
+
+.pa-h2 em {
+  font-style: normal;
+  color: var(--pa-accent);
+}
+
+.pa-lede {
+  max-width: 58ch;
+  margin: 1rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--pa-ink-2);
+}
+
+.pa-head { margin-bottom: 3rem; }
+
+.pa-head--c { text-align: center; margin-bottom: 3.5rem; }
+.pa-head--c .pa-lede { margin-left: auto; margin-right: auto; }
+
+/* ---------------------------------------------------------------
+   1 — HERO
+   --------------------------------------------------------------- */
+.pa-hero {
+  position: relative;
+
+  /* .px pads the page down by 90px so content clears the fixed header.
+     The hero's ground — the dot grid and the glow — is meant to run to
+     the TOP OF THE SCREEN, behind the header, so that pad is taken
+     back here and added again inside as padding.
+
+     --pa-header MUST stay at 90px: it is cancelling .px's 90px, not
+     describing the header. The header itself is ~79px tall
+     (0.2rem + 62px pill + 0.85rem), so that 90 already carries 11px of
+     clearance and the extra below only has to be the breathing room
+     you actually want. It was 4rem, which put 64px of empty white
+     under the nav on top of that. */
+  margin-top: calc(-1 * var(--pa-header));
+  padding: calc(var(--pa-header) + 1.25rem) 0 4.5rem;
+  overflow: hidden;
+  background:
+    radial-gradient(58% 62% at 62% 0%, rgba(226, 96, 31, 0.14) 0%, rgba(226, 96, 31, 0) 72%),
+    #fff;
+}
+
+/* THE BUILDER'S OWN CANVAS as the ground — a dot grid, not the ruled
+   squares that were here before. It is what the product actually
+   looks like behind a workflow. */
+.pa-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(9, 9, 11, 0.2) 1px, transparent 1px);
+  background-size: 19px 19px;
+  mask-image: linear-gradient(#000 0%, #000 52%, transparent 92%);
+  -webkit-mask-image: linear-gradient(#000 0%, #000 52%, transparent 92%);
+  opacity: 0.55;
+}
+
+/* Two columns. The canvas is a GRID CHILD, not an absolutely placed
+   layer — placed absolutely it had to be positioned by percentages
+   that were guesses, and at some widths it sat over the copy. */
+.pa-hero-in {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.42fr);
+  gap: 48px;
+
+  /* TOP-aligned, not centred. With the logo strip gone the two columns
+     are close to the same height, and centring the shorter one left the
+     diagram floating below the headline it belongs beside. Both now
+     start on the same line. */
+  align-items: start;
+}
+
+.pa-hero-copy { text-align: left; }
+
+.pa-hero-lede {
+  max-width: 46ch;
+  margin: 1.5rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: var(--pa-ink-2);
+}
+
+.pa-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 2rem; }
+
+/* It scales to the width of its track (see PlatformCanvas.css), so it
+   always fits and is never clipped. `pointer-events: none` because it
+   is scenery — a node must not swallow a click meant for the buttons. */
+.pa-hero-bg {
+  min-width: 0;
+  pointer-events: none;
+
+  /* bled out to the viewport edge — the container's right gutter is
+     dead space next to a figure that needs every pixel it can get,
+     and the hero clips, so nothing escapes the section */
+  margin-right: calc(-1 * max(24px, 4vw));
+}
+
+/* ---------------------------------------------------------------
+   THE ANCHOR BAR
+
+   The bar Supply Chain and Finance run, rebuilt on this page's own
+   classes rather than by importing FinanceD365.css — that stylesheet
+   is 1,700 lines of another page and carries its own green accent
+   variables, which this bar would have inherited.
+
+   Same measurements as the reference: links 60px apart at 1rem
+   semibold in near-black, on a white bar closed by a hairline.
+   --------------------------------------------------------------- */
+.pa-nav-sentinel { display: block; height: 1px; margin-top: -1px; }
+
+.pa-anchors {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: #fff;
+  border-bottom: 1px solid var(--pa-line);
+}
+
+.pa-anchors-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 68px;
+}
+
+.pa-anchors ul {
+  display: flex;
+  gap: 3.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pa-anchors ul::-webkit-scrollbar { display: none; }
+
+/* scoped to the list — `.pa-anchors a` would also catch the Contact
+   button, and being one element more specific it would win, stripping
+   the button's own padding */
+.pa-anchors ul a {
+  display: block;
+  padding: 1.35rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: var(--pa-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.pa-anchors ul a:hover { border-bottom-color: var(--pa-accent); }
+
+.pa-anchors ul a.is-current {
+  color: var(--pa-accent);
+  border-bottom-color: var(--pa-accent);
+}
+
+.pa-anchors-cta {
+  flex-shrink: 0;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* so a jump to an anchor does not park its heading under the bar */
+.pa-sec { scroll-margin-top: 68px; }
+
+/* THE SWAP. Past the hero the site header steps aside and this bar
+   takes the top. The header stays `position: fixed` throughout — only
+   its transform and opacity change — so nothing reflows. The body
+   class is added and removed by the page itself, so no other route is
+   affected. */
+.neurox-header { transition: transform 0.3s ease, opacity 0.3s ease; }
+
+body.pa-nav-swap .neurox-header {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------
+   3 — BUILD
+
+   The appsmith.com shape. One tinted panel; the capabilities spread
+   across its top as a tab row with the live one underlined; copy left,
+   screen right. Their layout, this site's colour and type.
+
+   The tint is the page's own orange at a few percent rather than a
+   flat grey, so the panel reads as a surface belonging to the brand
+   and the white screen inside it lifts without needing a shadow.
+   --------------------------------------------------------------- */
+.pa-build { padding-top: 2rem; }
+
+.pa-bpanel {
+  padding: clamp(1.75rem, 2.6vw, 2.75rem) clamp(1.25rem, 2.6vw, 2.75rem) clamp(2rem, 3vw, 3.25rem);
+  border-radius: 28px;
+  border: 1px solid rgba(226, 96, 31, 0.14);
+  background:
+    linear-gradient(180deg, rgba(226, 96, 31, 0.07) 0%, rgba(226, 96, 31, 0.025) 100%),
+    #fff;
+}
+
+/* the section's own heading lives INSIDE the panel, above the tab row —
+   so the whole section is one object rather than a title floating above
+   a card */
+.pa-bpanel .pa-head { margin-bottom: clamp(2rem, 3.2vw, 3rem); }
+
+/* the tab row — equal tracks, so the labels spread across the panel
+   the way the reference's do instead of bunching at the left */
+.pa-btabs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.pa-btabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 4px 16px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--pa-ink-3);
+  font-family: inherit;
+  font-size: clamp(0.875rem, 1.05vw, 1.0625rem);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.22s ease, border-color 0.22s ease;
+}
+
+/* the icon rides the label's colour, so one rule lights both */
+.pa-btabs svg { flex-shrink: 0; opacity: 0.75; transition: opacity 0.22s ease; }
+.pa-btabs button.is-on svg { opacity: 1; color: var(--pa-accent); }
+
+.pa-btabs button:hover { color: var(--pa-ink-2); }
+
+.pa-btabs button.is-on {
+  color: var(--pa-ink);
+  font-weight: 700;
+  border-bottom-color: var(--pa-accent);
+}
+
+/* copy left, screen right */
+.pa-bbody {
+  display: grid;
+  grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+  gap: clamp(2rem, 3.6vw, 3.75rem);
+  align-items: center;
+  margin-top: clamp(2.25rem, 3.6vw, 3.75rem);
+}
+
+.pa-bcopy h3 {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 2.35vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.032em;
+  color: var(--pa-ink);
+}
+
+.pa-bcopy p {
+  margin: 1.125rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: var(--pa-ink-2);
+}
+
+.pa-bshot { position: relative; min-width: 0; }
+
+/* ---------------------------------------------------------------
+   4 — AUTOMATE
+
+   The wide band. `.pa-bleed` is deliberately a larger measure than
+   `.pa-in` — the flow designer is the one thing on the page allowed to
+   be bigger than the page, which is what makes it read as the centre
+   of the section rather than as another figure in the column.
+   --------------------------------------------------------------- */
+/* NO `overflow: hidden` HERE, EVER.
+
+   It was on this section to contain the glow below, and it silently
+   broke the sticky column in the capability rail: an overflow-hidden
+   ancestor becomes the sticky element's scroll container, and a
+   container that does not scroll can never engage a sticky child. The
+   left column just scrolled away with the page.
+
+   The glow is contained by being drawn inside the section's own box
+   instead — a radial falls off on its own, it does not need to be 130%
+   wide and pulled back by a transform. */
+.pa-flow { position: relative; }
+
+.pa-flow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24%;
+  height: 76%;
+  pointer-events: none;
+  background: radial-gradient(46% 50% at 50% 50%, rgba(226, 96, 31, 0.13) 0%, rgba(226, 96, 31, 0) 70%);
+}
+
+.pa-flow .pa-in,
+.pa-bleed { position: relative; z-index: 1; }
+
+.pa-bleed {
+  max-width: 1780px;
+  margin: 0 auto;
+  padding: 0 max(24px, 4vw);
+}
+
+/* ---------------------------------------------------------------
+   4b — THE CAPABILITY RAIL
+
+   The retool.com shape: copy pinned on the left, screens scrolling on
+   the right, the copy swapping to whichever screen is crossing the
+   middle. Sticky works here because the right column is deliberately
+   several viewports tall while the left is one screen of text — a
+   sticky element only travels through the slack its sibling gives it.
+   --------------------------------------------------------------- */
+.pa-rail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: start;
+  margin-top: 5rem;
+}
+
+.pa-rail-l {
+  position: sticky;
+  top: 140px;              /* clears the 68px anchor bar with air */
+  align-self: start;
+}
+
+.pa-rail-n {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 1.25rem;
+  font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--pa-accent);
+}
+
+.pa-rail-n i { font-style: normal; color: var(--pa-ink-3); font-weight: 500; }
+
+.pa-rail-copy h3 {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 2.35vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.032em;
+  color: var(--pa-ink);
+}
+
+.pa-rail-copy p {
+  margin: 1.125rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: var(--pa-ink-2);
+}
+
+/* the copy is re-keyed on change, so this replays each time */
+.pa-rail-copy h3,
+.pa-rail-copy p { animation: pa-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.pa-rail-copy p { animation-delay: 0.05s; }
+
+@keyframes pa-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* the progress list — also the way to jump to a panel */
+.pa-rail-nav {
+  margin: 2.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--pa-line);
+}
+
+.pa-rail-nav li {
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.pa-rail-nav li.is-on { border-left-color: var(--pa-accent); }
+
+.pa-rail-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 0 13px 20px;
+  text-decoration: none;
+}
+
+/* each entry says what it IS, not just what it is called — the list was
+   four bare words holding a lot of empty column */
+.pa-rail-nav b {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--pa-ink-3);
+  transition: color 0.3s ease;
+}
+
+.pa-rail-nav i {
+  font-style: normal;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--pa-ink-3);
+  opacity: 0.72;
+  transition: opacity 0.3s ease;
+}
+
+.pa-rail-nav li.is-on b,
+.pa-rail-nav a:hover b { color: var(--pa-ink); }
+.pa-rail-nav li.is-on i { opacity: 1; }
+
+/* each screen gets its own stretch of scroll, and sits in the middle
+   of it — which is where the observer's band is */
+.pa-rail-item {
+  display: flex;
+  align-items: center;
+  min-height: 66vh;
+  scroll-margin-top: 120px;
+  opacity: 0.45;
+  transition: opacity 0.45s ease;
+}
+
+.pa-rail-item.is-on { opacity: 1; }
+.pa-rail-item-copy { display: none; }
+.pa-rail-item > * { width: 100%; }
+
+/* THE CROPS RUN LARGER HERE.
+
+   `.sh-root` sizes a whole screen off one `cqw` number, and the library
+   default is tuned for a full-width frame. In this column that resolved
+   to about 10px of base type — every screen technically correct and
+   none of it readable. Raised for this section only, so the panels read
+   at arm's length, plus a floor so a short one is not a sliver floating
+   in two thirds of a viewport. */
+.pa-rail-item .sh-root {
+  font-size: clamp(11px, 2.1cqw, 19px);
+  min-height: 30cqw;
+}
+
+/* ---------------------------------------------------------------
+   5 — ANALYZE
+
+   No ground of its own. It was the one inverted block on the page;
+   now the tiles carry themselves on white and the section needs
+   nothing but its padding. The light-orange block that follows it is
+   what provides the break instead.
+   --------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------
+   6 — WHAT CAN YOU BUILD
+
+   Three across, twice, on a light orange wash. No card around any of
+   them: icon, heading, two lines, and the gap between columns doing
+   the separating. It follows the near-black Analyze block, so the
+   light ground gives the chapter break and hands the page back toward
+   white before the closing CTA.
+   --------------------------------------------------------------- */
+.pa-mods {
+  background:
+    linear-gradient(180deg, rgba(226, 96, 31, 0.085) 0%, rgba(226, 96, 31, 0.03) 100%),
+    #fff;
+}
+
+.pa-mods .pa-lede { max-width: 52ch; }
+
+/* heading left, the figure beside it; the six departments run full
+   width underneath */
+.pa-mtop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+.pa-mtop .pa-head { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------
+   THE RECORD FLOW
+
+   Authored on a 600 x 300 box, laid out in PERCENTAGES of it, with one
+   font size in `cqw` driving the type — so the figure scales as a
+   single piece and the elbows meet the tiles at every width.
+   --------------------------------------------------------------- */
+.pf {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 600 / 300;
+  container-type: inline-size;
+  font-size: clamp(7px, 2.15cqw, 15px);
+}
+
+.pf-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: #c8ccd4;
+}
+
+.pf-wire { stroke: #c8ccd4; transition: stroke 0.4s ease, color 0.4s ease; }
+
+/* a leg the run has crossed keeps a warm tint, so the path taken reads
+   at a glance and not only in the instant the dot is on it */
+.pf-wire.is-live { stroke: #f0a97a; color: #f0a97a; }
+
+/* THE TRAVELLING DOT.
+
+   One 4.2s loop shared by both halves — three beats of 1400ms. The dot
+   covers its wire inside the first 30% of the loop and is invisible for
+   the rest, so the inbound dots run 0–1.26s and the outbound ones run
+   1.4–2.66s (delayed by exactly one beat). Each lands just before the
+   stage that lights the tile it is heading for.
+
+   `pathLength` normalises every wire to 100 units, so the elbowed legs
+   and the straight middle one travel at the same speed. */
+.pf-pulse {
+  fill: none;
+  stroke: var(--pa-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 11 100;
+  animation: pf-flow 4.2s linear infinite;
+}
+
+.pf-pulse--out { animation-delay: 1.4s; }
+
+@keyframes pf-flow {
+  0%   { stroke-dashoffset: 11; opacity: 0; }
+  3%   { opacity: 1; }
+  28%  { stroke-dashoffset: -100; opacity: 1; }
+  32%  { stroke-dashoffset: -100; opacity: 0; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+/* the group labels — outlined, not filled. Two black slabs and an
+   orange one sat heavier than the tiles they were labelling and pulled
+   the eye to the captions instead of the flow. A hairline and the
+   label's own colour say the same thing and stay out of the way. */
+.pf-tag {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3em 0;
+  border-radius: 999px;
+  border: 1px solid rgba(9, 9, 11, 0.16);
+  background: transparent;
+  color: var(--pa-ink-2);
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* the middle one is the point of the figure, so it takes the accent —
+   in the border and the type, still not as a fill */
+.pf-tag--core {
+  border-color: rgba(226, 96, 31, 0.45);
+  color: var(--pa-accent);
+}
+
+/* a source or an output */
+.pf-tile {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  padding: 0 0.4em;
+  border-radius: 0.75em;
+  border: 1px solid var(--pa-line);
+  background: #fff;
+  text-align: center;
+  transition: border-color 0.35s ease, transform 0.35s ease;
+}
+
+/* the dot has arrived: the tile takes its own colour and lifts */
+.pf-tile.is-on {
+  border-color: rgb(var(--tc));
+  transform: scale(1.06);
+}
+
+.pf-tile i {
+  display: grid;
+  place-items: center;
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 0.5em;
+  background: rgba(var(--tc), 0.12);
+  color: rgb(var(--tc));
+  flex-shrink: 0;
+}
+
+.pf-tile i svg { width: 0.9em; height: 0.9em; }
+
+.pf-tile b {
+  font-size: 0.76em;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--pa-ink);
+}
+
+/* the thing everything meets on */
+.pf-core {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9em;
+  border: 1px solid rgba(226, 96, 31, 0.4);
+  background: linear-gradient(180deg, rgba(226, 96, 31, 0.09) 0%, rgba(226, 96, 31, 0.03) 100%), #fff;
+  text-align: center;
+  transition: border-color 0.35s ease, transform 0.35s ease;
+}
+
+.pf-core.is-on {
+  border-color: var(--pa-accent);
+  transform: scale(1.05);
+}
+
+.pf-core span {
+  font-size: 0.66em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pa-ink-3);
+}
+
+.pf-core b {
+  margin-top: 0.15em;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--pa-ink);
+}
+
+.pf-core em {
+  margin-top: 0.3em;
+  font-style: normal;
+  font-size: 0.72em;
+  font-weight: 600;
+  color: var(--pa-accent);
+}
+
+/* ---------------------------------------------------------------
+   THE DEPARTMENT CAROUSEL
+   --------------------------------------------------------------- */
+.pa-mnav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1.75rem;
+}
+
+/* filled squircles, not outlined circles — the arrow reads white on
+   the accent instead of orange on white */
+.pa-mnav button {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  border: 0;
+  background: linear-gradient(180deg, #ef7635 0%, #e2601f 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pa-mnav button:hover:not(:disabled) {
+  background: linear-gradient(180deg, #e2601f 0%, #d0500f 100%);
+}
+
+/* spent, not hidden — the rail's ends stay legible. A filled button
+   cannot just drop its opacity the way the outlined one did; it goes
+   to the page's own band so it still reads as a button. */
+.pa-mnav button:disabled {
+  background: var(--pa-band);
+  border: 1px solid var(--pa-line);
+  color: var(--pa-ink-3);
+  cursor: default;
+}
+
+/* THE RAIL. A real scroll container, so a trackpad swipe works and the
+   buttons are only a convenience on top of it. It bleeds to the right
+   edge of the viewport so the next card is always half-visible —
+   which is what tells you there IS a next card. */
+.pa-mrail {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+
+  /* PROXIMITY, not mandatory. Mandatory fights the last scroll position
+     against the trailing pad below and leaves the final card jumping
+     out from under you. */
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+
+  /* `overflow-x: auto` computes overflow-y to `auto` as well, so this
+     box clips vertically whether or not it was asked to. Anything a
+     card does upward — a hover lift, a focus ring — gets cut off and
+     can pop a scrollbar. The block padding is the room for it. */
+  padding: 6px 0 10px;
+
+  margin-right: calc(-1 * max(24px, 4vw));
+  padding-right: max(24px, 4vw);
+}
+
+.pa-mrail::-webkit-scrollbar { display: none; }
+
+.pa-mcard {
+  /* vw, not a percentage: a % basis resolves against this container's
+     content box, which the trailing pad above has already narrowed —
+     so the card width moved with the gutter instead of with the page */
+  flex: 0 0 clamp(272px, 25vw, 370px);
+  scroll-snap-align: start;
+  padding: 26px 26px 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 96, 31, 0.16);
+  background: #fff;
+  transition: border-color 0.25s ease;
+}
+
+.pa-mcard:hover { border-color: rgba(var(--mc), 0.55); }
+
+.pa-mcard h3 {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0 0 0.85rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--pa-ink);
+}
+
+.pa-mic {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(var(--mc), 0.12);
+  color: rgb(var(--mc));
+  flex-shrink: 0;
+}
+
+.pa-mcard p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--pa-ink-2);
+}
+
+/* ---------------------------------------------------------------
+   8 — CLOSING CTA
+   --------------------------------------------------------------- */
+.pa-cta {
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.pa-cta .pa-h2 { max-width: 20ch; margin: 0 auto; }
+.pa-cta .pa-lede { margin-left: auto; margin-right: auto; text-align: center; }
+
+.pa-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 2.25rem; }
+
+.pa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.22s ease, background 0.22s ease;
+}
+
+.pa-btn-solid { background: var(--pa-accent); color: #fff; }
+.pa-btn-solid:hover { transform: translateY(-2px); }
+.pa-btn-shell { border: 1px solid var(--pa-line); color: var(--pa-ink); }
+.pa-btn-shell:hover { border-color: var(--pa-ink); }
+.pa-btn i { display: inline-flex; }
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .pa-hero .hi-title { font-size: clamp(2.3rem, 4.4vw, 3.2rem) !important; }
+  .pa-hero-in { gap: 44px; }
+}
+
+@media (max-width: 1040px) {
+  /* the rail stops being two columns — the copy sits above its own
+     screen, one after another, and nothing sticks */
+  .pa-rail { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 3rem; }
+  .pa-rail-l { display: none; }
+  .pa-rail-r { display: flex; flex-direction: column; gap: 3.5rem; }
+
+  .pa-rail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    opacity: 1;
+  }
+
+  .pa-rail-item-copy { display: block; margin-bottom: 1.5rem; }
+
+  .pa-rail-item-copy h3 {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: clamp(1.35rem, 3.4vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.24;
+    letter-spacing: -0.03em;
+    color: var(--pa-ink);
+  }
+
+  .pa-rail-item-copy p {
+    margin: 0.85rem 0 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--pa-ink-2);
+  }
+
+  /* copy above the screen rather than beside it, and the tab row stops
+     being an equal-track grid — six labels cannot share a phone's width,
+     so it becomes a scrolling strip */
+  .pa-bbody { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; }
+
+  .pa-btabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .pa-btabs::-webkit-scrollbar { display: none; }
+  .pa-btabs button { flex-shrink: 0; padding: 0 12px 14px; }
+}
+
+@media (max-width: 1000px) {
+  .pa-mtop { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+}
+
+@media (max-width: 980px) {
+  /* below this the canvas cannot be read AND leave the copy room, so
+     it drops under the copy as a full-width band instead of beside it */
+  .pa-hero-in { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  .pa-hero-copy { text-align: center; }
+  .pa-hero .hi-title { align-items: center !important; }
+  .pa-hero-lede { margin-left: auto; margin-right: auto; }
+  .pa-hero-actions { justify-content: center; }
+  .pa-proof ul { justify-content: center; }
+  .pa-hero-bg { max-width: 720px; margin: 0 auto; width: 100%; }
+}
+
+/* ---------------------------------------------------------------
+   THE SCREENS AT NARROW WIDTHS
+
+   A full builder screen cannot be read below about 720px — the rails
+   alone eat half of it. Rather than shrink it into illegibility or
+   drop it (which would gut a product-first page), the frame keeps a
+   readable minimum width and the stage scrolls sideways, which is
+   what the app itself does on a small window.
+   --------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .pa-sec { padding: 4.5rem 0; }
+
+  .pa-bshot,
+  .pa-bleed,
+  .pa-rail-item {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 10px;
+  }
+
+  .pa-bshot .sh-frame,
+  .pa-bleed .sh-frame,
+  .pa-rail-item .sh-frame { min-width: 760px; }
+
+  /* the floating form panel has nowhere to float to at this width */
+  .sh-peek { display: none; }
+
+}
+
+@media (max-width: 720px) {
+  .pa-hero { padding: calc(var(--pa-header) + 0.75rem) 0 3rem; }
+
+  /* nothing of the canvas survives legibly at phone width, and a
+     sliver of one node reads as a rendering fault rather than as art */
+  .pa-hero-bg { display: none; }
+
+  .pa-actions,
+  .pa-hero-actions { flex-direction: column; align-items: stretch; }
+  .pa-btn { justify-content: center; }
+  .pa-rail-nav b { font-size: 0.9375rem; }
+  .pa-rail-nav i { font-size: 0.8125rem; }
+
+  /* the bar keeps all five links and scrolls sideways for them; the
+     Contact pill is the one thing that goes, since #start is the
+     section it scrolls to anyway */
+  .pa-anchors-in { min-height: 56px; }
+  .pa-anchors ul { gap: 1.75rem; }
+  .pa-anchors ul a { padding: 1.05rem 0; font-size: 0.9375rem; }
+  .pa-anchors-cta { display: none; }
+  .pa-sec { scroll-margin-top: 56px; }
+}
+
+/* ---------------------------------------------------------------
+   MOTION OFF
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .pa-btn,
+  .pa-mcard,
+  .pa-mnav button,
+  .pa-btabs button,
+  .pa-btabs svg,
+  .pa-rail-nav li,
+  .pa-rail-nav b,
+  .pa-rail-nav i,
+  .pa-rail-item,
+  .pf-tile,
+  .pf-core,
+  .pf-wire { transition: none; }
+
+  .pa-btn:hover { transform: none; }
+
+  /* no travel, and every panel at full strength since nothing is
+     animating attention from one to the next */
+  .pa-rail-copy h3,
+  .pa-rail-copy p { animation: none; }
+  .pa-rail-item { opacity: 1; }
+
+  /* THE FLOW STOPS. Its stage timer never starts either, so without
+     this only the first beat would ever be lit and the record and the
+     outputs would sit grey for good. Everything reads as arrived. */
+  .pf-pulse { animation: none; opacity: 0; }
+  .pf-tile,
+  .pf-core { transform: none; }
+  .pf-tile { border-color: rgba(var(--tc), 0.5); }
+  .pf-core { border-color: rgba(226, 96, 31, 0.4); }
+  .pf-wire { stroke: #f0a97a; color: #f0a97a; }
+}
