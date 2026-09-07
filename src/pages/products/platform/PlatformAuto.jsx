@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ArrowRight, Banknote, Bell, Boxes, Briefcase, ChartColumn, ChevronLeft,
-  ChevronRight, Code2, FileText, FormInput, LayoutGrid, PanelsTopLeft, Receipt,
-  ShoppingCart, UserRound, Workflow,
+  ArrowLeftRight, ArrowRight, Banknote, Bell, Boxes, Briefcase, ChartColumn,
+  ChevronDown, ChevronLeft, ChevronRight, FileText, FormInput,
+  LayoutGrid, MousePointer2, PanelsTopLeft, Receipt, ShoppingCart,
+  UserRound, Workflow,
 } from 'lucide-react';
-/* the Finance hero's type and buttons: .hi-title / .hi-line /
-   .hi-accent live here, .cta-btn-* are global in index.css */
-import '../../../components/hero/variants/HeroInfosys.css';
 import PlatformCanvas from './PlatformCanvas';
 import PlatformDash from './PlatformDash';
 import PlatformPillars from './PlatformPillars';
 import {
-  ApiShot, AppShot, ApprovalsShot, DocShot, FlowRails, FnShot,
+  AppShot, ApprovalsShot, FlowRails,
   FormShot, Frame, NavShot, ObjectShot, RunsShot, ScheduleShot,
 } from './PlatformShots';
 import './PlatformCanvas.css';
@@ -34,7 +32,7 @@ import './PlatformAuto.css';
                         panel over its corner and a capability selector
                         that swaps the screen underneath
      4  automate        the flow designer in its own chrome — rails,
-                        canvas, properties — then four capability crops
+                        canvas, properties — then three capability crops
      6  analyze         the dark block: an operational dashboard
      6  what you build  the module grid on a dark block, with the
                         one-record visual beside it
@@ -64,6 +62,48 @@ const ANCHORS = [
 /* at module scope, so the effect below has a stable dependency — built
    inline it would be a new array every render and re-run every time */
 const ANCHOR_IDS = ANCHORS.map(([id]) => id);
+
+/* =====================================================================
+   THE HERO'S OWN "NOT JUST WORKFLOW" CARDS.
+
+   The canvas beside the headline is a flow diagram, and a flow diagram
+   read on its own says "automation tool". These three cards sit next
+   to it and name the other two things the product is — an app builder
+   and a data modeller — so the first screen a visitor sees states the
+   whole platform, not just the one capability the canvas happens to
+   draw. Same three words the page's own anchor bar uses: Build,
+   [Object] Model[ling], Automate.
+   ===================================================================== */
+/* =====================================================================
+   BESIDE THE HERO DIAGRAM — a second screen, not a fifth text panel.
+
+   Four goes at this slot were all words: the three-word list, the
+   blocks-and-code panel, the two-timeline bars, the who-builds-it
+   rows. Every one of them put a paragraph next to a picture, and the
+   hero already has a headline and a lede doing that job.
+
+   So it shows PRODUCT instead. The canvas on the left is the Flow
+   Designer; this is the Object Builder — the same screen the Build
+   pillar draws further down the page, imported rather than rebuilt so
+   the two can never drift apart. Together they say the low-code claim
+   by demonstration: model the data here, move it there, no code in
+   either shot.
+   ===================================================================== */
+
+/* =====================================================================
+   THE MARGIN DOODLES — a curved arrow in currentColor, one <defs> per
+   instance so the arrowhead marker id is never duplicated in the DOM.
+   ===================================================================== */
+const Doodle = ({ id, d, w, h, className }) => (
+  <svg className={className} viewBox={`0 0 ${w} ${h}`} width={w} height={h} aria-hidden="true">
+    <defs>
+      <marker id={id} viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1.5 1.5 L5.5 4 L1.5 6.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      </marker>
+    </defs>
+    <path d={d} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" markerEnd={`url(#${id})`} />
+  </svg>
+);
 
 /* The last section wins when several are visible, which matches
    reading order on the way down. */
@@ -130,106 +170,78 @@ const useNavSwap = () => {
 };
 
 /* =====================================================================
-   3 — BUILD.  Six screens behind one selector.
+   3 — BUILD.  Four screens behind one selector.
    ===================================================================== */
 const BUILD_CAPS = [
   {
     id: 'apps',
     ic: LayoutGrid,
-    label: 'App Builder',
+    label: 'Drag & Drop Builder',
     path: 'emvive.app/studio/apps/sales-ops',
     chip: 'App builder',
-    h: 'Ship the screen, not the ticket.',
-    p: 'Assemble pages, lists and record views over your own objects, and hand each team the app it actually works in.',
+    h: 'Drag & Drop Builder',
+    p: 'Design application components through a drag-and-drop approach, making it easier to build business solutions without traditional development.',
     Shot: AppShot,
   },
   {
     id: 'forms',
     ic: FormInput,
-    label: 'Forms',
+    label: 'Custom Forms',
     path: 'emvive.app/studio/forms/customer-onboarding',
     chip: 'Form builder',
-    h: 'The form is the process.',
-    p: 'Drag the field in, set who has to sign it off, and it is collecting real records on the next page load.',
+    h: 'Custom Forms',
+    p: 'Create forms tailored to specific business requirements and processes.',
     Shot: FormShot,
   },
   {
     id: 'objects',
     ic: Boxes,
-    label: 'Objects',
+    label: 'Tables & Relationships',
     path: 'emvive.app/studio/objects/customer',
-    chip: 'Studio',
-    h: 'Your data model, in your language.',
-    p: 'Every field, relationship and permission on the record — no schema migration, no release window.',
+    chip: 'Object Builder',
+    h: 'Tables & Relationships',
+    p: 'Structure business data using tables and define relationships between related information.',
     Shot: ObjectShot,
-  },
-  {
-    id: 'docs',
-    ic: FileText,
-    label: 'Documents',
-    path: 'emvive.app/studio/documents/tax-invoice',
-    chip: 'Template',
-    h: 'The paperwork writes itself.',
-    p: 'Invoices, POs and certificates rendered from the live record, in the format each authority expects.',
-    Shot: DocShot,
   },
   {
     id: 'nav',
     ic: PanelsTopLeft,
-    label: 'Navigation',
+    label: 'UI Designer',
     path: 'emvive.app/studio/navigation',
     chip: 'Designer',
-    h: 'Every role sees its own system.',
-    p: 'Arrange what each team opens on, and what they never have to look at, down to the item.',
+    h: 'UI Designer',
+    p: 'Design application interfaces to create user experiences aligned with your business processes.',
     Shot: NavShot,
-  },
-  {
-    id: 'fn',
-    ic: Code2,
-    label: 'Functions',
-    path: 'emvive.app/studio/functions/on-order-approved',
-    chip: 'Code',
-    h: 'And where it needs code, write code.',
-    p: 'Drop into JavaScript for the logic no builder should own, with the same records and the same permissions.',
-    Shot: FnShot,
   },
 ];
 
 /* =====================================================================
-   4 — AUTOMATE.  The four capability crops under the big screen.
+   4 — AUTOMATE.  The three capability crops under the big screen.
    ===================================================================== */
 const AUTO_CAPS = [
   {
     id: 'flows',
-    sum: 'Triggers, branches, loops, replay',
-    label: 'Workflows',
-    h: 'Multi-step processes that run themselves.',
-    p: 'Open any run and see what each step read, what it decided and what it changed — then replay a single record without redoing the rest.',
+    sum: 'Define and automate business workflows',
+    label: 'Workflow Automation',
+    h: 'Workflow Automation',
+    p: 'Define and automate business workflows based on organisational requirements.',
     Shot: RunsShot,
   },
   {
     id: 'approvals',
-    sum: 'Value routing, SLA clocks, escalation',
-    label: 'Approvals',
-    h: 'The sign-off, with a clock on it.',
-    p: 'Route by value, entity or exception, escalate when the window closes, and let anyone approve from the record itself.',
+    sum: 'Structured approvals, any stage',
+    label: 'Approval Chains',
+    h: 'Approval Chains',
+    p: 'Create structured approval processes involving the required users or stages.',
     Shot: ApprovalsShot,
   },
   {
-    id: 'scheduled',
-    sum: 'Cron, your timezone, backfills',
-    label: 'Scheduled',
-    h: 'The work nobody should remember.',
-    p: 'Nightly reviews, month-end postings, quarterly re-scores — on your calendar and your timezone, not someone’s reminder.',
+    id: 'triggers',
+    sum: 'Initiate workflows on business events',
+    label: 'Event Triggers',
+    h: 'Event Triggers',
+    p: 'Initiate workflows based on defined business events.',
     Shot: ScheduleShot,
-  },
-  {
-    id: 'api',
-    sum: 'REST, SDK, signed webhooks',
-    label: 'API & Webhooks',
-    h: 'A flow is not confined to Emvive.',
-    p: 'Call anything you already run, and let anything you already run call a flow — with a signed payload and a full delivery log.',
-    Shot: ApiShot,
   },
 ];
 
@@ -314,7 +326,7 @@ const AutoRail = () => {
               {/* the same copy, carried with its own screen. It is off
                   on desktop, where the sticky column says it — but once
                   the rail stacks there is no sticky column, and one
-                  block of copy above four screens pairs with none of
+                  block of copy above three screens pairs with none of
                   them. */}
               <div className="pa-rail-item-copy">
                 <h3>{c.h}</h3>
@@ -613,6 +625,74 @@ const MODULES = [
 
 
 /* =====================================================================
+   THE HERO SIDE PANEL — the code first, then the screen it renders.
+
+   A stand-in for the whole "low-code" pitch in one small screen: the
+   same three builders named in the hero copy (App, Object, Flow) as a
+   tab row, the markup for a small form, then — the arrow standing in
+   for "compiles to" — the visual output that markup actually builds.
+   Stacked, not side-by-side, because the panel this sits in is a
+   sidebar, not a wide screen.
+   ===================================================================== */
+const LC_TABS = ['App Builder', 'Object Builder', 'Flow Designer'];
+
+/* the code pane's tokens, coloured rather than left flat grey — three
+   of the site's own hues (teal for tags, violet for attributes, the
+   page's orange for strings) so the "code" view reads as code and
+   still belongs to this palette, not a borrowed editor theme */
+const LowCodeMock = () => (
+  <div className="pm pm-lc">
+    <div className="pm-lc-tabs">
+      {LC_TABS.map((t, i) => (
+        <span key={t} className={i === 0 ? 'is-on' : undefined}>{t}</span>
+      ))}
+    </div>
+
+    <pre className="pm-lc-code">
+      <code>
+        <span className="tk-tag">{'<Form '}</span>
+        <span className="tk-attr">onSubmit</span>
+        <span className="tk-tag">{'={saveVendor}>'}</span>{'\n'}
+        {'  '}<span className="tk-tag">{'<Field '}</span>
+        <span className="tk-attr">name</span>
+        <span className="tk-tag">=</span>
+        <span className="tk-str">&quot;name&quot;</span>{' '}
+        <span className="tk-attr">label</span>
+        <span className="tk-tag">=</span>
+        <span className="tk-str">&quot;Vendor Name&quot;</span>
+        <span className="tk-tag">{' />'}</span>{'\n'}
+        {'  '}<span className="tk-tag">{'<Field '}</span>
+        <span className="tk-attr">name</span>
+        <span className="tk-tag">=</span>
+        <span className="tk-str">&quot;category&quot;</span>{' '}
+        <span className="tk-attr">type</span>
+        <span className="tk-tag">=</span>
+        <span className="tk-str">&quot;select&quot;</span>
+        <span className="tk-tag">{' />'}</span>{'\n'}
+        {'  '}<span className="tk-tag">{'<Button>'}</span>Save<span className="tk-tag">{'</Button>'}</span>{'\n'}
+        <span className="tk-tag">{'</Form>'}</span>
+      </code>
+    </pre>
+
+    <span className="pm-lc-div" aria-hidden="true">
+      <i />
+      <ArrowLeftRight size={10} strokeWidth={2.4} />
+      <i />
+    </span>
+
+    <div className="pm-lc-form">
+      <div className="pm-lc-form-h">
+        <b><MousePointer2 size={9} strokeWidth={2.4} />Create Vendor</b>
+        <span className="pm-lc-chip">Drag &amp; Drop</span>
+      </div>
+      <span className="pm-lc-fld">Vendor Name</span>
+      <span className="pm-lc-fld pm-lc-fld--sel">Category<ChevronDown size={9} strokeWidth={2.4} /></span>
+      <span className="pm-lc-save">Save</span>
+    </div>
+  </div>
+);
+
+/* =====================================================================
    THE PAGE
    ===================================================================== */
 const PlatformAuto = () => {
@@ -630,48 +710,62 @@ const PlatformAuto = () => {
           ============================================================ */}
       <section className="pa-hero" id="top">
         <div className="pa-in pa-hero-in">
-          {/* copy left, the diagram beside it */}
-          <div className="pa-hero-copy">
-            <span className="pa-eyebrow">Platform &amp; Builder</span>
+          {/* copy left, the diagram beside it.
 
-            {/* THE FINANCE HERO'S HEADLINE, verbatim: .hi-title at 65px
-                with the lines stacked and the last one carrying
-                .hi-accent — the 100deg orange ramp clipped to the glyphs
-                rather than a flat colour. The two inline overrides are
-                Finance's own: left-aligned instead of centred, and the
-                text-shadow off, since it exists to hold white type off a
-                dark film and this ground is white. */}
-            <h1
-              className="hi-title"
-              style={{ alignItems: 'flex-start', margin: 0, textShadow: 'none', fontSize: '65px' }}
-            >
-              <span className="hi-line" style={{ color: 'var(--ink)' }}>The system your</span>
-              <span className="hi-line" style={{ color: 'var(--ink)' }}>business actually</span>
-              <span className="hi-line hi-accent">runs on.</span>
+              THE HEADLINE IS FLOWING TEXT, not four fixed line-breaks —
+              one block that wraps on its own at whatever width the row
+              gives it, exactly like .pa-hero-lede below it. A forced
+              per-line layout (four short spans, each hugging its own
+              text) can never fill a wide row; ordinary wrapping text
+              does, the same way a paragraph does. */}
+          <div className="pa-hero-copy">
+            <h1 className="pa-hero-title">
+              Build, Automate and Connect Your Business{' '}
+              <span className="pa-hero-title-accent">on One Platform</span>
             </h1>
 
             <p className="pa-hero-lede">
-              Model the objects you work with, automate the work between them, and put it live
-              across every entity you operate — on one record every module reads and writes.
+              Extend your enterprise applications with a no-code platform designed to
+              build applications, automate workflows, connect business systems and
+              manage access — all within a unified enterprise environment.
             </p>
-
-            {/* and its buttons — the global pair, with the secondary
-                forced white the way Finance does it: its default is a
-                transparent shell with a white border, which is meant for
-                a dark hero and disappears on this one */}
-            <div className="pa-hero-actions">
-              <a href="#start" className="cta-btn-primary">
-                Request a demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
-              </a>
-              <a href="#platform" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
-                See how it works
-              </a>
-            </div>
           </div>
 
-          {/* the builder, at full strength in its own column */}
+          {/* the copy runs full width above, so this row is free to use
+              the WHOLE hero width for itself — the low-code card on the
+              left, the flow diagram on the right. */}
           <div className="pa-hero-bg" aria-hidden="true">
-            <PlatformCanvas />
+            <aside className="pa-lc">
+              <p className="pa-lc-k">
+                <i className="pa-lc-dot" />
+                Build with low-code
+              </p>
+
+              <div className="pa-lc-shot"><LowCodeMock /></div>
+
+              <p className="pa-lc-foot">
+                Same app, two views. Drag it together, or drop straight
+                into the code.
+              </p>
+            </aside>
+
+            <div className="pa-hero-canvas">
+              <PlatformCanvas />
+
+              {/* the margin notes — the reference's hand-drawn asides,
+                  same three claims the cards and the wire diagram
+                  already make, said again in a different voice so the
+                  hero doesn't read as one dry diagram */}
+              <span className="pa-note pa-note--top">
+                Automate<br />with a few clicks
+                <Doodle
+                  id="pa-doodle-top"
+                  className="pa-note-arrow pa-note-arrow--top"
+                  w={54} h={44}
+                  d="M50 4 C 40 4, 14 10, 6 38"
+                />
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -695,7 +789,12 @@ const PlatformAuto = () => {
               </li>
             ))}
           </ul>
-          <a href="#start" className="pa-btn pa-btn-solid pa-anchors-cta">Contact us</a>
+          <a href="#start" className="btn-get-started pa-anchors-cta">
+            Contact us
+            <span className="arrow-circle">
+              <ArrowRight size={14} color="#fff" />
+            </span>
+          </a>
         </div>
       </nav>
 
@@ -719,11 +818,13 @@ const PlatformAuto = () => {
         <div className="pa-in">
           <div className="pa-bpanel">
             <div className="pa-head">
-              <span className="pa-eyebrow">Build</span>
-              <h2 className="pa-h2">Build around <em>your business.</em></h2>
+              <span className="pa-eyebrow">Emvive Studio</span>
+              <h2 className="pa-h2">Build Applications Around <em>the Way Your Business Works</em></h2>
               <p className="pa-lede">
-                Create the applications, data structures and experiences your teams need —
-                without being held to the shape somebody else’s software came in.
+                Emvive Studio provides no-code tools to create and customise business
+                applications through a visual development environment. From business
+                requirements to working applications, Emvive Studio gives organisations
+                the tools to shape applications around the way they operate.
               </p>
             </div>
 
@@ -768,24 +869,27 @@ const PlatformAuto = () => {
           The one section that breaks the page's own measure: the flow
           designer runs wider than every other block on the page, on a
           band of its own, because it is the screen worth looking at
-          longest. The four capabilities under it are a segmented
+          longest. The three capabilities under it are a segmented
           control — the component the product itself would use — not a
           card with a tab strip glued to its top.
           ============================================================ */}
       <section className="pa-sec pa-flow" id="automate">
         <div className="pa-in">
           <div className="pa-head pa-head--c">
-            <span className="pa-eyebrow">Automate</span>
-            <h2 className="pa-h2 pa-h2--xl">Turn business processes <em>into workflows.</em></h2>
+            <span className="pa-eyebrow">Emvive Flow</span>
+            <h2 className="pa-h2 pa-h2--xl">Automate <em>the Way Work Moves</em></h2>
             <p className="pa-lede">
-              Design how work moves through your organisation — from the first event to the
-              final action, including everything that has to happen when someone says no.
+              Business processes often involve multiple steps, users and approvals. Emvive
+              Flow provides workflow automation capabilities to structure and automate
+              these processes. Emvive Flow brings structure and automation to business
+              processes, helping organisations manage how work moves across teams and
+              functions.
             </p>
           </div>
         </div>
 
         <div className="pa-bleed">
-          <Frame path="emvive.app/flows/sales-invoice-approval" chip="Flow designer">
+          <Frame path="emvive.app/flows/sales-quotation-to-invoice" chip="Flow Designer">
             <FlowRails><PlatformCanvas /></FlowRails>
           </Frame>
         </div>

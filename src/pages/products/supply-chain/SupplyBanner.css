@@ -37,8 +37,8 @@
   /* FIXED HEIGHT — a real measure, not a share of the viewport, so the
      band is the same size on every screen. It runs up behind the fixed
      site header, so the header's height is added on and then pulled
-     back off: 640px of band, wherever the header sits. */
-  height: calc(640px + var(--site-header, 90px));
+     back off: 580px of band, wherever the header sits. */
+  height: calc(580px + var(--site-header, 90px));
   margin-top: calc(-1 * var(--site-header, 90px));
 
   background: #fff;
@@ -243,12 +243,12 @@
    RESPONSIVE — the reference's own steps
    --------------------------------------------------------------- */
 @media (max-width: 992px) {
-  .sb-banner { height: calc(560px + var(--site-header, 90px)); }
+  .sb-banner { height: calc(450px + var(--site-header, 90px)); }
   .sb-align { padding-bottom: 2.75rem; }
 }
 
 @media (max-width: 620px) {
-  .sb-banner { height: calc(520px + var(--site-header, 90px)); }
+  .sb-banner { height: calc(390px + var(--site-header, 90px)); }
   .sb-align { padding: 0 18px 2.5rem; }
 
   /* one line stops being possible here — a headline that overflows the

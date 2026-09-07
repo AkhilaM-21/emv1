@@ -43,8 +43,8 @@ const SupplyChain = () => (
     <Overview />
     <Solutions />
     <Products />
-    <Pricing />
     <Platform />
+    <Pricing />
     <div id="stories"><CustomerStory /></div>
     <div id="resources"><Resources /></div>
     <CTA />

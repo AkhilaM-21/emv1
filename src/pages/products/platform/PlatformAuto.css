@@ -97,7 +97,7 @@
 }
 
 .pa-lede {
-  max-width: 58ch;
+  max-width: none;
   margin: 1rem 0 0;
   font-size: 1.0625rem;
   line-height: 1.6;
@@ -149,46 +149,344 @@
   opacity: 0.55;
 }
 
-/* Two columns. The canvas is a GRID CHILD, not an absolutely placed
-   layer — placed absolutely it had to be positioned by percentages
-   that were guesses, and at some widths it sat over the copy. */
+/* STACKED, not side-by-side. Two columns fighting over one row's
+   width is what forced every earlier round of this hero into a
+   trade-off — a bigger diagram always meant a narrower headline.
+   Full width top to bottom removes the trade-off entirely: the copy
+   gets the whole measure, and the diagram below gets the whole
+   measure too, each on its own line of the stack. */
 .pa-hero-in {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.42fr);
-  gap: 48px;
+  display: flex;
+  flex-direction: column;
 
-  /* TOP-aligned, not centred. With the logo strip gone the two columns
-     are close to the same height, and centring the shorter one left the
-     diagram floating below the headline it belongs beside. Both now
-     start on the same line. */
-  align-items: start;
+  /* THE GAP HAS A FLOOR, not just a taste.
+
+     `.pa-note--top` ("Automate / with a few clicks") is absolute at
+     `top: -36px`, so it hangs 36px ABOVE the diagram row and into this
+     gap. At the 24px this used to be, the note overlapped the lede by
+     about 12px and the two sat almost touching. Anything under ~48px
+     puts them back on top of each other. */
+  gap: clamp(2.75rem, 4vw, 4.5rem);
 }
 
-.pa-hero-copy { text-align: left; }
+.pa-hero-copy { width: 100%; max-width: none; text-align: center; }
+
+/* THE HEADLINE — ordinary flowing text, not fixed line-breaks. It
+   wraps on its own, same as .pa-hero-lede, so it actually fills
+   whatever width the row gives it instead of four short spans each
+   sized to their own words. */
+.pa-hero-title {
+  margin: 0;
+  max-width: none;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(2.25rem, 3.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--pa-ink);
+  text-wrap: balance;
+}
+
+.pa-hero-title-accent {
+  background: linear-gradient(100deg, #f7a76c 0%, #f0883e 45%, #e2601f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .pa-hero-lede {
-  max-width: 46ch;
-  margin: 1.5rem 0 0;
+  max-width: none;
+  margin: 1rem 0 0;
   font-size: 1.0625rem;
-  line-height: 1.62;
+  line-height: 1.5;
   color: var(--pa-ink-2);
 }
 
-.pa-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 2rem; }
+.pa-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 1.5rem; }
 
-/* It scales to the width of its track (see PlatformCanvas.css), so it
-   always fits and is never clipped. `pointer-events: none` because it
-   is scenery — a node must not swallow a click meant for the buttons. */
+/* `pointer-events: none` because it is scenery — a node must not
+   swallow a click meant for the buttons above it. The row the copy
+   used to share with the canvas is gone (the copy is full width
+   above), so this row gets the WHOLE hero width to itself: the flow
+   diagram on the left, the three cards stacked on the right — see
+   PlatformCanvas.css for how the canvas scales itself off its own
+   width via cqw, which is why giving this row more room is what
+   actually makes the diagram bigger. */
 .pa-hero-bg {
   min-width: 0;
   pointer-events: none;
+  display: flex;
+  align-items: start;
 
-  /* bled out to the viewport edge — the container's right gutter is
-     dead space next to a figure that needs every pixel it can get,
-     and the hero clips, so nothing escapes the section */
-  margin-right: calc(-1 * max(24px, 4vw));
+  /* start-aligned with a fixed gap, NOT space-between. The canvas caps
+     at 780px and the card at 460px, so on a wide screen there is
+     leftover row width past both of them — space-between turned that
+     leftover into a second, much wider gap wedged between the two,
+     pulling the card away from the diagram it's meant to sit beside.
+     Left-aligned, the leftover space falls after the card instead,
+     where it is just quiet margin rather than a visible gap. */
+  justify-content: flex-start;
+  gap: 28px;
+}
+
+/* the canvas's own positioning context, for the margin notes, and the
+   flex item that grows to fill whatever the card column does not.
+
+   flex-basis is 0%, NOT auto. .pc has an aspect-ratio and a container
+   query on it, and a flex-basis of `auto` asks the browser to start
+   sizing from that box's OWN natural/intrinsic size before shrinking
+   it to fit — which for an aspect-ratio box is undefined enough that
+   it rendered at a wildly oversized width instead of sharing the row.
+   A 0% basis has no intrinsic size to fall back on, so the box is
+   sized purely by flex-grow against the row's actual available space,
+   which is the well-known fix for this exact class of bug. */
+.pa-hero-canvas {
+  position: relative;
+  flex: 1 1 0%;
+  min-width: 0;
+
+  /* THE CAP IS LOAD-BEARING IN TWO DIRECTIONS, so it cannot just be
+     nudged for looks:
+
+     DOWNWARD — the canvas has an aspect-ratio (see PlatformCanvas.css),
+     so every extra pixel of width becomes 0.51 of height. 820 gives a
+     417px diagram, which is what keeps the whole hero on one screen.
+
+     UPWARD — the margin notes below the diagram are `white-space:
+     nowrap`, and the two of them need about 700px of canvas to clear
+     each other. At the 460 this once was, "From idea to impact —
+     faster" ran 47px into "More possibilities." and the two printed as
+     one word. Do not take this below ~700.
+
+     780, down from 820, because the panel beside it grew from 300 to
+     340 to hold a screen rather than a paragraph. Still clear of the
+     700 floor. */
+  max-width: 780px;
+}
+
+/* ---------------------------------------------------------------
+   THE SECOND SCREEN — the low-code builder, beside the flow canvas
+
+   A fixed flex-basis, not flex-grow, so it never competes with the
+   canvas for the row's space — .pa-hero-bg is start-aligned now, so
+   this can size up on its own without the canvas needing to shrink
+   to make room. 460 (was 340) so the form fields and the code pane
+   both read at a real size instead of a cramped miniature.
+   --------------------------------------------------------------- */
+.pa-lc {
+  position: relative;
+  flex: 0 0 clamp(300px, 30vw, 460px);
+  padding: 16px 16px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--pa-line);
+  background: #fff;
+}
+
+.pa-lc-k {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pa-accent);
+}
+
+.pa-lc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2fbf71;
+  flex-shrink: 0;
+}
+
+/* the container query the mock sizes itself off — the same one the
+   Build pillar gives it, so the screen is identical in both places */
+.pa-lc-shot {
+  container-type: inline-size;
+  border-radius: 11px;
+  border: 1px solid #eaebee;
+  background: #fff;
+  overflow: hidden;
+}
+
+.pa-lc-foot {
+  margin: 14px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--pa-ink-3);
+}
+
+/* ---------------------------------------------------------------
+   THE LOW-CODE MOCK — visual build on top, the code it produces
+   underneath, an arrow between them standing in for "same thing".
+   Sizes off the same .pm cqw base PlatformPillars.css sets up, so it
+   drops into .pa-lc-shot without redeclaring the container query.
+   --------------------------------------------------------------- */
+.pm-lc { padding: 0.85em 0.9em 0.95em; }
+
+.pm-lc-tabs { display: flex; gap: 0.9em; border-bottom: 1px solid #eef0f3; }
+
+.pm-lc-tabs span {
+  padding-bottom: 0.5em;
+  margin-bottom: -1px;
+  border-bottom: 1.5px solid transparent;
+  font-size: 0.78em;
+  font-weight: 600;
+  color: #9aa1ad;
+  white-space: nowrap;
+}
+
+.pm-lc-tabs span.is-on { color: var(--pa-accent); border-bottom-color: var(--pa-accent); }
+
+.pm-lc-form {
+  padding: 0.7em 0.75em 0.8em;
+  border-radius: 0.65em;
+  border: 1px solid #eaecef;
+  background: #fafbfc;
+}
+
+.pm-lc-form-h { display: flex; align-items: center; gap: 0.5em; }
+
+.pm-lc-form-h b {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.88em;
+  font-weight: 700;
+}
+
+.pm-lc-form-h b svg { color: #9aa1ad; flex-shrink: 0; }
+
+.pm-lc-chip {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding: 0.28em 0.6em;
+  border-radius: 999px;
+  background: rgba(109, 74, 224, 0.12);
+  font-size: 0.66em;
+  font-weight: 700;
+  color: #6d4ae0;
+  white-space: nowrap;
+}
+
+.pm-lc-fld {
+  display: flex;
+  align-items: center;
+  margin-top: 0.6em;
+  padding: 0.55em 0.7em;
+  border-radius: 0.45em;
+  border: 1px solid #e6e8ec;
+  background: #fff;
+  font-size: 0.8em;
+  color: #9aa1ad;
+}
+
+.pm-lc-fld--sel { justify-content: space-between; }
+.pm-lc-fld--sel svg { color: #b9bfc9; }
+
+.pm-lc-save {
+  display: block;
+  margin-top: 0.65em;
+  padding: 0.55em 0;
+  border-radius: 0.45em;
+  background: var(--pa-accent);
+  text-align: center;
+  font-size: 0.82em;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pm-lc-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.75em 0;
+  color: var(--pa-accent);
+}
+
+.pm-lc-div i { flex: 1; height: 1px; background: #eaecef; }
+.pm-lc-div svg { flex-shrink: 0; }
+
+/* the code pane — light, like the rest of the card, not a dropped-in
+   dark editor. --pa-band is the same light grey the page's other
+   section grounds use, so this reads as "the same screen, a different
+   tab" rather than a chunk of a different UI bolted on. The three
+   token hues are the site's own teal / violet / orange (pillar hues +
+   the page accent), each already proven at this weight on a light
+   ground elsewhere on the page. */
+.pm-lc-code {
+  margin: 0.75em 0 0;
+  padding: 0.75em 0.8em;
+  border-radius: 0.65em;
+  background: var(--pa-band);
+  border: 1px solid #e6e8ec;
+  overflow-x: auto;
+}
+
+.pm-lc-code code {
+  display: block;
+  white-space: pre;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.78em;
+  line-height: 1.7;
+  color: #383b46;
+}
+
+.pm-lc-code .tk-tag { color: #0f9b8e; }
+.pm-lc-code .tk-attr { color: #6d4ae0; }
+.pm-lc-code .tk-str { color: var(--pa-accent); }
+
+/* ---------------------------------------------------------------
+   THE MARGIN NOTES — the reference's hand-drawn asides. Absolute over
+   .pa-hero-bg, in the Caveat script rather than the page's own type,
+   so they read as a scribbled aside and not as another UI label.
+   They sit OUTSIDE the row's own box on two sides (negative top /
+   bottom), which is safe: .pa-hero-bg has nothing else near its edges
+   for them to collide with, and the hero section has the headroom.
+   --------------------------------------------------------------- */
+.pa-note {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Caveat', 'Segoe Script', cursive;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.15;
+  color: var(--pa-accent);
+  white-space: nowrap;
+}
+
+.pa-note-arrow { color: var(--pa-accent); flex-shrink: 0; }
+
+/* Percentages, not fixed pixels — .pa-hero-canvas is now the diagram
+   alone (the cards moved above it), so each note is placed off the
+   diagram's OWN coordinate space: the trigger sits centre-right (see
+   TRIGGER.x in PlatformCanvas.jsx), the left branch a fifth of the
+   way in, the right branch four-fifths. A percentage tracks that as
+   the 960px cap gives way to a narrower canvas at smaller widths. */
+.pa-note--top {
+  top: -36px;
+  right: 26%;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  transform: rotate(-2deg);
+}
+
+.pa-note--top .pa-note-arrow { margin-top: 2px; }
+
+/* The notes are hand-drawn flourish, not information, so they are the
+   first thing to go once the canvas gets tight for room. */
+@media (max-width: 1030px) {
+  .pa-note { display: none; }
 }
 
 /* ---------------------------------------------------------------
@@ -255,11 +553,7 @@
   border-bottom-color: var(--pa-accent);
 }
 
-.pa-anchors-cta {
-  flex-shrink: 0;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.95rem;
-}
+.pa-anchors-cta { flex-shrink: 0; }
 
 /* so a jump to an anchor does not park its heading under the bar */
 .pa-sec { scroll-margin-top: 68px; }
@@ -907,7 +1201,7 @@ body.pa-nav-swap .neurox-header {
    RESPONSIVE
    --------------------------------------------------------------- */
 @media (max-width: 1200px) {
-  .pa-hero .hi-title { font-size: clamp(2.3rem, 4.4vw, 3.2rem) !important; }
+  .pa-hero-title { font-size: clamp(2.3rem, 4.4vw, 3.2rem) !important; }
   .pa-hero-in { gap: 44px; }
 }
 
@@ -966,15 +1260,19 @@ body.pa-nav-swap .neurox-header {
 }
 
 @media (max-width: 980px) {
-  /* below this the canvas cannot be read AND leave the copy room, so
-     it drops under the copy as a full-width band instead of beside it */
-  .pa-hero-in { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  /* the stack centres itself below this, rather than staying pinned
+     to the left edge the way a wide desktop hero reads best */
+  .pa-hero-in { gap: 2.5rem; }
   .pa-hero-copy { text-align: center; }
-  .pa-hero .hi-title { align-items: center !important; }
   .pa-hero-lede { margin-left: auto; margin-right: auto; }
   .pa-hero-actions { justify-content: center; }
   .pa-proof ul { justify-content: center; }
-  .pa-hero-bg { max-width: 720px; margin: 0 auto; width: 100%; }
+
+  /* the diagram-left / panel-right row cannot hold both at a legible
+     width down here, so it becomes a top-to-bottom stack: diagram
+     first, the low-code panel under it at full width */
+  .pa-hero-bg { max-width: 720px; margin: 0 auto; width: 100%; flex-direction: column; }
+  .pa-lc { flex: none; width: 100%; }
 }
 
 /* ---------------------------------------------------------------
@@ -1034,6 +1332,7 @@ body.pa-nav-swap .neurox-header {
    MOTION OFF
    --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
+  .pa-anchors,
   .pa-btn,
   .pa-mcard,
   .pa-mnav button,

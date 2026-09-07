@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-mot
 import {
   BadgeDollarSign, BookOpen, Boxes, Briefcase, Building2, ChevronDown, ChevronLeft, ChevronRight, Cloud, ArrowRight,
   Factory, FileText, GitMerge, Globe, Handshake, HardDrive, Landmark, Languages,
-  Layers, LayoutDashboard, Percent, Play, Receipt, ReceiptText, RefreshCw, Search, Share2,
+  Layers, LayoutDashboard, Pause, Percent, Play, Receipt, ReceiptText, RefreshCw, Search, Share2,
   ShieldCheck, ShoppingCart, Sparkles, TrendingUp, Truck, Users, Wallet,
 } from 'lucide-react';
 import { tint } from './FinanceStory';
@@ -163,8 +163,8 @@ const ANCHORS = [
   ['overview', 'Overview'],
   ['solutions', 'Solutions'],
   ['products', 'Products'],
-  ['pricing', 'Pricing'],
   ['platform', 'Platform'],
+  ['pricing', 'Pricing'],
   ['stories', 'Customer stories'],
   ['resources', 'Resources'],
 ];
@@ -175,6 +175,14 @@ const ANCHORS = [
 export const FinanceHeroBlade = () => {
   const active = useScrollSpy(ANCHORS.map(([id]) => id));
   const sentinel = useNavSwap();
+  const heroVideoRef = useRef(null);
+  const [heroPlaying, setHeroPlaying] = useState(true);
+
+  const toggleHeroVideo = () => {
+    const el = heroVideoRef.current;
+    if (!el) return;
+    if (el.paused) { el.play(); setHeroPlaying(true); } else { el.pause(); setHeroPlaying(false); }
+  };
 
   return (
   <>
@@ -195,17 +203,25 @@ export const FinanceHeroBlade = () => {
       <div className="fd-in fd-hero-in">
         <div className="fd-hero-copy">
           <h1 className="hi-title" style={{ alignItems: 'flex-start', margin: 0, textShadow: 'none', fontSize: '65px' }}>
-            <span className="hi-line" style={{ color: 'var(--ink)' }}>Complete financial</span>
-            <span className="hi-line" style={{ color: 'var(--ink)' }}>management for</span>
-            <span className="hi-line hi-accent">connected businesses</span>
+            <span className="hi-line" style={{ color: 'var(--ink)' }}>Intelligent financial</span>
+            <span className="hi-line" style={{ color: 'var(--ink)' }}>management for the</span>
+            <span className="hi-line hi-accent">connected enterprise</span>
           </h1>
+
+          <p className="fd-hero-lede">
+            Run your financial operations on one connected platform. One financial engine.
+            Every transaction connected. Every decision informed.
+          </p>
 
           <div className="fd-hero-actions" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <a href="#demo" className="cta-btn-primary">
-              Request a demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
+              Request a Demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
             </a>
             <a href="#demo" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
-              Start free trial
+              Start Free Trial
+            </a>
+            <a href="#demo" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
+              Talk to Sales
             </a>
           </div>
         </div>
@@ -213,11 +229,31 @@ export const FinanceHeroBlade = () => {
         {/* the screenshot rides in a tinted glass frame, not flush */}
         <div className="fd-hero-media">
           <div className="fd-hero-frame">
-            <Slot ratio="16 / 9" src="https://picsum.photos/seed/hero/1280/720" alt="Emvive Finance" />
-            <button type="button" className="fd-play" aria-label="Watch the Emvive Finance overview">
-              <Play size={20} strokeWidth={2.2} />
+            <div className="fd-slot" style={{ aspectRatio: '16 / 9' }}>
+              <video
+                ref={heroVideoRef}
+                src="/images/hero-finance.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                tabIndex={-1}
+                aria-hidden="true"
+                /* scaled up and clipped by .fd-slot's own overflow:hidden —
+                   crops the generator's watermark out of frame on every
+                   edge instead of just wherever it happens to sit */
+                style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.14)' }}
+              />
+            </div>
+            <button
+              type="button"
+              className="fd-play"
+              aria-label={heroPlaying ? 'Pause the Emvive Finance overview' : 'Play the Emvive Finance overview'}
+              onClick={toggleHeroVideo}
+            >
+              {heroPlaying ? <Pause size={20} strokeWidth={2.2} /> : <Play size={20} strokeWidth={2.2} />}
             </button>
-            <span className="fd-hero-caption">One platform for every financial process</span>
+            <span className="fd-hero-caption">One financial engine. Every transaction connected.</span>
           </div>
         </div>
       </div>
@@ -242,7 +278,12 @@ export const FinanceHeroBlade = () => {
             </li>
           ))}
         </ul>
-        <a href="#start" className="fd-btn fd-btn-solid fd-anchors-cta">Contact us</a>
+        <a href="#start" className="btn-get-started fd-anchors-cta">
+          Contact us
+          <span className="arrow-circle">
+            <ArrowRight size={14} color="#fff" />
+          </span>
+        </a>
       </div>
     </nav>
   </>
@@ -316,7 +357,7 @@ const MODULES = [
   {
     k: 'Cost Centres & Dimensions', c: 'green', icon: Layers,
     line: 'Financial data structured the way you report.',
-    body: 'Structure financial information using cost centres and dimensions. Organise financial data according to the areas, entities or dimensions relevant to your organisation and its reporting requirements.',
+    body: 'Structure financial information using cost centres, dimensions and multi-level organisational hierarchies, including Business Unit, Cost Centre, Department and Custom Organisation types. Organise financial data according to the areas, entities or dimensions relevant to your organisation and its reporting requirements.',
     img: 'https://picsum.photos/seed/cost/1280/720',
   },
 
@@ -364,7 +405,7 @@ const MODULES = [
   {
     k: 'Tax Management', c: 'rose', icon: Percent,
     line: 'One engine for the taxes you have to file.',
-    body: 'Support different tax requirements through the Emvive Tax Engine, including VAT, GST, sales tax, withholding tax and reverse charge.',
+    body: 'Support different tax requirements through the Emvive Tax Engine, including VAT, GST, sales tax, withholding tax and reverse charge. For Saudi Arabia, the engine supports ZATCA compliance, including e-invoicing requirements.',
     img: 'https://picsum.photos/seed/tax/1280/720',
   },
   {
@@ -413,9 +454,13 @@ export const Overview = () => {
       <div className="fd-in">
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div className="emv-subtitle" style={{ margin: '0 auto' }}>OVERVIEW</div>
-          <h2 className="fd-h2 global-section-title" style={{ marginTop: '1rem', letterSpacing: '-0.03em' }}>Get to know <span className="text-gradient">Emvive Finance</span></h2>
+          <h2 className="fd-h2 global-section-title" style={{ marginTop: '1rem', letterSpacing: '-0.03em' }}>Finance Built Around <span className="text-gradient">Your Business</span></h2>
           <p className="fd-lede" style={{ maxWidth: '100%', margin: '1rem auto 0' }}>
-            Learn more about our solutions and products across accounting, consolidation, tax, and reporting.
+            Emvive Finance brings core accounting and advanced financial management together in a unified
+            financial platform. Manage financial operations across single or multiple companies while
+            maintaining a connected view of transactions, accounts, organisational structures and financial
+            performance. From everyday accounting to complex multi-company operations, Emvive provides the
+            financial foundation for a connected enterprise.
           </p>
         </div>
         
@@ -424,7 +469,7 @@ export const Overview = () => {
             <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work1/1280/720" alt="What is Emvive Finance?" />
             <div className="fd-ocard-content">
               <h3 className="fd-ocard-title">What is Emvive Finance?</h3>
-              <p className="fd-ocard-body">Become more data-driven and innovative with a unified platform for all your financial operations.</p>
+              <p className="fd-ocard-body">A General Ledger and Chart of Accounts foundation, connected to accounts payable and receivable, cash and bank, and the rest of your financial operations.</p>
               <a href="#explore" className="fd-ocard-cta">
                 <i aria-hidden="true"><ChevronRight /></i> Explore Emvive Finance
               </a>
@@ -435,7 +480,7 @@ export const Overview = () => {
             <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work2/1280/720" alt="Take a guided tour" />
             <div className="fd-ocard-content">
               <h3 className="fd-ocard-title">Take a guided tour</h3>
-              <p className="fd-ocard-body">Get a closer look at how to improve specific business processes with our financial tools.</p>
+              <p className="fd-ocard-body">See how payables, receivables, cash and bank activity stay connected as accounting transactions rather than separate records.</p>
               <a href="#tour" className="fd-ocard-cta">
                 <i aria-hidden="true"><ChevronRight /></i> Start your tour
               </a>
@@ -611,25 +656,140 @@ export const Solutions = () => {
    2.5 — PRODUCTS
    ===================================================================== */
 const PRODUCTS_DATA = [
-  { id: 'gl', tab: 'General Ledger', icon: BookOpen, title: 'General Ledger', link: 'Explore General Ledger', img: '/images/general_ledger.jpg', color: '#7c3aed', caption: 'Manage your core accounting operations with a multi-company General Ledger.', body: 'Maintain financial records and transactions within a unified accounting structure, supporting organisations that operate across multiple companies.' },
-  { id: 'ap_ar', tab: 'AP & AR', icon: Receipt, title: 'Accounts Payable & Accounts Receivable', link: 'Explore AP & AR', img: '/images/accounts_payable_receivable.jpg', color: '#0891b2', caption: 'Manage payables and receivables as connected parts of your financial operations.', body: 'Support vendor and customer-related financial transactions while keeping accounting activities integrated with the wider business workflow.' },
-  { id: 'cash_bank', tab: 'Cash & Bank', icon: Landmark, title: 'Cash & Bank Management', link: 'Explore Cash & Bank', img: 'https://picsum.photos/seed/bank/1280/720', color: '#059669', caption: 'Manage cash and bank transactions within your financial system.', body: 'Keep banking activities connected with your accounting operations and maintain a unified view of your financial transactions.' },
-  { id: 'fixed_assets', tab: 'Fixed Assets', icon: Building2, title: 'Fixed Assets Management', link: 'Explore Fixed Assets', img: 'https://picsum.photos/seed/assets/1280/720', color: '#2563eb', caption: 'Manage fixed assets as part of your financial operations.', body: 'Keep asset-related information connected with your accounting processes within the same financial platform.' },
-  { id: 'adv_payments', tab: 'Advance Payments', icon: Wallet, title: 'Advance Payments', link: 'Explore Advance Payments', img: 'https://picsum.photos/seed/adv/1280/720', color: '#9333ea', caption: 'Manage advance payments across Accounts Receivable and Accounts Payable.', body: 'Support advance payment transactions as part of your customer and vendor financial processes.' },
-  { id: 'retention', tab: 'Retention Mgt', icon: ShieldCheck, title: 'Retention Management', link: 'Explore Retention', img: 'https://picsum.photos/seed/ret/1280/720', color: '#0d9488', caption: 'Manage retention-related financial transactions within your accounting processes.', body: 'Emvive supports retention management across the financial workflows where retained amounts form part of business transactions.' },
-  { id: 'budgeting', tab: 'Budgeting', icon: TrendingUp, title: 'Budgeting & Forecasting', link: 'Explore Budgeting', img: 'https://picsum.photos/seed/budg/1280/720', color: '#d97706', caption: 'Plan and monitor your financial activities with budgeting and forecasting capabilities.', body: 'Use financial planning information alongside your accounting data to support ongoing financial management.' },
-  { id: 'cost_centres', tab: 'Cost Centres', icon: Layers, title: 'Cost Centres & Dimensions', link: 'Explore Cost Centres', img: 'https://picsum.photos/seed/cost/1280/720', color: '#be123c', caption: 'Structure financial information using cost centres and dimensions.', body: 'Organise financial data according to the areas, entities or dimensions relevant to your organisation and its reporting requirements.' },
-  { id: 'intercompany', tab: 'Intercompany', icon: Share2, title: 'Intercompany Accounting', link: 'Explore Intercompany', img: 'https://picsum.photos/seed/inter/1280/720', color: '#7c3aed', caption: 'Support financial transactions between companies within your organisation through intercompany accounting.', body: 'This is particularly relevant for businesses managing multiple entities within a connected financial environment.' },
-  { id: 'consolidation', tab: 'Consolidation', icon: GitMerge, title: 'Financial Consolidation', link: 'Explore Consolidation', img: 'https://picsum.photos/seed/cons/1280/720', color: '#0891b2', caption: 'Bring financial information together across multiple companies through consolidation.', body: 'Support a consolidated view of financial information for organisations operating across multiple entities.' },
-  { id: 'auto_bank_rec', tab: 'Auto Bank Rec', icon: RefreshCw, title: 'Auto Bank Reconciliation', link: 'Explore Auto Bank Rec', img: 'https://picsum.photos/seed/recon/1280/720', color: '#059669', caption: 'Automate bank reconciliation as part of your financial operations.', body: 'Emvive includes auto bank reconciliation to connect banking activity with your accounting processes.' },
-  { id: 'dashboards', tab: 'Dashboards', icon: LayoutDashboard, title: 'Financial Dashboards', link: 'Explore Dashboards', img: 'https://picsum.photos/seed/dash/1280/720', color: '#2563eb', caption: 'Bring financial information into dashboards for a clearer view of business performance.', body: "Financial dashboards are part of Emvive's analytics and reporting capabilities." },
-  { id: 'custom_reports', tab: 'Custom Reports', icon: FileText, title: 'Custom Report Builder', link: 'Explore Custom Reports', img: 'https://picsum.photos/seed/report/1280/720', color: '#9333ea', caption: 'Create customised reports to analyse the business information relevant to your organisation.', body: "Emvive's analytics capabilities include a custom report builder for flexible reporting." },
-  { id: 'drill_down', tab: 'Drill-Down', icon: Search, title: 'Drill-Down Analysis', link: 'Explore Drill-Down', img: 'https://picsum.photos/seed/drill/1280/720', color: '#0d9488', caption: 'Move from high-level financial information into the underlying details with drill-down analysis.', body: 'This allows users to explore the information behind reported figures rather than relying only on summary-level views.' },
-  { id: 'global_ops', tab: 'Global Ops', icon: Globe, title: 'Multi-Country, Multi-Company & Multi-Currency', link: 'Explore Global Ops', img: 'https://picsum.photos/seed/multi/1280/720', color: '#d97706', caption: 'Support business operations across multiple countries, companies and currencies through Emvive\'s global capabilities.', body: 'These capabilities provide the foundation for organisations operating across different entities and markets.' },
-  { id: 'tax_mgmt', tab: 'Tax Management', icon: Percent, title: 'Tax Management', link: 'Explore Tax Management', img: 'https://picsum.photos/seed/tax/1280/720', color: '#be123c', caption: 'Support different tax requirements through the Emvive Tax Engine, including VAT, GST, sales tax, withholding tax and reverse charge.', body: '' },
-  { id: 'multi_lang', tab: 'Multi-Language', icon: Languages, title: 'Multi-Language Financial Operations', link: 'Explore Multi-Language', img: 'https://picsum.photos/seed/lang/1280/720', color: '#7c3aed', caption: 'Support English and Arabic with RTL, along with multilingual documents, for businesses operating across different markets.', body: '' },
-  { id: 'connected_ops', tab: 'Connected Ops', icon: GitMerge, title: 'Connected Financial Operations', link: 'Explore Connected Ops', img: 'https://picsum.photos/seed/connected/1280/720', color: '#0891b2', caption: 'Emvive Finance is part of a broader Business Operating System that connects Finance with Supply Chain, Sales, Projects, Manufacturing, Human Capital, POS and other business functions.', body: 'This allows financial processes to operate as part of connected business workflows rather than as an isolated accounting system.' },
-  { id: 'secure_cloud', tab: 'Secure Cloud', icon: Cloud, title: 'Built on a Secure Cloud Platform', link: 'Explore Secure Cloud', img: 'https://picsum.photos/seed/cloud/1280/720', color: '#059669', caption: 'Emvive is designed as a SaaS, multi-tenant, cloud-native platform with scalability and security features including zero-downtime updates, backup and disaster recovery.', body: '' },
+  {
+    id: 'gl',
+    tab: 'General Ledger',
+    icon: BookOpen,
+    title: 'General Ledger & Chart of Accounts',
+    link: 'Explore General Ledger',
+    img: '/images/general_ledger.jpg',
+    color: '#7c3aed',
+    caption: 'Build the foundation of your financial operations with a structured General Ledger and flexible Chart of Accounts.',
+    body: 'Manage financial transactions across multiple companies and currencies while maintaining a consistent accounting structure. Support manual and automated journals, recurring journals, accruals, adjustments and reversing entries as part of your accounting processes. Configure journal approvals and automated posting workflows while maintaining financial dimensions and account-level controls. Maintain an audit history of financial activity for greater visibility and control.',
+    caps: ['General Ledger', 'Chart of Accounts', 'Multi-Company Accounting', 'Multi-Currency Accounting', 'Journal Management', 'Recurring Journals', 'Accrual & Adjustment Journals', 'Reversing Journals', 'Journal Approvals', 'Automated Posting', 'Financial Dimensions', 'Account-Level Controls', 'Audit History'],
+  },
+  {
+    id: 'ap_ar',
+    tab: 'AP & AR',
+    icon: Receipt,
+    title: 'Accounts Payable & Accounts Receivable',
+    link: 'Explore AP & AR',
+    img: '/images/accounts_payable_receivable.jpg',
+    color: '#0891b2',
+    caption: 'Manage the financial transactions that connect your organisation with suppliers and customers.',
+    body: 'Accounts Payable: manage vendor-related financial processes from invoice recording through payment. Support invoice processing, vendor advances, retention deductions and payment workflows while keeping payable transactions connected with procurement and the wider financial system. Accounts Receivable: manage customer receivables and collections within the same financial platform. Track receivable transactions, support customer advances and maintain visibility into outstanding amounts and payment activity.',
+    caps: ['Vendor Invoices', 'Customer Invoices', 'Payment Processing', 'Vendor Advances', 'Customer Advances', 'Retention Deductions', 'Receivables & Payables Management'],
+  },
+  {
+    id: 'cash_bank',
+    tab: 'Cash & Bank',
+    icon: Landmark,
+    title: 'Cash & Bank Management',
+    link: 'Explore Cash & Bank',
+    img: 'https://picsum.photos/seed/bank/1280/720',
+    color: '#059669',
+    caption: 'Manage cash and banking activities alongside your accounting operations.',
+    body: 'Maintain visibility into cash and bank transactions while connecting banking activity with the broader financial workflow. Auto Bank Reconciliation automates bank reconciliation by connecting bank activity with financial records, helping finance teams reconcile transactions as part of their regular financial operations.',
+    caps: ['Cash Management', 'Bank Management', 'Bank Transactions', 'Auto Bank Reconciliation'],
+  },
+  {
+    id: 'fixed_assets',
+    tab: 'Fixed Assets',
+    icon: Building2,
+    title: 'Fixed Assets Management',
+    link: 'Explore Fixed Assets',
+    img: 'https://picsum.photos/seed/assets/1280/720',
+    color: '#2563eb',
+    caption: 'Manage fixed assets as part of your financial operations, keeping asset-related information connected with your accounting processes.',
+    body: 'Maintain asset information within the financial platform and manage asset-related transactions alongside your wider financial operations.',
+  },
+  {
+    id: 'budgeting',
+    tab: 'Budgeting',
+    icon: TrendingUp,
+    title: 'Budgeting & Forecasting',
+    link: 'Explore Budgeting',
+    img: 'https://picsum.photos/seed/budg/1280/720',
+    color: '#d97706',
+    caption: 'Plan, monitor and evaluate financial performance with integrated budgeting and forecasting.',
+    body: 'Create a structured approach to financial planning while keeping budgets and forecasts connected to your financial information. Use financial planning data alongside actual financial performance to support ongoing analysis and decision-making.',
+  },
+  {
+    id: 'cost_centres',
+    tab: 'Cost Centres',
+    icon: Layers,
+    title: 'Cost Centres, Dimensions & Organisational Hierarchies',
+    link: 'Explore Cost Centres',
+    img: 'https://picsum.photos/seed/cost/1280/720',
+    color: '#be123c',
+    caption: 'Go beyond traditional cost-centre structures with flexible organisational hierarchies and financial dimensions.',
+    body: 'Emvive supports multiple types of organisational hierarchies, allowing businesses to structure financial information according to the way their organisation operates. Organisation Hierarchy: create multi-level organisational structures using different organisation types, including Business Unit, Cost Centre, Department and Custom Organisation. Business Unit Hierarchy: structure business units across multiple levels to reflect the organisation’s operational structure. Cost Centre Hierarchy: create multi-level cost-centre structures to organise and analyse financial information across different areas of the business. Financial Dimensions: use financial dimensions to classify and analyse financial information across organisational structures and reporting requirements. Multi-Level Company Hierarchy: manage complex corporate structures with multiple companies and company hierarchies, providing a structured view of financial operations across entities.',
+  },
+  {
+    id: 'intercompany',
+    tab: 'Intercompany',
+    icon: Share2,
+    title: 'Intercompany Accounting & Consolidation',
+    link: 'Explore Intercompany & Consolidation',
+    img: 'https://picsum.photos/seed/inter/1280/720',
+    color: '#7c3aed',
+    caption: 'Manage financial operations across multiple companies while keeping transactions connected.',
+    body: 'Intercompany Accounting: manage financial transactions between companies within the organisation through integrated intercompany accounting processes. Financial Consolidation: bring financial information together across multiple companies to provide a consolidated view of financial performance. Support organisations with complex company structures while maintaining visibility across individual entities and the wider enterprise.',
+  },
+  {
+    id: 'tax_compliance',
+    tab: 'Tax & Compliance',
+    icon: Percent,
+    title: 'Tax & Compliance',
+    link: 'Explore Tax & Compliance',
+    img: 'https://picsum.photos/seed/tax/1280/720',
+    color: '#be123c',
+    caption: 'Manage tax requirements as part of your financial operations.',
+    body: "Emvive's Tax Engine supports VAT, GST, sales tax, withholding tax and reverse charge requirements. For businesses operating in Saudi Arabia, the platform also supports ZATCA compliance, including e-invoicing requirements. The platform's multi-country and multi-currency capabilities support financial operations across different markets and business environments.",
+  },
+  {
+    id: 'close_control',
+    tab: 'Close & Control',
+    icon: ReceiptText,
+    title: 'Financial Close & Control',
+    link: 'Explore Close & Control',
+    img: 'https://picsum.photos/seed/close/1280/720',
+    color: '#4338ca',
+    caption: 'Bring financial activities together within a structured environment for greater control over financial operations.',
+    body: 'Support financial governance through controlled accounting processes, approval workflows, audit history and account-level controls. Maintain visibility into financial activity while creating a stronger foundation for accurate and controlled financial operations.',
+  },
+  {
+    id: 'financial_reporting',
+    tab: 'Reporting & Intelligence',
+    icon: LayoutDashboard,
+    title: 'Financial Reporting & Intelligence',
+    link: 'Explore Reporting & Intelligence',
+    img: 'https://picsum.photos/seed/dash/1280/720',
+    color: '#2563eb',
+    caption: 'Turn financial data into information that supports business decisions.',
+    body: 'Financial Dashboards: get a clear view of financial performance through financial dashboards that bring relevant financial information together. Custom Report Builder: create reports based on the information and dimensions relevant to your organisation. Drill-Down Analysis: move from summary-level information into underlying transaction details to understand what is driving financial results. Financial Intelligence: use connected financial information to gain greater visibility into business performance and support informed financial decision-making.',
+    caps2Label: 'Connected Financial Processes',
+    caps2Note: "Finance doesn't operate separately from the rest of the business. Emvive connects financial processes with the business activities that create them.",
+    caps2: [
+      ['Procure-to-Pay', 'Connect purchasing activities with receiving, vendor invoicing and payment.'],
+      ['Order-to-Cash', 'Connect sales transactions with receivables and financial processing.'],
+      ['Inventory-to-Finance', 'Connect inventory-related business activities with their financial impact.'],
+      ['Project-to-Cash', 'Connect project activities, billing and financial transactions.'],
+      ['Hire-to-Pay', 'Connect employee-related processes with payroll and financial operations.'],
+    ],
+    caps2Closing: 'This allows Finance to become part of the complete business workflow, rather than functioning as an isolated accounting system.',
+  },
+  {
+    id: 'global_ops',
+    tab: 'Global Operations',
+    icon: Globe,
+    title: 'Global Financial Operations',
+    link: 'Explore Global Operations',
+    img: 'https://picsum.photos/seed/multi/1280/720',
+    color: '#d97706',
+    caption: 'Support financial operations across different markets, entities and currencies.',
+    body: 'Multi-Country: manage financial operations across different countries and markets. Multi-Company: support financial management across multiple companies and organisational structures. Multi-Currency: manage financial transactions across multiple currencies. Multi-Language: support English and Arabic, including RTL requirements and multilingual documents.',
+  },
 ];
 
 export const Products = () => {
@@ -711,9 +871,27 @@ export const Products = () => {
           <div className="fd-prod-text" style={{ paddingRight: '2rem', textAlign: 'left' }}>
             <h3 className="fd-prod-body-title">{cur.title}</h3>
             {(cur.caption || cur.body) && (
-              <div className="fd-prod-body-desc" style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.6', marginBottom: '2rem' }}>
+              <div className="fd-prod-body-desc" style={{ color: '#4b5563', fontSize: '16px', lineHeight: '1.6', marginBottom: cur.caps ? '1.5rem' : '2rem' }}>
                 {cur.caption && <p style={{ marginBottom: cur.body ? '1rem' : '0' }}>{cur.caption}</p>}
                 {cur.body && <p>{cur.body}</p>}
+              </div>
+            )}
+            {cur.caps && (
+              <div className="fd-prod-caps" style={{ marginBottom: cur.caps2 ? '1rem' : '2rem' }}>
+                <h4 className="fd-prod-caps-h">Key capabilities</h4>
+                <p className="fd-prod-caps-list">{cur.caps.join(' · ')}</p>
+              </div>
+            )}
+            {cur.caps2 && (
+              <div className="fd-prod-caps2" style={{ marginBottom: '2rem' }}>
+                <h4 className="fd-prod-caps-h">{cur.caps2Label || 'Key capabilities'}</h4>
+                {cur.caps2Note && <p className="fd-prod-caps-note">{cur.caps2Note}</p>}
+                <ul className="fd-prod-caps2-list">
+                  {cur.caps2.map(([name, desc]) => (
+                    <li key={name}><b>{name}:</b> {desc}</li>
+                  ))}
+                </ul>
+                {cur.caps2Closing && <p className="fd-prod-caps-note" style={{ marginTop: '0.85rem' }}>{cur.caps2Closing}</p>}
               </div>
             )}
             <a href="#start" className="fd-prod-link">
@@ -1156,12 +1334,12 @@ export const Platform = () => {
     <section className="fd-section fd-platform fd-anim fd-anim--up" id="platform" ref={reveal}>
       <div className="fd-in">
         <span className="global-section-badge fd-badge-orange"><span className="global-badge-dot" aria-hidden="true" /> PLATFORM</span>
-        <h2 className="fd-h2 global-section-title">Finance as part of the business, <span className="text-gradient">not beside it</span></h2>
+        <h2 className="fd-h2 global-section-title">Built for the <span className="text-gradient">Connected Enterprise</span></h2>
 
         <div className="fd-auto-card">
           <div className="fd-auto-left">
             <h3>The platform underneath</h3>
-            <p>Finance does not run on its own island — it runs on the same system the rest of the business does.</p>
+            <p>Emvive Finance operates as part of the broader Emvive Business Operating System, connecting financial management with Supply Chain, Sales, Projects, Manufacturing, Human Capital, POS and other business operations. With a cloud-native, multi-tenant architecture, role-based access, field-level security, audit logs, backup and disaster recovery, Emvive provides the foundation for scalable and secure financial operations.</p>
 
             <div className="fd-auto-tabs" role="tablist" aria-label="Platform">
               {PLATFORM.map((x, i) => (

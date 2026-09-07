@@ -143,13 +143,17 @@
   line-height: 1;
 }
 
+/* one size for every card — the longest titles are the stage chains
+   ("Purchase Request → RFQ → ... → Payment"), and the hero-sized
+   clamp this used to be wrapped those into the strip below and
+   clipped the last line, so every title now uses that smaller size. */
 .hb-title {
   margin: 22px 0 0;
-  max-width: 800px;
+  max-width: 640px;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.25;
   letter-spacing: -0.03em;
   color: #fff;
 }
@@ -157,23 +161,59 @@
 /* ---------------------------------------------------------------
    THE STRIP — pulled up into the banner, and it IS the navigation
    --------------------------------------------------------------- */
+/* the width/position that used to live on .hb-strip itself now sits on
+   the wrap, so the arrow buttons below have a positioning context that
+   spans the strip's own left/right edges */
+.hb-strip-wrap {
+  position: relative;
+  width: calc(100% - 2 * max(28px, 4vw));
+  margin: -140px auto 0;
+}
+
+/* a horizontal scroller, not a grid — the count is content-driven now
+   (nine cards, not a fixed four), so the strip scrolls sideways for
+   whatever doesn't fit rather than wrapping into extra rows. The
+   native scrollbar is hidden — the arrow buttons are the visible
+   control now, same as the department rail on the Platform page. */
 .hb-strip {
   position: relative;
   z-index: 3;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: calc(100% - 2 * max(28px, 4vw));
-  margin: -140px auto 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  width: 100%;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
   border-radius: 4px;
-  overflow: hidden;
 }
+
+.hb-strip::-webkit-scrollbar { display: none; }
+
+/* sits in .hb-in's own side padding, clear of the white strip box
+   entirely — never over a card's text, at either scrolling edge.
+   Centred with `top` + a fixed margin rather than a translateY, since
+   .fd-orange-btn:hover sets its own transform and would otherwise
+   fight this one for the centring on hover. */
+.hb-edge-nav {
+  position: absolute;
+  top: calc(50% + 50px);
+  z-index: 4;
+}
+
+.hb-edge-nav--prev { right: 100%; margin-right: 14px; }
+.hb-edge-nav--next { left: 100%; margin-left: 14px; }
 
 .hb-item {
   position: relative;
   display: flex;
   flex-direction: column;
+  /* exactly four visible at once — no upper clamp, so the card keeps
+     growing to fill a quarter of the strip instead of capping out and
+     letting a fifth one creep into view */
+  flex: 0 0 25%;
+  min-width: 220px;
+  scroll-snap-align: start;
   padding: 25px 0 0 20px;
   border: 0;
   background: #fff;
@@ -283,30 +323,21 @@
    the items stack rather than squeezing four across a phone.
    --------------------------------------------------------------- */
 @media (max-width: 1100px) {
-  .hb-strip { grid-template-columns: repeat(2, 1fr); }
-  .hb-item:nth-child(2) .hb-inner { border-right: 0; }
-  .hb-item:nth-child(1) .hb-inner,
-  .hb-item:nth-child(2) .hb-inner { border-bottom: 1px solid rgba(169, 174, 177, 0.6); }
+  .hb-item { flex-basis: clamp(200px, 45%, 260px); }
 }
 
 @media (max-width: 720px) {
   .hb { padding: 3.5rem 0 4rem; }
   .hb-stage { height: 360px; }
 
-  .hb-strip {
-    grid-template-columns: 1fr;
+  .hb-strip-wrap {
     width: 100%;
     /* below the banner rather than pulled into it — there is not
        enough banner left to overlap at this width */
     margin-top: 16px;
   }
 
-  .hb-item .hb-inner {
-    border-right: 0;
-    border-bottom: 1px solid rgba(169, 174, 177, 0.6);
-  }
-
-  .hb-item:last-child .hb-inner { border-bottom: 0; }
+  .hb-item { flex-basis: min(78vw, 320px); }
 }
 
 /* ---------------------------------------------------------------

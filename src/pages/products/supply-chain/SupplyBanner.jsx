@@ -34,11 +34,11 @@ const SupplyBanner = ({
   video = DEFAULT_VIDEO,
   poster,
   /* One line, so keep it short — it is set `nowrap` above 620px. */
-  title = 'Every move on',
-  accent = 'one ledger',
-  para = 'Procurement, production, the warehouse and the fleet read and write the same records — from the purchase order to the carton on the shelf.',
-  primary = { label: 'Request a demo', href: '#demo' },
-  secondary = { label: 'Explore the platform', href: '#overview' },
+  title = 'Connected Supply Chain',
+  accent = 'Management',
+  para = 'Manage procurement, vendors, inventory, warehouses and demand planning on one connected platform. Emvive Supply Chain brings purchasing and supply operations together, connecting the activities that move goods and services through your business with the financial and operational processes around them. One supply chain. Every process connected. Complete visibility across operations.',
+  primary = { label: 'Request a Demo', href: '#demo' },
+  secondary = { label: 'Start Free Trial', href: '#demo' },
 }) => {
   const ref = useRef(null);
 

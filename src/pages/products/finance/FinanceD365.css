@@ -327,7 +327,7 @@
      721px copy / 118px gutter / 817px media — so the media is the wider
      column, at a fraction over half. */
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  align-items: center;
+  align-items: stretch;
   gap: clamp(2rem, 6.2vw, 7.4rem);
   width: 100%;
 }
@@ -407,10 +407,16 @@
 /* --- the framed screenshot ---
    The shot is inset inside a tinted glass panel rather than sitting
    flush, which is what gives the reference's hero its depth. */
-.fd-hero-media { position: relative; }
+/* stretches to match .fd-hero-copy's own height (the grid row is
+   align-items: stretch), so the video is exactly as tall as the
+   headline + lede + buttons beside it, not a fixed 16:9 shape */
+.fd-hero-media { position: relative; height: 100%; }
 
 .fd-hero-frame {
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   /* a plain white mat with a wide, soft shadow — the frame reads as a
      device sitting above the page rather than as tinted glass */
   padding: 0.85rem;
@@ -423,7 +429,14 @@
   backdrop-filter: blur(6px);
 }
 
-.fd-hero-frame .fd-slot { border-radius: 0.65rem; }
+/* overrides the Slot component's inline `aspect-ratio: 16/9` — the
+   hero is the one place that ratio should give way to the row's own
+   stretched height instead */
+.fd-hero-frame .fd-slot {
+  flex: 1 1 auto;
+  aspect-ratio: auto !important;
+  border-radius: 0.65rem;
+}
 
 .fd-play {
   position: absolute;
@@ -524,12 +537,7 @@
   border-bottom-color: var(--db-500);
 }
 
-/* the same pill, sized to the bar rather than to the page */
-.fd-anchors-cta {
-  flex-shrink: 0;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.95rem;
-}
+.fd-anchors-cta { flex-shrink: 0; }
 
 /* =====================================================================
    2 — OVERVIEW
@@ -2281,6 +2289,46 @@ body.fd-nav-swap .neurox-header {
   color: var(--ink);
   margin-bottom: 1.5rem;
 }
+
+.fd-prod-caps-h {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9aa1ad;
+}
+
+.fd-prod-caps-list {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.fd-prod-caps-note {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.fd-prod-caps2-list {
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fd-prod-caps2-list li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.fd-prod-caps2-list b { color: var(--ink); }
 
 .fd-prod-link {
   display: inline-flex;

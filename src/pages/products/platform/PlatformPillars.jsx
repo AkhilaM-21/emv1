@@ -42,7 +42,7 @@ const FIELDS = [
   ['Status', 'Status'],
 ];
 
-const ObjectMock = () => (
+export const ObjectMock = () => (
   <div className="pm pm-obj">
     <aside className="pm-rail" aria-hidden="true">
       {[Box, LayoutGrid, FileText, Workflow, LayoutDashboard, Filter, ShieldCheck, Braces].map((Ic, i) => (

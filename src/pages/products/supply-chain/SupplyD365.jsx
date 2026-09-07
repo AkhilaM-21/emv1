@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ArrowRight, Boxes, Briefcase, Check, ChevronLeft, ChevronRight, Cloud, Factory, Gauge, Handshake, HardDrive, Landmark, ShieldCheck, ShoppingCart, TrendingUp, Users,
+  ArrowRight, Boxes, Briefcase, Check, ChevronLeft, ChevronRight, Cloud, Factory, Gauge,
+  Handshake, HardDrive, Landmark, ShieldCheck, ShoppingCart, TrendingUp, Users,
 } from 'lucide-react';
 import SupplyBanner from './SupplyBanner';
 import './SupplyWhatsNew.css';
@@ -152,8 +153,8 @@ const ANCHORS = [
   ['overview', 'Overview'],
   ['solutions', 'Solutions'],
   ['products', 'Products'],
-  ['pricing', 'Pricing'],
   ['platform', 'Platform'],
+  ['pricing', 'Pricing'],
   ['stories', 'Customer stories'],
   ['resources', 'Resources'],
 ];
@@ -190,7 +191,12 @@ export const SupplyHeroBlade = () => {
             </li>
           ))}
         </ul>
-        <a href="#start" className="fd-btn fd-btn-solid fd-anchors-cta">Contact us</a>
+        <a href="#start" className="btn-get-started fd-anchors-cta">
+          Contact us
+          <span className="arrow-circle">
+            <ArrowRight size={14} color="#fff" />
+          </span>
+        </a>
       </div>
     </nav>
   </>
@@ -216,7 +222,7 @@ const OVERVIEW_ITEMS = [
     id: 'tour',
     kind: 'Guided tour',
     img: '/images/control_step.jpg',
-    title: 'Follow one order from requisition to proof of delivery',
+    title: 'Follow one purchase from request to payment',
     cta: 'Start the tour',
     href: '#solutions',
   },
@@ -224,7 +230,7 @@ const OVERVIEW_ITEMS = [
     id: 'pricing',
     kind: 'Pricing',
     img: '/images/close_step.jpg',
-    title: 'Compare plans across your sites, warehouses and fleet',
+    title: 'Compare plans across procurement, vendors and warehouses',
     cta: 'See pricing',
     href: '#pricing',
   },
@@ -315,10 +321,14 @@ export const Overview = () => {
         <div className="wh-head wh-anim wh-anim--down" ref={headRef}>
           <div className="emv-subtitle">OVERVIEW</div>
           <h2 className="fd-h2 global-section-title" style={{ marginTop: '1rem', letterSpacing: '-0.03em' }}>
-            Get to know <span className="text-gradient">Emvive Supply Chain</span>
+            Supply Chain Built Around <span className="text-gradient">Your Business</span>
           </h2>
           <p className="fd-lede" style={{ maxWidth: '70ch', margin: '1rem 0 0' }}>
-            Learn more about our solutions and products across procurement, manufacturing, warehousing, transportation and planning.
+            Emvive Supply Chain connects the core activities involved in purchasing and supply management —
+            from purchase requests and vendor interactions to goods receipt, inventory and warehouse operations.
+            With connected procurement, vendor management, inventory control, warehouse management and demand
+            planning, businesses can manage supply operations through one integrated system. Connected,
+            controlled, collaborative, integrated, visible and scalable — built for growing organisations.
           </p>
         </div>
 
@@ -395,36 +405,52 @@ export const Overview = () => {
    ===================================================================== */
 const SOLUTIONS_DATA = [
   {
-    k: 'Modernize your procurement operations',
-    line: 'Requisition to receipt on one document trail, with budget checked at the commitment and approvals routed by value and category.',
+    k: 'Connected',
+    line: 'Connect procurement, vendors, inventory and financial processes across the enterprise.',
     link: 'Explore procurement',
     href: '#products',
     img: '/images/solution_procurement.jpg',
     c: '#10b981', // Green
   },
   {
-    k: 'Run the warehouse down to the bin',
-    line: 'Putaway, picking, packing and counting on a scanner that keeps working when the signal does not, with stock held at bin, batch and serial level.',
-    link: 'Discover warehousing',
+    k: 'Controlled',
+    line: 'Bring structured procurement workflows and matching processes into purchasing operations.',
+    link: 'Explore procurement',
     href: '#products',
-    img: '/images/solution_warehouse.jpg',
+    img: '/images/solution_transport.jpg',
     c: '#3b82f6', // Blue
   },
   {
-    k: 'Move goods with live visibility',
-    line: 'Loads built by weight and drop sequence, ETAs tracked against plan, and cold chain logged the whole way to the door.',
-    link: 'See transportation',
+    k: 'Collaborative',
+    line: 'Give vendors a connected way to register, respond to RFQs, access purchase orders, submit invoices and track payments.',
+    link: 'Explore vendor management',
     href: '#products',
-    img: '/images/solution_transport.jpg',
+    img: '/images/product_inventory.jpg',
     c: '#8b5cf6', // Purple
   },
   {
-    k: 'Plan demand outlet by outlet',
-    line: 'Forecasts, reorder points and allocation that read live stock rather than last month’s plan, with fill rate measured on the line.',
-    link: 'View planning tools',
-    href: '#products',
-    img: '/images/solution_planning.jpg',
+    k: 'Integrated',
+    line: 'Connect Supply Chain with Finance and other business operations.',
+    link: 'Explore the platform',
+    href: '#platform',
+    img: '/images/solution_warehouse.jpg',
     c: '#d6461a', // Orange
+  },
+  {
+    k: 'Visible',
+    line: 'Bring supply chain and inventory information into broader business reporting and analytics.',
+    link: 'View inventory control',
+    href: '#products',
+    img: '/images/product_inventory.jpg',
+    c: '#ec4899', // Pink
+  },
+  {
+    k: 'Scalable',
+    line: 'Manage supply operations through a unified enterprise platform designed to support growing organisations.',
+    link: 'See warehouse and planning',
+    href: '#products',
+    img: '/images/solution_warehouse.jpg',
+    c: '#06b6d4', // Teal
   },
 ];
 
@@ -440,10 +466,14 @@ export const Solutions = () => {
     <section className="rd" id="solutions" ref={reveal}>
       <div className="rd-in">
         <div className="rd-head">
-          <p className="emv-subtitle" style={{ marginBottom: '1rem', textTransform: 'uppercase' }}>Solutions</p>
+          <p className="emv-subtitle" style={{ marginBottom: '1rem', textTransform: 'uppercase' }}>The Emvive Supply Chain Advantage</p>
           <h2 className="fd-h2 global-section-title" style={{ letterSpacing: '-0.03em' }}>
-            Move from a system of record to a <span className="text-gradient">system of action</span>
+            From <span className="text-gradient">Requirement to Receipt</span>
           </h2>
+          <p className="fd-lede" style={{ maxWidth: '70ch', margin: '1rem 0 0' }}>
+            Request → Source → Select → Purchase → Receive → Invoice → Pay. Connect every stage of the
+            procurement journey through Emvive Supply Chain.
+          </p>
         </div>
 
         <ul className="rd-list">
@@ -503,37 +533,82 @@ const SHOWCASE = [
   {
     id: 'procurement',
     tag: 'Procurement',
-    title: 'Requisition to receipt, on one trail',
+    title: 'Purchase Request → RFQ → Vendor Selection → Purchase Order → Goods Receipt → Vendor Invoice → Payment',
     img: '/images/solution_procurement.jpg',
-    head: 'Procurement',
-    body: 'Budget checked at the commitment, approvals routed by value, and a variance that holds the receipt instead of nodding it through.',
+    head: 'Connected Procurement Management',
+    body: 'Connect purchase requests, RFQs, vendor selection, purchase orders and goods receipt through to vendor invoicing and payment, in one structured procurement workflow.',
+    cta: 'Read more',
+  },
+  {
+    id: 'advanced_procurement',
+    tag: 'Advanced Procurement',
+    title: 'Controls for every procurement scenario',
+    img: '/images/solution_procurement.jpg',
+    head: 'Advanced Procurement',
+    body: 'Two-way and three-way matching, vendor advance payments, retention deduction and partial receipts.',
+    cta: 'Read more',
+  },
+  {
+    id: 'vendor',
+    tag: 'Vendor Management',
+    title: 'Build connected vendor relationships',
+    img: '/images/solution_transport.jpg',
+    head: 'Vendor Management',
+    body: 'Connect vendor activities with sourcing, purchasing, invoicing and payment across the procurement lifecycle.',
+    cta: 'Read more',
+  },
+  {
+    id: 'vendor_portal',
+    tag: 'Vendor Portal',
+    title: 'Register → Quote → Purchase Order → Invoice → Payment',
+    img: '/images/solution_transport.jpg',
+    head: 'Vendor Portal',
+    body: 'Vendors register, respond to RFQs, access purchase orders, submit invoices and track payment status — all through one connected portal.',
+    cta: 'Read more',
+  },
+  {
+    id: 'inventory',
+    tag: 'Inventory',
+    title: 'Maintain control across your inventory',
+    img: '/images/product_inventory.jpg',
+    head: 'Inventory Control',
+    body: 'Inventory connected to procurement and warehouse activity, feeding Inventory Insights and broader reporting.',
     cta: 'Read more',
   },
   {
     id: 'warehouse',
     tag: 'Warehouse',
-    title: 'Down to the bin, down to the batch',
+    title: 'Connect warehouse operations with your supply chain',
     img: '/images/solution_warehouse.jpg',
-    head: 'Warehouse management',
-    body: 'Putaway, picking, packing and counting on a scanner that keeps working when the signal does not.',
+    head: 'Warehouse Management',
+    body: 'Movement and handling of goods managed within one integrated supply chain environment.',
     cta: 'Read more',
   },
   {
-    id: 'transport',
-    tag: 'Transportation',
-    title: 'You hear about the delay first',
-    img: '/images/solution_transport.jpg',
-    head: 'Transportation',
-    body: 'Loads built by weight and drop sequence, live ETAs against plan, and cold chain logged to the door.',
+    id: 'demand_planning',
+    tag: 'Demand Planning',
+    title: 'Plan supply around business requirements',
+    img: '/images/solution_warehouse.jpg',
+    head: 'Demand Planning',
+    body: 'Demand planning connected with procurement and inventory activity, aligned to what the business actually needs.',
     cta: 'Read more',
   },
   {
-    id: 'planning',
-    tag: 'Planning',
-    title: 'Demand, outlet by outlet',
-    img: '/images/solution_planning.jpg',
-    head: 'Customer planning',
-    body: 'Forecasts, reorder points and allocation that read live stock rather than last month’s plan.',
+    id: 'visibility',
+    tag: 'Visibility',
+    title: 'Turn supply chain data into insight',
+    img: '/images/product_inventory.jpg',
+    head: 'Supply Chain Visibility',
+    body: 'Inventory Insights alongside financial, sales, POS and project analytics, for a broader view of operations.',
+    cta: 'Read more',
+  },
+  {
+    id: 'connected_processes',
+    tag: 'Connected Processes',
+    title: 'Procure-to-Pay → Inventory-to-Finance',
+    img: '/images/solution_procurement.jpg',
+    head: 'Connected Supply Chain Processes',
+    body: 'Supply Chain connects with Finance so operational activity flows straight into financial and business processes.',
     cta: 'Explore now',
   },
 ];
@@ -546,6 +621,7 @@ export const Products = () => {
   const ref = useReveal();
   const [i, setI] = useState(0);
   const [running, setRunning] = useState(true);
+  const stripRef = useRef(null);
 
   /* Autoplay is the point here: the bar along the foot of the current
      item IS the timer, so stopping it would leave a bar that fills and
@@ -558,6 +634,16 @@ export const Products = () => {
     return () => clearTimeout(t);
   }, [running, i]);
 
+  /* moves by one card's own rendered width, not a guessed pixel step,
+     so it stays right however the cards resize at each breakpoint */
+  const nudge = (dir) => {
+    const el = stripRef.current;
+    if (!el) return;
+    const card = el.firstElementChild;
+    const step = card ? card.offsetWidth : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+
   return (
     <section id="products" className="hb" ref={ref}>
       <div className="hb-in">
@@ -567,7 +653,7 @@ export const Products = () => {
             Bring your supply chain together with <span className="text-gradient">Emvive Supply Chain</span>
           </h2>
           <p className="hb-sub">
-            From everyday stock movements to advanced planning and logistics, Emvive Supply Chain provides a connected platform for managing goods across your organisation.
+            From purchase request through vendor invoice and payment, and on through inventory, warehouse and demand planning, Emvive Supply Chain provides a connected platform for procurement, vendor management and supply operations.
           </p>
         </div>
 
@@ -592,12 +678,21 @@ export const Products = () => {
           ))}
         </div>
 
-        {/* THE STRIP — pulled up into the banner, and it is the nav */}
-        <div
-          className="hb-strip"
-          onMouseEnter={() => setRunning(false)}
-          onMouseLeave={() => setRunning(true)}
-        >
+        {/* THE STRIP — pulled up into the banner, and it is the nav.
+            Scrolls sideways for the cards that don't fit, with the
+            native scrollbar hidden (see .hb-strip) — an arrow button
+            sits at each edge of the scroller instead. */}
+        <div className="hb-strip-wrap">
+          <button type="button" className="fd-orange-btn hb-edge-nav hb-edge-nav--prev" onClick={() => nudge(-1)} aria-label="Previous">
+            <ChevronLeft size={18} strokeWidth={2.6} />
+          </button>
+
+          <div
+            className="hb-strip"
+            ref={stripRef}
+            onMouseEnter={() => setRunning(false)}
+            onMouseLeave={() => setRunning(true)}
+          >
           {SHOWCASE.map((s, n) => (
             <button
               type="button"
@@ -633,6 +728,11 @@ export const Products = () => {
               </span>
             </button>
           ))}
+          </div>
+
+          <button type="button" className="fd-orange-btn hb-edge-nav hb-edge-nav--next" onClick={() => nudge(1)} aria-label="Next">
+            <ChevronRight size={18} strokeWidth={2.6} />
+          </button>
         </div>
       </div>
     </section>
@@ -655,9 +755,9 @@ const PLANS = [
     forV: 'A single site',
     forN: 'Priced on users and the modules you turn on.',
     points: [
-      'Procurement and goods receipt',
+      'Purchase requests, RFQ and purchase orders',
+      'Goods receipt with two-way matching',
       'Bin, batch and serial stock',
-      'Standard stock and ageing reporting',
       'Up to 10 users',
     ],
   },
@@ -669,9 +769,9 @@ const PLANS = [
     forN: 'Priced on sites, users and the modules you turn on.',
     points: [
       'Everything in Essentials',
-      'Multi-site and inter-site transfers',
+      'Vendor portal — RFQ, PO access, invoicing and payment tracking',
+      'Three-way matching, vendor advances and retention deduction',
       'Demand forecasting and reorder points',
-      'Approval workflows and audit trail',
     ],
     featured: true,
   },
@@ -683,8 +783,8 @@ const PLANS = [
     forN: 'Priced on entities, sites, fleet and residency.',
     points: [
       'Everything in Growth',
+      'Multi-entity procurement with a group-wide vendor network',
       'Transportation, routing and proof of delivery',
-      'Cross-docking and hub allocation',
       'Data residency and SSO',
     ],
   },
@@ -785,12 +885,12 @@ export const Platform = () => {
     <section className="fd-section fd-platform fd-anim fd-anim--up" id="platform" ref={reveal}>
       <div className="fd-in">
         <span className="global-section-badge fd-badge-orange"><span className="global-badge-dot" aria-hidden="true" /> PLATFORM</span>
-        <h2 className="fd-h2 global-section-title">Supply chain as part of the business, <span className="text-gradient">not beside it</span></h2>
+        <h2 className="fd-h2 global-section-title">Built for the <span className="text-gradient">Connected Enterprise</span></h2>
 
         <div className="fd-auto-card">
           <div className="fd-auto-left">
             <h3>The platform underneath</h3>
-            <p>The supply chain does not run on its own island — it runs on the same system the rest of the business does.</p>
+            <p>Emvive Supply Chain operates as part of the broader Emvive Business Operating System, connecting supply chain operations with Finance, Sales, Projects, Manufacturing, Human Capital, POS and other business functions. Procure-to-Pay and Inventory-to-Finance keep procurement and inventory activity connected to the resulting financial transactions, so teams work within one connected enterprise environment rather than disconnected systems.</p>
 
             <div className="fd-auto-tabs" role="tablist" aria-label="Platform">
               {PLATFORM.map((x, i) => (

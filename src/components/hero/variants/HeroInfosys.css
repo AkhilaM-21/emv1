@@ -39,9 +39,13 @@
   .hi-video { transition: none; animation: none; }
 }
 
+/* the floor of this drift stays well above 1.0 — .hi-hero clips
+   overflow, so the extra scale keeps the generated clips' watermark
+   corner cropped out of frame at every point in the drift, not just
+   its most-zoomed-in moment */
 @keyframes hi-drift {
-  from { transform: scale(1.1); }
-  to   { transform: scale(1.02); }
+  from { transform: scale(1.22); }
+  to   { transform: scale(1.12); }
 }
 
 /* Centre-weighted, because the copy is centred: a radial keeps the darkening

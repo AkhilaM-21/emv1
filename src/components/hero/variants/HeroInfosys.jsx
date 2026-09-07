@@ -26,30 +26,30 @@ const HERO_VIDEO = '/Create_a_premium_enterprise_we.mp4';
    its words from the shared hero copy, so it stays in step with the other
    hero variants and with i18n.
 
-   Slides two and three are PLACEHOLDERS — stand-in clips already in
-   /public/images and stand-in copy. Replace `video`, `headline1` and
-   `headline2` with the real thing; nothing else needs touching. Neither
+   Slides two and three carry the Platform and Supply Chain + Finance
+   clips, with headlines matched to those product pages' own hero copy
+   (PlatformAuto.jsx / SupplyBanner.jsx / FinanceD365.jsx). Neither
    carries calls to action: two sets of buttons rotating in and out of the
    same spot reads as a glitch rather than as a choice. */
 const SLIDES = [
   { key: 'lead', video: null, ctas: true },
   {
     key: 'two',
-    video: '/images/1.mp4',
-    headline1: 'Close the books',
-    headline2: 'in days, not weeks.',
+    video: '/images/hero-supply-finance.mp4',
+    headline1: 'Supply chain and finance,',
+    headline2: 'connected as one.',
     ctas: false,
   },
   {
     key: 'three',
-    video: '/images/3.mp4',
-    headline1: 'Every order tracked',
-    headline2: 'from quote to cash.',
+    video: '/images/hero-workflow-automation.mp4',
+    headline1: 'Automate the way',
+    headline2: 'work moves.',
     ctas: false,
   },
 ];
 
-const SLIDE_MS = 6000;   // how long each slide holds
+const SLIDE_MS = 20000;  // fallback only — the real advance is the video's own `ended` event
 
 /* Act timing, in seconds. Everything downstream is derived from these and
    from the real word counts, so a longer translation still lands in order
@@ -105,6 +105,11 @@ const HeroInfosys = ({ video = HERO_VIDEO }) => {
         if (i !== slide || mq.matches) {
           el.pause();
         } else {
+          /* `loop` is off (see the effect below), so a clip that already
+             played through this carousel once sits at its own end —
+             rewind before playing or it would just sit on the last
+             frame, having already fired `ended`. */
+          el.currentTime = 0;
           // autoplay can be refused; the poster frame still shows
           el.play().catch(() => {});
         }
@@ -131,16 +136,30 @@ const HeroInfosys = ({ video = HERO_VIDEO }) => {
     return () => clearTimeout(t);
   }, [finalIn]);
 
-  /* One dwell per slide rather than a standing interval: because the
-     effect depends on `slide`, pressing an arrow restarts the clock
-     instead of leaving a half-spent timer to fire immediately after.
-     Reduced motion holds wherever it is, while the arrows still work. */
+  /* Advances on the current film's own `ended` event rather than a fixed
+     dwell — the clip plays out in full before the next slide comes in,
+     however long that clip actually runs. `loop` is off on the <video>
+     elements for exactly this reason: with it on, `ended` never fires.
+
+     A generous fallback timer (SLIDE_MS, well past any real clip length)
+     still backs this up in case a film fails to load or autoplay is
+     refused, so the carousel can never get stuck on one slide. Because
+     the effect depends on `slide`, pressing an arrow restarts the wait
+     instead of leaving a stale listener/timer to fire right after. */
   useEffect(() => {
     if (!introDone) return undefined;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const t = setTimeout(() => setSlide((i) => (i + 1) % SLIDES.length), SLIDE_MS);
-    return () => clearTimeout(t);
+    const advance = () => setSlide((i) => (i + 1) % SLIDES.length);
+    const el = videoRefs.current[slide];
+
+    const t = setTimeout(advance, SLIDE_MS);
+    if (el) el.addEventListener('ended', advance);
+
+    return () => {
+      clearTimeout(t);
+      if (el) el.removeEventListener('ended', advance);
+    };
   }, [introDone, slide]);
 
   // the arrows wrap, matching the rotation — no dead end at either end
@@ -156,7 +175,6 @@ const HeroInfosys = ({ video = HERO_VIDEO }) => {
           className={`hi-video${i === slide ? ' is-current' : ''}`}
           src={s.video || video}
           muted
-          loop
           playsInline
           /* only the opening film is worth the bandwidth up front; the
              other two fetch while the first one is on screen */
