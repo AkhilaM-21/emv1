@@ -466,7 +466,7 @@ export const Overview = () => {
         
         <div className="fd-overview-grid">
           <div className="fd-ocard">
-            <Slot className="fd-ocard-img" ratio="16 / 9" src="https://picsum.photos/seed/work1/1280/720" alt="What is Emvive Finance?" />
+            <Slot className="fd-ocard-img" ratio="16 / 9" src="/images/finance_overview.jpg" alt="What is Emvive Finance?" />
             <div className="fd-ocard-content">
               <h3 className="fd-ocard-title">What is Emvive Finance?</h3>
               <p className="fd-ocard-body">A General Ledger and Chart of Accounts foundation, connected to accounts payable and receivable, cash and bank, and the rest of your financial operations.</p>
@@ -511,7 +511,7 @@ const SOLUTIONS_DATA = [
     k: 'Modernize your financial operations',
     line: 'Enhance accounting across payables, receivables, and cash management with an integrated financial solution.',
     link: 'Explore financial operations',
-    img: '/images/general_ledger.jpg',
+    img: '/images/finance_solutions.jpg',
     c: '#10b981', // Green
   },
   {
