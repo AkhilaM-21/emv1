@@ -30,20 +30,6 @@
    --------------------------------------------------------------- */
 .pl-head { text-align: center; margin-bottom: clamp(2rem, 3vw, 3rem); }
 
-.pl-eyebrow {
-  display: inline-block;
-  margin-bottom: 1.25rem;
-  padding: 7px 16px;
-  border-radius: 999px;
-  border: 1px solid #e6e6ea;
-  background: #fff;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--pa-ink-2, #52525b);
-}
-
 .pl-h2 {
   margin: 0;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowLeftRight, ArrowRight, Banknote, Bell, Boxes, Briefcase, ChartColumn,
-  ChevronDown, ChevronLeft, ChevronRight, FileText, FormInput,
-  LayoutGrid, MousePointer2, PanelsTopLeft, Receipt, ShoppingCart,
-  UserRound, Workflow,
+  ChevronDown, ChevronLeft, ChevronRight, Factory, FileText, FormInput,
+  Handshake, LayoutGrid, MousePointer2, PanelsTopLeft, Receipt, ShoppingCart,
+  UserRound,
 } from 'lucide-react';
 import PlatformCanvas from './PlatformCanvas';
 import PlatformDash from './PlatformDash';
@@ -557,7 +557,7 @@ const DeptRail = () => {
                 <span className="pa-mic"><Ic size={19} strokeWidth={1.9} /></span>
                 {m.h}
               </h3>
-              <p>{m.p}</p>
+              {m.p && <p>{m.p}</p>}
             </article>
           );
         })}
@@ -580,46 +580,32 @@ const DeptRail = () => {
    ===================================================================== */
 const MODULES = [
   {
-    id: 'sales',
-    c: '226, 96, 31',
-    ic: Receipt,
-    h: 'Sales',
-    p: 'Orders, quotations and the customers behind them — priced, approved and invoiced on one record.',
+    id: 'finance', c: '18, 128, 90', ic: Banknote, h: 'Finance',
+    p: 'Expenses, payments and the approvals that release them, posted against one connected ledger.',
   },
   {
-    id: 'finance',
-    c: '18, 128, 90',
-    ic: Banknote,
-    h: 'Finance',
-    p: 'Expenses, payments and the approvals that release them, posted against the same ledger.',
+    id: 'supply-chain', c: '42, 120, 214', ic: Boxes, h: 'Supply Chain',
+    p: 'Procurement, vendors and inventory, connected from the purchase request through to receipt.',
   },
   {
-    id: 'ops',
-    c: '42, 120, 214',
-    ic: Workflow,
-    h: 'Operations',
-    p: 'Requests, cases and the processes that move them, without a spreadsheet in the middle.',
+    id: 'sales-crm', c: '226, 96, 31', ic: Handshake, h: 'Sales & CRM',
+    p: 'Leads, quotations and orders, tracked on the same record as the rest of the business.',
   },
   {
-    id: 'proc',
-    c: '74, 58, 167',
-    ic: Boxes,
-    h: 'Procurement',
-    p: 'Purchase orders, vendors and contracts, from the requisition through to the goods receipt.',
+    id: 'projects', c: '161, 98, 7', ic: Briefcase, h: 'Projects',
+    p: 'Timesheets, milestones and budgets, reading the costs finance has already posted.',
   },
   {
-    id: 'hr',
-    c: '217, 79, 134',
-    ic: UserRound,
-    h: 'HR & People',
+    id: 'manufacturing', c: '74, 58, 167', ic: Factory, h: 'Manufacturing',
+    p: 'Production orders and work centres, connected to the inventory they consume and produce.',
+  },
+  {
+    id: 'hcm', c: '217, 79, 134', ic: UserRound, h: 'Human Capital Management',
     p: 'Employee requests, onboarding and sign-offs, on the same approvals engine as everything else.',
   },
   {
-    id: 'projects',
-    c: '161, 98, 7',
-    ic: Briefcase,
-    h: 'Projects',
-    p: 'Timesheets, milestones and budgets, reading the costs finance has already posted.',
+    id: 'pos', c: '15, 155, 142', ic: ShoppingCart, h: 'Point of Sale',
+    p: 'In-store transactions, connected back to inventory and finance as they happen.',
   },
 ];
 
@@ -729,6 +715,12 @@ const PlatformAuto = () => {
               build applications, automate workflows, connect business systems and
               manage access — all within a unified enterprise environment.
             </p>
+
+            <p className="pa-hero-tagline">
+              <strong>Build</strong> what your business needs.{' '}
+              <strong>Automate</strong> how work moves.{' '}
+              <strong>Connect</strong> the systems you depend on.
+            </p>
           </div>
 
           {/* the copy runs full width above, so this row is free to use
@@ -818,7 +810,7 @@ const PlatformAuto = () => {
         <div className="pa-in">
           <div className="pa-bpanel">
             <div className="pa-head">
-              <span className="pa-eyebrow">Emvive Studio</span>
+              <span className="emv-subtitle">Emvive Studio</span>
               <h2 className="pa-h2">Build Applications Around <em>the Way Your Business Works</em></h2>
               <p className="pa-lede">
                 Emvive Studio provides no-code tools to create and customise business
@@ -876,7 +868,7 @@ const PlatformAuto = () => {
       <section className="pa-sec pa-flow" id="automate">
         <div className="pa-in">
           <div className="pa-head pa-head--c">
-            <span className="pa-eyebrow">Emvive Flow</span>
+            <span className="emv-subtitle">Emvive Flow</span>
             <h2 className="pa-h2 pa-h2--xl">Automate <em>the Way Work Moves</em></h2>
             <p className="pa-lede">
               Business processes often involve multiple steps, users and approvals. Emvive
@@ -905,7 +897,7 @@ const PlatformAuto = () => {
       <section className="pa-sec pa-an" id="analyze">
         <div className="pa-in">
           <div className="pa-head pa-head--c">
-            <span className="pa-eyebrow">Analyze</span>
+            <span className="emv-subtitle">Analyze</span>
             <h2 className="pa-h2">See what your business <em>is actually doing.</em></h2>
             <p className="pa-lede">
               Turn the data your applications and processes generate into operational insight —
@@ -929,7 +921,7 @@ const PlatformAuto = () => {
         <div className="pa-in">
           <div className="pa-mtop">
             <div className="pa-head">
-              <span className="pa-eyebrow">What you can build</span>
+              <span className="emv-subtitle">What you can build</span>
               <h2 className="pa-h2">Build for the way <em>your business works.</em></h2>
               <p className="pa-lede">
                 Not six products with six databases. Six departments on one record — which is

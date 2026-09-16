@@ -670,10 +670,10 @@ const PRODUCTS_DATA = [
   },
   {
     id: 'ap_ar',
-    tab: 'AP & AR',
+    tab: 'Accounts Payable & Accounts Receivable',
     icon: Receipt,
     title: 'Accounts Payable & Accounts Receivable',
-    link: 'Explore AP & AR',
+    link: 'Explore Accounts Payable & Accounts Receivable',
     img: '/images/accounts_payable_receivable.jpg',
     color: '#0891b2',
     caption: 'Manage the financial transactions that connect your organisation with suppliers and customers.',

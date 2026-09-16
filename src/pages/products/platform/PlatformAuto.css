@@ -63,19 +63,6 @@
 /* ---------------------------------------------------------------
    SHARED TYPE
    --------------------------------------------------------------- */
-.pa-eyebrow {
-  display: inline-block;
-  margin-bottom: 1rem;
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(226, 96, 31, 0.28);
-  background: var(--pa-accent-soft);
-  color: var(--pa-accent);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
 
 .pa-h2 {
   margin: 0;
@@ -202,6 +189,19 @@
   font-size: 1.0625rem;
   line-height: 1.5;
   color: var(--pa-ink-2);
+}
+
+.pa-hero-tagline {
+  max-width: none;
+  margin: 0.85rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--pa-ink-2);
+}
+
+.pa-hero-tagline strong {
+  font-weight: 700;
+  color: var(--pa-ink);
 }
 
 .pa-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 1.5rem; }

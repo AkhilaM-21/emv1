@@ -278,7 +278,7 @@ const PlatformPillars = () => (
     <div className="pa-in">
       <div className="pl-shell">
         <div className="pl-head">
-          <span className="pl-eyebrow">One platform</span>
+          <span className="emv-subtitle">One platform</span>
           <h2 className="pl-h2">
             Build. <em className="pl-v">Automate.</em> <em className="pl-t">Analyze.</em>
           </h2>
