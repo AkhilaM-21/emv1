@@ -416,6 +416,10 @@
   gap: 0.4rem;
 }
 .mobile-mega-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
   padding: 0.4rem 0.85rem;
   border-radius: 999px;
   border: 1px solid #e2e8f0;
@@ -433,6 +437,10 @@
   gap: 0.4rem;
 }
 .mobile-mega-ind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
   padding: 0.35rem 0.75rem;
   border-radius: 8px;
   border: none;
@@ -491,6 +499,7 @@
 .mobile-chip {
   display: inline-flex;
   align-items: center;
+  min-height: 36px;
   gap: 0.35rem;
   padding: 0.5rem 1rem;
   border-radius: 999px;
@@ -733,6 +742,7 @@
   align-items: center;
   gap: 0.6rem;
   width: 100%;
+  min-height: 36px;
   padding: 7px 0;
   border: none;
   background: transparent;

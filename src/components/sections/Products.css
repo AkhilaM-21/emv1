@@ -41,6 +41,12 @@
     align-items: flex-start;
     gap: 1rem;
   }
+  /* .emv-headline had no mobile size at all — 3.4rem (54px) on a phone
+     forced very tight wrapping against the section's 80%-width column. */
+  .emv-headline {
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+  }
 }
 .emv-subtitle {
   font-size: 0.85rem;
@@ -439,6 +445,15 @@
 }
 @media (max-width: 640px) {
   .emv-app-detail-points { grid-template-columns: 1fr; }
+  /* .emv-app-cta has flex-shrink:0 (so the pill doesn't squash next to the
+     title on tablet) but on a phone the title + full-size pill together
+     don't fit the row and were getting clipped by the section's
+     overflow-x:clip. Stack them instead of fighting for the same line. */
+  .emv-app-detail-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
 
 /* =========================================

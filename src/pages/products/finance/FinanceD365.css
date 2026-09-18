@@ -1525,6 +1525,30 @@
   .fd-ov-grid { grid-template-columns: minmax(0, 1fr); }
   .fd-ov-shot { display: none; }
   .fd-acc-shot { display: block; }
+
+  /* THE HERO HEADING. The <h1> carries `hi-title` (the home hero's
+     class, reused here) plus an INLINE `fontSize: '65px'` set in the
+     JSX — fixed, not responsive, and an inline style beats every rule
+     below except one marked !important. At this width the row has
+     already stacked to one column, so a flat 65px is no longer sized
+     against a half-width copy column but against the FULL row — on a
+     narrow phone that is wide enough to force a horizontal scrollbar
+     on words like "connected" or "management". Scoped to the hero so
+     no other page's `.hi-title` is touched. */
+  .fd-hero-in .hi-title { font-size: clamp(2rem, 6.5vw, 2.75rem) !important; }
+
+  /* THE HERO VIDEO. `.fd-hero-frame`/`.fd-hero-media` are `height:
+     100%`, stretched by `.fd-hero-in`'s `align-items: stretch` to
+     match the copy column's own height — that only means something
+     while the two sit side by side. Stacked here, the media is alone
+     in its own row with nothing to stretch against, so that chain of
+     100% heights has no definite height to resolve against. Browsers
+     fall back to the video's own intrinsic ratio, which should still
+     be fine — but an explicit floor is cheap insurance against the
+     frame collapsing to a sliver before the video's metadata loads. */
+  .fd-hero-media,
+  .fd-hero-frame { height: auto; }
+  .fd-hero-frame .fd-slot { min-height: 260px; }
 }
 
 @media (max-width: 720px) {
@@ -1535,6 +1559,11 @@
   .fd-fgrid, .fd-rgrid,
   .fd-pgrid, .fd-pngrid { grid-template-columns: minmax(0, 1fr); }
   .fd-btn { flex: 1 1 auto; }
+
+  /* one step further down than the 1080px rule above, for phone
+     widths where even a 2.75rem cap starts crowding the frame */
+  .fd-hero-in .hi-title { font-size: clamp(1.65rem, 8vw, 2.1rem) !important; }
+  .fd-hero-frame .fd-slot { min-height: 200px; }
   .fd-acc-item { --ic: 2.25rem; --ic-gap: 0.75rem; padding-left: 1.25rem; }
   .fd-acc-item::after { left: 1.25rem; }
   .fd-fgrid { gap: 2.5rem; }

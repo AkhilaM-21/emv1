@@ -180,6 +180,7 @@
   z-index: 3;
   display: flex;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   width: 100%;
@@ -338,6 +339,26 @@
   }
 
   .hb-item { flex-basis: min(78vw, 320px); }
+
+  /* THE EDGE ARROWS move INSIDE the wrap here.
+     `right: 100%` / `left: 100%` parks each button in the gutter
+     outside `.hb-strip-wrap`'s own box — fine while that gutter (built
+     from `.hb-in`'s side padding plus the wrap's centring margin) is
+     wide enough to hold a 44px button plus its 14px offset. Once the
+     wrap goes full width here that gutter is gone, so the buttons were
+     printing past the viewport edge — off canvas and unusable. They
+     sit over the strip's own edges instead now, the way an overlaid
+     carousel arrow normally does.
+
+     `top: 50%; margin-top` rather than a translateY, same reasoning as
+     the desktop rule above: `.fd-orange-btn:hover` sets its own
+     transform and would fight a transform-based centring. */
+  .hb-edge-nav {
+    top: 50%;
+    margin-top: -22px;
+  }
+  .hb-edge-nav--prev { right: auto; left: 6px; margin-right: 0; }
+  .hb-edge-nav--next { left: auto; right: 6px; margin-left: 0; }
 }
 
 /* ---------------------------------------------------------------

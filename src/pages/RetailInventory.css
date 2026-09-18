@@ -375,6 +375,13 @@
   .ri-price-card.featured:hover { transform: translateY(-4px); }
   .ri-subnav-links { gap: 1.2rem; }
   .ri-subnav-name { display: none; }
+
+  /* "Monthly" + the 70px switch + "Annually" + the "Save 20%" pill run
+     ~330px wide with no wrap set — on phones under ~360px that is
+     wider than the content column and pushes the row past the edge.
+     Wrap is a no-op until it is actually needed, so nothing moves at
+     the wider widths this same query already covers. */
+  .ri-billing-toggle-wrapper { flex-wrap: wrap; row-gap: 0.75rem; }
 }
 
 /* HERO SECTION (Dropship.io Style) */
@@ -1516,17 +1523,48 @@ body.dark-theme .stat-marquee-card .stat-desc {
   .ri-features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* THE ACCORDION + IMAGE ROW had no responsive rule at all: two
+     `flex: 1` columns with no basis just keep splitting the viewport
+     in half all the way down to a phone, squeezing the accordion copy
+     into a sliver a few dozen px wide and forcing far more wrapped
+     lines than `.acc-body`'s 300px max-height was sized for — the
+     open panel's text gets cut off rather than fully showing. Stacked
+     here, each side gets the full width back. */
+  .ri-accordion-container {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .ri-accordion-image {
+    width: 100%;
+    min-height: 320px;
+  }
 }
 
 @media (max-width: 768px) {
   .ri-features-grid {
     grid-template-columns: 1fr;
   }
-  .ri-hero h1 {
+  .ri-accordion-image { min-height: 240px; }
+  /* was `.ri-hero h1` — one class short of the base rule's
+     `.ri-hero.dropship-style h1` (0,2,1), so the lower-specificity
+     (0,1,1) override here never won the cascade: the 4.5rem heading
+     never actually shrank below 768px, which at phone widths is wide
+     enough on its own to force horizontal overflow on a word like
+     "Operations". Matched to the base selector so this rule applies. */
+  .ri-hero.dropship-style h1 {
     font-size: 2.5rem;
   }
   .ri-stats-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  /* one step further down for the narrowest phones, where 2.5rem
+     still crowds the frame */
+  .ri-hero.dropship-style h1 {
+    font-size: 2rem;
   }
 }
