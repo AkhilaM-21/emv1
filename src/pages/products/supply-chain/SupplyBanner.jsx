@@ -98,15 +98,13 @@ const SupplyBanner = ({
 
           <div className="sb-actions">
             {primary && (
-              <a className="sb-btn sb-btn-solid" href={primary.href}>
-                {primary.label}
-                <span className="sb-btn-ic" aria-hidden="true"><ArrowRight size={15} strokeWidth={2.4} /></span>
+              <a className="cta-btn-primary" href={primary.href}>
+                {primary.label} <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
               </a>
             )}
             {secondary && (
-              <a className="sb-btn sb-btn-ghost" href={secondary.href}>
+              <a className="cta-btn-secondary" href={secondary.href} style={{ backgroundColor: 'white' }}>
                 {secondary.label}
-                <span className="sb-btn-ic" aria-hidden="true"><ArrowRight size={15} strokeWidth={2.4} /></span>
               </a>
             )}
           </div>

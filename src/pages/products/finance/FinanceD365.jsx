@@ -220,9 +220,6 @@ export const FinanceHeroBlade = () => {
             <a href="#demo" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
               Start Free Trial
             </a>
-            <a href="#demo" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
-              Talk to Sales
-            </a>
           </div>
         </div>
 

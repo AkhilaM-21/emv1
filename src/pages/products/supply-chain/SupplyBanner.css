@@ -181,57 +181,10 @@
    geometry — the pill, the padding, the weight, the blur, the hover
    lift — and inverts only its two colours.
    --------------------------------------------------------------- */
-.sb-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.3rem;
-  border: 0;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-}
-
-.sb-btn:hover { transform: translateY(-2px); }
-
-.sb-btn-solid {
-  /* flat, not the home page's 180deg ramp */
-  background: #e2601f;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
-}
-
-.sb-btn-solid:hover,
-.sb-btn-solid:focus-visible { color: #fff; background: #d6461a; }
-
-.sb-btn-ghost {
-  background: rgba(9, 9, 11, 0.05);
-  border: 1px solid rgba(9, 9, 11, 0.22);
-  color: #0b0b0f;
-  backdrop-filter: blur(6px);
-}
-
-.sb-btn-ghost:hover,
-.sb-btn-ghost:focus-visible {
-  background: rgba(9, 9, 11, 0.09);
-  border-color: rgba(9, 9, 11, 0.4);
-  color: #0b0b0f;
-}
-
-/* the arrow nudges along on hover, as .hi-btn-ic does */
-.sb-btn-ic {
-  display: grid;
-  place-items: center;
-  transition: transform 0.25s ease;
-}
-
-.sb-btn:hover .sb-btn-ic,
-.sb-btn:focus-visible .sb-btn-ic { transform: translateX(3px); }
-
+/* button geometry now comes from the site-wide .cta-btn-primary /
+   .cta-btn-secondary classes (see index.css) — the same pair every
+   other product page's hero uses — so this file no longer styles its
+   own .sb-btn pair. */
 .sb-actions {
   display: flex;
   flex-wrap: wrap;
@@ -256,17 +209,14 @@
   .sb-title { white-space: normal; text-wrap: balance; }
 
   .sb-actions { flex-direction: column; align-items: stretch; }
-  .sb-btn { width: 100%; }
+  .cta-btn-primary,
+  .cta-btn-secondary { width: 100%; }
 }
 
 /* ---------------------------------------------------------------
    MOTION OFF — hold a frame rather than loop a film nobody asked for.
    The poster still shows, so the band is never empty.
    --------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .sb-btn,
-  .sb-btn-ic { transition: none; }
-}
 
 /* ---------------------------------------------------------------
    DARK — nothing to do. The band is a film on a dark ground with white

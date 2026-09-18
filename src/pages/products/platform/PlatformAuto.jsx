@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ArrowLeftRight, ArrowRight, Banknote, Bell, Boxes, Briefcase, ChartColumn,
-  ChevronDown, ChevronLeft, ChevronRight, Factory, FileText, FormInput,
-  Handshake, LayoutGrid, MousePointer2, PanelsTopLeft, Receipt, ShoppingCart,
+  ArrowRight, Banknote, Bell, Boxes, Briefcase, ChartColumn,
+  ChevronLeft, ChevronRight, Factory, FileText, FormInput,
+  Handshake, LayoutGrid, PanelsTopLeft, Receipt, ShoppingCart,
   UserRound,
 } from 'lucide-react';
 import PlatformCanvas from './PlatformCanvas';
@@ -611,74 +611,6 @@ const MODULES = [
 
 
 /* =====================================================================
-   THE HERO SIDE PANEL — the code first, then the screen it renders.
-
-   A stand-in for the whole "low-code" pitch in one small screen: the
-   same three builders named in the hero copy (App, Object, Flow) as a
-   tab row, the markup for a small form, then — the arrow standing in
-   for "compiles to" — the visual output that markup actually builds.
-   Stacked, not side-by-side, because the panel this sits in is a
-   sidebar, not a wide screen.
-   ===================================================================== */
-const LC_TABS = ['App Builder', 'Object Builder', 'Flow Designer'];
-
-/* the code pane's tokens, coloured rather than left flat grey — three
-   of the site's own hues (teal for tags, violet for attributes, the
-   page's orange for strings) so the "code" view reads as code and
-   still belongs to this palette, not a borrowed editor theme */
-const LowCodeMock = () => (
-  <div className="pm pm-lc">
-    <div className="pm-lc-tabs">
-      {LC_TABS.map((t, i) => (
-        <span key={t} className={i === 0 ? 'is-on' : undefined}>{t}</span>
-      ))}
-    </div>
-
-    <pre className="pm-lc-code">
-      <code>
-        <span className="tk-tag">{'<Form '}</span>
-        <span className="tk-attr">onSubmit</span>
-        <span className="tk-tag">{'={saveVendor}>'}</span>{'\n'}
-        {'  '}<span className="tk-tag">{'<Field '}</span>
-        <span className="tk-attr">name</span>
-        <span className="tk-tag">=</span>
-        <span className="tk-str">&quot;name&quot;</span>{' '}
-        <span className="tk-attr">label</span>
-        <span className="tk-tag">=</span>
-        <span className="tk-str">&quot;Vendor Name&quot;</span>
-        <span className="tk-tag">{' />'}</span>{'\n'}
-        {'  '}<span className="tk-tag">{'<Field '}</span>
-        <span className="tk-attr">name</span>
-        <span className="tk-tag">=</span>
-        <span className="tk-str">&quot;category&quot;</span>{' '}
-        <span className="tk-attr">type</span>
-        <span className="tk-tag">=</span>
-        <span className="tk-str">&quot;select&quot;</span>
-        <span className="tk-tag">{' />'}</span>{'\n'}
-        {'  '}<span className="tk-tag">{'<Button>'}</span>Save<span className="tk-tag">{'</Button>'}</span>{'\n'}
-        <span className="tk-tag">{'</Form>'}</span>
-      </code>
-    </pre>
-
-    <span className="pm-lc-div" aria-hidden="true">
-      <i />
-      <ArrowLeftRight size={10} strokeWidth={2.4} />
-      <i />
-    </span>
-
-    <div className="pm-lc-form">
-      <div className="pm-lc-form-h">
-        <b><MousePointer2 size={9} strokeWidth={2.4} />Create Vendor</b>
-        <span className="pm-lc-chip">Drag &amp; Drop</span>
-      </div>
-      <span className="pm-lc-fld">Vendor Name</span>
-      <span className="pm-lc-fld pm-lc-fld--sel">Category<ChevronDown size={9} strokeWidth={2.4} /></span>
-      <span className="pm-lc-save">Save</span>
-    </div>
-  </div>
-);
-
-/* =====================================================================
    THE PAGE
    ===================================================================== */
 const PlatformAuto = () => {
@@ -696,15 +628,14 @@ const PlatformAuto = () => {
           ============================================================ */}
       <section className="pa-hero" id="top">
         <div className="pa-in pa-hero-in">
-          {/* copy left, the diagram beside it.
-
-              THE HEADLINE IS FLOWING TEXT, not four fixed line-breaks —
-              one block that wraps on its own at whatever width the row
-              gives it, exactly like .pa-hero-lede below it. A forced
-              per-line layout (four short spans, each hugging its own
-              text) can never fill a wide row; ordinary wrapping text
-              does, the same way a paragraph does. */}
+          {/* copy on the left, the live workflow canvas on the right —
+              a plain two-column hero, no low-code side panel. The
+              headline and lede are flowing text, not fixed line
+              breaks, so each wraps on its own at whatever width this
+              narrower column gives it. */}
           <div className="pa-hero-copy">
+            <span className="emv-subtitle pa-hero-eyebrow">Emvive Platform</span>
+
             <h1 className="pa-hero-title">
               Build, Automate and Connect Your Business{' '}
               <span className="pa-hero-title-accent">on One Platform</span>
@@ -721,43 +652,32 @@ const PlatformAuto = () => {
               <strong>Automate</strong> how work moves.{' '}
               <strong>Connect</strong> the systems you depend on.
             </p>
+
+            <div className="pa-hero-actions">
+              <a href="#start" className="cta-btn-primary">
+                Request a Demo <span className="cta-btn-arrow"><ArrowRight size={16} /></span>
+              </a>
+              <a href="#start" className="cta-btn-secondary" style={{ backgroundColor: 'white' }}>
+                Start Free Trial
+              </a>
+            </div>
           </div>
 
-          {/* the copy runs full width above, so this row is free to use
-              the WHOLE hero width for itself — the low-code card on the
-              left, the flow diagram on the right. */}
-          <div className="pa-hero-bg" aria-hidden="true">
-            <aside className="pa-lc">
-              <p className="pa-lc-k">
-                <i className="pa-lc-dot" />
-                Build with low-code
-              </p>
+          <div className="pa-hero-canvas" aria-hidden="true">
+            <PlatformCanvas />
 
-              <div className="pa-lc-shot"><LowCodeMock /></div>
-
-              <p className="pa-lc-foot">
-                Same app, two views. Drag it together, or drop straight
-                into the code.
-              </p>
-            </aside>
-
-            <div className="pa-hero-canvas">
-              <PlatformCanvas />
-
-              {/* the margin notes — the reference's hand-drawn asides,
-                  same three claims the cards and the wire diagram
-                  already make, said again in a different voice so the
-                  hero doesn't read as one dry diagram */}
-              <span className="pa-note pa-note--top">
-                Automate<br />with a few clicks
-                <Doodle
-                  id="pa-doodle-top"
-                  className="pa-note-arrow pa-note-arrow--top"
-                  w={54} h={44}
-                  d="M50 4 C 40 4, 14 10, 6 38"
-                />
-              </span>
-            </div>
+            {/* the margin note — the reference's hand-drawn aside,
+                said again in a different voice so the hero doesn't
+                read as one dry diagram */}
+            <span className="pa-note pa-note--top">
+              Automate<br />with a few clicks
+              <Doodle
+                id="pa-doodle-top"
+                className="pa-note-arrow pa-note-arrow--top"
+                w={54} h={44}
+                d="M50 4 C 40 4, 14 10, 6 38"
+              />
+            </span>
           </div>
         </div>
       </section>
