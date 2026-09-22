@@ -16,7 +16,7 @@ import Resources from '../components/sections/Resources';
 const Home = () => {
   return (
     <>
-      <HeroInfosys video="/images/hero-platform.mp4" />
+      <HeroInfosys video="/images/hero-platform-new.mp4" />
       <Products />
       <Features variant="color" />
       {/* Hidden for now — the "Your Business Works Together" card with the
