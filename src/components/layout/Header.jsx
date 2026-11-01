@@ -246,6 +246,16 @@ const Header = () => {
     [t('megaMenu.erp.supplyChain', 'Supply Chain Operations')]: '/products/supply-chain',
     'Inventory for Retail & POS': '/products/retail-inventory',
     [t('megaMenu.retail.inventory', 'Inventory for Retail & POS')]: '/products/retail-inventory',
+    'Advanced Reporting': '/products/advanced-reporting',
+    [t('megaMenu.products.reporting', 'Advanced Reporting')]: '/products/advanced-reporting',
+    ...Object.fromEntries([
+      ['megaMenu.analytics.financial', 'Financial Dashboards'],
+      ['megaMenu.analytics.sales', 'Sales Analytics'],
+      ['megaMenu.analytics.pos', 'POS Analytics'],
+      ['megaMenu.analytics.inventory', 'Inventory Insights'],
+      ['megaMenu.analytics.projects', 'Project Profitability'],
+      ['megaMenu.analytics.builder', 'Custom Report Builder'],
+    ].flatMap(([key, en]) => [[en, '/products/advanced-reporting'], [t(key, en), '/products/advanced-reporting']])),
     Studio: '/products/platform',
     Flow: '/products/platform',
     ...Object.fromEntries(PLATFORM_TITLES.map((title) => [title, '/products/platform'])),
@@ -738,7 +748,7 @@ const Header = () => {
                       setActiveProductIndex(idx);
                       setActiveIndustryIndex(0);
                     }}
-                    onClick={() => setOpenNav(null)}
+                    onClick={() => goProduct(title)}
                   />
                 ))}
               </div>
